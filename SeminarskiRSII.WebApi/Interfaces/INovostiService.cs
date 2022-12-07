@@ -9,9 +9,9 @@ namespace SeminarskiRSII.WebApi.Interfaces
 {
    public interface INovostiService
     {
-        List<Novosti> GetList(NovostiSearchRequest search);
-        Novosti Get(int ID);
-        Novosti Insert(NovostiInsertRequest insert);
-        Novosti Update(int ID, NovostiInsertRequest update);
+        public Task<List<Novosti>> GetList(NovostiSearchRequest search);
+        public Task<Novosti> Get(int ID);
+        public Task<Novosti> Insert(NovostiInsertRequest insert);
+        public Task<Novosti> Update(int ID, NovostiInsertRequest update);
     }
 }

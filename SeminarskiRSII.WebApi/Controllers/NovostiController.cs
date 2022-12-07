@@ -13,43 +13,47 @@ using SeminarskiRSII.Model.Models;
 
 namespace SeminarskiRSII.WebApi.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
-    //public class NovostiController : ControllerBase
-    //{
-    //    private readonly INovostiService _service;
-    //    public NovostiController(INovostiService service)
-    //    {
-    //        _service = service;
-    //    }
-    //    [HttpGet]
-    //    public ActionResult<List<Model.Novosti>> Get([FromQuery] NovostiSearchRequest search)
-    //    {
-    //        return _service.get(search);
-    //    }
-    //    [HttpGet("{id}")]
-    //    public ActionResult<Model.Novosti> GetByID(int id)
-    //    {
-    //        return _service.getByID(id);
-    //    }
-    //    [HttpPost]
-    //    public Model.Novosti Insert(NovostiInsertRequest insert)
-    //    {
-    //        return _service.Insert(insert);
-    //    }
-    //    [HttpPut("{id}")]
-    //    public Model.Novosti Update(int id, NovostiInsertRequest update)
-    //    {
-    //        return _service.Update(id, update);
-    //    }
-    //}
-
-    [AllowAnonymous]
-
-    public class NovostiController : BaseCRUDController<Novosti, NovostiSearchRequest, NovostiInsertRequest, NovostiInsertRequest>
+    [Route("api/[controller]")]
+    [ApiController]
+    public class NovostiController : ControllerBase
     {
-        public NovostiController(ICRUDService<Novosti, NovostiSearchRequest, NovostiInsertRequest, NovostiInsertRequest> service) : base(service)
+        private readonly INovostiService _service;
+        public NovostiController(INovostiService service)
         {
+            _service = service;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Novosti>>> GetList([FromQuery] NovostiSearchRequest search)
+        {
+            return Ok(await _service.GetList(search));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Novosti>> Get(int id)
+        {
+            return Ok(await _service.Get(id));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Novosti>> Insert(NovostiInsertRequest insert)
+        {
+            return Ok(await _service.Insert(insert));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Novosti>> Update(int id, NovostiInsertRequest update)
+        {
+            return Ok(await _service.Update(id, update));
         }
     }
+
+    //[AllowAnonymous]
+
+    //public class NovostiController : BaseCRUDController<Novosti, NovostiSearchRequest, NovostiInsertRequest, NovostiInsertRequest>
+    //{
+    //    public NovostiController(ICRUDService<Novosti, NovostiSearchRequest, NovostiInsertRequest, NovostiInsertRequest> service) : base(service)
+    //    {
+    //    }
+    //}
 }

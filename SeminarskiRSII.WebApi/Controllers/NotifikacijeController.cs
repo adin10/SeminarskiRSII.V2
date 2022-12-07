@@ -13,27 +13,29 @@ using SeminarskiRSII.WebApi.Interfaces;
 
 namespace SeminarskiRSII.WebApi.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
-    //public class NotifikacijeController : ControllerBase
-    //{
-    //    private readonly INotifikacijeService _service;
-    //    public NotifikacijeController(INotifikacijeService service)
-    //    {
-    //        _service = service;
-    //    }
-    //    [HttpGet]
-    //    public ActionResult<List<Model.Notifikacije>> Get([FromQuery] NotifikacijeSearchRequest search)
-    //    {
-    //        return _service.get(search);
-    //    }
-    //}
-    [AllowAnonymous]
-
-    public class NotifikacijeController : BaseCRUDController<Notifikacije, NotifikacijeSearchRequest, NotifikacijeInsertRequest, NotifikacijeInsertRequest>
+    [Route("api/[controller]")]
+    [ApiController]
+    public class NotifikacijeController : ControllerBase
     {
-        public NotifikacijeController(ICRUDService<Notifikacije, NotifikacijeSearchRequest, NotifikacijeInsertRequest, NotifikacijeInsertRequest> service) : base(service)
+        private readonly INotifikacijeService _service;
+        public NotifikacijeController(INotifikacijeService service)
         {
+            _service = service;
+        }
+        [HttpGet]
+        public async Task<ActionResult<List<Notifikacije>>> GetList([FromQuery] NotifikacijeSearchRequest search)
+        {
+            return Ok(await _service.GetList(search));
         }
     }
+
+
+    //[AllowAnonymous]
+
+    //public class NotifikacijeController : BaseCRUDController<Notifikacije, NotifikacijeSearchRequest, NotifikacijeInsertRequest, NotifikacijeInsertRequest>
+    //{
+    //    public NotifikacijeController(ICRUDService<Notifikacije, NotifikacijeSearchRequest, NotifikacijeInsertRequest, NotifikacijeInsertRequest> service) : base(service)
+    //    {
+    //    }
+    //}
 }

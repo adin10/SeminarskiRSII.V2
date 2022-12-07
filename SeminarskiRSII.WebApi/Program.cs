@@ -41,6 +41,9 @@ builder.Services.AddScoped<IVrstaOsobljaService, VrstaOsobljaService>();
 builder.Services.AddScoped<IRecenzijaService, RecenzijaService>();
 builder.Services.AddScoped<IRezervacijaService, RezervacijaService>();
 builder.Services.AddScoped<IOsobljeService, OsobljeService>();
+builder.Services.AddScoped<INovostiService, NovostiService>();
+builder.Services.AddScoped<INotifikacijeService, NotifikacijeService>();
+builder.Services.AddScoped<IGostiNotifikacijeService, GostiNotifikacijeService>();
 
 //builder.Services.AddScoped<ICRUDService<Model.Models.Notifikacije, NotifikacijeSearchRequest, NotifikacijeInsertRequest, NotifikacijeInsertRequest>, NotifikacijaService>();
 //builder.Services.AddScoped<INovostiService, NovostiService>();

@@ -9,6 +9,6 @@ namespace SeminarskiRSII.WebApi.Services
 {
    public interface INotifikacijeService
     {
-        List<Notifikacije> get(NotifikacijeSearchRequest search);
+        public Task<List<Notifikacije>> GetList(NotifikacijeSearchRequest search);
     }
 }

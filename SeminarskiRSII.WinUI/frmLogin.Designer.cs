@@ -29,25 +29,13 @@ namespace SeminarskiRSII.WinUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtKorisnickoIme = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnSnimi = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("MT Extra", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(187, 40);
-            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(220, 57);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Hotel AS";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -100,17 +88,28 @@ namespace SeminarskiRSII.WinUI
             this.btnSnimi.UseVisualStyleBackColor = true;
             this.btnSnimi.Click += new System.EventHandler(this.btnSnimi_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(188, 48);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(203, 40);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "HOTEL AS";
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(598, 638);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnSnimi);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtKorisnickoIme);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmLogin";
             this.Text = "frmLogin";
@@ -121,12 +120,11 @@ namespace SeminarskiRSII.WinUI
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtKorisnickoIme;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnSnimi;
+        private Label label4;
     }
 }
