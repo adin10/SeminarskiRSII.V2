@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRecenzije" targetNamespace="http://tempuri.org/dsRecenzije.xsd" xmlns:mstns="http://tempuri.org/dsRecenzije.xsd" xmlns="http://tempuri.org/dsRecenzije.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRecenzije" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsRecenzije" msprop:Generator_UserDSName="dsRecenzije">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblRecenzije" msprop:Generator_TableClassName="tblRecenzijeDataTable" msprop:Generator_TableVarName="tabletblRecenzije" msprop:Generator_TablePropName="tblRecenzije" msprop:Generator_RowDeletingName="tblRecenzijeRowDeleting" msprop:Generator_RowChangingName="tblRecenzijeRowChanging" msprop:Generator_RowEvHandlerName="tblRecenzijeRowChangeEventHandler" msprop:Generator_RowDeletedName="tblRecenzijeRowDeleted" msprop:Generator_UserTableName="tblRecenzije" msprop:Generator_RowChangedName="tblRecenzijeRowChanged" msprop:Generator_RowEvArgName="tblRecenzijeRowChangeEvent" msprop:Generator_RowClassName="tblRecenzijeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ImePrezime" msprop:Generator_ColumnVarNameInTable="columnImePrezime" msprop:Generator_ColumnPropNameInRow="ImePrezime" msprop:Generator_ColumnPropNameInTable="ImePrezimeColumn" msprop:Generator_UserColumnName="ImePrezime" type="xs:string" minOccurs="0" />
+              <xs:element name="Ocjena" msprop:Generator_ColumnVarNameInTable="columnOcjena" msprop:Generator_ColumnPropNameInRow="Ocjena" msprop:Generator_ColumnPropNameInTable="OcjenaColumn" msprop:Generator_UserColumnName="Ocjena" type="xs:string" minOccurs="0" />
+              <xs:element name="Komentar" msprop:Generator_ColumnVarNameInTable="columnKomentar" msprop:Generator_ColumnPropNameInRow="Komentar" msprop:Generator_ColumnPropNameInTable="KomentarColumn" msprop:Generator_UserColumnName="Komentar" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

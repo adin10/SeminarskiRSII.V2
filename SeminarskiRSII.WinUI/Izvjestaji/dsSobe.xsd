@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsSobe" targetNamespace="http://tempuri.org/dsSobe.xsd" xmlns:mstns="http://tempuri.org/dsSobe.xsd" xmlns="http://tempuri.org/dsSobe.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsSobe" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsSobe" msprop:Generator_UserDSName="dsSobe">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblSobe" msprop:Generator_TableClassName="tblSobeDataTable" msprop:Generator_TableVarName="tabletblSobe" msprop:Generator_TablePropName="tblSobe" msprop:Generator_RowDeletingName="tblSobeRowDeleting" msprop:Generator_RowChangingName="tblSobeRowChanging" msprop:Generator_RowEvHandlerName="tblSobeRowChangeEventHandler" msprop:Generator_RowDeletedName="tblSobeRowDeleted" msprop:Generator_UserTableName="tblSobe" msprop:Generator_RowChangedName="tblSobeRowChanged" msprop:Generator_RowEvArgName="tblSobeRowChangeEvent" msprop:Generator_RowClassName="tblSobeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="gost" msprop:Generator_ColumnVarNameInTable="columngost" msprop:Generator_ColumnPropNameInRow="gost" msprop:Generator_ColumnPropNameInTable="gostColumn" msprop:Generator_UserColumnName="gost" type="xs:string" minOccurs="0" />
+              <xs:element name="DatumDolaska" msprop:Generator_ColumnVarNameInTable="columnDatumDolaska" msprop:Generator_ColumnPropNameInRow="DatumDolaska" msprop:Generator_ColumnPropNameInTable="DatumDolaskaColumn" msprop:Generator_UserColumnName="DatumDolaska" type="xs:string" minOccurs="0" />
+              <xs:element name="DatumOdlaska" msprop:Generator_ColumnVarNameInTable="columnDatumOdlaska" msprop:Generator_ColumnPropNameInRow="DatumOdlaska" msprop:Generator_ColumnPropNameInTable="DatumOdlaskaColumn" msprop:Generator_UserColumnName="DatumOdlaska" type="xs:string" minOccurs="0" />
+              <xs:element name="BrojRezervacija" msprop:Generator_ColumnVarNameInTable="columnBrojRezervacija" msprop:Generator_ColumnPropNameInRow="BrojRezervacija" msprop:Generator_ColumnPropNameInTable="BrojRezervacijaColumn" msprop:Generator_UserColumnName="BrojRezervacija" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
