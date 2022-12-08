@@ -40,7 +40,7 @@ namespace SeminarskiRSII.WinUI.Grad
         {
             var id = dgwGradovi.SelectedRows[0].Cells[0].Value;
             frmGradDetalji frm = new frmGradDetalji(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

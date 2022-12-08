@@ -41,7 +41,7 @@ namespace SeminarskiRSII.WinUI.Gost
         {
             var id = dgwGosti.SelectedRows[0].Cells[0].Value;                    // Uzimamo gosta na kojeg smo izvrsili dupli klik
             frmGostDetalji frm = new frmGostDetalji(int.Parse(id.ToString()));   // Otvaramo formu gostDetalji kojoj proslijedjujemo gosta
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

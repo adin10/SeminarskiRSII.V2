@@ -131,151 +131,151 @@ namespace SeminarskiRSII.WinUI
         private void listaDrzavaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmDrzavaPrikaz frm = new frmDrzavaPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNovuDrzavuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmDodajDrzavu frm = new frmDodajDrzavu();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void pregledCijenaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCjenovnikPrikaz frm = new frmCjenovnikPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNovuCijenuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCjenovnikDetalji frm = new frmCjenovnikDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void pregledStatusaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSobaStatusPrikaz frm = new frmSobaStatusPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNoviStatusToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSobaStatusDetalji frm = new frmSobaStatusDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaGradovaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmGradPrikaz frm = new frmGradPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNoviGradToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmGradDetalji frm = new frmGradDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaSvihGostijuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmGostPrikaz frm = new frmGostPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNovogGostaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmGostDetalji frm = new frmGostDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void sveSobeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSobaPrikaz frm = new frmSobaPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNovuSobuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSobaDodaj frm = new frmSobaDodaj();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaPozicijaIZaduzenjaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmVrstaOsobljaPrikaz frm = new frmVrstaOsobljaPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNovuVrstuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmVrstaOsobljaDetalji frm = new frmVrstaOsobljaDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaOsobljaZaduzenihPoSobamaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSobaOsobljePrikaz frm = new frmSobaOsobljePrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodjeliSobuOsobljuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSobaOsobljeDetalji frm = new frmSobaOsobljeDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaRezervacijaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmRezervacijaPrikaz frm = new frmRezervacijaPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNovuRezervacijuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmRezervacijaDetalji frm = new frmRezervacijaDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaOcjenaIKomentaraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmRecenzijaPrikaz frm = new frmRecenzijaPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajRecenzijuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmRecenzijaDetalji frm = new frmRecenzijaDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaUposlenihToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmOsobljePrikaz frm = new frmOsobljePrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajUposlenikaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmOsobljeDetalji frm = new frmOsobljeDetalji();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaObavijestiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmNovostiPrikaz frm = new frmNovostiPrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void dodajNovuObavijestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmNovostiDodaj frm = new frmNovostiDodaj();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void listaSvihNotifikacijaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmNotifikacijePrikaz frm = new frmNotifikacijePrikaz();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -286,7 +286,7 @@ namespace SeminarskiRSII.WinUI
         private void izvjestajiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmOdabir frm = new frmOdabir();
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

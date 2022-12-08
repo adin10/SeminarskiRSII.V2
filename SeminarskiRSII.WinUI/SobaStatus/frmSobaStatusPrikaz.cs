@@ -29,7 +29,7 @@ namespace SeminarskiRSII.WinUI.SobaStatus
         {
             var id = dgwSobaStatus.SelectedRows[0].Cells[0].Value;
             frmSobaStatusDetalji frm = new frmSobaStatusDetalji(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

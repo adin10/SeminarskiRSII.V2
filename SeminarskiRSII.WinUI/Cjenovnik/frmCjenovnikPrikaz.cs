@@ -29,7 +29,7 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
         {
             var id = dgwCjenovnik.SelectedRows[0].Cells[0].Value;
             frmCjenovnikDetalji frm = new frmCjenovnikDetalji(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

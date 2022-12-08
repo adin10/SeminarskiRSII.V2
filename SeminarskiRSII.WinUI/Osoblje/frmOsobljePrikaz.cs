@@ -41,7 +41,7 @@ namespace SeminarskiRSII.WinUI.Osoblje
         {
             var id = dgwOsoblje.SelectedRows[0].Cells[0].Value;
             frmOsobljeDetalji frm = new frmOsobljeDetalji(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

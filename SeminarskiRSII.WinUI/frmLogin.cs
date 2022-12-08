@@ -40,7 +40,7 @@ namespace SeminarskiRSII.WinUI
                 if (item != null)
                 {
                     var frm = new frmPocetna();
-                    frm.Show();
+                    frm.ShowDialog();
                 }
                 else
                 {

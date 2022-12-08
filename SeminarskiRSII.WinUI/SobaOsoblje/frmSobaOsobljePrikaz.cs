@@ -29,7 +29,7 @@ namespace SeminarskiRSII.WinUI.SobaOsoblje
         {
             var id = dgwSobaOsoblje.SelectedRows[0].Cells[0].Value;
             frmSobaOsobljeDetalji frm = new frmSobaOsobljeDetalji(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

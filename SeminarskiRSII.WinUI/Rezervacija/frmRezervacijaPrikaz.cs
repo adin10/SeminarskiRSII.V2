@@ -40,7 +40,7 @@ namespace SeminarskiRSII.WinUI.Rezervacija
         {
             var id = dgwRezervacije.SelectedRows[0].Cells[0].Value;
             frmRezervacijaDetalji frm = new frmRezervacijaDetalji(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

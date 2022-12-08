@@ -53,7 +53,7 @@ namespace SeminarskiRSII.WinUI.Soba
         {
             var id = dgwSoba.SelectedRows[0].Cells[0].Value;
             frmSobaDodaj frm = new frmSobaDodaj(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

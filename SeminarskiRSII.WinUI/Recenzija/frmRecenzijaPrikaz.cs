@@ -54,7 +54,7 @@ namespace SeminarskiRSII.WinUI.Recenzija
         {
             var id = dgwRecenzija.SelectedRows[0].Cells[0].Value;
             frmRecenzijaDetalji frm = new frmRecenzijaDetalji(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

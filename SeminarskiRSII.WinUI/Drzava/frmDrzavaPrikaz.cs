@@ -41,7 +41,7 @@ namespace SeminarskiRSII.WinUI.Drzava
         {
             var id = dgwDrzave.SelectedRows[0].Cells[0].Value;  // na koju smo drzavu uradili dupli klik
             frmDodajDrzavu frm = new frmDodajDrzavu(int.Parse(id.ToString()));  // Ako odaberemo neku drzavu otidji u formu za dodavanje novog korisnika
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace SeminarskiRSII.WinUI.Novosti
         {
             var id = dgwNovosti.SelectedRows[0].Cells[0].Value;
             frmNovostiDodaj frm = new frmNovostiDodaj(int.Parse(id.ToString()));
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }
