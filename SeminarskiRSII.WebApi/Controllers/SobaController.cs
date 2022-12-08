@@ -8,9 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using SeminarskiRSII.Model.Models;
 using SeminarskiRSII.WebApi.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SeminarskiRSII.WebApi.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SobaController : ControllerBase
