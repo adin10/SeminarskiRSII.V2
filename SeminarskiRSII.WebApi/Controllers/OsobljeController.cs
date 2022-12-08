@@ -12,7 +12,7 @@ using SeminarskiRSII.Model.Models;
 
 namespace SeminarskiRSII.WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OsobljeController : ControllerBase
