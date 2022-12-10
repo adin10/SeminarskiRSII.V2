@@ -43,11 +43,13 @@ namespace SeminarskiRSII.WinUI.Grad
             {
                 await _service.Update<Model.Models.Grad>(_id, grad);
                 MessageBox.Show("Uspjesno ste uredili podatke grada ");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.Grad>(grad);
                 MessageBox.Show($"Uspjesno ste dodali grad {grad.NazivGrada}");
+                Close();
             }
         }
 

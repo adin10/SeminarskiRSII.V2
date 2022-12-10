@@ -43,11 +43,13 @@ namespace SeminarskiRSII.WinUI.Osoblje
                         osoblje.Slika = Helper.ImageHelper.FromImageToByte(pbOsoblje.Image);
                         await _service.Update<Model.Models.Osoblje>(_id, osoblje);
                         MessageBox.Show("Uspjesno ste uredili podatke o uposleniku");
+                        Close();
                     }
                     else
                     {
                         await _service.Insert<Model.Models.Osoblje>(osoblje);
                         MessageBox.Show($"Uspjesno ste dodali zaposlenika {osoblje.Ime} {osoblje.Prezime}");
+                        Close();
                     }
                 }
             }

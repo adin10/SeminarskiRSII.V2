@@ -46,28 +46,31 @@ namespace SeminarskiRSII.WinUI.Grad
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(20, 17);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 20);
+            this.label1.Size = new System.Drawing.Size(105, 29);
             this.label1.TabIndex = 15;
             this.label1.Text = "Pretraga";
             // 
             // txtpretraga
             // 
-            this.txtpretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtpretraga.Location = new System.Drawing.Point(16, 47);
+            this.txtpretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtpretraga.Location = new System.Drawing.Point(27, 90);
+            this.txtpretraga.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtpretraga.Name = "txtpretraga";
-            this.txtpretraga.Size = new System.Drawing.Size(368, 23);
+            this.txtpretraga.Size = new System.Drawing.Size(611, 30);
             this.txtpretraga.TabIndex = 14;
             // 
             // btnPrikaz
             // 
             this.btnPrikaz.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPrikaz.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrikaz.Location = new System.Drawing.Point(413, 38);
+            this.btnPrikaz.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrikaz.Location = new System.Drawing.Point(688, 73);
+            this.btnPrikaz.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikaz.Name = "btnPrikaz";
-            this.btnPrikaz.Size = new System.Drawing.Size(93, 38);
+            this.btnPrikaz.Size = new System.Drawing.Size(155, 73);
             this.btnPrikaz.TabIndex = 13;
             this.btnPrikaz.Text = "Prikazi";
             this.btnPrikaz.UseVisualStyleBackColor = false;
@@ -76,10 +79,12 @@ namespace SeminarskiRSII.WinUI.Grad
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgwGradovi);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 80);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.Location = new System.Drawing.Point(20, 154);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(497, 356);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBox1.Size = new System.Drawing.Size(828, 685);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lista gradova";
@@ -95,11 +100,13 @@ namespace SeminarskiRSII.WinUI.Grad
             this.PostanskiBroj,
             this.Drzava});
             this.dgwGradovi.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgwGradovi.Location = new System.Drawing.Point(3, 20);
+            this.dgwGradovi.Location = new System.Drawing.Point(5, 31);
+            this.dgwGradovi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwGradovi.Name = "dgwGradovi";
             this.dgwGradovi.ReadOnly = true;
+            this.dgwGradovi.RowHeadersWidth = 62;
             this.dgwGradovi.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwGradovi.Size = new System.Drawing.Size(491, 333);
+            this.dgwGradovi.Size = new System.Drawing.Size(818, 648);
             this.dgwGradovi.TabIndex = 0;
             this.dgwGradovi.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwGradovi_MouseDoubleClick);
             // 
@@ -108,6 +115,7 @@ namespace SeminarskiRSII.WinUI.Grad
             this.GradID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.GradID.DataPropertyName = "Id";
             this.GradID.HeaderText = "GradID";
+            this.GradID.MinimumWidth = 8;
             this.GradID.Name = "GradID";
             this.GradID.ReadOnly = true;
             this.GradID.Visible = false;
@@ -117,6 +125,7 @@ namespace SeminarskiRSII.WinUI.Grad
             this.NazivGrada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.NazivGrada.DataPropertyName = "NazivGrada";
             this.NazivGrada.HeaderText = "Naziv Grada";
+            this.NazivGrada.MinimumWidth = 8;
             this.NazivGrada.Name = "NazivGrada";
             this.NazivGrada.ReadOnly = true;
             // 
@@ -125,6 +134,7 @@ namespace SeminarskiRSII.WinUI.Grad
             this.PostanskiBroj.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.PostanskiBroj.DataPropertyName = "PostanskiBroj";
             this.PostanskiBroj.HeaderText = "Postanski Broj";
+            this.PostanskiBroj.MinimumWidth = 8;
             this.PostanskiBroj.Name = "PostanskiBroj";
             this.PostanskiBroj.ReadOnly = true;
             // 
@@ -133,19 +143,22 @@ namespace SeminarskiRSII.WinUI.Grad
             this.Drzava.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Drzava.DataPropertyName = "drzava";
             this.Drzava.HeaderText = "Drzava";
+            this.Drzava.MinimumWidth = 8;
             this.Drzava.Name = "Drzava";
             this.Drzava.ReadOnly = true;
             // 
             // frmGradPrikaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 450);
+            this.ClientSize = new System.Drawing.Size(867, 865);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtpretraga);
             this.Controls.Add(this.btnPrikaz);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmGradPrikaz";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmGradPrikaz";
             this.Load += new System.EventHandler(this.frmGradPrikaz_Load);
             this.groupBox1.ResumeLayout(false);

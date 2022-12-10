@@ -47,20 +47,22 @@ namespace SeminarskiRSII.WinUI.Recenzija
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(20, 17);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 20);
+            this.label1.Size = new System.Drawing.Size(105, 29);
             this.label1.TabIndex = 15;
             this.label1.Text = "Pretraga";
             // 
             // btnPrikazi
             // 
             this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrikazi.Location = new System.Drawing.Point(508, 35);
+            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrikazi.Location = new System.Drawing.Point(847, 67);
+            this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(75, 35);
+            this.btnPrikazi.Size = new System.Drawing.Size(125, 67);
             this.btnPrikazi.TabIndex = 14;
             this.btnPrikazi.Text = "Prikazi";
             this.btnPrikazi.UseVisualStyleBackColor = false;
@@ -68,19 +70,22 @@ namespace SeminarskiRSII.WinUI.Recenzija
             // 
             // txtPretraga
             // 
-            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPretraga.Location = new System.Drawing.Point(12, 42);
+            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPretraga.Location = new System.Drawing.Point(20, 81);
+            this.txtPretraga.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtPretraga.Name = "txtPretraga";
-            this.txtPretraga.Size = new System.Drawing.Size(482, 23);
+            this.txtPretraga.Size = new System.Drawing.Size(801, 30);
             this.txtPretraga.TabIndex = 13;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgwRecenzija);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(9, 88);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.Location = new System.Drawing.Point(15, 169);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(584, 358);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBox1.Size = new System.Drawing.Size(973, 688);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lista ocjena i komentara posjetilaca";
@@ -97,11 +102,13 @@ namespace SeminarskiRSII.WinUI.Recenzija
             this.Ocjena,
             this.Komentar});
             this.dgwRecenzija.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgwRecenzija.Location = new System.Drawing.Point(3, 22);
+            this.dgwRecenzija.Location = new System.Drawing.Point(5, 34);
+            this.dgwRecenzija.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwRecenzija.Name = "dgwRecenzija";
             this.dgwRecenzija.ReadOnly = true;
+            this.dgwRecenzija.RowHeadersWidth = 62;
             this.dgwRecenzija.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwRecenzija.Size = new System.Drawing.Size(578, 333);
+            this.dgwRecenzija.Size = new System.Drawing.Size(963, 648);
             this.dgwRecenzija.TabIndex = 0;
             this.dgwRecenzija.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwRecenzija_MouseDoubleClick);
             // 
@@ -109,15 +116,18 @@ namespace SeminarskiRSII.WinUI.Recenzija
             // 
             this.Id.DataPropertyName = "Id";
             this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 8;
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             this.Id.Visible = false;
+            this.Id.Width = 150;
             // 
             // Gost
             // 
             this.Gost.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Gost.DataPropertyName = "gost";
             this.Gost.HeaderText = "Gost";
+            this.Gost.MinimumWidth = 8;
             this.Gost.Name = "Gost";
             this.Gost.ReadOnly = true;
             // 
@@ -126,6 +136,7 @@ namespace SeminarskiRSII.WinUI.Recenzija
             this.Soba.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Soba.DataPropertyName = "soba";
             this.Soba.HeaderText = "Soba broj";
+            this.Soba.MinimumWidth = 8;
             this.Soba.Name = "Soba";
             this.Soba.ReadOnly = true;
             // 
@@ -134,6 +145,7 @@ namespace SeminarskiRSII.WinUI.Recenzija
             this.Ocjena.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Ocjena.DataPropertyName = "Ocjena";
             this.Ocjena.HeaderText = "Ocjena";
+            this.Ocjena.MinimumWidth = 8;
             this.Ocjena.Name = "Ocjena";
             this.Ocjena.ReadOnly = true;
             // 
@@ -142,19 +154,22 @@ namespace SeminarskiRSII.WinUI.Recenzija
             this.Komentar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Komentar.DataPropertyName = "Komentar";
             this.Komentar.HeaderText = "Komentar";
+            this.Komentar.MinimumWidth = 8;
             this.Komentar.Name = "Komentar";
             this.Komentar.ReadOnly = true;
             // 
             // frmRecenzijaPrikaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(607, 450);
+            this.ClientSize = new System.Drawing.Size(1012, 865);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnPrikazi);
             this.Controls.Add(this.txtPretraga);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmRecenzijaPrikaz";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRecenzijaPrikaz";
             this.Load += new System.EventHandler(this.frmRecenzijaPrikaz_Load);
             this.groupBox1.ResumeLayout(false);

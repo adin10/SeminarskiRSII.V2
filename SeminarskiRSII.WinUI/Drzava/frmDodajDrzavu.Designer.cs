@@ -42,20 +42,22 @@ namespace SeminarskiRSII.WinUI.Drzava
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(37, 41);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(62, 79);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(153, 20);
+            this.label2.Size = new System.Drawing.Size(228, 29);
             this.label2.TabIndex = 15;
             this.label2.Text = "Unesite novu drzavu";
             // 
             // btnSnimi
             // 
             this.btnSnimi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSnimi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSnimi.Location = new System.Drawing.Point(261, 159);
+            this.btnSnimi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSnimi.Location = new System.Drawing.Point(435, 306);
+            this.btnSnimi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnSnimi.Name = "btnSnimi";
-            this.btnSnimi.Size = new System.Drawing.Size(84, 29);
+            this.btnSnimi.Size = new System.Drawing.Size(140, 56);
             this.btnSnimi.TabIndex = 14;
             this.btnSnimi.Text = "Snimi";
             this.btnSnimi.UseVisualStyleBackColor = false;
@@ -63,19 +65,21 @@ namespace SeminarskiRSII.WinUI.Drzava
             // 
             // txtNaziv
             // 
-            this.txtNaziv.Location = new System.Drawing.Point(140, 106);
+            this.txtNaziv.Location = new System.Drawing.Point(233, 204);
+            this.txtNaziv.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtNaziv.Name = "txtNaziv";
-            this.txtNaziv.Size = new System.Drawing.Size(206, 20);
+            this.txtNaziv.Size = new System.Drawing.Size(341, 31);
             this.txtNaziv.TabIndex = 13;
             this.txtNaziv.Validating += new System.ComponentModel.CancelEventHandler(this.txtNaziv_Validating);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(38, 107);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(63, 206);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 17);
+            this.label1.Size = new System.Drawing.Size(131, 25);
             this.label1.TabIndex = 12;
             this.label1.Text = "Naziv drzave:";
             // 
@@ -85,14 +89,16 @@ namespace SeminarskiRSII.WinUI.Drzava
             // 
             // frmDodajDrzavu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(382, 260);
+            this.ClientSize = new System.Drawing.Size(637, 500);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnSnimi);
             this.Controls.Add(this.txtNaziv);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmDodajDrzavu";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmDodajDrzavu";
             this.Load += new System.EventHandler(this.frmDodajDrzavu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();

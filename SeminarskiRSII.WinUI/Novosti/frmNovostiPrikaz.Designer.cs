@@ -46,10 +46,12 @@ namespace SeminarskiRSII.WinUI.Novosti
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgwNovosti);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(1, 99);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.Location = new System.Drawing.Point(2, 190);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(554, 353);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBox1.Size = new System.Drawing.Size(923, 679);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Pregled svih novosti";
@@ -66,11 +68,13 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.DatumObavijesti,
             this.NapisaoObjavu});
             this.dgwNovosti.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgwNovosti.Location = new System.Drawing.Point(3, 22);
+            this.dgwNovosti.Location = new System.Drawing.Point(5, 34);
+            this.dgwNovosti.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwNovosti.Name = "dgwNovosti";
             this.dgwNovosti.ReadOnly = true;
+            this.dgwNovosti.RowHeadersWidth = 62;
             this.dgwNovosti.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwNovosti.Size = new System.Drawing.Size(548, 328);
+            this.dgwNovosti.Size = new System.Drawing.Size(913, 639);
             this.dgwNovosti.TabIndex = 0;
             this.dgwNovosti.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwNovosti_MouseDoubleClick);
             // 
@@ -78,15 +82,18 @@ namespace SeminarskiRSII.WinUI.Novosti
             // 
             this.ID.DataPropertyName = "Id";
             this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
             this.ID.Name = "ID";
             this.ID.ReadOnly = true;
             this.ID.Visible = false;
+            this.ID.Width = 150;
             // 
             // Naslov
             // 
             this.Naslov.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Naslov.DataPropertyName = "Naslov";
             this.Naslov.HeaderText = "Naslov";
+            this.Naslov.MinimumWidth = 8;
             this.Naslov.Name = "Naslov";
             this.Naslov.ReadOnly = true;
             // 
@@ -95,6 +102,7 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.Sadrzaj.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Sadrzaj.DataPropertyName = "Sadrzaj";
             this.Sadrzaj.HeaderText = "Sadrzaj";
+            this.Sadrzaj.MinimumWidth = 8;
             this.Sadrzaj.Name = "Sadrzaj";
             this.Sadrzaj.ReadOnly = true;
             // 
@@ -103,6 +111,7 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.DatumObavijesti.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.DatumObavijesti.DataPropertyName = "DatumObjave";
             this.DatumObavijesti.HeaderText = "Datum obavijesti";
+            this.DatumObavijesti.MinimumWidth = 8;
             this.DatumObavijesti.Name = "DatumObavijesti";
             this.DatumObavijesti.ReadOnly = true;
             // 
@@ -111,16 +120,18 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.NapisaoObjavu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.NapisaoObjavu.DataPropertyName = "Osoblje";
             this.NapisaoObjavu.HeaderText = "Objavu napisao";
+            this.NapisaoObjavu.MinimumWidth = 8;
             this.NapisaoObjavu.Name = "NapisaoObjavu";
             this.NapisaoObjavu.ReadOnly = true;
             // 
             // btnPrikazi
             // 
             this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrikazi.Location = new System.Drawing.Point(475, 38);
+            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrikazi.Location = new System.Drawing.Point(792, 73);
+            this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(80, 40);
+            this.btnPrikazi.Size = new System.Drawing.Size(133, 77);
             this.btnPrikazi.TabIndex = 14;
             this.btnPrikazi.Text = "Prikazi";
             this.btnPrikazi.UseVisualStyleBackColor = false;
@@ -130,31 +141,35 @@ namespace SeminarskiRSII.WinUI.Novosti
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(20, 17);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 20);
+            this.label1.Size = new System.Drawing.Size(105, 29);
             this.label1.TabIndex = 13;
             this.label1.Text = "Pretraga";
             // 
             // txtPretraga
             // 
-            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPretraga.Location = new System.Drawing.Point(12, 48);
+            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPretraga.Location = new System.Drawing.Point(20, 92);
+            this.txtPretraga.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtPretraga.Name = "txtPretraga";
-            this.txtPretraga.Size = new System.Drawing.Size(437, 23);
+            this.txtPretraga.Size = new System.Drawing.Size(726, 30);
             this.txtPretraga.TabIndex = 12;
             // 
             // frmNovostiPrikaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 450);
+            this.ClientSize = new System.Drawing.Size(947, 865);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnPrikazi);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPretraga);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmNovostiPrikaz";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmNovostiPrikaz";
             this.Load += new System.EventHandler(this.frmNovostiPrikaz_Load);
             this.groupBox1.ResumeLayout(false);

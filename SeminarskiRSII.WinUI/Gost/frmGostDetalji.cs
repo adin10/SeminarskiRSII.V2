@@ -54,11 +54,13 @@ namespace SeminarskiRSII.WinUI.Gost
                     {
                         await _gost.Update<Model.Models.Gost>(_id, gost);      // Vrsimo updatovane postojeceg gosta
                         MessageBox.Show($"Uspjesno ste uerdili podatke");
+                        Close();
                     }
                     else                                    // Ako nema ID
                     {
                         await _gost.Insert<Model.Models.Gost>(gost);     // Vrsimo obicno dodavanje gosta
                         MessageBox.Show($"Uspjesno ste dodali gosta {gost.Ime} {gost.Prezime}");
+                        Close();
                     }
                 }
             }

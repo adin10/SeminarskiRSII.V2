@@ -44,28 +44,31 @@ namespace SeminarskiRSII.WinUI.Drzava
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(25, 19);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(42, 37);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 20);
+            this.label1.Size = new System.Drawing.Size(105, 29);
             this.label1.TabIndex = 15;
             this.label1.Text = "Pretraga";
             // 
             // txtPretraga
             // 
-            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPretraga.Location = new System.Drawing.Point(25, 52);
+            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPretraga.Location = new System.Drawing.Point(42, 100);
+            this.txtPretraga.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtPretraga.Name = "txtPretraga";
-            this.txtPretraga.Size = new System.Drawing.Size(306, 23);
+            this.txtPretraga.Size = new System.Drawing.Size(507, 30);
             this.txtPretraga.TabIndex = 14;
             // 
             // btnPrikazi
             // 
             this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrikazi.Location = new System.Drawing.Point(344, 44);
+            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrikazi.Location = new System.Drawing.Point(573, 85);
+            this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(80, 36);
+            this.btnPrikazi.Size = new System.Drawing.Size(133, 69);
             this.btnPrikazi.TabIndex = 13;
             this.btnPrikazi.Text = "Prikazi";
             this.btnPrikazi.UseVisualStyleBackColor = false;
@@ -74,10 +77,12 @@ namespace SeminarskiRSII.WinUI.Drzava
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgwDrzave);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(13, 98);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.Location = new System.Drawing.Point(22, 188);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(414, 339);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBox1.Size = new System.Drawing.Size(690, 652);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lista drzava";
@@ -91,11 +96,13 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.DrzavaID,
             this.Naziv});
             this.dgwDrzave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgwDrzave.Location = new System.Drawing.Point(3, 20);
+            this.dgwDrzave.Location = new System.Drawing.Point(5, 31);
+            this.dgwDrzave.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwDrzave.Name = "dgwDrzave";
             this.dgwDrzave.ReadOnly = true;
+            this.dgwDrzave.RowHeadersWidth = 62;
             this.dgwDrzave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwDrzave.Size = new System.Drawing.Size(408, 316);
+            this.dgwDrzave.Size = new System.Drawing.Size(680, 615);
             this.dgwDrzave.TabIndex = 0;
             this.dgwDrzave.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwDrzave_MouseDoubleClick);
             // 
@@ -104,6 +111,7 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.DrzavaID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.DrzavaID.DataPropertyName = "Id";
             this.DrzavaID.HeaderText = "DrzavaID";
+            this.DrzavaID.MinimumWidth = 8;
             this.DrzavaID.Name = "DrzavaID";
             this.DrzavaID.ReadOnly = true;
             this.DrzavaID.Visible = false;
@@ -113,19 +121,22 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.Naziv.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Naziv.DataPropertyName = "Naziv";
             this.Naziv.HeaderText = "Naziv drzave";
+            this.Naziv.MinimumWidth = 8;
             this.Naziv.Name = "Naziv";
             this.Naziv.ReadOnly = true;
             // 
             // frmDrzavaPrikaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 450);
+            this.ClientSize = new System.Drawing.Size(737, 865);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPretraga);
             this.Controls.Add(this.btnPrikazi);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmDrzavaPrikaz";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmDrzavaPrikaz";
             this.Load += new System.EventHandler(this.frmDrzavaPrikaz_Load);
             this.groupBox1.ResumeLayout(false);

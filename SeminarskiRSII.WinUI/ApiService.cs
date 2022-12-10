@@ -136,6 +136,7 @@
 using Flurl.Http;
 using SeminarskiRSII.Model;
 using SeminarskiRSII.Model.Models;
+using SeminarskiRSII.WinUI.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -185,6 +186,12 @@ namespace SeminarskiRSII.WinUI
             var url = $"{Properties.Settings.Default.ApiUrl}/{_route}/{id}";
 
             return await url.WithBasicAuth(Username, Password).GetJsonAsync<T>();
+        }
+
+        public async Task<T> Delete<T>(object id)
+        {
+            var url = $"{Properties.Settings.Default.ApiUrl}/{_route}/{id}";
+            return await url.WithBasicAuth(Username, Password).DeleteAsync().ReceiveJson<T>();
         }
 
         public async Task<T> Insert<T>(object request)

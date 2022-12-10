@@ -41,10 +41,12 @@ namespace SeminarskiRSII.WinUI.SobaOsoblje
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgwSobaOsoblje);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 22);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.Location = new System.Drawing.Point(20, 42);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(521, 401);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBox1.Size = new System.Drawing.Size(868, 771);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Upsoslenici zaduzeni za sobu";
@@ -59,11 +61,13 @@ namespace SeminarskiRSII.WinUI.SobaOsoblje
             this.Soba,
             this.Osoblje});
             this.dgwSobaOsoblje.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgwSobaOsoblje.Location = new System.Drawing.Point(3, 22);
+            this.dgwSobaOsoblje.Location = new System.Drawing.Point(5, 34);
+            this.dgwSobaOsoblje.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwSobaOsoblje.Name = "dgwSobaOsoblje";
             this.dgwSobaOsoblje.ReadOnly = true;
+            this.dgwSobaOsoblje.RowHeadersWidth = 62;
             this.dgwSobaOsoblje.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwSobaOsoblje.Size = new System.Drawing.Size(515, 376);
+            this.dgwSobaOsoblje.Size = new System.Drawing.Size(858, 731);
             this.dgwSobaOsoblje.TabIndex = 0;
             this.dgwSobaOsoblje.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwSobaOsoblje_MouseDoubleClick);
             // 
@@ -71,15 +75,18 @@ namespace SeminarskiRSII.WinUI.SobaOsoblje
             // 
             this.Id.DataPropertyName = "Id";
             this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 8;
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             this.Id.Visible = false;
+            this.Id.Width = 150;
             // 
             // Soba
             // 
             this.Soba.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Soba.DataPropertyName = "Soba";
             this.Soba.HeaderText = "Soba";
+            this.Soba.MinimumWidth = 8;
             this.Soba.Name = "Soba";
             this.Soba.ReadOnly = true;
             // 
@@ -88,16 +95,19 @@ namespace SeminarskiRSII.WinUI.SobaOsoblje
             this.Osoblje.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Osoblje.DataPropertyName = "Osoblje";
             this.Osoblje.HeaderText = "Osoblje";
+            this.Osoblje.MinimumWidth = 8;
             this.Osoblje.Name = "Osoblje";
             this.Osoblje.ReadOnly = true;
             // 
             // frmSobaOsobljePrikaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 450);
+            this.ClientSize = new System.Drawing.Size(900, 865);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmSobaOsobljePrikaz";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmSobaOsobljePrikaz";
             this.Load += new System.EventHandler(this.frmSobaOsobljePrikaz_Load);
             this.groupBox1.ResumeLayout(false);

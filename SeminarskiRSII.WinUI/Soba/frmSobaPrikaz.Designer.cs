@@ -46,10 +46,11 @@ namespace SeminarskiRSII.WinUI.Soba
             // btnPrikazi
             // 
             this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrikazi.Location = new System.Drawing.Point(456, 38);
+            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrikazi.Location = new System.Drawing.Point(760, 73);
+            this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(75, 32);
+            this.btnPrikazi.Size = new System.Drawing.Size(125, 62);
             this.btnPrikazi.TabIndex = 15;
             this.btnPrikazi.Text = "Prikazi";
             this.btnPrikazi.UseVisualStyleBackColor = false;
@@ -57,30 +58,34 @@ namespace SeminarskiRSII.WinUI.Soba
             // 
             // txtPretraga
             // 
-            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPretraga.Location = new System.Drawing.Point(21, 44);
+            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPretraga.Location = new System.Drawing.Point(35, 85);
+            this.txtPretraga.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtPretraga.Name = "txtPretraga";
-            this.txtPretraga.Size = new System.Drawing.Size(420, 23);
+            this.txtPretraga.Size = new System.Drawing.Size(697, 30);
             this.txtPretraga.TabIndex = 14;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(21, 9);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(35, 17);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 20);
+            this.label1.Size = new System.Drawing.Size(105, 29);
             this.label1.TabIndex = 13;
             this.label1.Text = "Pretraga";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgwSoba);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(17, 76);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.Location = new System.Drawing.Point(28, 146);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(528, 370);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBox1.Size = new System.Drawing.Size(880, 712);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lista soba";
@@ -97,11 +102,13 @@ namespace SeminarskiRSII.WinUI.Soba
             this.OpisSobe,
             this.SobaStatus});
             this.dgwSoba.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgwSoba.Location = new System.Drawing.Point(3, 22);
+            this.dgwSoba.Location = new System.Drawing.Point(5, 34);
+            this.dgwSoba.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwSoba.Name = "dgwSoba";
             this.dgwSoba.ReadOnly = true;
+            this.dgwSoba.RowHeadersWidth = 62;
             this.dgwSoba.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwSoba.Size = new System.Drawing.Size(522, 345);
+            this.dgwSoba.Size = new System.Drawing.Size(870, 672);
             this.dgwSoba.TabIndex = 0;
             this.dgwSoba.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwSoba_MouseDoubleClick);
             // 
@@ -109,15 +116,18 @@ namespace SeminarskiRSII.WinUI.Soba
             // 
             this.Id.DataPropertyName = "Id";
             this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 8;
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             this.Id.Visible = false;
+            this.Id.Width = 150;
             // 
             // BrojSprata
             // 
             this.BrojSprata.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.BrojSprata.DataPropertyName = "BrojSprata";
             this.BrojSprata.HeaderText = "Broj Sprata";
+            this.BrojSprata.MinimumWidth = 8;
             this.BrojSprata.Name = "BrojSprata";
             this.BrojSprata.ReadOnly = true;
             // 
@@ -126,6 +136,7 @@ namespace SeminarskiRSII.WinUI.Soba
             this.BrojSobe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.BrojSobe.DataPropertyName = "BrojSobe";
             this.BrojSobe.HeaderText = "Broj Sobe";
+            this.BrojSobe.MinimumWidth = 8;
             this.BrojSobe.Name = "BrojSobe";
             this.BrojSobe.ReadOnly = true;
             // 
@@ -134,6 +145,7 @@ namespace SeminarskiRSII.WinUI.Soba
             this.OpisSobe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.OpisSobe.DataPropertyName = "OpisSobe";
             this.OpisSobe.HeaderText = "Opis Sobe";
+            this.OpisSobe.MinimumWidth = 8;
             this.OpisSobe.Name = "OpisSobe";
             this.OpisSobe.ReadOnly = true;
             // 
@@ -142,20 +154,23 @@ namespace SeminarskiRSII.WinUI.Soba
             this.SobaStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.SobaStatus.DataPropertyName = "SobaStatus";
             this.SobaStatus.HeaderText = "Soba Status";
+            this.SobaStatus.MinimumWidth = 8;
             this.SobaStatus.Name = "SobaStatus";
             this.SobaStatus.ReadOnly = true;
             this.SobaStatus.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // frmSobaPrikaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(555, 450);
+            this.ClientSize = new System.Drawing.Size(925, 865);
             this.Controls.Add(this.btnPrikazi);
             this.Controls.Add(this.txtPretraga);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmSobaPrikaz";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmSobaPrikaz";
             this.Load += new System.EventHandler(this.frmSobaPrikaz_Load);
             this.groupBox1.ResumeLayout(false);

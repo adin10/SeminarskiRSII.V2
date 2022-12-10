@@ -37,11 +37,13 @@ namespace SeminarskiRSII.WinUI.Novosti
             {
                 await _service.Update<Model.Models.Novosti>(_id, obavijest);
                 MessageBox.Show("Uspjesno ste izmijenili obavijest");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.Novosti>(obavijest);
                 MessageBox.Show("Uspjesno ste objavili vijest");
+                Close();
             }
         }
         private async Task loadAutore()

@@ -40,10 +40,11 @@ namespace SeminarskiRSII.WinUI.Notifikacije
             // btnPrikazi
             // 
             this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrikazi.Location = new System.Drawing.Point(482, 7);
+            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrikazi.Location = new System.Drawing.Point(803, 13);
+            this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(84, 34);
+            this.btnPrikazi.Size = new System.Drawing.Size(140, 65);
             this.btnPrikazi.TabIndex = 8;
             this.btnPrikazi.Text = "Prikazi";
             this.btnPrikazi.UseVisualStyleBackColor = false;
@@ -51,17 +52,20 @@ namespace SeminarskiRSII.WinUI.Notifikacije
             // 
             // txtNaslov
             // 
-            this.txtNaslov.Location = new System.Drawing.Point(13, 12);
+            this.txtNaslov.Location = new System.Drawing.Point(22, 23);
+            this.txtNaslov.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtNaslov.Name = "txtNaslov";
-            this.txtNaslov.Size = new System.Drawing.Size(432, 20);
+            this.txtNaslov.Size = new System.Drawing.Size(717, 31);
             this.txtNaslov.TabIndex = 7;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgwNotifikacije);
-            this.groupBox1.Location = new System.Drawing.Point(10, 47);
+            this.groupBox1.Location = new System.Drawing.Point(17, 90);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(559, 391);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBox1.Size = new System.Drawing.Size(932, 752);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Notifikacije";
@@ -70,20 +74,24 @@ namespace SeminarskiRSII.WinUI.Notifikacije
             // 
             this.dgwNotifikacije.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwNotifikacije.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgwNotifikacije.Location = new System.Drawing.Point(3, 16);
+            this.dgwNotifikacije.Location = new System.Drawing.Point(5, 30);
+            this.dgwNotifikacije.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwNotifikacije.Name = "dgwNotifikacije";
-            this.dgwNotifikacije.Size = new System.Drawing.Size(553, 372);
+            this.dgwNotifikacije.RowHeadersWidth = 62;
+            this.dgwNotifikacije.Size = new System.Drawing.Size(922, 716);
             this.dgwNotifikacije.TabIndex = 0;
             // 
             // frmNotifikacijePrikaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 450);
+            this.ClientSize = new System.Drawing.Size(972, 865);
             this.Controls.Add(this.btnPrikazi);
             this.Controls.Add(this.txtNaslov);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmNotifikacijePrikaz";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmNotifikacijePrikaz";
             this.Load += new System.EventHandler(this.frmNotifikacijePrikaz_Load);
             this.groupBox1.ResumeLayout(false);

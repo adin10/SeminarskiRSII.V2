@@ -51,11 +51,13 @@ namespace SeminarskiRSII.WinUI.Soba
                 soba.Slika = ImageHelper.FromImageToByte(pbSoba.Image);
                 await _service.Update<Model.Models.Soba>(_id, soba);
                 MessageBox.Show("Uspjesno ste uredili podatke ");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.Soba>(soba);
                 MessageBox.Show("Uspjesno ste dodali sobu ");
+                Close();
             }
         }
 

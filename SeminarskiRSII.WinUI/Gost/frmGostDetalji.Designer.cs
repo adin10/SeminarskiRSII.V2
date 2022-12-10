@@ -51,52 +51,58 @@ namespace SeminarskiRSII.WinUI.Gost
             // 
             // txtPotvrdiLozinku
             // 
-            this.txtPotvrdiLozinku.Location = new System.Drawing.Point(133, 395);
+            this.txtPotvrdiLozinku.Location = new System.Drawing.Point(222, 760);
+            this.txtPotvrdiLozinku.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtPotvrdiLozinku.Name = "txtPotvrdiLozinku";
-            this.txtPotvrdiLozinku.Size = new System.Drawing.Size(304, 20);
+            this.txtPotvrdiLozinku.Size = new System.Drawing.Size(504, 31);
             this.txtPotvrdiLozinku.TabIndex = 73;
             // 
             // txtLozinka
             // 
-            this.txtLozinka.Location = new System.Drawing.Point(134, 346);
+            this.txtLozinka.Location = new System.Drawing.Point(223, 665);
+            this.txtLozinka.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtLozinka.Name = "txtLozinka";
-            this.txtLozinka.Size = new System.Drawing.Size(304, 20);
+            this.txtLozinka.Size = new System.Drawing.Size(504, 31);
             this.txtLozinka.TabIndex = 72;
             // 
             // txtKorisnickoIme
             // 
-            this.txtKorisnickoIme.Location = new System.Drawing.Point(133, 299);
+            this.txtKorisnickoIme.Location = new System.Drawing.Point(222, 575);
+            this.txtKorisnickoIme.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtKorisnickoIme.Name = "txtKorisnickoIme";
-            this.txtKorisnickoIme.Size = new System.Drawing.Size(304, 20);
+            this.txtKorisnickoIme.Size = new System.Drawing.Size(504, 31);
             this.txtKorisnickoIme.TabIndex = 71;
             // 
             // labelPotvrdi
             // 
             this.labelPotvrdi.AutoSize = true;
-            this.labelPotvrdi.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPotvrdi.Location = new System.Drawing.Point(31, 395);
+            this.labelPotvrdi.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelPotvrdi.Location = new System.Drawing.Point(52, 760);
+            this.labelPotvrdi.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelPotvrdi.Name = "labelPotvrdi";
-            this.labelPotvrdi.Size = new System.Drawing.Size(100, 17);
+            this.labelPotvrdi.Size = new System.Drawing.Size(138, 25);
             this.labelPotvrdi.TabIndex = 70;
             this.labelPotvrdi.Text = "Potvrdi lozinku";
             // 
             // labelLozinka
             // 
             this.labelLozinka.AutoSize = true;
-            this.labelLozinka.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelLozinka.Location = new System.Drawing.Point(31, 349);
+            this.labelLozinka.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelLozinka.Location = new System.Drawing.Point(52, 671);
+            this.labelLozinka.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelLozinka.Name = "labelLozinka";
-            this.labelLozinka.Size = new System.Drawing.Size(57, 17);
+            this.labelLozinka.Size = new System.Drawing.Size(80, 25);
             this.labelLozinka.TabIndex = 69;
             this.labelLozinka.Text = "Lozinka";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(28, 299);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(47, 575);
+            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(99, 17);
+            this.label7.Size = new System.Drawing.Size(139, 25);
             this.label7.TabIndex = 68;
             this.label7.Text = "Korisnicko ime";
             // 
@@ -104,38 +110,42 @@ namespace SeminarskiRSII.WinUI.Gost
             // 
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(28, 9);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label6.Location = new System.Drawing.Point(47, 17);
+            this.label6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(183, 20);
+            this.label6.Size = new System.Drawing.Size(273, 29);
             this.label6.TabIndex = 67;
             this.label6.Text = "Unesite podatke o gostu";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(29, 249);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(48, 479);
+            this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 17);
+            this.label5.Size = new System.Drawing.Size(55, 25);
             this.label5.TabIndex = 66;
             this.label5.Text = "Grad";
             // 
             // cmbGradID
             // 
             this.cmbGradID.FormattingEnabled = true;
-            this.cmbGradID.Location = new System.Drawing.Point(134, 246);
+            this.cmbGradID.Location = new System.Drawing.Point(223, 473);
+            this.cmbGradID.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.cmbGradID.Name = "cmbGradID";
-            this.cmbGradID.Size = new System.Drawing.Size(304, 21);
+            this.cmbGradID.Size = new System.Drawing.Size(504, 33);
             this.cmbGradID.TabIndex = 65;
             // 
             // btnSnimi
             // 
             this.btnSnimi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSnimi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSnimi.Location = new System.Drawing.Point(362, 439);
+            this.btnSnimi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSnimi.Location = new System.Drawing.Point(603, 844);
+            this.btnSnimi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnSnimi.Name = "btnSnimi";
-            this.btnSnimi.Size = new System.Drawing.Size(75, 31);
+            this.btnSnimi.Size = new System.Drawing.Size(125, 60);
             this.btnSnimi.TabIndex = 64;
             this.btnSnimi.Text = "Snimi";
             this.btnSnimi.UseVisualStyleBackColor = false;
@@ -143,77 +153,85 @@ namespace SeminarskiRSII.WinUI.Gost
             // 
             // txtTelefon
             // 
-            this.txtTelefon.Location = new System.Drawing.Point(134, 198);
+            this.txtTelefon.Location = new System.Drawing.Point(223, 381);
+            this.txtTelefon.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtTelefon.Name = "txtTelefon";
-            this.txtTelefon.Size = new System.Drawing.Size(304, 20);
+            this.txtTelefon.Size = new System.Drawing.Size(504, 31);
             this.txtTelefon.TabIndex = 63;
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(134, 154);
+            this.txtEmail.Location = new System.Drawing.Point(223, 296);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(304, 20);
+            this.txtEmail.Size = new System.Drawing.Size(504, 31);
             this.txtEmail.TabIndex = 62;
             // 
             // txtPrezime
             // 
-            this.txtPrezime.Location = new System.Drawing.Point(134, 111);
+            this.txtPrezime.Location = new System.Drawing.Point(223, 213);
+            this.txtPrezime.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtPrezime.Name = "txtPrezime";
-            this.txtPrezime.Size = new System.Drawing.Size(304, 20);
+            this.txtPrezime.Size = new System.Drawing.Size(504, 31);
             this.txtPrezime.TabIndex = 61;
             // 
             // txtIme
             // 
-            this.txtIme.Location = new System.Drawing.Point(134, 63);
+            this.txtIme.Location = new System.Drawing.Point(223, 121);
+            this.txtIme.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtIme.Name = "txtIme";
-            this.txtIme.Size = new System.Drawing.Size(304, 20);
+            this.txtIme.Size = new System.Drawing.Size(504, 31);
             this.txtIme.TabIndex = 60;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(29, 198);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(48, 381);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(56, 17);
+            this.label4.Size = new System.Drawing.Size(78, 25);
             this.label4.TabIndex = 59;
             this.label4.Text = "Telefon";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(29, 157);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(48, 302);
+            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 17);
+            this.label3.Size = new System.Drawing.Size(60, 25);
             this.label3.TabIndex = 58;
             this.label3.Text = "Email";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(29, 111);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(48, 213);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 17);
+            this.label2.Size = new System.Drawing.Size(83, 25);
             this.label2.TabIndex = 57;
             this.label2.Text = "Prezime";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(29, 63);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(48, 121);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 17);
+            this.label1.Size = new System.Drawing.Size(44, 25);
             this.label1.TabIndex = 56;
             this.label1.Text = "Ime";
             // 
             // frmGostDetalji
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 499);
+            this.ClientSize = new System.Drawing.Size(773, 960);
             this.Controls.Add(this.txtPotvrdiLozinku);
             this.Controls.Add(this.txtLozinka);
             this.Controls.Add(this.txtKorisnickoIme);
@@ -232,7 +250,9 @@ namespace SeminarskiRSII.WinUI.Gost
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmGostDetalji";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmGostDetalji";
             this.Load += new System.EventHandler(this.frmGostDetalji_Load);
             this.ResumeLayout(false);

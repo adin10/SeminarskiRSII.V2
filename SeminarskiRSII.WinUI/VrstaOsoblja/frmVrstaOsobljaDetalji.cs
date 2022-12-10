@@ -32,11 +32,13 @@ namespace SeminarskiRSII.WinUI.VrstaOsoblja
             {
                 await _service.Update<Model.Models.VrstaOsoblja>(_id, o);
                 MessageBox.Show("Uspjesno ste promjenili vrstu osoblja");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.VrstaOsoblja>(o);
                 MessageBox.Show($"Uspjesno ste dodali {o.Pozicija} u vrstu osoblja");
+                Close();
             }
         }
 

@@ -44,11 +44,13 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
             {
                 await _service.Update<Model.Models.Cjenovnik>(_id, insert);
                 MessageBox.Show("Uspjesno ste uredili podatke");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.Cjenovnik>(insert);
                 MessageBox.Show("Uspjesno ste dodali cijenu ");
+                Close();
             }
         }
 

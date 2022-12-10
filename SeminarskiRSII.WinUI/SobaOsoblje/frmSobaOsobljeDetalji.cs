@@ -58,11 +58,13 @@ namespace SeminarskiRSII.WinUI.SobaOsoblje
             {
                 await _service.Update<Model.Models.SobaOsoblje>(_id, insert);
                 MessageBox.Show("Uspjesno ste uredili podatke");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.SobaOsoblje>(insert);
                 MessageBox.Show("Uspjesno ste dodjelili sobu uposleniku ");
+                Close();
             }
         }
 

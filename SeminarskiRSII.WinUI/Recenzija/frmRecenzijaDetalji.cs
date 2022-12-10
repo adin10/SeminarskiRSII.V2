@@ -59,11 +59,13 @@ namespace SeminarskiRSII.WinUI.Recenzija
             {
                 await _service.Update<Model.Models.Recenzija>(_id, recenzija);
                 MessageBox.Show("Uspjesno ste uredili podatke");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.Recenzija>(recenzija);
                 MessageBox.Show("Uspjesno ste dodali ocjenu i komentar");
+                Close();
             }
         }
 

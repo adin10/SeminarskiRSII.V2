@@ -57,12 +57,13 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             {
                 await _service.Update<Model.Models.Rezervacija>(_id, rezervacija);
                 MessageBox.Show("Uspjesno ste izmijenili podatke ");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.Rezervacija>(rezervacija);
                 MessageBox.Show("Uspjesno ste dodali rezervaciju ");
-
+                Close();
             }
         }
 

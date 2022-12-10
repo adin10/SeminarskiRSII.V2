@@ -32,11 +32,13 @@ namespace SeminarskiRSII.WinUI.SobaStatus
             {
                 await _service.Update<Model.Models.SobaStatus>(_id, sobaStatus);
                 MessageBox.Show("Uspjesno ste uredili podatke");
+                Close();
             }
             else
             {
                 await _service.Insert<Model.Models.SobaStatus>(sobaStatus);
                 MessageBox.Show("Uspjesno ste dodali status za sobu");
+                Close();
             }
         }
 

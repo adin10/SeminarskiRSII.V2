@@ -31,12 +31,14 @@ namespace SeminarskiRSII.WinUI.Drzava
             {
                 await _service.Update<Model.Models.Drzava>(_id, drzava);
                 MessageBox.Show("Uspjesno ste uredili podatke o drzavi ");
+                Close();
             }
 
             else
             {
                 await _service.Insert<Model.Models.Drzava>(drzava);
                 MessageBox.Show("Uspjesno ste dodali drzavu ");
+                Close();
             }
         }
 

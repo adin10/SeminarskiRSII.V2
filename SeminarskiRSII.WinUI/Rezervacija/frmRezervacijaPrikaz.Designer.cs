@@ -46,10 +46,11 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             // btnPrikazi
             // 
             this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrikazi.Location = new System.Drawing.Point(426, 56);
+            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrikazi.Location = new System.Drawing.Point(710, 108);
+            this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(84, 39);
+            this.btnPrikazi.Size = new System.Drawing.Size(140, 75);
             this.btnPrikazi.TabIndex = 15;
             this.btnPrikazi.Text = "Prikazi";
             this.btnPrikazi.UseVisualStyleBackColor = false;
@@ -57,30 +58,34 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             // 
             // txtPretraga
             // 
-            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPretraga.Location = new System.Drawing.Point(25, 65);
+            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPretraga.Location = new System.Drawing.Point(42, 125);
+            this.txtPretraga.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtPretraga.Name = "txtPretraga";
-            this.txtPretraga.Size = new System.Drawing.Size(367, 23);
+            this.txtPretraga.Size = new System.Drawing.Size(609, 30);
             this.txtPretraga.TabIndex = 14;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(21, 22);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(35, 42);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 20);
+            this.label1.Size = new System.Drawing.Size(191, 29);
             this.label1.TabIndex = 13;
             this.label1.Text = "Pretraga po sobi";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgwRezervacije);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(22, 110);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.Location = new System.Drawing.Point(37, 212);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(491, 280);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBox1.Size = new System.Drawing.Size(818, 538);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lista rezervacija";
@@ -97,11 +102,13 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             this.DatumRezervacije,
             this.ZavrsetakRezervacije});
             this.dgwRezervacije.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgwRezervacije.Location = new System.Drawing.Point(3, 22);
+            this.dgwRezervacije.Location = new System.Drawing.Point(5, 34);
+            this.dgwRezervacije.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwRezervacije.Name = "dgwRezervacije";
             this.dgwRezervacije.ReadOnly = true;
+            this.dgwRezervacije.RowHeadersWidth = 62;
             this.dgwRezervacije.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwRezervacije.Size = new System.Drawing.Size(485, 255);
+            this.dgwRezervacije.Size = new System.Drawing.Size(808, 498);
             this.dgwRezervacije.TabIndex = 0;
             this.dgwRezervacije.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwRezervacije_MouseDoubleClick);
             // 
@@ -109,15 +116,18 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             // 
             this.Id.DataPropertyName = "Id";
             this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 8;
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             this.Id.Visible = false;
+            this.Id.Width = 150;
             // 
             // Gost
             // 
             this.Gost.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Gost.DataPropertyName = "Gost";
             this.Gost.HeaderText = "Gost";
+            this.Gost.MinimumWidth = 8;
             this.Gost.Name = "Gost";
             this.Gost.ReadOnly = true;
             // 
@@ -126,6 +136,7 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             this.Soba.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Soba.DataPropertyName = "Soba";
             this.Soba.HeaderText = "Soba";
+            this.Soba.MinimumWidth = 8;
             this.Soba.Name = "Soba";
             this.Soba.ReadOnly = true;
             // 
@@ -134,6 +145,7 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             this.DatumRezervacije.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.DatumRezervacije.DataPropertyName = "DatumRezervacije";
             this.DatumRezervacije.HeaderText = "Datum Rezervacije";
+            this.DatumRezervacije.MinimumWidth = 8;
             this.DatumRezervacije.Name = "DatumRezervacije";
             this.DatumRezervacije.ReadOnly = true;
             // 
@@ -142,19 +154,22 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             this.ZavrsetakRezervacije.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.ZavrsetakRezervacije.DataPropertyName = "ZavrsetakRezervacije";
             this.ZavrsetakRezervacije.HeaderText = "Zavrsetak Rezervacije";
+            this.ZavrsetakRezervacije.MinimumWidth = 8;
             this.ZavrsetakRezervacije.Name = "ZavrsetakRezervacije";
             this.ZavrsetakRezervacije.ReadOnly = true;
             // 
             // frmRezervacijaPrikaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 398);
+            this.ClientSize = new System.Drawing.Size(873, 765);
             this.Controls.Add(this.btnPrikazi);
             this.Controls.Add(this.txtPretraga);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmRezervacijaPrikaz";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRezervacijaPrikaz";
             this.Load += new System.EventHandler(this.frmRezervacijaPrikaz_Load);
             this.groupBox1.ResumeLayout(false);
