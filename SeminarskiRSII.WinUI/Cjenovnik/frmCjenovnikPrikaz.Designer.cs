@@ -35,6 +35,7 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
             this.Soba = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BrojDana = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cijena = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwCjenovnik)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +63,8 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
             this.Id,
             this.Soba,
             this.BrojDana,
-            this.Cijena});
+            this.Cijena,
+            this.Obrisi});
             this.dgwCjenovnik.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwCjenovnik.Location = new System.Drawing.Point(5, 34);
             this.dgwCjenovnik.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -111,6 +113,16 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
             this.Cijena.Name = "Cijena";
             this.Cijena.ReadOnly = true;
             // 
+            // Obrisi
+            // 
+            this.Obrisi.HeaderText = "Obrisi";
+            this.Obrisi.MinimumWidth = 8;
+            this.Obrisi.Name = "Obrisi";
+            this.Obrisi.ReadOnly = true;
+            this.Obrisi.Text = "Obrisi";
+            this.Obrisi.UseColumnTextForButtonValue = true;
+            this.Obrisi.Width = 150;
+            // 
             // frmCjenovnikPrikaz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -132,9 +144,10 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgwCjenovnik;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Soba;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BrojDana;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cijena;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn Soba;
+        private DataGridViewTextBoxColumn BrojDana;
+        private DataGridViewTextBoxColumn Cijena;
+        private DataGridViewButtonColumn Obrisi;
     }
 }

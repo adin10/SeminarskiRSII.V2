@@ -39,6 +39,7 @@ namespace SeminarskiRSII.WinUI.Soba
             this.BrojSobe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OpisSobe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SobaStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwSoba)).BeginInit();
             this.SuspendLayout();
@@ -100,7 +101,8 @@ namespace SeminarskiRSII.WinUI.Soba
             this.BrojSprata,
             this.BrojSobe,
             this.OpisSobe,
-            this.SobaStatus});
+            this.SobaStatus,
+            this.Obrisi});
             this.dgwSoba.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwSoba.Location = new System.Drawing.Point(5, 34);
             this.dgwSoba.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -159,6 +161,16 @@ namespace SeminarskiRSII.WinUI.Soba
             this.SobaStatus.ReadOnly = true;
             this.SobaStatus.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
+            // Obrisi
+            // 
+            this.Obrisi.HeaderText = "Obrisi";
+            this.Obrisi.MinimumWidth = 8;
+            this.Obrisi.Name = "Obrisi";
+            this.Obrisi.ReadOnly = true;
+            this.Obrisi.Text = "Obrisi";
+            this.Obrisi.UseColumnTextForButtonValue = true;
+            this.Obrisi.Width = 150;
+            // 
             // frmSobaPrikaz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -187,10 +199,11 @@ namespace SeminarskiRSII.WinUI.Soba
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgwSoba;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BrojSprata;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BrojSobe;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OpisSobe;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SobaStatus;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn BrojSprata;
+        private DataGridViewTextBoxColumn BrojSobe;
+        private DataGridViewTextBoxColumn OpisSobe;
+        private DataGridViewTextBoxColumn SobaStatus;
+        private DataGridViewButtonColumn Obrisi;
     }
 }

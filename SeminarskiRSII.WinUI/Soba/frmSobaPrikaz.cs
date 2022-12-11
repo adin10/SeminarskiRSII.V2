@@ -45,15 +45,39 @@ namespace SeminarskiRSII.WinUI.Soba
 
         private async void frmSobaPrikaz_Load(object sender, EventArgs e)
         {
+            await LoadSobe();
+        }
+
+        public async Task LoadSobe()
+        {
             var result = await _service.get<List<Model.Models.Soba>>(null);
             dgwSoba.DataSource = result;
         }
 
-        private void dgwSoba_MouseDoubleClick(object sender, MouseEventArgs e)
+        private async void dgwSoba_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var id = dgwSoba.SelectedRows[0].Cells[0].Value;
-            frmSobaDodaj frm = new frmSobaDodaj(int.Parse(id.ToString()));
-            frm.ShowDialog();
+            var soba = await _service.getByID<Model.Models.Soba>(id);
+            if(dgwSoba.CurrentCell is DataGridViewButtonCell && soba != null)
+            {
+                var messageBoxConfirmation = MessageBox.Show($"Da li ste sigurni da želite da izbrišete sobu '{soba.BrojSobe}'", "Form closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (messageBoxConfirmation == DialogResult.No)
+                {
+                    await LoadSobe();
+                }
+                else if (messageBoxConfirmation == DialogResult.Yes)
+                {
+                    await _service.Delete<Model.Models.Soba>(soba.Id);
+                    await LoadSobe();
+                }
+            }
+            else
+            {
+                frmSobaDodaj frm = new frmSobaDodaj(int.Parse(id.ToString()));
+                frm.ShowDialog();
+                await LoadSobe();
+            }
+
         }
     }
 }

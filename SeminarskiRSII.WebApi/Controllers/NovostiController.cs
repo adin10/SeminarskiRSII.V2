@@ -46,6 +46,12 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(await _service.Update(id, update));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Novosti>> Delete(int id)
+        {
+            return Ok(await _service.Delete(id));
+        }
     }
 
     //[AllowAnonymous]

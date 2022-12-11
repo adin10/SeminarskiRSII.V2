@@ -21,15 +21,38 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
 
         private async void frmCjenovnikPrikaz_Load(object sender, EventArgs e)
         {
+            await LoadCijene();
+        }
+
+        public async Task LoadCijene()
+        {
             var list = await _Service.get<List<Model.Models.Cjenovnik>>(null);
             dgwCjenovnik.DataSource = list;
         }
 
-        private void dgwCjenovnik_MouseDoubleClick(object sender, MouseEventArgs e)
+        private async void dgwCjenovnik_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var id = dgwCjenovnik.SelectedRows[0].Cells[0].Value;
-            frmCjenovnikDetalji frm = new frmCjenovnikDetalji(int.Parse(id.ToString()));
-            frm.ShowDialog();
+            var cijena = await _Service.getByID<Model.Models.Cjenovnik>(id);
+            if(dgwCjenovnik.CurrentCell is DataGridViewButtonCell && cijena != null)
+            {
+                var messageBoxConfirmation = MessageBox.Show($"Da li ste sigurni da želite da izbrišete cijenu", "Form closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (messageBoxConfirmation == DialogResult.No)
+                {
+                    await LoadCijene();
+                }
+                else if (messageBoxConfirmation == DialogResult.Yes)
+                {
+                    await _Service.Delete<Model.Models.Cjenovnik>(cijena.Id);
+                    await LoadCijene();
+                }
+            }
+            else
+            {
+                frmCjenovnikDetalji frm = new frmCjenovnikDetalji(int.Parse(id.ToString()));
+                frm.ShowDialog();
+                await LoadCijene();
+            }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

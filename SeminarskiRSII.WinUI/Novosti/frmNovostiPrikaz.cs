@@ -20,7 +20,6 @@ namespace SeminarskiRSII.WinUI.Novosti
             dgwNovosti.AutoGenerateColumns = false;
         }
 
-
         private async void btnPrikazi_Click(object sender, EventArgs e)
         {
             var search = new NovostiSearchRequest
@@ -34,15 +33,37 @@ namespace SeminarskiRSII.WinUI.Novosti
 
         private async void frmNovostiPrikaz_Load(object sender, EventArgs e)
         {
+            await LoadNovosti();
+        }
+
+        public async Task LoadNovosti()
+        {
             var result = await _service.get<List<Model.Models.Novosti>>(null);
             dgwNovosti.DataSource = result;
         }
-
-        private void dgwNovosti_MouseDoubleClick(object sender, MouseEventArgs e)
+        private async void dgwNovosti_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var id = dgwNovosti.SelectedRows[0].Cells[0].Value;
-            frmNovostiDodaj frm = new frmNovostiDodaj(int.Parse(id.ToString()));
-            frm.ShowDialog();
+            var novost = await _service.getByID<Model.Models.Novosti>(id);
+            if(dgwNovosti.CurrentCell is DataGridViewButtonCell && novost != null)
+            {
+                var messageBoxConfirmation = MessageBox.Show($"Da li ste sigurni da želite da izbrišete novost '{novost.Naslov}'", "Form closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (messageBoxConfirmation == DialogResult.No)
+                {
+                    await LoadNovosti();
+                }
+                else if (messageBoxConfirmation == DialogResult.Yes)
+                {
+                    await _service.Delete<Model.Models.Soba>(novost.Id);
+                    await LoadNovosti();
+                }
+            }
+            else
+            {
+                frmNovostiDodaj frm = new frmNovostiDodaj(int.Parse(id.ToString()));
+                frm.ShowDialog();
+                await LoadNovosti();
+            }
         }
     }
 }

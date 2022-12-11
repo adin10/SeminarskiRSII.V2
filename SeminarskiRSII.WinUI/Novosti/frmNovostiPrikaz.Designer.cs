@@ -31,14 +31,15 @@ namespace SeminarskiRSII.WinUI.Novosti
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgwNovosti = new System.Windows.Forms.DataGridView();
+            this.btnPrikazi = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtPretraga = new System.Windows.Forms.TextBox();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Naslov = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sadrzaj = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DatumObavijesti = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NapisaoObjavu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnPrikazi = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtPretraga = new System.Windows.Forms.TextBox();
+            this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwNovosti)).BeginInit();
             this.SuspendLayout();
@@ -66,7 +67,8 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.Naslov,
             this.Sadrzaj,
             this.DatumObavijesti,
-            this.NapisaoObjavu});
+            this.NapisaoObjavu,
+            this.Obrisi});
             this.dgwNovosti.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwNovosti.Location = new System.Drawing.Point(5, 34);
             this.dgwNovosti.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -77,6 +79,40 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.dgwNovosti.Size = new System.Drawing.Size(913, 639);
             this.dgwNovosti.TabIndex = 0;
             this.dgwNovosti.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwNovosti_MouseDoubleClick);
+            // 
+            // btnPrikazi
+            // 
+            this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrikazi.Location = new System.Drawing.Point(792, 73);
+            this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.btnPrikazi.Name = "btnPrikazi";
+            this.btnPrikazi.Size = new System.Drawing.Size(133, 77);
+            this.btnPrikazi.TabIndex = 14;
+            this.btnPrikazi.Text = "Prikazi";
+            this.btnPrikazi.UseVisualStyleBackColor = false;
+            this.btnPrikazi.Click += new System.EventHandler(this.btnPrikazi_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(20, 17);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 29);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Pretraga";
+            // 
+            // txtPretraga
+            // 
+            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPretraga.Location = new System.Drawing.Point(20, 92);
+            this.txtPretraga.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.txtPretraga.Name = "txtPretraga";
+            this.txtPretraga.Size = new System.Drawing.Size(726, 30);
+            this.txtPretraga.TabIndex = 12;
             // 
             // ID
             // 
@@ -124,39 +160,15 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.NapisaoObjavu.Name = "NapisaoObjavu";
             this.NapisaoObjavu.ReadOnly = true;
             // 
-            // btnPrikazi
+            // Obrisi
             // 
-            this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPrikazi.Location = new System.Drawing.Point(792, 73);
-            this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(133, 77);
-            this.btnPrikazi.TabIndex = 14;
-            this.btnPrikazi.Text = "Prikazi";
-            this.btnPrikazi.UseVisualStyleBackColor = false;
-            this.btnPrikazi.Click += new System.EventHandler(this.btnPrikazi_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(20, 17);
-            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 29);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Pretraga";
-            // 
-            // txtPretraga
-            // 
-            this.txtPretraga.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtPretraga.Location = new System.Drawing.Point(20, 92);
-            this.txtPretraga.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.txtPretraga.Name = "txtPretraga";
-            this.txtPretraga.Size = new System.Drawing.Size(726, 30);
-            this.txtPretraga.TabIndex = 12;
+            this.Obrisi.HeaderText = "Obrisi";
+            this.Obrisi.MinimumWidth = 8;
+            this.Obrisi.Name = "Obrisi";
+            this.Obrisi.ReadOnly = true;
+            this.Obrisi.Text = "Obrisi";
+            this.Obrisi.UseColumnTextForButtonValue = true;
+            this.Obrisi.Width = 150;
             // 
             // frmNovostiPrikaz
             // 
@@ -183,13 +195,14 @@ namespace SeminarskiRSII.WinUI.Novosti
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgwNovosti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Naslov;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sadrzaj;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DatumObavijesti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NapisaoObjavu;
         private System.Windows.Forms.Button btnPrikazi;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPretraga;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn Naslov;
+        private DataGridViewTextBoxColumn Sadrzaj;
+        private DataGridViewTextBoxColumn DatumObavijesti;
+        private DataGridViewTextBoxColumn NapisaoObjavu;
+        private DataGridViewButtonColumn Obrisi;
     }
 }

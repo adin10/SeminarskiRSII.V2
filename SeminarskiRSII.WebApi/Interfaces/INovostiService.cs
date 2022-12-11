@@ -13,5 +13,6 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<Novosti> Get(int ID);
         public Task<Novosti> Insert(NovostiInsertRequest insert);
         public Task<Novosti> Update(int ID, NovostiInsertRequest update);
+        public Task<Novosti> Delete(int id);
     }
 }
