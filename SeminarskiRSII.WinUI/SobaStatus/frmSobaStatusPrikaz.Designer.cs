@@ -68,6 +68,7 @@ namespace SeminarskiRSII.WinUI.SobaStatus
             this.dgwSobaStatus.Name = "dgwSobaStatus";
             this.dgwSobaStatus.ReadOnly = true;
             this.dgwSobaStatus.RowHeadersWidth = 62;
+            this.dgwSobaStatus.RowTemplate.Height = 45;
             this.dgwSobaStatus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwSobaStatus.Size = new System.Drawing.Size(827, 754);
             this.dgwSobaStatus.TabIndex = 0;

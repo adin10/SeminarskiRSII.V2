@@ -34,7 +34,7 @@ namespace SeminarskiRSII.WinUI.SobaStatus
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSnimi
@@ -90,17 +90,17 @@ namespace SeminarskiRSII.WinUI.SobaStatus
             this.label2.TabIndex = 19;
             this.label2.Text = "Status";
             // 
-            // label1
+            // labelStatus
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(72, 63);
-            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(145, 29);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Dodaj status";
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelStatus.Location = new System.Drawing.Point(72, 63);
+            this.labelStatus.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(145, 29);
+            this.labelStatus.TabIndex = 18;
+            this.labelStatus.Text = "Dodaj status";
             // 
             // frmSobaStatusDetalji
             // 
@@ -112,7 +112,7 @@ namespace SeminarskiRSII.WinUI.SobaStatus
             this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelStatus);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmSobaStatusDetalji";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -130,6 +130,6 @@ namespace SeminarskiRSII.WinUI.SobaStatus
         private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelStatus;
     }
 }

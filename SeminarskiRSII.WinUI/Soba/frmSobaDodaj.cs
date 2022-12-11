@@ -77,6 +77,7 @@ namespace SeminarskiRSII.WinUI.Soba
             await loadSobaStatus();
             if (_id.HasValue)
             {
+                labelSobaName.Text = "Uredi podatke o sobi";
                 var s = await _service.getByID<Model.Models.Soba>(_id);
                 txtBrojSobe.Text = s.BrojSobe.ToString();
                 txtBrojSprata.Text = s.BrojSprata.ToString();

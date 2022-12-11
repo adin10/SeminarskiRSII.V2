@@ -49,7 +49,6 @@ namespace SeminarskiRSII.WebApi.Services
                 query = query.Where(x => x.Gost.KorisnickoIme.Contains(search.KorisnickoIme));
             }
             var list =await query.ToListAsync();
-            //var list = _context.Rezervacija.Include(r => r.Gost).Include(r => r.Soba).ToList();
             return _mapper.Map<List<Model.Models.Rezervacija>>(list);
         }
 

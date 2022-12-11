@@ -61,6 +61,7 @@ namespace SeminarskiRSII.WinUI.Novosti
             await loadAutore();
             if (_id.HasValue)
             {
+                labelNovostiName.Text = "Uredi obavijest";
                 var novosti = await _service.getByID<Model.Models.Novosti>(_id);
                 txtNaslov.Text = novosti.Naslov;
                 txtSadrzaj.Text = novosti.Sadrzaj;

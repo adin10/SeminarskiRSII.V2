@@ -38,7 +38,7 @@ namespace SeminarskiRSII.WinUI.Soba
             this.txtInformacije = new System.Windows.Forms.TextBox();
             this.txtBrojSprata = new System.Windows.Forms.TextBox();
             this.txtBrojSobe = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelSobaName = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -137,17 +137,17 @@ namespace SeminarskiRSII.WinUI.Soba
             this.txtBrojSobe.TabIndex = 41;
             this.txtBrojSobe.Validating += new System.ComponentModel.CancelEventHandler(this.txtBrojSobe_Validating);
             // 
-            // label4
+            // labelSobaName
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(47, 46);
-            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(136, 29);
-            this.label4.TabIndex = 40;
-            this.label4.Text = "Dodaj sobu";
+            this.labelSobaName.AutoSize = true;
+            this.labelSobaName.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelSobaName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelSobaName.Location = new System.Drawing.Point(47, 46);
+            this.labelSobaName.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelSobaName.Name = "labelSobaName";
+            this.labelSobaName.Size = new System.Drawing.Size(136, 29);
+            this.labelSobaName.TabIndex = 40;
+            this.labelSobaName.Text = "Dodaj sobu";
             // 
             // label3
             // 
@@ -245,7 +245,7 @@ namespace SeminarskiRSII.WinUI.Soba
             this.Controls.Add(this.txtInformacije);
             this.Controls.Add(this.txtBrojSprata);
             this.Controls.Add(this.txtBrojSobe);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.labelSobaName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -271,7 +271,7 @@ namespace SeminarskiRSII.WinUI.Soba
         private System.Windows.Forms.TextBox txtInformacije;
         private System.Windows.Forms.TextBox txtBrojSprata;
         private System.Windows.Forms.TextBox txtBrojSobe;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelSobaName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

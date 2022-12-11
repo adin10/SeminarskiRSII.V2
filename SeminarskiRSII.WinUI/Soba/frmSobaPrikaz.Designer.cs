@@ -39,6 +39,7 @@ namespace SeminarskiRSII.WinUI.Soba
             this.BrojSobe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OpisSobe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SobaStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Slika = new System.Windows.Forms.DataGridViewImageColumn();
             this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwSoba)).BeginInit();
@@ -102,6 +103,7 @@ namespace SeminarskiRSII.WinUI.Soba
             this.BrojSobe,
             this.OpisSobe,
             this.SobaStatus,
+            this.Slika,
             this.Obrisi});
             this.dgwSoba.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwSoba.Location = new System.Drawing.Point(5, 34);
@@ -109,6 +111,7 @@ namespace SeminarskiRSII.WinUI.Soba
             this.dgwSoba.Name = "dgwSoba";
             this.dgwSoba.ReadOnly = true;
             this.dgwSoba.RowHeadersWidth = 62;
+            this.dgwSoba.RowTemplate.Height = 45;
             this.dgwSoba.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwSoba.Size = new System.Drawing.Size(870, 672);
             this.dgwSoba.TabIndex = 0;
@@ -161,6 +164,16 @@ namespace SeminarskiRSII.WinUI.Soba
             this.SobaStatus.ReadOnly = true;
             this.SobaStatus.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
+            // Slika
+            // 
+            this.Slika.DataPropertyName = "Slika";
+            this.Slika.HeaderText = "Slika";
+            this.Slika.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.Slika.MinimumWidth = 8;
+            this.Slika.Name = "Slika";
+            this.Slika.ReadOnly = true;
+            this.Slika.Width = 150;
+            // 
             // Obrisi
             // 
             this.Obrisi.HeaderText = "Obrisi";
@@ -204,6 +217,7 @@ namespace SeminarskiRSII.WinUI.Soba
         private DataGridViewTextBoxColumn BrojSobe;
         private DataGridViewTextBoxColumn OpisSobe;
         private DataGridViewTextBoxColumn SobaStatus;
+        private DataGridViewImageColumn Slika;
         private DataGridViewButtonColumn Obrisi;
     }
 }

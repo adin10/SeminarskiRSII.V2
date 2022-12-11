@@ -105,6 +105,7 @@ namespace SeminarskiRSII.WinUI.Grad
             this.dgwGradovi.Name = "dgwGradovi";
             this.dgwGradovi.ReadOnly = true;
             this.dgwGradovi.RowHeadersWidth = 62;
+            this.dgwGradovi.RowTemplate.Height = 45;
             this.dgwGradovi.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwGradovi.Size = new System.Drawing.Size(818, 648);
             this.dgwGradovi.TabIndex = 0;

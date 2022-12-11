@@ -66,6 +66,7 @@ namespace SeminarskiRSII.WinUI.VrstaOsoblja
             this.dgwVrstaOsoblja.Name = "dgwVrstaOsoblja";
             this.dgwVrstaOsoblja.ReadOnly = true;
             this.dgwVrstaOsoblja.RowHeadersWidth = 62;
+            this.dgwVrstaOsoblja.RowTemplate.Height = 45;
             this.dgwVrstaOsoblja.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwVrstaOsoblja.Size = new System.Drawing.Size(740, 603);
             this.dgwVrstaOsoblja.TabIndex = 0;

@@ -140,6 +140,7 @@ namespace SeminarskiRSII.WinUI.Osoblje
             this.dgwOsoblje.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dgwOsoblje.Name = "dgwOsoblje";
             this.dgwOsoblje.RowHeadersWidth = 62;
+            this.dgwOsoblje.RowTemplate.Height = 45;
             this.dgwOsoblje.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwOsoblje.Size = new System.Drawing.Size(1072, 623);
             this.dgwOsoblje.TabIndex = 0;

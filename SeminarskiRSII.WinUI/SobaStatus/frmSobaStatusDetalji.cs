@@ -46,6 +46,7 @@ namespace SeminarskiRSII.WinUI.SobaStatus
         {
             if (_id.HasValue)
             {
+                labelStatus.Text = "Uredi status";
                 var sobaStatus = await _service.getByID<Model.Models.SobaStatus>(_id);
                 txtStatus.Text = sobaStatus.Status;
                 txtOpis.Text = sobaStatus.Opis;

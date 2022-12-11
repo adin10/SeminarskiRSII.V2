@@ -71,6 +71,7 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
             this.dgwCjenovnik.Name = "dgwCjenovnik";
             this.dgwCjenovnik.ReadOnly = true;
             this.dgwCjenovnik.RowHeadersWidth = 62;
+            this.dgwCjenovnik.RowTemplate.Height = 45;
             this.dgwCjenovnik.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwCjenovnik.Size = new System.Drawing.Size(1085, 706);
             this.dgwCjenovnik.TabIndex = 0;

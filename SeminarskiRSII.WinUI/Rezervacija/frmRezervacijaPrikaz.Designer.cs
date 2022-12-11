@@ -107,6 +107,7 @@ namespace SeminarskiRSII.WinUI.Rezervacija
             this.dgwRezervacije.Name = "dgwRezervacije";
             this.dgwRezervacije.ReadOnly = true;
             this.dgwRezervacije.RowHeadersWidth = 62;
+            this.dgwRezervacije.RowTemplate.Height = 45;
             this.dgwRezervacije.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwRezervacije.Size = new System.Drawing.Size(808, 498);
             this.dgwRezervacije.TabIndex = 0;

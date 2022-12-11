@@ -145,6 +145,7 @@ namespace SeminarskiRSII.WinUI.Gost
             this.dgwGosti.Name = "dgwGosti";
             this.dgwGosti.ReadOnly = true;
             this.dgwGosti.RowHeadersWidth = 62;
+            this.dgwGosti.RowTemplate.Height = 45;
             this.dgwGosti.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwGosti.Size = new System.Drawing.Size(1075, 609);
             this.dgwGosti.TabIndex = 0;

@@ -46,9 +46,9 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.label2.Location = new System.Drawing.Point(62, 79);
             this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(228, 29);
+            this.label2.Size = new System.Drawing.Size(277, 29);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Unesite novu drzavu";
+            this.label2.Text = "Unesite podatke o drzavi";
             // 
             // btnSnimi
             // 

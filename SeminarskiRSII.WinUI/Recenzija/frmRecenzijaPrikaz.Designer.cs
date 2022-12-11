@@ -107,6 +107,7 @@ namespace SeminarskiRSII.WinUI.Recenzija
             this.dgwRecenzija.Name = "dgwRecenzija";
             this.dgwRecenzija.ReadOnly = true;
             this.dgwRecenzija.RowHeadersWidth = 62;
+            this.dgwRecenzija.RowTemplate.Height = 45;
             this.dgwRecenzija.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwRecenzija.Size = new System.Drawing.Size(963, 648);
             this.dgwRecenzija.TabIndex = 0;

@@ -101,6 +101,7 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.dgwDrzave.Name = "dgwDrzave";
             this.dgwDrzave.ReadOnly = true;
             this.dgwDrzave.RowHeadersWidth = 62;
+            this.dgwDrzave.RowTemplate.Height = 45;
             this.dgwDrzave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwDrzave.Size = new System.Drawing.Size(680, 615);
             this.dgwDrzave.TabIndex = 0;

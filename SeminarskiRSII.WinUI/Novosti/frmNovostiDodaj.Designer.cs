@@ -37,7 +37,7 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelNovostiName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -124,17 +124,17 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.label3.TabIndex = 33;
             this.label3.Text = "Sadrzaj";
             // 
-            // label2
+            // labelNovostiName
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(47, 42);
-            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(179, 29);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Dodaj obavijest";
+            this.labelNovostiName.AutoSize = true;
+            this.labelNovostiName.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelNovostiName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelNovostiName.Location = new System.Drawing.Point(47, 42);
+            this.labelNovostiName.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNovostiName.Name = "labelNovostiName";
+            this.labelNovostiName.Size = new System.Drawing.Size(179, 29);
+            this.labelNovostiName.TabIndex = 32;
+            this.labelNovostiName.Text = "Dodaj obavijest";
             // 
             // label1
             // 
@@ -160,7 +160,7 @@ namespace SeminarskiRSII.WinUI.Novosti
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelNovostiName);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "frmNovostiDodaj";
@@ -182,7 +182,7 @@ namespace SeminarskiRSII.WinUI.Novosti
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelNovostiName;
         private System.Windows.Forms.Label label1;
     }
 }

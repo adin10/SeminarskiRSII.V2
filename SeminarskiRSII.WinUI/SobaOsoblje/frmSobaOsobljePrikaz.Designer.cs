@@ -66,6 +66,7 @@ namespace SeminarskiRSII.WinUI.SobaOsoblje
             this.dgwSobaOsoblje.Name = "dgwSobaOsoblje";
             this.dgwSobaOsoblje.ReadOnly = true;
             this.dgwSobaOsoblje.RowHeadersWidth = 62;
+            this.dgwSobaOsoblje.RowTemplate.Height = 45;
             this.dgwSobaOsoblje.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwSobaOsoblje.Size = new System.Drawing.Size(858, 731);
             this.dgwSobaOsoblje.TabIndex = 0;
