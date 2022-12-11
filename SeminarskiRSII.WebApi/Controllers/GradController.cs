@@ -35,11 +35,17 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(await _gradService.Insert(request));
         }
-
+        
         [HttpPut("{id}")]
         public async Task<ActionResult<Grad>> Update(int id, GradInsertRequest request)
         {
             return Ok(await _gradService.Update(id, request));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Grad>> Delete(int id)
+        {
+            return Ok(await _gradService.Delete(id));
         }
     }
 }

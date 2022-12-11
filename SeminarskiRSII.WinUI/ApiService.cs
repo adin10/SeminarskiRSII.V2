@@ -175,7 +175,7 @@ namespace SeminarskiRSII.WinUI
             {
                 if (ex.Call.Response.ResponseMessage.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    MessageBox.Show("Niste authentificirani");
+                    MessageBox.Show("Pogresan Username ili Password");
                 }
                 throw;
             }

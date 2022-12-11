@@ -43,6 +43,8 @@ namespace SeminarskiRSII.WinUI.Osoblje
             this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Telefon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KorisnickoIme = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Slika = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwOsoblje)).BeginInit();
             this.SuspendLayout();
@@ -134,7 +136,9 @@ namespace SeminarskiRSII.WinUI.Osoblje
             this.Prezime,
             this.Email,
             this.Telefon,
-            this.KorisnickoIme});
+            this.KorisnickoIme,
+            this.Slika,
+            this.Obrisi});
             this.dgwOsoblje.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwOsoblje.Location = new System.Drawing.Point(5, 31);
             this.dgwOsoblje.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -195,6 +199,24 @@ namespace SeminarskiRSII.WinUI.Osoblje
             this.KorisnickoIme.MinimumWidth = 8;
             this.KorisnickoIme.Name = "KorisnickoIme";
             // 
+            // Slika
+            // 
+            this.Slika.DataPropertyName = "Slika";
+            this.Slika.HeaderText = "Slika";
+            this.Slika.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.Slika.MinimumWidth = 8;
+            this.Slika.Name = "Slika";
+            this.Slika.Width = 150;
+            // 
+            // Obrisi
+            // 
+            this.Obrisi.HeaderText = "Obrisi";
+            this.Obrisi.MinimumWidth = 8;
+            this.Obrisi.Name = "Obrisi";
+            this.Obrisi.Text = "Obrisi";
+            this.Obrisi.UseColumnTextForButtonValue = true;
+            this.Obrisi.Width = 150;
+            // 
             // frmOsobljePrikaz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -229,11 +251,13 @@ namespace SeminarskiRSII.WinUI.Osoblje
         private System.Windows.Forms.TextBox txtPretraga;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgwOsoblje;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Prezime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Telefon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn KorisnickoIme;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn Ime;
+        private DataGridViewTextBoxColumn Prezime;
+        private DataGridViewTextBoxColumn Email;
+        private DataGridViewTextBoxColumn Telefon;
+        private DataGridViewTextBoxColumn KorisnickoIme;
+        private DataGridViewImageColumn Slika;
+        private DataGridViewButtonColumn Obrisi;
     }
 }

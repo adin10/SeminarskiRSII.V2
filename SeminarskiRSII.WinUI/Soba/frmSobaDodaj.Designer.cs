@@ -74,7 +74,6 @@ namespace SeminarskiRSII.WinUI.Soba
             this.pbSoba.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbSoba.TabIndex = 47;
             this.pbSoba.TabStop = false;
-            this.pbSoba.Click += new System.EventHandler(this.pbSoba_Click);
             this.pbSoba.Validating += new System.ComponentModel.CancelEventHandler(this.pbSoba_Validating);
             // 
             // btnUcitajSobu

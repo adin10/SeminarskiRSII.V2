@@ -9,5 +9,6 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<Drzava> Get(int id);
         public Task<Drzava> Insert(DrzavaInsertRequest request);
         public Task<Drzava> Update(int id, DrzavaInsertRequest requets);
+        public Task<Drzava> Delete(int id);
     }
 }

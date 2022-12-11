@@ -38,6 +38,7 @@ namespace SeminarskiRSII.WinUI.Grad
             this.NazivGrada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PostanskiBroj = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Drzava = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwGradovi)).BeginInit();
             this.SuspendLayout();
@@ -98,7 +99,8 @@ namespace SeminarskiRSII.WinUI.Grad
             this.GradID,
             this.NazivGrada,
             this.PostanskiBroj,
-            this.Drzava});
+            this.Drzava,
+            this.Obrisi});
             this.dgwGradovi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwGradovi.Location = new System.Drawing.Point(5, 31);
             this.dgwGradovi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -148,6 +150,16 @@ namespace SeminarskiRSII.WinUI.Grad
             this.Drzava.Name = "Drzava";
             this.Drzava.ReadOnly = true;
             // 
+            // Obrisi
+            // 
+            this.Obrisi.HeaderText = "Obrisi";
+            this.Obrisi.MinimumWidth = 8;
+            this.Obrisi.Name = "Obrisi";
+            this.Obrisi.ReadOnly = true;
+            this.Obrisi.Text = "Obrisi";
+            this.Obrisi.UseColumnTextForButtonValue = true;
+            this.Obrisi.Width = 150;
+            // 
             // frmGradPrikaz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -176,9 +188,10 @@ namespace SeminarskiRSII.WinUI.Grad
         private System.Windows.Forms.Button btnPrikaz;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgwGradovi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GradID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NazivGrada;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PostanskiBroj;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Drzava;
+        private DataGridViewTextBoxColumn GradID;
+        private DataGridViewTextBoxColumn NazivGrada;
+        private DataGridViewTextBoxColumn PostanskiBroj;
+        private DataGridViewTextBoxColumn Drzava;
+        private DataGridViewButtonColumn Obrisi;
     }
 }

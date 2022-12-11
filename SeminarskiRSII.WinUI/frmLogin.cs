@@ -23,11 +23,6 @@ namespace SeminarskiRSII.WinUI
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private async void btnSnimi_Click(object sender, EventArgs e)
         {
             try
@@ -55,16 +50,6 @@ namespace SeminarskiRSII.WinUI
                     MessageBox.Show("Niste pokrenuli API!");
                 }
             }
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmLogin_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -77,7 +77,7 @@ namespace SeminarskiRSII.WinUI.Soba
             await loadSobaStatus();
             if (_id.HasValue)
             {
-                labelSobaName.Text = "Uredi podatke o sobi";
+                labelSobaName.Text = "Uredite podatke sobe";
                 var s = await _service.getByID<Model.Models.Soba>(_id);
                 txtBrojSobe.Text = s.BrojSobe.ToString();
                 txtBrojSprata.Text = s.BrojSprata.ToString();
@@ -85,11 +85,6 @@ namespace SeminarskiRSII.WinUI.Soba
                 cmbStatusID.SelectedValue = s.SobaStatusId;
                 pbSoba.Image = Helper.ImageHelper.FromByteToImage(s.Slika);
             }
-        }
-
-        private void pbSoba_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void txtBrojSobe_Validating(object sender, CancelEventArgs e)

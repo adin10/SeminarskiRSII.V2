@@ -48,7 +48,7 @@ namespace SeminarskiRSII.WinUI.Osoblje
                     else
                     {
                         await _service.Insert<Model.Models.Osoblje>(osoblje);
-                        MessageBox.Show($"Uspjesno ste dodali zaposlenika {osoblje.Ime} {osoblje.Prezime}");
+                        MessageBox.Show($"Uspjesno ste dodali uposlenika {osoblje.Ime} {osoblje.Prezime}");
                         Close();
                     }
                 }

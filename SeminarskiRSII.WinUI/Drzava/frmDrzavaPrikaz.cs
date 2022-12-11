@@ -1,4 +1,5 @@
-﻿using SeminarskiRSII.Model.Requests;
+﻿using SeminarskiRSII.Model.Models;
+using SeminarskiRSII.Model.Requests;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,15 +34,38 @@ namespace SeminarskiRSII.WinUI.Drzava
 
         private async void frmDrzavaPrikaz_Load(object sender, EventArgs e)
         {
+            await LoadDrzave();
+        }
+
+        public async Task LoadDrzave()
+        {
             var result = await _service.get<List<Model.Models.Drzava>>(null);
             dgwDrzave.DataSource = result;
         }
 
-        private void dgwDrzave_MouseDoubleClick(object sender, MouseEventArgs e)
+        private async void dgwDrzave_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var id = dgwDrzave.SelectedRows[0].Cells[0].Value;  // na koju smo drzavu uradili dupli klik
-            frmDodajDrzavu frm = new frmDodajDrzavu(int.Parse(id.ToString()));  // Ako odaberemo neku drzavu otidji u formu za dodavanje novog korisnika
-            frm.ShowDialog();
+            var id = dgwDrzave.SelectedRows[0].Cells[0].Value;
+            var drzava = await _service.getByID<Model.Models.Drzava>(id);
+            if(dgwDrzave.CurrentCell is DataGridViewButtonCell && drzava != null)
+            {
+                var messageBoxConfirmation = MessageBox.Show($"Da li ste sigurni da želite da izbrišete drzavu '{drzava.Naziv}'", "Form closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (messageBoxConfirmation == DialogResult.No)
+                {
+                    await LoadDrzave();
+                }
+                else if (messageBoxConfirmation == DialogResult.Yes)
+                {
+                    await _service.Delete<Model.Models.SobaStatus>(drzava.Id);
+                    await LoadDrzave();
+                }
+            }
+            else
+            {
+                frmDodajDrzavu frm = new frmDodajDrzavu(int.Parse(id.ToString()));
+                frm.ShowDialog();
+                await LoadDrzave();
+            }
         }
     }
 }

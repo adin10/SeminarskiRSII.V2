@@ -9,5 +9,6 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<Grad> Get(int id);
         public Task<Grad> Insert(GradInsertRequest request);
         public Task<Grad> Update(int id, GradInsertRequest update);
+        public Task<Grad> Delete(int id);
     }
 }

@@ -143,9 +143,9 @@ namespace SeminarskiRSII.WinUI.Osoblje
             this.label6.Location = new System.Drawing.Point(38, 17);
             this.label6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(334, 29);
+            this.label6.Size = new System.Drawing.Size(331, 29);
             this.label6.TabIndex = 73;
-            this.label6.Text = "Unesite podatke o uposlenom";
+            this.label6.Text = "Unesite podatke o uposleniku";
             // 
             // btnSnimi
             // 

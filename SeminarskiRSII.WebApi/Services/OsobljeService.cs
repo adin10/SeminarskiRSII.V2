@@ -149,5 +149,13 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Osoblje>(entity);
         }
+
+        public async Task<Model.Models.Osoblje> Delete(int id)
+        {
+            var entity = await _context.Osoblje.FindAsync(id);
+            _context.Osoblje.Remove(entity);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<Model.Models.Osoblje>(entity);
+        }
     }
 }

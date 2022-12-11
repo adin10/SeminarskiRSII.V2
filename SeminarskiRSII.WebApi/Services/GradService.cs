@@ -56,5 +56,13 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Grad>(entity);
         }
+
+        public async Task<Model.Models.Grad> Delete(int id)
+        {
+            var entity = await _context.Grad.FirstOrDefaultAsync(x=>x.Id == id);
+            _context.Grad.Remove(entity);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<Model.Models.Grad>(entity);
+        }
     }
 }

@@ -32,15 +32,38 @@ namespace SeminarskiRSII.WinUI.Grad
 
         private async void frmGradPrikaz_Load(object sender, EventArgs e)
         {
+            await LoadGradovi();
+        }
+
+        public async Task LoadGradovi()
+        {
             var list = await _service.get<List<Model.Models.Grad>>(null);
             dgwGradovi.DataSource = list;
         }
 
-        private void dgwGradovi_MouseDoubleClick(object sender, MouseEventArgs e)
+        private async void dgwGradovi_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var id = dgwGradovi.SelectedRows[0].Cells[0].Value;
-            frmGradDetalji frm = new frmGradDetalji(int.Parse(id.ToString()));
-            frm.ShowDialog();
+            var grad = await _service.getByID<Model.Models.Grad>(id);
+            if(dgwGradovi.CurrentCell is DataGridViewButtonCell && grad != null)
+            {
+                var messageBoxConfirmation = MessageBox.Show($"Da li ste sigurni da želite da izbrišete grad '{grad.NazivGrada}'", "Form closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (messageBoxConfirmation == DialogResult.No)
+                {
+                    await LoadGradovi();
+                }
+                else if (messageBoxConfirmation == DialogResult.Yes)
+                {
+                    await _service.Delete<Model.Models.SobaStatus>(grad.Id);
+                    await LoadGradovi();
+                }
+            }
+            else
+            {
+                frmGradDetalji frm = new frmGradDetalji(int.Parse(id.ToString()));
+                frm.ShowDialog();
+                await LoadGradovi();
+            }
         }
     }
 }

@@ -47,7 +47,6 @@ namespace SeminarskiRSII.WinUI
             this.label2.Size = new System.Drawing.Size(139, 25);
             this.label2.TabIndex = 1;
             this.label2.Text = "Korisnicko ime";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -114,7 +113,6 @@ namespace SeminarskiRSII.WinUI
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmLogin";
-            this.Load += new System.EventHandler(this.frmLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

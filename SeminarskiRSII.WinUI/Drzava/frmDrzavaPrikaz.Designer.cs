@@ -36,6 +36,7 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.dgwDrzave = new System.Windows.Forms.DataGridView();
             this.DrzavaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwDrzave)).BeginInit();
             this.SuspendLayout();
@@ -94,7 +95,8 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.dgwDrzave.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwDrzave.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DrzavaID,
-            this.Naziv});
+            this.Naziv,
+            this.Obrisi});
             this.dgwDrzave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwDrzave.Location = new System.Drawing.Point(5, 31);
             this.dgwDrzave.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -126,6 +128,16 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.Naziv.Name = "Naziv";
             this.Naziv.ReadOnly = true;
             // 
+            // Obrisi
+            // 
+            this.Obrisi.HeaderText = "Obrisi";
+            this.Obrisi.MinimumWidth = 8;
+            this.Obrisi.Name = "Obrisi";
+            this.Obrisi.ReadOnly = true;
+            this.Obrisi.Text = "Obrisi";
+            this.Obrisi.UseColumnTextForButtonValue = true;
+            this.Obrisi.Width = 150;
+            // 
             // frmDrzavaPrikaz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -154,7 +166,8 @@ namespace SeminarskiRSII.WinUI.Drzava
         private System.Windows.Forms.Button btnPrikazi;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgwDrzave;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DrzavaID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Naziv;
+        private DataGridViewTextBoxColumn DrzavaID;
+        private DataGridViewTextBoxColumn Naziv;
+        private DataGridViewButtonColumn Obrisi;
     }
 }
