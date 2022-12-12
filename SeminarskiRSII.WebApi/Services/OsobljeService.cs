@@ -64,15 +64,15 @@ namespace SeminarskiRSII.WebApi.Services
 
             if (!string.IsNullOrWhiteSpace(search?.ime))
             {
-                query = query.Where(o => o.Ime.Contains(search.ime));
+                query = query.Where(o => o.Ime.ToLower().Contains(search.ime.ToLower()));
             }
             if (!string.IsNullOrWhiteSpace(search?.prezime))
             {
-                query = query.Where(o => o.Prezime.Contains(search.prezime));
+                query = query.Where(o => o.Prezime.ToLower().Contains(search.prezime.ToLower()));
             }
             if (!string.IsNullOrWhiteSpace(search?.korisnickoIme))
             {
-                query = query.Where(l => l.KorisnickoIme.Contains(search.korisnickoIme));
+                query = query.Where(l => l.KorisnickoIme.ToLower().Contains(search.korisnickoIme.ToLower()));
             }
 
             var list = await query.ToListAsync();

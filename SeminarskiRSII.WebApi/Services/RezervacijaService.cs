@@ -46,7 +46,7 @@ namespace SeminarskiRSII.WebApi.Services
             }
             if (!string.IsNullOrWhiteSpace(search?.KorisnickoIme))
             {
-                query = query.Where(x => x.Gost.KorisnickoIme.Contains(search.KorisnickoIme));
+                query = query.Where(x => x.Gost.KorisnickoIme.ToLower().Contains(search.KorisnickoIme.ToLower()));
             }
             var list =await query.ToListAsync();
             return _mapper.Map<List<Model.Models.Rezervacija>>(list);
