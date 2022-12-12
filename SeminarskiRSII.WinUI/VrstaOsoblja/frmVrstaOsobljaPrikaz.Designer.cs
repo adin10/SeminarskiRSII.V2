@@ -34,6 +34,7 @@ namespace SeminarskiRSII.WinUI.VrstaOsoblja
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Pozicija = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Zaduzenja = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwVrstaOsoblja)).BeginInit();
             this.SuspendLayout();
@@ -59,7 +60,8 @@ namespace SeminarskiRSII.WinUI.VrstaOsoblja
             this.dgwVrstaOsoblja.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
             this.Pozicija,
-            this.Zaduzenja});
+            this.Zaduzenja,
+            this.Obrisi});
             this.dgwVrstaOsoblja.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwVrstaOsoblja.Location = new System.Drawing.Point(5, 31);
             this.dgwVrstaOsoblja.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -100,6 +102,16 @@ namespace SeminarskiRSII.WinUI.VrstaOsoblja
             this.Zaduzenja.Name = "Zaduzenja";
             this.Zaduzenja.ReadOnly = true;
             // 
+            // Obrisi
+            // 
+            this.Obrisi.HeaderText = "Obrisi";
+            this.Obrisi.MinimumWidth = 8;
+            this.Obrisi.Name = "Obrisi";
+            this.Obrisi.ReadOnly = true;
+            this.Obrisi.Text = "Obrisi";
+            this.Obrisi.UseColumnTextForButtonValue = true;
+            this.Obrisi.Width = 150;
+            // 
             // frmVrstaOsobljaPrikaz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -121,8 +133,9 @@ namespace SeminarskiRSII.WinUI.VrstaOsoblja
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgwVrstaOsoblja;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Pozicija;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Zaduzenja;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn Pozicija;
+        private DataGridViewTextBoxColumn Zaduzenja;
+        private DataGridViewButtonColumn Obrisi;
     }
 }

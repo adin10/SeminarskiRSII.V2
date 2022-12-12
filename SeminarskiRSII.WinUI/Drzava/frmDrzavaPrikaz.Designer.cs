@@ -66,10 +66,10 @@ namespace SeminarskiRSII.WinUI.Drzava
             // 
             this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPrikazi.Location = new System.Drawing.Point(573, 85);
+            this.btnPrikazi.Location = new System.Drawing.Point(573, 91);
             this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(133, 69);
+            this.btnPrikazi.Size = new System.Drawing.Size(134, 51);
             this.btnPrikazi.TabIndex = 13;
             this.btnPrikazi.Text = "Prikazi";
             this.btnPrikazi.UseVisualStyleBackColor = false;
@@ -79,11 +79,11 @@ namespace SeminarskiRSII.WinUI.Drzava
             // 
             this.groupBox1.Controls.Add(this.dgwDrzave);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox1.Location = new System.Drawing.Point(22, 188);
+            this.groupBox1.Location = new System.Drawing.Point(42, 178);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.groupBox1.Size = new System.Drawing.Size(690, 652);
+            this.groupBox1.Size = new System.Drawing.Size(670, 662);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lista drzava";
@@ -105,7 +105,7 @@ namespace SeminarskiRSII.WinUI.Drzava
             this.dgwDrzave.RowHeadersWidth = 62;
             this.dgwDrzave.RowTemplate.Height = 45;
             this.dgwDrzave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwDrzave.Size = new System.Drawing.Size(680, 615);
+            this.dgwDrzave.Size = new System.Drawing.Size(660, 625);
             this.dgwDrzave.TabIndex = 0;
             this.dgwDrzave.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgwDrzave_MouseDoubleClick);
             // 

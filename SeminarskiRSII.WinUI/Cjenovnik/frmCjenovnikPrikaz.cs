@@ -54,10 +54,5 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
                 await LoadCijene();
             }
         }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }

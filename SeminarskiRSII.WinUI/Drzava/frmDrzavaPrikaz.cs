@@ -27,9 +27,9 @@ namespace SeminarskiRSII.WinUI.Drzava
             {
                 naziv = txtPretraga.Text
             };
-            var result = await _service.get<List<Model.Models.Drzava>>(search);  // Uzimamo listu drzava sa apija
+            var result = await _service.get<List<Model.Models.Drzava>>(search);
 
-            dgwDrzave.DataSource = result;       // Dodjeljujemo data grid viewu drzave sa apija
+            dgwDrzave.DataSource = result;
         }
 
         private async void frmDrzavaPrikaz_Load(object sender, EventArgs e)

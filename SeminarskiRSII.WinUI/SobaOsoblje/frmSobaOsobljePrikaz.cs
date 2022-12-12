@@ -21,15 +21,38 @@ namespace SeminarskiRSII.WinUI.SobaOsoblje
 
         private async void frmSobaOsobljePrikaz_Load(object sender, EventArgs e)
         {
+            await loadSobaOsoblje();
+        }
+
+        public async Task loadSobaOsoblje()
+        {
             var list = await _service.get<List<Model.Models.SobaOsoblje>>(null);
             dgwSobaOsoblje.DataSource = list;
         }
 
-        private void dgwSobaOsoblje_MouseDoubleClick(object sender, MouseEventArgs e)
+        private async void dgwSobaOsoblje_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var id = dgwSobaOsoblje.SelectedRows[0].Cells[0].Value;
-            frmSobaOsobljeDetalji frm = new frmSobaOsobljeDetalji(int.Parse(id.ToString()));
-            frm.ShowDialog();
+            var sobaOsoblje = await _service.getByID<Model.Models.SobaOsoblje>(id);
+            if(dgwSobaOsoblje.CurrentCell is DataGridViewButtonCell && sobaOsoblje != null)
+            {
+                var messageBoxConfirmation = MessageBox.Show($"Da li ste sigurni da želite izbrisati uposlenikovo zaduzenje '{sobaOsoblje.Osoblje.Ime} {sobaOsoblje.Osoblje.Prezime}'", "Form closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (messageBoxConfirmation == DialogResult.No)
+                {
+                    await loadSobaOsoblje();
+                }
+                else if (messageBoxConfirmation == DialogResult.Yes)
+                {
+                    await _service.Delete<Model.Models.SobaStatus>(sobaOsoblje.Id);
+                    await loadSobaOsoblje();
+                }
+            }
+            else
+            {
+                frmSobaOsobljeDetalji frm = new frmSobaOsobljeDetalji(int.Parse(id.ToString()));
+                frm.ShowDialog();
+                await loadSobaOsoblje();
+            }
         }
     }
 }

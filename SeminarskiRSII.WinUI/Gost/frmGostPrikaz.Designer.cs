@@ -44,6 +44,7 @@ namespace SeminarskiRSII.WinUI.Gost
             this.Telefon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Grad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KorisnickoIme = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Obrisi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwGosti)).BeginInit();
             this.SuspendLayout();
@@ -104,10 +105,10 @@ namespace SeminarskiRSII.WinUI.Gost
             // 
             this.btnPrikazi.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPrikazi.Location = new System.Drawing.Point(950, 106);
+            this.btnPrikazi.Location = new System.Drawing.Point(950, 115);
             this.btnPrikazi.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(150, 81);
+            this.btnPrikazi.Size = new System.Drawing.Size(150, 56);
             this.btnPrikazi.TabIndex = 22;
             this.btnPrikazi.Text = "Prikazi";
             this.btnPrikazi.UseVisualStyleBackColor = false;
@@ -138,7 +139,8 @@ namespace SeminarskiRSII.WinUI.Gost
             this.Email,
             this.Telefon,
             this.Grad,
-            this.KorisnickoIme});
+            this.KorisnickoIme,
+            this.Obrisi});
             this.dgwGosti.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwGosti.Location = new System.Drawing.Point(5, 31);
             this.dgwGosti.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -215,6 +217,16 @@ namespace SeminarskiRSII.WinUI.Gost
             this.KorisnickoIme.Name = "KorisnickoIme";
             this.KorisnickoIme.ReadOnly = true;
             // 
+            // Obrisi
+            // 
+            this.Obrisi.HeaderText = "Obrisi";
+            this.Obrisi.MinimumWidth = 8;
+            this.Obrisi.Name = "Obrisi";
+            this.Obrisi.ReadOnly = true;
+            this.Obrisi.Text = "Obrisi";
+            this.Obrisi.UseColumnTextForButtonValue = true;
+            this.Obrisi.Width = 150;
+            // 
             // frmGostPrikaz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -249,12 +261,13 @@ namespace SeminarskiRSII.WinUI.Gost
         private System.Windows.Forms.Button btnPrikazi;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgwGosti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Prezime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Telefon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Grad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn KorisnickoIme;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn Ime;
+        private DataGridViewTextBoxColumn Prezime;
+        private DataGridViewTextBoxColumn Email;
+        private DataGridViewTextBoxColumn Telefon;
+        private DataGridViewTextBoxColumn Grad;
+        private DataGridViewTextBoxColumn KorisnickoIme;
+        private DataGridViewButtonColumn Obrisi;
     }
 }

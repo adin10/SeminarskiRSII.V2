@@ -22,26 +22,49 @@ namespace SeminarskiRSII.WinUI.Gost
 
         private async void btnPrikazi_Click(object sender, EventArgs e)
         {
-            var search = new GostiSearchRequest()   // Ovo sluzi za pretragu gostiju po imenu i prezimenu
+            var search = new GostiSearchRequest()
             {
                 ime = txtPretraga.Text,
                 prezime = txtPrezime.Text
             };
-            var result = await _service.get<List<Model.Models.Gost>>(search);      // Dovaljamo sve goste sa api servisa                           
-            dgwGosti.DataSource = result;                                   // data grid view popunjavamo sa dobavljenom listom
+            var result = await _service.get<List<Model.Models.Gost>>(search);
+            dgwGosti.DataSource = result;
         }
 
         private async void frmGostPrikaz_Load(object sender, EventArgs e)
+        {
+            await LoadGosti();
+        }
+
+        public async Task LoadGosti()
         {
             var lista = await _service.get<List<Model.Models.Gost>>(null);
             dgwGosti.DataSource = lista;
         }
 
-        private void dgwGosti_MouseDoubleClick(object sender, MouseEventArgs e)
+        private async void dgwGosti_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var id = dgwGosti.SelectedRows[0].Cells[0].Value;                    // Uzimamo gosta na kojeg smo izvrsili dupli klik
-            frmGostDetalji frm = new frmGostDetalji(int.Parse(id.ToString()));   // Otvaramo formu gostDetalji kojoj proslijedjujemo gosta
-            frm.ShowDialog();
+            var id = dgwGosti.SelectedRows[0].Cells[0].Value;
+            var gost = await _service.getByID<Model.Models.Gost>(id);
+            if(dgwGosti.CurrentCell is DataGridViewButtonCell && gost != null)
+            {
+                var messageBoxConfirmation = MessageBox.Show($"Da li ste sigurni da želite da izbrišete gosta '{gost.Ime} {gost.Prezime}'", "Form closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (messageBoxConfirmation == DialogResult.No)
+                {
+                    await LoadGosti();
+                }
+                else if (messageBoxConfirmation == DialogResult.Yes)
+                {
+                    await _service.Delete<Model.Models.SobaStatus>(gost.Id);
+                    await LoadGosti();
+                }
+            }
+            else
+            {
+                frmGostDetalji frm = new frmGostDetalji(int.Parse(id.ToString()));
+                frm.ShowDialog();
+                await LoadGosti();
+            }
         }
     }
 }

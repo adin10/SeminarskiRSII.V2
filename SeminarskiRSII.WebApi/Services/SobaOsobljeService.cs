@@ -37,7 +37,7 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.SobaOsoblje> Get(int id)
         {
-            var entity = await _context.SobaOsoblje.FindAsync(id);
+            var entity = await _context.SobaOsoblje.Include(s=>s.Soba).Include(s=>s.Osoblje).FirstOrDefaultAsync(x=>x.Id == id);
             return _mapper.Map<Model.Models.SobaOsoblje>(entity);
         }
 
