@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SeminarskiRSII.WebApi.Interfaces;
+using Microsoft.ML.Trainers;
+using Microsoft.ML;
+using SeminarskiRSII.Model.ML;
 
 namespace SeminarskiRSII.WebApi.Services
 {
@@ -71,7 +74,6 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Soba>(entity);
         }
-
     }
     //public class SobaService : BaseCRUDService<Model.Soba, SobaSearchRequest,Database.Soba, SobaInsertRequest, SobaInsertRequest>
     //{

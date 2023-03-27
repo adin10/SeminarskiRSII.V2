@@ -36,7 +36,7 @@ namespace SeminarskiRSII.WinUI.Izvjestaji
         private async void frmSobeIzvjestaj_Load(object sender, EventArgs e)
         {
             var list = await _service.get<List<Model.Models.Soba>>(null);
-            list.Insert(0, new Model.Models.Soba());
+            //list.Insert(0, new Model.Models.Soba());
             cbSobe.DataSource = list;
             cbSobe.DisplayMember = "BrojSobe";
             cbSobe.ValueMember = "Id";

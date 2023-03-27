@@ -51,5 +51,12 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(await _service.Delete(id));
         }
+
+        [HttpGet("{gostID}/recommended")]
+        public List<Rezervacija> Recommended(int gostID)
+        {
+            return _service.Recommend(gostID);
+        }
+
     }
 }

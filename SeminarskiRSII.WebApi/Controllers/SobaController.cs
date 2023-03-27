@@ -22,6 +22,7 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             _service = service;
         }
+
         [HttpGet]
         public async Task<ActionResult<List<Soba>>> GetList([FromQuery] SobaSearchRequest search)
         {
