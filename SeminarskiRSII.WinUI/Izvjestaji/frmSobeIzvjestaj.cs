@@ -18,11 +18,6 @@ namespace SeminarskiRSII.WinUI.Izvjestaji
             InitializeComponent();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnOdaberi_Click(object sender, EventArgs e)
         {
             var tap = cbSobe.SelectedValue.ToString();

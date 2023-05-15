@@ -81,11 +81,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles(); // Za sliku
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Images")),
-    RequestPath = new PathString("/Images")
-});
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Images")),
+//    RequestPath = new PathString("/Images")
+//});
 
 app.UseHttpsRedirection();
 
