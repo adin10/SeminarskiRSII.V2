@@ -119,6 +119,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -243,9 +244,9 @@ class HomePage extends StatelessWidget {
                               ])),
                           child: InkWell(
                             onTap: () {
-                                  Navigator.pushNamed(context, SobeScreen.sobeRouteName);
-                              // login(context, usernameController.text,
-                              //     passwordController.text);
+                                  // Navigator.pushNamed(context, SobeScreen.sobeRouteName);
+                              login(context, usernameController.text,
+                                  passwordController.text);
                             },
                             child: Center(child: Text("Login")),
                           ),
@@ -260,64 +261,137 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Future<GetUserResponse> login(
-      BuildContext context, String username, String password) async {
-    try {
-      final ioc = new HttpClient();
+//   Future<GetUserResponse> login(
+//       BuildContext context, String username, String password) async {
+//     try {
+//       final ioc = new HttpClient();
+//       ioc.badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//       final http = new IOClient(ioc);
+
+//       final response = await http.post(
+//           Uri.parse("${BaseProvider.baseUrl}/Login/authenticate"),
+//           headers: {'Content-Type': 'application/json'},
+//           body: jsonEncode({"Username": username, "Password": password}));
+
+//       if (response.statusCode == 401) {
+//         throw Exception('Invalid credentials');
+//       }
+//       if (response.statusCode != 200) {
+//         throw Exception('Failed to login');
+//       }
+//       // final finalData = GetUserResponse.fromJson(response.body);
+//       final finalData = GetUserResponse.fromJson(jsonDecode(response.body));
+//       TokenGetter.token = finalData.token;
+//       Navigator.pushNamed(context, SobeScreen.sobeRouteName,
+//           arguments: finalData);
+//       return finalData;
+//     } catch (e) {
+//       showDialog(
+//           context: context,
+//           builder: (BuildContext context) => AlertDialog(
+//                 title: Text("Error"),
+//                 content: Text(e.toString()),
+//                 actions: [
+//                   TextButton(
+//                     child: Text("Ok"),
+//                     onPressed: () => Navigator.pop(context),
+//                   )
+//                 ],
+//               ));
+//       return new Future<GetUserResponse>.value(
+//           new GetUserResponse(username: '', token: ''));
+//     }
+//   }
+// }
+
+// class GetUserResponse {
+//   final String username;
+//   final String token;
+
+//   GetUserResponse({required this.username, required this.token});
+
+//   factory GetUserResponse.fromJson(Map<String, dynamic> json) {
+//     return GetUserResponse(
+//       username: json['username'],
+//       token: json['token'],
+//     );
+//   }
+// }
+
+// class TokenGetter {
+//   static String token = "";
+// }
+
+
+
+Future<GetUserResponse> login(
+  BuildContext context, String username, String password) async {
+  try {
+          final ioc = new HttpClient();
       ioc.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
       final http = new IOClient(ioc);
+    final usernameAndPassword = '$username:$password';
+    final basicAuth = 'Basic ' + base64Encode(utf8.encode(usernameAndPassword));
 
-      final response = await http.post(
-          Uri.parse("${BaseProvider.baseUrl}/Login/authenticate"),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({"Username": username, "Password": password}));
+    final response = await http.post(
+        Uri.parse("${BaseProvider.baseUrl}/Login/authenticate"),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({"Username": username, "Password": password})
+        );
 
-      if (response.statusCode == 401) {
-        throw Exception('Invalid credentials');
-      }
-      if (response.statusCode != 200) {
-        throw Exception('Failed to login');
-      }
-      // final finalData = GetUserResponse.fromJson(response.body);
-      final finalData = GetUserResponse.fromJson(jsonDecode(response.body));
-      TokenGetter.token = finalData.token;
-      Navigator.pushNamed(context, SobeScreen.sobeRouteName,
-          arguments: finalData);
-      return finalData;
-    } catch (e) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                title: Text("Error"),
-                content: Text(e.toString()),
-                actions: [
-                  TextButton(
-                    child: Text("Ok"),
-                    onPressed: () => Navigator.pop(context),
-                  )
-                ],
-              ));
-      return new Future<GetUserResponse>.value(
-          new GetUserResponse(username: '', token: ''));
+    if (response.statusCode == 401) {
+      throw Exception('Invalid credentials');
     }
+    if (response.statusCode != 200) {
+      throw Exception('Wrong username or password');
+    }
+
+    final finalData = GetUserResponse.fromJson(jsonDecode(response.body));
+    Navigator.pushNamed(context, SobeScreen.sobeRouteName, arguments: finalData);
+    return finalData;
+  } catch (e) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text("Error"),
+        content: Text(e.toString()),
+        actions: [
+          TextButton(
+            child: Text("Ok"),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      ),
+    );
+    return GetUserResponse( email: '', ime: '', korisnickoIme: '', prezime: '', telefon: '');
+  }
   }
 }
 
 class GetUserResponse {
-  final String username;
-  final String token;
+  // final Int id;
+  // final String username;
+  final String ime;
+  final String korisnickoIme;
+  final String prezime;
+  final String email;
+  final String telefon;
 
-  GetUserResponse({required this.username, required this.token});
+
+  
+
+
+  GetUserResponse({required this.email, required this.ime, required this.korisnickoIme, required this.prezime, required this.telefon});
 
   factory GetUserResponse.fromJson(Map<String, dynamic> json) {
     return GetUserResponse(
-      username: json['username'],
-      token: json['token'],
+      email: json['email'],
+      ime: json['ime'],
+      korisnickoIme: json['korisnickoIme'],
+      prezime: json['prezime'],
+      telefon: json['telefon'],
     );
   }
-}
-
-class TokenGetter {
-  static String token = "";
 }
