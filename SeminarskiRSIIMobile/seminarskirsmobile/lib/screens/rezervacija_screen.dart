@@ -819,7 +819,6 @@
 
 
 import 'dart:io';
-
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -828,7 +827,6 @@ import 'package:intl/intl.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
 import 'dart:convert';
-
 import '../providers/base_provider.dart';
 
 class RezervacijScreen extends StatefulWidget {
@@ -968,6 +966,24 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       // Prikazati poruku o grešci ili poduzeti odgovarajuće radnje
       return;
     }
+     if (zavrsetakRezervacije!.isBefore(datumRezervacije!)) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Greška'),
+          content: Text('Završetak rezervacije ne može biti prije datuma rezervacije.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('U redu'),
+            ),
+          ],
+        );
+      },
+    );
+    return;
+  }
 
     // Izradite svoj HTTP zahtjev s podacima iz forme
     final request = RezervacijaInsertRequest(
