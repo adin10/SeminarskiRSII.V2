@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SeminarskiRSII.Model.Requests
+﻿namespace SeminarskiRSII.Model.Requests
 {
     public class RezervacijaInsertRequest
     {

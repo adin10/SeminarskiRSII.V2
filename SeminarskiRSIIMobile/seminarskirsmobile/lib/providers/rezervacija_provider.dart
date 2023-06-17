@@ -18,7 +18,7 @@ class RezervacijaProvider with ChangeNotifier {
       throw Exception("Token not found");
     }
 
-    var url = Uri.parse("${BaseProvider.baseUrl}/Soba");
+    var url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
     
     var response = await http!.get(url, 
     // headers: {

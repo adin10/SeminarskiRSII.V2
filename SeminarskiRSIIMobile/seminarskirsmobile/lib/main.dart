@@ -121,6 +121,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
+// import 'dart:js';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
@@ -144,16 +145,19 @@ import 'package:provider/provider.dart';
 // import 'package:stranivarimobile/screens/schools/event_schools_list_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:seminarskirsmobile/providers/novosti_provider.dart';
+import 'package:seminarskirsmobile/providers/rezervacija_provider.dart';
 import 'package:seminarskirsmobile/providers/sobe_provider.dart';
 import 'package:seminarskirsmobile/providers/base_provider.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
+import 'package:seminarskirsmobile/screens/rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
 // import 'package:stranivarimobile/screens/volunteers/school_volunteers_screen.dart';
 
 void main() => runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SobaProvider()),
-        ChangeNotifierProvider(create: (_) => NovostiProvider())
+        ChangeNotifierProvider(create: (_) => NovostiProvider()),
+        ChangeNotifierProvider(create: (_) => RezervacijaProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
@@ -161,6 +165,7 @@ void main() => runApp(MultiProvider(
         routes: {
           SobeScreen.sobeRouteName: (context) => SobeScreen(),
           NovostiScreen.novostiRouteName: (context) => NovostiScreen(),
+          RezervacijScreen.dodajRezervacijuRouteName: (context) => RezervacijScreen(),
         },
         onGenerateRoute: (settings) {},
       ),
@@ -194,7 +199,6 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 30,
-                        fontFamily: 'NothingYouCouldDo-Regular',
                         fontWeight: FontWeight.bold),
                   )),
                 ),
