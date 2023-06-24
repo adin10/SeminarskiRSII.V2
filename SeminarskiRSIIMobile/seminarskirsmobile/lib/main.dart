@@ -265,70 +265,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-//   Future<GetUserResponse> login(
-//       BuildContext context, String username, String password) async {
-//     try {
-//       final ioc = new HttpClient();
-//       ioc.badCertificateCallback =
-//           (X509Certificate cert, String host, int port) => true;
-//       final http = new IOClient(ioc);
-
-//       final response = await http.post(
-//           Uri.parse("${BaseProvider.baseUrl}/Login/authenticate"),
-//           headers: {'Content-Type': 'application/json'},
-//           body: jsonEncode({"Username": username, "Password": password}));
-
-//       if (response.statusCode == 401) {
-//         throw Exception('Invalid credentials');
-//       }
-//       if (response.statusCode != 200) {
-//         throw Exception('Failed to login');
-//       }
-//       // final finalData = GetUserResponse.fromJson(response.body);
-//       final finalData = GetUserResponse.fromJson(jsonDecode(response.body));
-//       TokenGetter.token = finalData.token;
-//       Navigator.pushNamed(context, SobeScreen.sobeRouteName,
-//           arguments: finalData);
-//       return finalData;
-//     } catch (e) {
-//       showDialog(
-//           context: context,
-//           builder: (BuildContext context) => AlertDialog(
-//                 title: Text("Error"),
-//                 content: Text(e.toString()),
-//                 actions: [
-//                   TextButton(
-//                     child: Text("Ok"),
-//                     onPressed: () => Navigator.pop(context),
-//                   )
-//                 ],
-//               ));
-//       return new Future<GetUserResponse>.value(
-//           new GetUserResponse(username: '', token: ''));
-//     }
-//   }
-// }
-
-// class GetUserResponse {
-//   final String username;
-//   final String token;
-
-//   GetUserResponse({required this.username, required this.token});
-
-//   factory GetUserResponse.fromJson(Map<String, dynamic> json) {
-//     return GetUserResponse(
-//       username: json['username'],
-//       token: json['token'],
-//     );
-//   }
-// }
-
-// class TokenGetter {
-//   static String token = "";
-// }
-
-
-
 Future<GetUserResponse> login(
   BuildContext context, String username, String password) async {
   try {
@@ -341,8 +277,11 @@ Future<GetUserResponse> login(
 
     final response = await http.post(
         Uri.parse("${BaseProvider.baseUrl}/Login/authenticate"),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({"Username": username, "Password": password})
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': basicAuth, // Add Basic Authentication header
+      },
+      body: jsonEncode({"Username": username, "Password": password}),
         );
 
     if (response.statusCode == 401) {
@@ -353,7 +292,13 @@ Future<GetUserResponse> login(
     }
 
     final finalData = GetUserResponse.fromJson(jsonDecode(response.body));
-    Navigator.pushNamed(context, SobeScreen.sobeRouteName, arguments: finalData);
+    final userId = finalData.id; // Dohvaćanje ID-ja korisnika
+    Navigator.pushNamed(context, SobeScreen.sobeRouteName,
+     arguments: {
+      'userData': finalData,
+      'userId': finalData.id,
+     },
+    );
     return finalData;
   } catch (e) {
     showDialog(
@@ -369,13 +314,13 @@ Future<GetUserResponse> login(
         ],
       ),
     );
-    return GetUserResponse( email: '', ime: '', korisnickoIme: '', prezime: '', telefon: '');
+    return GetUserResponse(id: 1, email: '', ime: '', korisnickoIme: '', prezime: '', telefon: '');
   }
   }
 }
 
 class GetUserResponse {
-  // final Int id;
+  final int id;
   // final String username;
   final String ime;
   final String korisnickoIme;
@@ -387,10 +332,11 @@ class GetUserResponse {
   
 
 
-  GetUserResponse({required this.email, required this.ime, required this.korisnickoIme, required this.prezime, required this.telefon});
+  GetUserResponse({required this.id ,required this.email, required this.ime, required this.korisnickoIme, required this.prezime, required this.telefon});
 
   factory GetUserResponse.fromJson(Map<String, dynamic> json) {
     return GetUserResponse(
+      id: json['id'],
       email: json['email'],
       ime: json['ime'],
       korisnickoIme: json['korisnickoIme'],

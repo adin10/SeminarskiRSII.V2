@@ -521,6 +521,8 @@ import 'package:seminarskirsmobile/providers/sobe_provider.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/rezervacija_screen.dart';
 
+import '../main.dart';
+
 class SobeScreen extends StatefulWidget {
   static const String sobeRouteName = '/sobe';
 
@@ -550,6 +552,21 @@ class _SobeScreenState extends State<SobeScreen> {
 
   @override
   Widget build(BuildContext context) {
+final Map<String, dynamic>? args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args == null) {
+      // Handle the case when arguments are not available
+      // You can show an error message or navigate back to the previous screen
+      return Scaffold(
+        body: Center(
+          child: Text('Error: Missing arguments'),
+        ),
+      );
+    }
+
+    final GetUserResponse userData = args['userData'] as GetUserResponse;
+    final int userId = args['userId'] as int;
     return Scaffold(
       appBar: AppBar(
         title: Text("Sobe"),
@@ -594,7 +611,7 @@ class _SobeScreenState extends State<SobeScreen> {
                               Navigator.pushNamed(
                                 context,
                                 RezervacijScreen.dodajRezervacijuRouteName,
-                                arguments: IdGetter.Id,
+                                arguments: userId,
                               );
                             },
                             child: Text("Rezervisi sobu"),
