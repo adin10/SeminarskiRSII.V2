@@ -99,6 +99,7 @@ final Map<String, dynamic>? args =
                                   arguments: {
                                     'userData': userData,
                                     'userId': userId,
+                                    'selectedRoomId': x["id"]
                                   },
                               );
                             },

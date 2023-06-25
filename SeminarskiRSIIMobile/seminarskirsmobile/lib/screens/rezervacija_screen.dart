@@ -44,6 +44,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
 
   final GetUserResponse userData = args['userData'] as GetUserResponse;
   final int userId = args['userId'] as int;
+  final int? selectedRoomId = args['selectedRoomId'] as int?; // Retrieve the selected room ID
     return Scaffold(
       appBar: AppBar(
         title: Text('Rezervacija'),
@@ -54,20 +55,20 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Soba ID'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Unesite Soba ID';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  if (value != null && value.isNotEmpty) {
-                    sobaId = int.tryParse(value);
-                  }
-                },
-              ),
+              // TextFormField(
+              //   decoration: InputDecoration(labelText: 'Soba ID'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Unesite Soba ID';
+              //     }
+              //     return null;
+              //   },
+              //   onSaved: (value) {
+              //     if (value != null && value.isNotEmpty) {
+              //       sobaId = int.tryParse(value);
+              //     }
+              //   },
+              // ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Datum rezervacije'),
                 validator: (value) {
@@ -131,7 +132,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     // Ovdje možete izvršiti slanje podataka na server
-                    _submitForm(userId, userData);
+                    _submitForm(userId, userData, selectedRoomId!);
                   }
                 },
                 child: Text('Pošalji'),
@@ -143,7 +144,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     );
   }
 
-  void _submitForm(int userId, GetUserResponse userdata) {
+  void _submitForm(int userId, GetUserResponse userdata, int selectedRoomId) {
     // Provjerite jesu li unosi datuma postavljeni
     if (datumRezervacije == null || zavrsetakRezervacije == null) {
       // Prikazati poruku o grešci ili poduzeti odgovarajuće radnje
@@ -171,7 +172,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     // Izradite svoj HTTP zahtjev s podacima iz forme
     final request = RezervacijaInsertRequest(
       gostId: userId,
-      sobaId: sobaId,
+      sobaId: selectedRoomId,
       datumRezervacije: datumRezervacije!,
       zavrsetakRezervacije: zavrsetakRezervacije!,
     );
