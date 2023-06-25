@@ -827,6 +827,7 @@ import 'package:intl/intl.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
 import 'dart:convert';
+import '../main.dart';
 import '../providers/base_provider.dart';
 
 class RezervacijScreen extends StatefulWidget {
@@ -847,6 +848,21 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
 
   @override
   Widget build(BuildContext context) {
+  final Map<String, dynamic>? args =
+      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+  if (args == null) {
+    // Handle the case when arguments are not available
+    // You can show an error message or navigate back to the previous screen
+    return Scaffold(
+      body: Center(
+        child: Text('Error: Missing arguments'),
+      ),
+    );
+  }
+
+  final GetUserResponse userData = args['userData'] as GetUserResponse;
+  final int userId = args['userId'] as int;
     return Scaffold(
       appBar: AppBar(
         title: Text('Rezervacija'),
@@ -861,13 +877,13 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
                 decoration: InputDecoration(labelText: 'Gost ID'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Unesite Gost ID';
+                    return userId.toString();
                   }
                   return null;
                 },
                 onSaved: (value) {
                   if (value != null && value.isNotEmpty) {
-                    gostId = int.tryParse(value);
+                    gostId = userId;
                   }
                 },
               ),

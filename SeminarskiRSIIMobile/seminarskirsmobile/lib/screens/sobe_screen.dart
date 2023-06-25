@@ -611,7 +611,10 @@ final Map<String, dynamic>? args =
                               Navigator.pushNamed(
                                 context,
                                 RezervacijScreen.dodajRezervacijuRouteName,
-                                arguments: userId,
+                                  arguments: {
+                                    'userData': userData,
+                                    'userId': userId,
+                                  },
                               );
                             },
                             child: Text("Rezervisi sobu"),
