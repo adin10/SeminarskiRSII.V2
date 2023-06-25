@@ -54,20 +54,6 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
           key: _formKey,
           child: Column(
             children: [
-              // TextFormField(
-              //   decoration: InputDecoration(labelText: 'Gost ID'),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return userId.toString();
-              //     }
-              //     return null;
-              //   },
-              //   onSaved: (value) {
-              //     if (value != null && value.isNotEmpty) {
-              //       gostId = userId;
-              //     }
-              //   },
-              // ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Soba ID'),
                 validator: (value) {
@@ -145,7 +131,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     // Ovdje možete izvršiti slanje podataka na server
-                    _submitForm(userId);
+                    _submitForm(userId, userData);
                   }
                 },
                 child: Text('Pošalji'),
@@ -157,7 +143,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     );
   }
 
-  void _submitForm(int userId) {
+  void _submitForm(int userId, GetUserResponse userdata) {
     // Provjerite jesu li unosi datuma postavljeni
     if (datumRezervacije == null || zavrsetakRezervacije == null) {
       // Prikazati poruku o grešci ili poduzeti odgovarajuće radnje
@@ -205,9 +191,19 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
      headers: {'Content-Type': 'application/json'})
     .then((response) {
       if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Rezervacija uspješno kreirana.'),
+          behavior: SnackBarBehavior.floating, // Display at the top
+        ),
+      );
         // Uspješno poslan zahtjev
         // Ovdje možete dodati odgovarajući postupak za prikaz poruke ili navigaciju na drugi ekran
-        Navigator.pushNamed(context, NovostiScreen.novostiRouteName,);
+        Navigator.pushNamed(context, SobeScreen.sobeRouteName,
+             arguments: {
+      'userData': userdata,
+      'userId': userId ,
+     },);
       } else {
         // Pogreška pri slanju zahtjeva
         // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
