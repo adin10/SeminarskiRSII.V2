@@ -49,6 +49,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Rezervacija'),
+        backgroundColor: Color.fromARGB(255, 200, 216, 199),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -56,6 +57,16 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
           key: _formKey,
           child: Column(
             children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "Unesite datume za vasu rezervaciju",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
               // TextFormField(
               //   decoration: InputDecoration(labelText: 'Soba ID'),
               //   validator: (value) {

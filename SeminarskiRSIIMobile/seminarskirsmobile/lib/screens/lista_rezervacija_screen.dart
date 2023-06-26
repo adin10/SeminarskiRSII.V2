@@ -53,7 +53,7 @@ Future<void> loadData(int gostID) async {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Lista rezervacija za gosta "),
+        title: Text("Lista rezervacija"),
         backgroundColor: Color.fromARGB(255, 200, 216, 199),
       ),
       body: SafeArea(
@@ -66,6 +66,16 @@ Future<void> loadData(int gostID) async {
           ),
           child: Column(
             children: [
+              Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "Lista rezervacija za gosta ${data.isNotEmpty ? '${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}' : ''}",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
               Expanded(
                 child: data.isNotEmpty ? PageView(
                   children: data.map<Widget>((x) {
@@ -87,7 +97,7 @@ Future<void> loadData(int gostID) async {
                           Text("Pocetak rezervacije: ${x["datumRezervacije"]}"),
                           Text("Zavrsetak rezervacije: ${x["zavrsetakRezervacije"]}"),
                           Text("Broj sobe: ${x["soba"]["brojSobe"]}"),
-                          Text("Gost: ${x["gost"]["ime"]}"),
+                          // Text("Gost: ${x["gost"]["ime"]} ${x["gost"]["prezime"]}"),
                           ElevatedButton(
                             onPressed: () {
                               IdGetter.Id = x["sobaId"];

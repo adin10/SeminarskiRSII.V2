@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
               height: 784,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/aeroplane.png"),
+                      image: AssetImage("assets/images/hotel.jpg"),
                       fit: BoxFit.cover)
                   ),
               child: Stack(children: [

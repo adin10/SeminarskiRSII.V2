@@ -73,6 +73,16 @@ final Map<String, dynamic>? args =
                     return Card(
                       child: Column(
                         children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "Pregled svih slobodnih soba",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
                           AspectRatio(
                             aspectRatio: 1/1, // Omjer 1:1 za kvadratnu sliku
                             child: Expanded(
@@ -85,11 +95,11 @@ final Map<String, dynamic>? args =
                             ),
                           ),
                           SizedBox(height: 10),
-                          Text("ID: ${x["id"]}"),
+                          // Text("ID: ${x["id"]}"),
                           Text("Broj sprata: ${x["brojSprata"]}"),
                           Text("Broj sobe: ${x["brojSobe"]}"),
                           Text("Opis sobe: ${x["opisSobe"]}"),
-                          Text("Status sobe: ${x["sobaStatus"]["status"]}"),
+                          // Text("Status sobe: ${x["sobaStatus"]["status"]}"),
                           ElevatedButton(
                             onPressed: () {
                               IdGetter.Id = x["id"];

@@ -48,6 +48,7 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Recenzija'),
+        backgroundColor: Color.fromARGB(255, 200, 216, 199),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -55,6 +56,16 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
           key: _formKey,
           child: Column(
             children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "Unesite vasu ocjenu i komentar",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
               // TextFormField(
               //   decoration: InputDecoration(labelText: 'Soba ID'),
               //   validator: (value) {
