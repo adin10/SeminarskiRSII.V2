@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:seminarskirsmobile/providers/globals.dart';
 import 'package:seminarskirsmobile/providers/rezervacija_provider.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
+import 'package:seminarskirsmobile/screens/recenzija_screen.dart';
 
 import '../main.dart';
 
@@ -83,11 +84,23 @@ Future<void> loadData(int gostID) async {
                             ),
                           ),
                           SizedBox(height: 10),
-                          // Text("ID: ${x["id"]}"),
                           Text("Pocetak rezervacije: ${x["datumRezervacije"]}"),
                           Text("Zavrsetak rezervacije: ${x["zavrsetakRezervacije"]}"),
                           Text("Broj sobe: ${x["soba"]["brojSobe"]}"),
-                           Text("Gost: ${x["gost"]["ime"]}"),
+                          Text("Gost: ${x["gost"]["ime"]}"),
+                          ElevatedButton(
+                            onPressed: () {
+                              IdGetter.Id = x["sobaId"];
+                              Navigator.pushNamed(
+                                context,
+                                RecenzijaScreen.dodajRecenzijuRouteName,
+                                  arguments: {
+                                    'selectedRoomId': x["sobaId"]
+                                  },
+                              );
+                            },
+                            child: Text("Ostavite recenziju"),
+                          ),
                         ],
                       ),
                     );

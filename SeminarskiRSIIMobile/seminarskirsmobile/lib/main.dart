@@ -11,11 +11,13 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:seminarskirsmobile/providers/globals.dart';
 import 'package:seminarskirsmobile/providers/novosti_provider.dart';
+import 'package:seminarskirsmobile/providers/recenzija_provider.dart';
 import 'package:seminarskirsmobile/providers/rezervacija_provider.dart';
 import 'package:seminarskirsmobile/providers/sobe_provider.dart';
 import 'package:seminarskirsmobile/providers/base_provider.dart';
 import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
+import 'package:seminarskirsmobile/screens/recenzija_screen.dart';
 import 'package:seminarskirsmobile/screens/rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
 
@@ -24,7 +26,8 @@ void main() => runApp(MultiProvider(
         ChangeNotifierProvider(create: (_) => SobaProvider()),
         ChangeNotifierProvider(create: (_) => NovostiProvider()),
         ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
-        ChangeNotifierProvider(create: (_) => RezervacijaProvider())
+        ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
+        ChangeNotifierProvider(create: (_) => RecenzijaProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
@@ -34,6 +37,7 @@ void main() => runApp(MultiProvider(
           NovostiScreen.novostiRouteName: (context) => NovostiScreen(),
           RezervacijScreen.dodajRezervacijuRouteName: (context) => RezervacijScreen(),
           ListaRezervacijaScreen.listaRezervacijaRouteName: (context) => ListaRezervacijaScreen(),
+          RecenzijaScreen.dodajRecenzijuRouteName: (context) => RecenzijaScreen(),
         },
         onGenerateRoute: (settings) {},
       ),
