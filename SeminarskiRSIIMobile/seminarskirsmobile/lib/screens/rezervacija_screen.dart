@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
+import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
 import 'dart:convert';
@@ -200,11 +201,12 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       );
         // Uspješno poslan zahtjev
         // Ovdje možete dodati odgovarajući postupak za prikaz poruke ili navigaciju na drugi ekran
-        Navigator.pushNamed(context, SobeScreen.sobeRouteName,
-             arguments: {
-      'userData': userdata,
-      'userId': userId ,
-     },);
+    //     Navigator.pushNamed(context, SobeScreen.sobeRouteName,
+    //          arguments: {
+    //   'userData': userdata,
+    //   'userId': userId ,
+    //  },);
+            Navigator.pushNamed(context, ListaRezervacijaScreen.listaRezervacijaRouteName);
       } else {
         // Pogreška pri slanju zahtjeva
         // Ovdje možete dodati odgovarajući postupak za prikaz pogreške

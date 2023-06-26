@@ -12,25 +12,46 @@ class RezervacijaProvider with ChangeNotifier {
     http = IOClient(client);
   }
 
-  Future<dynamic> get() async {
-    var token = "";
-    if (token == null) {
-      throw Exception("Token not found");
-    }
+  // Future<dynamic> get() async {
+  //   var token = "";
+  //   if (token == null) {
+  //     throw Exception("Token not found");
+  //   }
 
-    var url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
+  //   var url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
     
-    var response = await http!.get(url, 
-    // headers: {
-      // "Authorization": "Bearer $token",
-    // }
+  //   var response = await http!.get(url, 
+  //   // headers: {
+  //     // "Authorization": "Bearer $token",
+  //   // }
+  //   );
+
+  //   if (response.statusCode < 400) {
+  //     var data = jsonDecode(response.body);
+  //     return data;
+  //   } else {
+  //     throw Exception("User not allowed");
+  //   }
+  // }
+
+  Future<List<dynamic>?> get({int? gostID}) async {
+  try {
+    // Make the API request with the gostID parameter
+    final response = await http!.get(
+      Uri.parse('${BaseProvider.baseUrl}/Rezervacija?gostID=$gostID'),
+      headers: {'Content-Type': 'application/json'},
     );
 
-    if (response.statusCode < 400) {
-      var data = jsonDecode(response.body);
-      return data;
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      return responseData;
     } else {
-      throw Exception("User not allowed");
+      // Handle API error response
+      return null;
     }
+  } catch (error) {
+    // Handle network or other errors
+    return null;
   }
+}
 }

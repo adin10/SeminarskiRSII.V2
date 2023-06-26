@@ -9,10 +9,12 @@ import 'package:http/io_client.dart';
 import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:seminarskirsmobile/providers/globals.dart';
 import 'package:seminarskirsmobile/providers/novosti_provider.dart';
 import 'package:seminarskirsmobile/providers/rezervacija_provider.dart';
 import 'package:seminarskirsmobile/providers/sobe_provider.dart';
 import 'package:seminarskirsmobile/providers/base_provider.dart';
+import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
@@ -21,6 +23,7 @@ void main() => runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SobaProvider()),
         ChangeNotifierProvider(create: (_) => NovostiProvider()),
+        ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
         ChangeNotifierProvider(create: (_) => RezervacijaProvider())
       ],
       child: MaterialApp(
@@ -30,6 +33,7 @@ void main() => runApp(MultiProvider(
           SobeScreen.sobeRouteName: (context) => SobeScreen(),
           NovostiScreen.novostiRouteName: (context) => NovostiScreen(),
           RezervacijScreen.dodajRezervacijuRouteName: (context) => RezervacijScreen(),
+          ListaRezervacijaScreen.listaRezervacijaRouteName: (context) => ListaRezervacijaScreen(),
         },
         onGenerateRoute: (settings) {},
       ),
@@ -157,6 +161,7 @@ Future<GetUserResponse> login(
 
     final finalData = GetUserResponse.fromJson(jsonDecode(response.body));
     final userId = finalData.id; // Dohvaćanje ID-ja korisnika
+    loggedUserID = userId;
     Navigator.pushNamed(context, SobeScreen.sobeRouteName,
      arguments: {
       'userData': finalData,
