@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +36,7 @@ class _SobeScreenState extends State<SobeScreen> {
 
   @override
   Widget build(BuildContext context) {
-final Map<String, dynamic>? args =
+    final Map<String, dynamic>? args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
     if (args == null) {
@@ -68,58 +67,62 @@ final Map<String, dynamic>? args =
           child: Column(
             children: [
               Expanded(
-                child: data.isNotEmpty ? PageView(
-                  children: data.map<Widget>((x) {
-                    return Card(
-                      child: Column(
-                        children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "Pregled svih slobodnih soba",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-                          AspectRatio(
-                            aspectRatio: 1/1, // Omjer 1:1 za kvadratnu sliku
-                            child: Expanded(
-                              child: Container(
-                                child: Image.memory(
-                                  base64Decode(x["slika"]),
-                                  fit: BoxFit.cover,
+                child: data.isNotEmpty
+                    ? PageView(
+                        children: data.map<Widget>((x) {
+                          return Card(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    "Pregled svih slobodnih soba",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          // Text("ID: ${x["id"]}"),
-                          Text("Broj sprata: ${x["brojSprata"]}"),
-                          Text("Broj sobe: ${x["brojSobe"]}"),
-                          Text("Opis sobe: ${x["opisSobe"]}"),
-                          // Text("Status sobe: ${x["sobaStatus"]["status"]}"),
-                          ElevatedButton(
-                            onPressed: () {
-                              IdGetter.Id = x["id"];
-                              Navigator.pushNamed(
-                                context,
-                                RezervacijScreen.dodajRezervacijuRouteName,
-                                  arguments: {
-                                    'userData': userData,
-                                    'userId': userId,
-                                    'selectedRoomId': x["id"]
+                                AspectRatio(
+                                  aspectRatio:
+                                      1 / 1, // Omjer 1:1 za kvadratnu sliku
+                                  child: Expanded(
+                                    child: Container(
+                                      child: Image.memory(
+                                        base64Decode(x["slika"]),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                // Text("ID: ${x["id"]}"),
+                                Text("Broj sprata: ${x["brojSprata"]}"),
+                                Text("Broj sobe: ${x["brojSobe"]}"),
+                                Text("Opis sobe: ${x["opisSobe"]}"),
+                                // Text("Status sobe: ${x["sobaStatus"]["status"]}"),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    IdGetter.Id = x["id"];
+                                    Navigator.pushNamed(
+                                      context,
+                                      RezervacijScreen
+                                          .dodajRezervacijuRouteName,
+                                      arguments: {
+                                        'userData': userData,
+                                        'userId': userId,
+                                        'selectedRoomId': x["id"]
+                                      },
+                                    );
                                   },
-                              );
-                            },
-                            child: Text("Rezervisi sobu"),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ) : Container(),
+                                  child: Text("Rezervisi sobu"),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      )
+                    : Container(),
               ),
               SizedBox(height: 10),
               // Icon(

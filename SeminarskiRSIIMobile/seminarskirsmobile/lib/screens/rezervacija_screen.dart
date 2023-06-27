@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
@@ -30,22 +29,23 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
 
   @override
   Widget build(BuildContext context) {
-  final Map<String, dynamic>? args =
-      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final Map<String, dynamic>? args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-  if (args == null) {
-    // Handle the case when arguments are not available
-    // You can show an error message or navigate back to the previous screen
-    return Scaffold(
-      body: Center(
-        child: Text('Error: Missing arguments'),
-      ),
-    );
-  }
+    if (args == null) {
+      // Handle the case when arguments are not available
+      // You can show an error message or navigate back to the previous screen
+      return Scaffold(
+        body: Center(
+          child: Text('Error: Missing arguments'),
+        ),
+      );
+    }
 
-  final GetUserResponse userData = args['userData'] as GetUserResponse;
-  final int userId = args['userId'] as int;
-  final int? selectedRoomId = args['selectedRoomId'] as int?; // Retrieve the selected room ID
+    final GetUserResponse userData = args['userData'] as GetUserResponse;
+    final int userId = args['userId'] as int;
+    final int? selectedRoomId =
+        args['selectedRoomId'] as int?; // Retrieve the selected room ID
     return Scaffold(
       appBar: AppBar(
         title: Text('Rezervacija'),
@@ -57,16 +57,16 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
           key: _formKey,
           child: Column(
             children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "Unesite datume za vasu rezervaciju",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "Unesite datume za vasu rezervaciju",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
               // TextFormField(
               //   decoration: InputDecoration(labelText: 'Soba ID'),
               //   validator: (value) {
@@ -110,8 +110,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
                 ),
               ),
               TextFormField(
-                decoration:
-                    InputDecoration(labelText: 'Završetak rezervacije'),
+                decoration: InputDecoration(labelText: 'Završetak rezervacije'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Unesite završetak rezervacije';
@@ -162,24 +161,25 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       // Prikazati poruku o grešci ili poduzeti odgovarajuće radnje
       return;
     }
-     if (zavrsetakRezervacije!.isBefore(datumRezervacije!)) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Greška'),
-          content: Text('Završetak rezervacije ne može biti prije datuma rezervacije.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('U redu'),
-            ),
-          ],
-        );
-      },
-    );
-    return;
-  }
+    if (zavrsetakRezervacije!.isBefore(datumRezervacije!)) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Greška'),
+            content: Text(
+                'Završetak rezervacije ne može biti prije datuma rezervacije.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('U redu'),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
 
     // Izradite svoj HTTP zahtjev s podacima iz forme
     final request = RezervacijaInsertRequest(
@@ -192,32 +192,31 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     // Pretvorite objekt request u JSON string
     final requestBody = jsonEncode(request.toJson());
 
-
-      final ioc = new HttpClient();
-      ioc.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      final http = new IOClient(ioc);
+    final ioc = new HttpClient();
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    final http = new IOClient(ioc);
     // Izvršite HTTP POST zahtjev na server
     final url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
     http.post(url,
-     body: requestBody,
-     headers: {'Content-Type': 'application/json'})
-    .then((response) {
+        body: requestBody,
+        headers: {'Content-Type': 'application/json'}).then((response) {
       if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Rezervacija uspješno kreirana.'),
-          behavior: SnackBarBehavior.floating, // Display at the top
-        ),
-      );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Rezervacija uspješno kreirana.'),
+            behavior: SnackBarBehavior.floating, // Display at the top
+          ),
+        );
         // Uspješno poslan zahtjev
         // Ovdje možete dodati odgovarajući postupak za prikaz poruke ili navigaciju na drugi ekran
-    //     Navigator.pushNamed(context, SobeScreen.sobeRouteName,
-    //          arguments: {
-    //   'userData': userdata,
-    //   'userId': userId ,
-    //  },);
-            Navigator.pushNamed(context, ListaRezervacijaScreen.listaRezervacijaRouteName);
+        //     Navigator.pushNamed(context, SobeScreen.sobeRouteName,
+        //          arguments: {
+        //   'userData': userdata,
+        //   'userId': userId ,
+        //  },);
+        Navigator.pushNamed(
+            context, ListaRezervacijaScreen.listaRezervacijaRouteName);
       } else {
         // Pogreška pri slanju zahtjeva
         // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
@@ -255,5 +254,3 @@ class RezervacijaInsertRequest {
     };
   }
 }
-
-

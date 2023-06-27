@@ -99,13 +99,15 @@ class _NovostiScreenState extends State<NovostiScreen> {
         .map((x) => DataRow(
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
-                DataCell(Text(x["naslov"] ?? "",style: TextStyle(fontSize: 14))),
+                DataCell(
+                    Text(x["naslov"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
                     Text(x["sadrzaj"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
                   Text(
                     DateFormat('dd/MM/yyyy hh:mm a')
-                        .format(DateTime.parse(x["datumObjave"])), style: TextStyle(fontSize: 14),
+                        .format(DateTime.parse(x["datumObjave"])),
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
               ],

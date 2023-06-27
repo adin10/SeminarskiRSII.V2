@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +16,7 @@ class ListaRezervacijaScreen extends StatefulWidget {
   const ListaRezervacijaScreen({Key? key}) : super(key: key);
 
   @override
-  State<ListaRezervacijaScreen> createState() =>
-      _ListaRezervacijaScreenState();
+  State<ListaRezervacijaScreen> createState() => _ListaRezervacijaScreenState();
 }
 
 class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
@@ -41,16 +38,15 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
 //   });
 // }
 
-Future<void> loadData(int gostID) async {
-  List<dynamic>? tmpData = await _rezervacijaProvider?.get(gostID: gostID);
-  setState(() {
-    data = tmpData ?? [];
-  });
-}
+  Future<void> loadData(int gostID) async {
+    List<dynamic>? tmpData = await _rezervacijaProvider?.get(gostID: gostID);
+    setState(() {
+      data = tmpData ?? [];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Lista rezervacija"),
@@ -67,55 +63,60 @@ Future<void> loadData(int gostID) async {
           child: Column(
             children: [
               Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "Lista rezervacija za gosta ${data.isNotEmpty ? '${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}' : ''}",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "Lista rezervacija za gosta ${data.isNotEmpty ? '${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}' : ''}",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
               Expanded(
-                child: data.isNotEmpty ? PageView(
-                  children: data.map<Widget>((x) {
-                    return Card(
-                      child: Column(
-                        children: [
-                          AspectRatio(
-                            aspectRatio: 1/1, // Omjer 1:1 za kvadratnu sliku
-                            child: Expanded(
-                              child: Container(
-                                child: Image.memory(
-                                  base64Decode(x["soba"]["slika"]),
-                                  fit: BoxFit.cover,
+                child: data.isNotEmpty
+                    ? PageView(
+                        children: data.map<Widget>((x) {
+                          return Card(
+                            child: Column(
+                              children: [
+                                AspectRatio(
+                                  aspectRatio:
+                                      1 / 1, // Omjer 1:1 za kvadratnu sliku
+                                  child: Expanded(
+                                    child: Container(
+                                      child: Image.memory(
+                                        base64Decode(x["soba"]["slika"]),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text("Pocetak rezervacije: ${x["datumRezervacije"]}"),
-                          Text("Zavrsetak rezervacije: ${x["zavrsetakRezervacije"]}"),
-                          Text("Broj sobe: ${x["soba"]["brojSobe"]}"),
-                          // Text("Gost: ${x["gost"]["ime"]} ${x["gost"]["prezime"]}"),
-                          ElevatedButton(
-                            onPressed: () {
-                              IdGetter.Id = x["sobaId"];
-                              Navigator.pushNamed(
-                                context,
-                                RecenzijaScreen.dodajRecenzijuRouteName,
-                                  arguments: {
-                                    'selectedRoomId': x["sobaId"]
+                                SizedBox(height: 10),
+                                Text(
+                                    "Pocetak rezervacije: ${x["datumRezervacije"]}"),
+                                Text(
+                                    "Zavrsetak rezervacije: ${x["zavrsetakRezervacije"]}"),
+                                Text("Broj sobe: ${x["soba"]["brojSobe"]}"),
+                                // Text("Gost: ${x["gost"]["ime"]} ${x["gost"]["prezime"]}"),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    IdGetter.Id = x["sobaId"];
+                                    Navigator.pushNamed(
+                                      context,
+                                      RecenzijaScreen.dodajRecenzijuRouteName,
+                                      arguments: {
+                                        'selectedRoomId': x["sobaId"]
+                                      },
+                                    );
                                   },
-                              );
-                            },
-                            child: Text("Ostavite recenziju"),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ) : Container(),
+                                  child: Text("Ostavite recenziju"),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      )
+                    : Container(),
               ),
               SizedBox(height: 10),
               // Icon(
@@ -131,7 +132,6 @@ Future<void> loadData(int gostID) async {
     );
   }
 }
-
 
 class IdGetter {
   static int Id = 0;

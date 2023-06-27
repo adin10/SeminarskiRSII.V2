@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi';
@@ -35,9 +34,12 @@ void main() => runApp(MultiProvider(
         routes: {
           SobeScreen.sobeRouteName: (context) => SobeScreen(),
           NovostiScreen.novostiRouteName: (context) => NovostiScreen(),
-          RezervacijScreen.dodajRezervacijuRouteName: (context) => RezervacijScreen(),
-          ListaRezervacijaScreen.listaRezervacijaRouteName: (context) => ListaRezervacijaScreen(),
-          RecenzijaScreen.dodajRecenzijuRouteName: (context) => RecenzijaScreen(),
+          RezervacijScreen.dodajRezervacijuRouteName: (context) =>
+              RezervacijScreen(),
+          ListaRezervacijaScreen.listaRezervacijaRouteName: (context) =>
+              ListaRezervacijaScreen(),
+          RecenzijaScreen.dodajRecenzijuRouteName: (context) =>
+              RecenzijaScreen(),
         },
         onGenerateRoute: (settings) {},
       ),
@@ -58,12 +60,11 @@ class HomePage extends StatelessWidget {
               height: 784,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/hotel.jpg"),
-                      fit: BoxFit.cover)
-                  ),
+                      image: AssetImage("assets/images/soba.jpg"),
+                      fit: BoxFit.cover)),
               child: Stack(children: [
                 Positioned(
-                  top: 160,
+                  top: 150,
                   left: 70,
                   child: Center(
                       child: Text(
@@ -120,7 +121,7 @@ class HomePage extends StatelessWidget {
                               ])),
                           child: InkWell(
                             onTap: () {
-                                  // Navigator.pushNamed(context, SobeScreen.sobeRouteName);
+                              // Navigator.pushNamed(context, SobeScreen.sobeRouteName);
                               login(context, usernameController.text,
                                   passwordController.text);
                             },
@@ -137,58 +138,67 @@ class HomePage extends StatelessWidget {
     );
   }
 
-Future<GetUserResponse> login(
-  BuildContext context, String username, String password) async {
-  try {
-          final ioc = new HttpClient();
+  Future<GetUserResponse> login(
+      BuildContext context, String username, String password) async {
+    try {
+      final ioc = new HttpClient();
       ioc.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
       final http = new IOClient(ioc);
-    final usernameAndPassword = '$username:$password';
-    final basicAuth = 'Basic ' + base64Encode(utf8.encode(usernameAndPassword));
+      final usernameAndPassword = '$username:$password';
+      final basicAuth =
+          'Basic ' + base64Encode(utf8.encode(usernameAndPassword));
 
-    final response = await http.post(
+      final response = await http.post(
         Uri.parse("${BaseProvider.baseUrl}/Login/authenticate"),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': basicAuth, // Add Basic Authentication header
-      },
-      body: jsonEncode({"Username": username, "Password": password}),
-        );
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': basicAuth, // Add Basic Authentication header
+        },
+        body: jsonEncode({"Username": username, "Password": password}),
+      );
 
-    if (response.statusCode == 401) {
-      throw Exception('Invalid credentials');
-    }
-    if (response.statusCode != 200) {
-      throw Exception('Wrong username or password');
-    }
+      if (response.statusCode == 401) {
+        throw Exception('Invalid credentials');
+      }
+      if (response.statusCode != 200) {
+        throw Exception('Wrong username or password');
+      }
 
-    final finalData = GetUserResponse.fromJson(jsonDecode(response.body));
-    final userId = finalData.id; // Dohvaćanje ID-ja korisnika
-    loggedUserID = userId;
-    Navigator.pushNamed(context, SobeScreen.sobeRouteName,
-     arguments: {
-      'userData': finalData,
-      'userId': finalData.id,
-     },
-    );
-    return finalData;
-  } catch (e) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text("Error"),
-        content: Text(e.toString()),
-        actions: [
-          TextButton(
-            child: Text("Ok"),
-            onPressed: () => Navigator.pop(context),
-          )
-        ],
-      ),
-    );
-    return GetUserResponse(id: 1, email: '', ime: '', korisnickoIme: '', prezime: '', telefon: '');
-  }
+      final finalData = GetUserResponse.fromJson(jsonDecode(response.body));
+      final userId = finalData.id; // Dohvaćanje ID-ja korisnika
+      loggedUserID = userId;
+      Navigator.pushNamed(
+        context,
+        SobeScreen.sobeRouteName,
+        arguments: {
+          'userData': finalData,
+          'userId': finalData.id,
+        },
+      );
+      return finalData;
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text("Error"),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              child: Text("Ok"),
+              onPressed: () => Navigator.pop(context),
+            )
+          ],
+        ),
+      );
+      return GetUserResponse(
+          id: 1,
+          email: '',
+          ime: '',
+          korisnickoIme: '',
+          prezime: '',
+          telefon: '');
+    }
   }
 }
 
@@ -201,7 +211,13 @@ class GetUserResponse {
   final String email;
   final String telefon;
 
-  GetUserResponse({required this.id ,required this.email, required this.ime, required this.korisnickoIme, required this.prezime, required this.telefon});
+  GetUserResponse(
+      {required this.id,
+      required this.email,
+      required this.ime,
+      required this.korisnickoIme,
+      required this.prezime,
+      required this.telefon});
 
   factory GetUserResponse.fromJson(Map<String, dynamic> json) {
     return GetUserResponse(
