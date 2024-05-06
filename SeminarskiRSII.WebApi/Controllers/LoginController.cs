@@ -26,6 +26,18 @@ namespace SeminarskiRSII.WebApi.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("authenticateAdministration")]
+        public IActionResult AuthenticateAdministration([FromBody] Login model)
+        {
+            var user = _userService.Authenticiraj(model.Username, model.Password);
+
+            if (user is null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(user);
+        }
+
+        [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] Login model)
         {

@@ -7,7 +7,7 @@ using SeminarskiRSII.WebApi.Interfaces;
 
 namespace SeminarskiRSII.WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GradController : ControllerBase
