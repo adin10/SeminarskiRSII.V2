@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:seminarskirsiidesktop/screens/grad_new_screen.dart';
 
 import '../providers/grad_provider.dart';
 import '../widgets/master_screen.dart';
@@ -71,6 +72,15 @@ class _GradListScreenState extends State<GradListScreen> {
                         rows: _buildPlanAndProgrammeList(),
                       ),
                     ),
+                      ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewGradScreen()),
+                );
+              },
+              child: Text('Create New Grad'),
+            ),
                   ]),
                 )
       )

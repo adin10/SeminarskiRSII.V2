@@ -1,3 +1,5 @@
+// import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/cjenovnik_provider.dart';
@@ -12,6 +14,7 @@ import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
 import 'package:seminarskirsiidesktop/providers/sobaosoblje_provider.dart';
 import 'package:seminarskirsiidesktop/providers/sobastatus_provider.dart';
 import 'package:seminarskirsiidesktop/providers/vrstaosoblja_provider.dart';
+import 'package:seminarskirsiidesktop/screens/drzava_list_screen.dart';
 import 'package:seminarskirsiidesktop/screens/gosti_list_screen.dart';
 import 'package:seminarskirsiidesktop/utils/util.dart';
 
@@ -32,6 +35,13 @@ void main() {
       ChangeNotifierProvider(create: (_) => SobaOsobljeProvider())
     ],
     child: const MyMaterialApp(),
+    //  child: MaterialApp(
+    //     debugShowCheckedModeBanner: true,
+    //     routes: {
+    //       DrzavaListScreen.drzavaRouteName: (context) => const DrzavaListScreen()    
+    //     },
+    //     onGenerateRoute: (settings) {},
+    //   ),
   ));
 }
 

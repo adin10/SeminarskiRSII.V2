@@ -4,8 +4,10 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import '../providers/drzava_provider.dart';
 import '../widgets/master_screen.dart';
+import 'drzava_new_screen.dart';
 
 class DrzavaListScreen extends StatefulWidget {
+  static const String drzavaRouteName = '/drzave';
   const DrzavaListScreen({super.key});
 
   @override
@@ -13,7 +15,6 @@ class DrzavaListScreen extends StatefulWidget {
 }
 
 class _DrzavaListScreenState extends State<DrzavaListScreen> {
-
   late DrzavaProvider _drzavaProvider;
   dynamic data = {};
   @override
@@ -59,6 +60,15 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                         rows: _buildPlanAndProgrammeList(),
                       ),
                     ),
+                          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewDrzavaScreen()),
+                );
+              },
+              child: Text('Create New Drzava'),
+            ),
                   ]),
                 )
       )
