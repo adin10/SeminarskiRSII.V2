@@ -2,29 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import '../providers/sobastatus_provider.dart';
-import '../widgets/master_screen.dart';
+import 'package:seminarskirsiidesktop/screens/details-new/vrsta-osoblja_new_screen.dart';
+import '../../providers/vrstaosoblja_provider.dart';
+import '../../widgets/master_screen.dart';
 
-class SobaStatusListScreen extends StatefulWidget {
-  const SobaStatusListScreen({super.key});
+class VrstaOsobljaListScreen extends StatefulWidget {
+  const VrstaOsobljaListScreen({super.key});
 
   @override
-  State<SobaStatusListScreen> createState() => _SobaStatusListScreenState();
+  State<VrstaOsobljaListScreen> createState() => _VrstaOsobljaListScreenState();
 }
 
-class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
+class _VrstaOsobljaListScreenState extends State<VrstaOsobljaListScreen> {
 
-  late SobaStatusProvider _sobaStatusProvider;
+  late VrstaOsobljaProvider _vrstaOsobljaProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _sobaStatusProvider = context.read<SobaStatusProvider>();
+    _vrstaOsobljaProvider = context.read<VrstaOsobljaProvider>();
     loadData();
   }
 
    Future loadData() async {
-    var tmpData = await _sobaStatusProvider.get(null);
+    var tmpData = await _vrstaOsobljaProvider.get(null);
     setState(() {
       data = tmpData;
     });
@@ -33,7 +34,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Statusi soba',
+      title: 'Vrste osoblja',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -53,17 +54,26 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Status",
+                                  child: Text("Pozicija",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Opis",
+                                  child: Text("Zaduzenje",
                                       style: TextStyle(fontSize: 14)))),
                         ],
                         rows: _buildPlanAndProgrammeList(),
                       ),
                     ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewVrstaOsobljaScreen()),
+                );
+              },
+              child: Text('Create New Vrsta Osoblja'),
+            ),
                   ]),
                 )
       )
@@ -85,9 +95,9 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
-                    Text(x["status"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["pozicija"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["opis"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["zaduzenja"] ?? "", style: TextStyle(fontSize: 14))),
               ],
             ))
         .toList()

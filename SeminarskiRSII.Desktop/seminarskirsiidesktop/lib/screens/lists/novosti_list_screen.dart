@@ -3,31 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:seminarskirsiidesktop/screens/grad_new_screen.dart';
+import 'package:seminarskirsiidesktop/providers/novosti_provider.dart';
+import 'package:seminarskirsiidesktop/screens/details-new/novosti_new_screen.dart';
+import '../../widgets/master_screen.dart';
 
-import '../providers/grad_provider.dart';
-import '../widgets/master_screen.dart';
-
-class GradListScreen extends StatefulWidget {
-  const GradListScreen({super.key});
+class NovostiListScreen extends StatefulWidget {
+  const NovostiListScreen({super.key});
 
   @override
-  State<GradListScreen> createState() => _GradListScreenState();
+  State<NovostiListScreen> createState() => _NovostiListScreenState();
 }
 
-class _GradListScreenState extends State<GradListScreen> {
+class _NovostiListScreenState extends State<NovostiListScreen> {
 
-  late GradProvider _gradProvider;
+  late NovostiProvider _novostiProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _gradProvider = context.read<GradProvider>();
+    _novostiProvider = context.read<NovostiProvider>();
     loadData();
   }
 
    Future loadData() async {
-    var tmpData = await _gradProvider.get(null);
+    var tmpData = await _novostiProvider.get(null);
     setState(() {
       data = tmpData;
     });
@@ -36,7 +35,7 @@ class _GradListScreenState extends State<GradListScreen> {
  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Gradovi',
+      title: 'Novosti',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -56,30 +55,35 @@ class _GradListScreenState extends State<GradListScreen> {
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Naziv grada",
+                                  child: Text("Naslov",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Postanski broj",
+                                  child: Text("Sadrzaj",
                                       style: TextStyle(fontSize: 14)))),
                             DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Drzava",
+                                  child: Text("Datum obavjesti",
+                                      style: TextStyle(fontSize: 14)))),
+                            DataColumn(
+                               label: Container(
+                                  alignment: Alignment.center,
+                                  child: Text("Autor",
                                       style: TextStyle(fontSize: 14)))),
                         ],
                         rows: _buildPlanAndProgrammeList(),
                       ),
                     ),
-                      ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NewGradScreen()),
+                  MaterialPageRoute(builder: (context) => const NewNovostScreen()),
                 );
               },
-              child: Text('Create New Grad'),
+              child: Text('Create New Notification'),
             ),
                   ]),
                 )
@@ -93,6 +97,7 @@ class _GradListScreenState extends State<GradListScreen> {
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
+          DataCell(Text("No data...")),
           DataCell(Text("No data..."))
         ])
       ];
@@ -103,11 +108,13 @@ class _GradListScreenState extends State<GradListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
-                    Text(x["nazivGrada"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["naslov"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["postanskiBroj"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["sadrzaj"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  Text(x["drzava"]["naziv"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["datumObjave"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(
+                  Text("${x["osoblje"]["ime"]} ${x["osoblje"]["prezime"]}" ?? "", style: TextStyle(fontSize: 14))),
               ],
             ))
         .toList()

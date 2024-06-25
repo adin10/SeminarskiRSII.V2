@@ -2,29 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import '../providers/sobaosoblje_provider.dart';
-import '../widgets/master_screen.dart';
+import '../../providers/drzava_provider.dart';
+import '../../widgets/master_screen.dart';
+import '../details-new/drzava_new_screen.dart';
 
-class SobaOsobljeListScreen extends StatefulWidget {
-  const SobaOsobljeListScreen({super.key});
+class DrzavaListScreen extends StatefulWidget {
+  static const String drzavaRouteName = '/drzave';
+  const DrzavaListScreen({super.key});
 
   @override
-  State<SobaOsobljeListScreen> createState() => _SobaOsobljeListScreenState();
+  State<DrzavaListScreen> createState() => _DrzavaListScreenState();
 }
 
-class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
-
-  late SobaOsobljeProvider _sobaOsobljeProvider;
+class _DrzavaListScreenState extends State<DrzavaListScreen> {
+  late DrzavaProvider _drzavaProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _sobaOsobljeProvider = context.read<SobaOsobljeProvider>();
+    _drzavaProvider = context.read<DrzavaProvider>();
     loadData();
   }
 
    Future loadData() async {
-    var tmpData = await _sobaOsobljeProvider.get(null);
+    var tmpData = await _drzavaProvider.get(null);
     setState(() {
       data = tmpData;
     });
@@ -33,7 +34,7 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Zaduzenja po sobama',
+      title: 'Drzave',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -53,17 +54,21 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Soba",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Osoblje",
+                                  child: Text("Naziv drzave",
                                       style: TextStyle(fontSize: 14)))),
                         ],
                         rows: _buildPlanAndProgrammeList(),
                       ),
                     ),
+                          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewDrzavaScreen()),
+                );
+              },
+              child: Text('Create New Drzava'),
+            ),
                   ]),
                 )
       )
@@ -73,7 +78,6 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
     if (data.length == 0) {
       return [
         DataRow(cells: [
-          DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data..."))
         ])
@@ -85,9 +89,7 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
-                    Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                    Text("${x["osoblje"]["ime"]} ${x["osoblje"]["prezime"]}" ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["naziv"] ?? "", style: TextStyle(fontSize: 14))),
               ],
             ))
         .toList()

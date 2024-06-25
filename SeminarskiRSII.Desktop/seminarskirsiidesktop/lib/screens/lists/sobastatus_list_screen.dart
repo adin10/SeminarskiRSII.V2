@@ -2,39 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:seminarskirsiidesktop/screens/details-new/soba-status_new_screen.dart';
+import '../../providers/sobastatus_provider.dart';
+import '../../widgets/master_screen.dart';
 
-import '../providers/recenzija_provider.dart';
-import '../widgets/master_screen.dart';
-
-class RecenzijaListScreen extends StatefulWidget {
-  const RecenzijaListScreen({super.key});
+class SobaStatusListScreen extends StatefulWidget {
+  const SobaStatusListScreen({super.key});
 
   @override
-  State<RecenzijaListScreen> createState() => _RecenzijaListScreenState();
+  State<SobaStatusListScreen> createState() => _SobaStatusListScreenState();
 }
 
-class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
+class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
 
-  late RecenzijaProvider _recenzijaProvider;
+  late SobaStatusProvider _sobaStatusProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _recenzijaProvider = context.read<RecenzijaProvider>();
+    _sobaStatusProvider = context.read<SobaStatusProvider>();
     loadData();
   }
 
-    Future loadData() async {
-    var tmpData = await _recenzijaProvider.get(null);
+   Future loadData() async {
+    var tmpData = await _sobaStatusProvider.get(null);
     setState(() {
       data = tmpData;
     });
   }
-
-  @override
+  
+ @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Sve Recenzije',
+      title: 'Statusi soba',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -52,34 +52,28 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
                                   child: Text("Id",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
-                              label: Container(
+                               label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Ime",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                              label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Prezime",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                              label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Soba broj",
+                                  child: Text("Status",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Ocjena",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Komentar",
+                                  child: Text("Opis",
                                       style: TextStyle(fontSize: 14)))),
                         ],
                         rows: _buildPlanAndProgrammeList(),
                       ),
                     ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewSobaStatusScreen()),
+                );
+              },
+              child: Text('Create New Room Status'),
+            ),
                   ]),
                 )
       )
@@ -89,9 +83,6 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
     if (data.length == 0) {
       return [
         DataRow(cells: [
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data..."))
@@ -104,19 +95,14 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
-                    Text(x["gost"]["ime"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["status"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["gost"]["prezime"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  Text(x["ocjena"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  Text(x["komentar"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["opis"] ?? "", style: TextStyle(fontSize: 14))),
               ],
             ))
         .toList()
         .cast<DataRow>();
     return list;
   }
+  
 }

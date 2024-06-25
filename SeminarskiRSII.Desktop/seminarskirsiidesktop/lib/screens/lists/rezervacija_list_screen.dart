@@ -1,43 +1,39 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:seminarskirsiidesktop/providers/osoblje_provider.dart';
+import '../../providers/rezervacija_provider.dart';
+import '../../widgets/master_screen.dart';
 
-import '../widgets/master_screen.dart';
-
-class OsobljeListScreen extends StatefulWidget {
-  const OsobljeListScreen({super.key});
+class RezervacijaListScreen extends StatefulWidget {
+  const RezervacijaListScreen({super.key});
 
   @override
-  State<OsobljeListScreen> createState() => _OsobljeListScreenState();
+  State<RezervacijaListScreen> createState() => _RezervacijaListScreenState();
 }
 
-class _OsobljeListScreenState extends State<OsobljeListScreen> {
+class _RezervacijaListScreenState extends State<RezervacijaListScreen> {
 
-  late OsobljeProvider _osobljeProvider;
+  late RezervacijaProvider _rezervacijaProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _osobljeProvider = context.read<OsobljeProvider>();
+    _rezervacijaProvider = context.read<RezervacijaProvider>();
     loadData();
   }
 
-   Future loadData() async {
-    var tmpData = await _osobljeProvider.get(null);
+    Future loadData() async {
+    var tmpData = await _rezervacijaProvider.get(null);
     setState(() {
       data = tmpData;
     });
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Lista uposlenih',
+      title: 'Lista rezervacija',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -67,22 +63,17 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                           DataColumn(
                               label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Email",
+                                  child: Text("Soba broj",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Telefon",
+                                  child: Text("Datum rezervacije",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Korisnicko ime",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Slika",
+                                  child: Text("Zavrsetak Rezervacije",
                                       style: TextStyle(fontSize: 14)))),
                         ],
                         rows: _buildPlanAndProgrammeList(),
@@ -102,8 +93,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
+          DataCell(Text("No data..."))
         ])
       ];
     }
@@ -113,21 +103,15 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
-                    Text(x["ime"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["gost"]["ime"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["prezime"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["gost"]["prezime"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  Text(x["email"] ?? "", style: TextStyle(fontSize: 14))),
+                  Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  Text(x["telefon"] ?? "", style: TextStyle(fontSize: 14))),
+                  Text(x["datumRezervacije"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  Text(x["korisnickoIme"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  Image.memory(
-                    base64Decode(x["slika"]),
-                    fit: BoxFit.cover,
-                  ),
-                  ),
+                  Text(x["zavrsetakRezervacije"] ?? "", style: TextStyle(fontSize: 14))),
               ],
             ))
         .toList()

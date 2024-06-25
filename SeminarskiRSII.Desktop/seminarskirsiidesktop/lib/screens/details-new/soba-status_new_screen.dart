@@ -1,29 +1,29 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
-import 'package:seminarskirsiidesktop/screens/drzava_list_screen.dart';
+import 'package:seminarskirsiidesktop/screens/lists/sobastatus_list_screen.dart';
+import '../../providers/base_provider.dart';
 
-import '../providers/base_provider.dart';
-
-class NewDrzavaScreen extends StatefulWidget {
-  const NewDrzavaScreen({Key? key}) : super(key: key);
+class NewSobaStatusScreen extends StatefulWidget {
+  const NewSobaStatusScreen({Key? key}) : super(key: key);
 
   @override
-  _NewDrzavaScreenState createState() => _NewDrzavaScreenState();
+  _NewSobaStatusScreenState createState() => _NewSobaStatusScreenState();
 }
 
-class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
-  TextEditingController _nazivController = TextEditingController();
+class _NewSobaStatusScreenState extends State<NewSobaStatusScreen> {
+  TextEditingController _statusController = TextEditingController();
+  TextEditingController _opisController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late String naziv;
+  late String status;
+  late String opis;
 
     @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Drzava'),
+        title: Text('Create New Status'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -33,15 +33,29 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Naziv Drzave'),
+                controller: _statusController,
+                decoration: InputDecoration(labelText: 'Soba Status'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the name of the Drzava';
+                    return 'Please enter the status of room';
                   }
                   return null;
                 },
                 onSaved: (value) {
-                  naziv = value!;
+                  status = value!;
+                },
+              ),
+              TextFormField(
+                controller: _opisController,
+                decoration: InputDecoration(labelText: 'Soba Opis'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the description of status';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  opis = value!;
                 },
               ),
               SizedBox(height: 16),
@@ -50,7 +64,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     // Call your method to create Drzava here
-                    _createDrzava();
+                    _createStatus();
                   }
                 },
                 child: Text('Save'),
@@ -62,10 +76,11 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
     );
   }
 
-  void _createDrzava() {
+  void _createStatus() {
     // Implement your logic to create Drzava here
-final request = DrzavaInsertRequest(
-      naziv: naziv,
+final request = SobaStatusInsertRequest(
+      status: status,
+      opis: opis
     );
 
     // Pretvorite objekt request u JSON string
@@ -76,14 +91,14 @@ final request = DrzavaInsertRequest(
         (X509Certificate cert, String host, int port) => true;
     final http = IOClient(ioc);
     // Izvršite HTTP POST zahtjev na server
-    final url = Uri.parse("${BaseProvider.baseUrl}/Drzava");
+    final url = Uri.parse("${BaseProvider.baseUrl}/SobaStatus");
     http.post(url,
         body: requestBody,
         headers: {'Content-Type': 'application/json'}).then((response) {
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Drzava uspješno Dodata.'),
+            content: Text('Status uspješno Dodat.'),
             behavior: SnackBarBehavior.floating, // Display at the top
           ),
         );
@@ -96,7 +111,7 @@ final request = DrzavaInsertRequest(
         //  },);
         Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const DrzavaListScreen()),
+                  MaterialPageRoute(builder: (context) => const SobaStatusListScreen()),
                 );
         // Navigator.pushNamed(
         //     context, DrzavaListScreen.drzavaRouteName);
@@ -112,21 +127,25 @@ final request = DrzavaInsertRequest(
 
   @override
   void dispose() {
-    _nazivController.dispose();
+    _statusController.dispose();
+    _opisController.dispose();
     super.dispose();
   }
 }
 
-class DrzavaInsertRequest {
-  final String naziv;
+class SobaStatusInsertRequest {
+  final String status;
+  final String opis;
 
-    DrzavaInsertRequest({
-    required this.naziv
+    SobaStatusInsertRequest({
+    required this.status,
+    required this.opis
   });
 
     Map<String, dynamic> toJson() {
     return {
-      'naziv': naziv,
+      'status': status,
+      'opis': opis
     };
   }
 }

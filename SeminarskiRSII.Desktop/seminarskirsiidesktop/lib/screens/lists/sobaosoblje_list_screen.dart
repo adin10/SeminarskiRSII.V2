@@ -2,38 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import '../providers/rezervacija_provider.dart';
-import '../widgets/master_screen.dart';
+import 'package:seminarskirsiidesktop/screens/details-new/soba-osoblje_new_screen.dart';
+import '../../providers/sobaosoblje_provider.dart';
+import '../../widgets/master_screen.dart';
 
-class RezervacijaListScreen extends StatefulWidget {
-  const RezervacijaListScreen({super.key});
+class SobaOsobljeListScreen extends StatefulWidget {
+  const SobaOsobljeListScreen({super.key});
 
   @override
-  State<RezervacijaListScreen> createState() => _RezervacijaListScreenState();
+  State<SobaOsobljeListScreen> createState() => _SobaOsobljeListScreenState();
 }
 
-class _RezervacijaListScreenState extends State<RezervacijaListScreen> {
+class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
 
-  late RezervacijaProvider _rezervacijaProvider;
+  late SobaOsobljeProvider _sobaOsobljeProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _rezervacijaProvider = context.read<RezervacijaProvider>();
+    _sobaOsobljeProvider = context.read<SobaOsobljeProvider>();
     loadData();
   }
 
-    Future loadData() async {
-    var tmpData = await _rezervacijaProvider.get(null);
+   Future loadData() async {
+    var tmpData = await _sobaOsobljeProvider.get(null);
     setState(() {
       data = tmpData;
     });
   }
-
-  @override
+  
+ @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Lista rezervacija',
+      title: 'Zaduzenja po sobama',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -51,34 +52,28 @@ class _RezervacijaListScreenState extends State<RezervacijaListScreen> {
                                   child: Text("Id",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
-                              label: Container(
+                               label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Ime",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                              label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Prezime",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                              label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Soba broj",
+                                  child: Text("Soba",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Datum rezervacije",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Zavrsetak Rezervacije",
+                                  child: Text("Osoblje",
                                       style: TextStyle(fontSize: 14)))),
                         ],
                         rows: _buildPlanAndProgrammeList(),
                       ),
                     ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewSobaOsobljeScreen()),
+                );
+              },
+              child: Text('Create New Soba Osoblje'),
+            ),
                   ]),
                 )
       )
@@ -88,9 +83,6 @@ class _RezervacijaListScreenState extends State<RezervacijaListScreen> {
     if (data.length == 0) {
       return [
         DataRow(cells: [
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data..."))
@@ -103,19 +95,14 @@ class _RezervacijaListScreenState extends State<RezervacijaListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
-                    Text(x["gost"]["ime"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["gost"]["prezime"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  Text(x["datumRezervacije"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  Text(x["zavrsetakRezervacije"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text("${x["osoblje"]["ime"]} ${x["osoblje"]["prezime"]}" ?? "", style: TextStyle(fontSize: 14))),
               ],
             ))
         .toList()
         .cast<DataRow>();
     return list;
   }
+  
 }

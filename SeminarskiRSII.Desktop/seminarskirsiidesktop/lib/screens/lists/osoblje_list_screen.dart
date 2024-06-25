@@ -1,44 +1,43 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:seminarskirsiidesktop/main.dart';
-import 'package:seminarskirsiidesktop/providers/gosti_provider.dart';
-import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
-import 'package:seminarskirsiidesktop/widgets/master_screen.dart';
+import 'package:seminarskirsiidesktop/providers/osoblje_provider.dart';
 
-class SobaListScreen extends StatefulWidget {
-  static const String sobaRouteName = '/soba';
-  const SobaListScreen({super.key});
+import '../../widgets/master_screen.dart';
+
+class OsobljeListScreen extends StatefulWidget {
+  const OsobljeListScreen({super.key});
 
   @override
-  State<SobaListScreen> createState() => _SobaListScreenState();
+  State<OsobljeListScreen> createState() => _OsobljeListScreenState();
 }
 
-class _SobaListScreenState extends State<SobaListScreen> {
-  late SobaProvider _sobaProvider;
+class _OsobljeListScreenState extends State<OsobljeListScreen> {
+
+  late OsobljeProvider _osobljeProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _sobaProvider = context.read<SobaProvider>();
+    _osobljeProvider = context.read<OsobljeProvider>();
     loadData();
   }
 
-    Future loadData() async {
-    var tmpData = await _sobaProvider.get(null);
+   Future loadData() async {
+    var tmpData = await _osobljeProvider.get(null);
     setState(() {
       data = tmpData;
     });
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Sobe',
+      title: 'Lista uposlenih',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -58,22 +57,27 @@ class _SobaListScreenState extends State<SobaListScreen> {
                           DataColumn(
                               label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Broj Sobe",
+                                  child: Text("Ime",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                               label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Broj sprata",
+                                  child: Text("Prezime",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                               label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Opis sobe",
+                                  child: Text("Email",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Soba status",
+                                  child: Text("Telefon",
+                                      style: TextStyle(fontSize: 14)))),
+                          DataColumn(
+                               label: Container(
+                                  alignment: Alignment.center,
+                                  child: Text("Korisnicko ime",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
@@ -99,6 +103,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
+          DataCell(Text("No data...")),
         ])
       ];
     }
@@ -108,13 +113,15 @@ class _SobaListScreenState extends State<SobaListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
-                    Text(x["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["ime"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["brojSprata"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["prezime"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  Text(x["opisSobe"] ?? "", style: TextStyle(fontSize: 14))),
+                  Text(x["email"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  Text(x["sobaStatus"]["status"] ?? "", style: TextStyle(fontSize: 14))),
+                  Text(x["telefon"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(
+                  Text(x["korisnickoIme"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
                   Image.memory(
                     base64Decode(x["slika"]),
@@ -128,6 +135,3 @@ class _SobaListScreenState extends State<SobaListScreen> {
     return list;
   }
 }
-
-
-

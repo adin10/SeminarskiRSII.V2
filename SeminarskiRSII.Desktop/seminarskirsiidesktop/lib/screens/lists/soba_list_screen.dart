@@ -1,40 +1,45 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:seminarskirsiidesktop/providers/novosti_provider.dart';
-import '../widgets/master_screen.dart';
+import 'package:seminarskirsiidesktop/main.dart';
+import 'package:seminarskirsiidesktop/providers/gosti_provider.dart';
+import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
+import 'package:seminarskirsiidesktop/screens/details-new/soba_new_screen.dart';
+import 'package:seminarskirsiidesktop/widgets/master_screen.dart';
 
-class NovostiListScreen extends StatefulWidget {
-  const NovostiListScreen({super.key});
+class SobaListScreen extends StatefulWidget {
+  static const String sobaRouteName = '/soba';
+  const SobaListScreen({super.key});
 
   @override
-  State<NovostiListScreen> createState() => _NovostiListScreenState();
+  State<SobaListScreen> createState() => _SobaListScreenState();
 }
 
-class _NovostiListScreenState extends State<NovostiListScreen> {
-
-  late NovostiProvider _novostiProvider;
+class _SobaListScreenState extends State<SobaListScreen> {
+  late SobaProvider _sobaProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _novostiProvider = context.read<NovostiProvider>();
+    _sobaProvider = context.read<SobaProvider>();
     loadData();
   }
 
-   Future loadData() async {
-    var tmpData = await _novostiProvider.get(null);
+    Future loadData() async {
+    var tmpData = await _sobaProvider.get(null);
     setState(() {
       data = tmpData;
     });
   }
-  
- @override
+
+  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Novosti',
+      title: 'Sobe',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -52,29 +57,43 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
                                   child: Text("Id",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
-                               label: Container(
+                              label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Naslov",
+                                  child: Text("Broj Sobe",
+                                      style: TextStyle(fontSize: 14)))),
+                          DataColumn(
+                              label: Container(
+                                  alignment: Alignment.center,
+                                  child: Text("Broj sprata",
+                                      style: TextStyle(fontSize: 14)))),
+                          DataColumn(
+                              label: Container(
+                                  alignment: Alignment.center,
+                                  child: Text("Opis sobe",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Sadrzaj",
+                                  child: Text("Soba status",
                                       style: TextStyle(fontSize: 14)))),
-                            DataColumn(
+                          DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Datum obavjesti",
-                                      style: TextStyle(fontSize: 14)))),
-                            DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Autor",
+                                  child: Text("Slika",
                                       style: TextStyle(fontSize: 14)))),
                         ],
                         rows: _buildPlanAndProgrammeList(),
                       ),
                     ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewSobaScreen()),
+                );
+              },
+              child: Text('Create New Room'),
+            ),
                   ]),
                 )
       )
@@ -88,7 +107,8 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
-          DataCell(Text("No data..."))
+          DataCell(Text("No data...")),
+          DataCell(Text("No data...")),
         ])
       ];
     }
@@ -98,13 +118,19 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
-                    Text(x["naslov"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["sadrzaj"] ?? "", style: TextStyle(fontSize: 14))),
+                    Text(x["brojSprata"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["datumObjave"] ?? "", style: TextStyle(fontSize: 14))),
+                  Text(x["opisSobe"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  Text("${x["osoblje"]["ime"]} ${x["osoblje"]["prezime"]}" ?? "", style: TextStyle(fontSize: 14))),
+                  Text(x["sobaStatus"]["status"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(
+                  Image.memory(
+                    base64Decode(x["slika"]),
+                    fit: BoxFit.cover,
+                  ),
+                  ),
               ],
             ))
         .toList()
@@ -112,3 +138,6 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
     return list;
   }
 }
+
+
+

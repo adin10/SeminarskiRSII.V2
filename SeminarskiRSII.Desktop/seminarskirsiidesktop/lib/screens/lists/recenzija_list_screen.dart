@@ -1,42 +1,40 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:seminarskirsiidesktop/providers/cjenovnik_provider.dart';
 
-import '../providers/grad_provider.dart';
-import '../widgets/master_screen.dart';
+import '../../providers/recenzija_provider.dart';
+import '../../widgets/master_screen.dart';
 
-class CjenovnikListScreen extends StatefulWidget {
-  const CjenovnikListScreen({super.key});
+class RecenzijaListScreen extends StatefulWidget {
+  const RecenzijaListScreen({super.key});
 
   @override
-  State<CjenovnikListScreen> createState() => _CjenovnikListScreenState();
+  State<RecenzijaListScreen> createState() => _RecenzijaListScreenState();
 }
 
-class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
+class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
 
-  late CjenovnikProvider _cjenovnikProvider;
+  late RecenzijaProvider _recenzijaProvider;
   dynamic data = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _cjenovnikProvider = context.read<CjenovnikProvider>();
+    _recenzijaProvider = context.read<RecenzijaProvider>();
     loadData();
   }
 
-   Future loadData() async {
-    var tmpData = await _cjenovnikProvider.get(null);
+    Future loadData() async {
+    var tmpData = await _recenzijaProvider.get(null);
     setState(() {
       data = tmpData;
     });
   }
-  
- @override
+
+  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Cijene soba',
+      title: 'Sve Recenzije',
       child: Container(
            child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -54,19 +52,29 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                                   child: Text("Id",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
-                               label: Container(
+                              label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Soba",
+                                  child: Text("Ime",
+                                      style: TextStyle(fontSize: 14)))),
+                          DataColumn(
+                              label: Container(
+                                  alignment: Alignment.center,
+                                  child: Text("Prezime",
+                                      style: TextStyle(fontSize: 14)))),
+                          DataColumn(
+                              label: Container(
+                                  alignment: Alignment.center,
+                                  child: Text("Soba broj",
                                       style: TextStyle(fontSize: 14)))),
                           DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Cijena",
+                                  child: Text("Ocjena",
                                       style: TextStyle(fontSize: 14)))),
-                            DataColumn(
+                          DataColumn(
                                label: Container(
                                   alignment: Alignment.center,
-                                  child: Text("Broj dana",
+                                  child: Text("Komentar",
                                       style: TextStyle(fontSize: 14)))),
                         ],
                         rows: _buildPlanAndProgrammeList(),
@@ -84,6 +92,8 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
           DataCell(Text("No data...")),
+          DataCell(Text("No data...")),
+          DataCell(Text("No data...")),
           DataCell(Text("No data..."))
         ])
       ];
@@ -94,11 +104,15 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
               cells: [
                 DataCell(Text(x["id"]?.toString() ?? "0")),
                 DataCell(
+                    Text(x["gost"]["ime"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(
+                    Text(x["gost"]["prezime"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(
                   Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["cijena"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
+                  Text(x["ocjena"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  Text(x["brojDana"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
+                  Text(x["komentar"] ?? "", style: TextStyle(fontSize: 14))),
               ],
             ))
         .toList()
