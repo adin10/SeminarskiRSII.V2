@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/grad_provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/grad_new_screen.dart';
 import '../../widgets/master_screen.dart';
+import '../details-new/drzava_new_screen.dart';
 
 class GradListScreen extends StatefulWidget {
   const GradListScreen({super.key});
@@ -114,12 +115,18 @@ class _GradListScreenState extends State<GradListScreen> {
                                 _buildDataColumn("Postanski broj"),
                                 _buildDataColumn("Drzava"),
                                 DataColumn(
-                                  label: Container(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Actions',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
+                                  label: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 60,
+                                        child: Center(child: Text('Update')),
+                                      ),
+                                      SizedBox(
+                                        width: 60,
+                                        child: Center(child: Text('Delete')),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -138,7 +145,7 @@ class _GradListScreenState extends State<GradListScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NewGradScreen()),
+                  MaterialPageRoute(builder: (context) =>  NewGradScreen()),
                 );
               },
               child: Text('Create New Grad'),
@@ -170,50 +177,55 @@ class _GradListScreenState extends State<GradListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(5, (index) => DataCell(Text("No data..."))))
+        DataRow(cells: [
+          DataCell(Text("No data...")),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
+        ])
       ];
     }
 
-    return List<DataRow>.generate(
-      data.length,
-      (index) {
-        var city = data[index];
-
-        return DataRow(
-          cells: [
-            _buildDataCell(city["id"]?.toString() ?? ""),
-            _buildDataCell(city["nazivGrada"] ?? ""),
-            _buildDataCell(city["postanskiBroj"]?.toString() ?? ""),
-            _buildDataCell(city["drzava"]["naziv"] ?? ""),
-            DataCell(
-              IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
-                onPressed: () => _confirmDelete(city["id"].toString()),
-              ),
-            ),
-          ],
-          color: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.hovered)) {
-                return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
-              }
-              return null;
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  DataCell _buildDataCell(String value) {
-    return DataCell(
-      Text(
-        value,
-        style: TextStyle(
-          fontSize: 14,
-          color: Colors.grey[800],
-        ),
-      ),
-    );
+    return data
+        .map<DataRow>((x) => DataRow(
+              cells: [
+                DataCell(Text(x["id"].toString(), style: TextStyle(fontSize: 14))),
+                DataCell(Text(x["nazivGrada"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(Text(x["postanskiBroj"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(Text(x["drzava"]?["naziv"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        child: IconButton(
+                          icon: Icon(Icons.edit, color: Colors.blue),
+                              onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => NewGradScreen(
+                                        grad: x, // Pass the entire grad object
+                                      ),
+                                    ),
+                                  );
+                                }
+                        ),
+                      ),
+                      SizedBox(
+                        width: 60,
+                        child: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => _confirmDelete(x["id"].toString()),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ))
+        .toList();
   }
 }

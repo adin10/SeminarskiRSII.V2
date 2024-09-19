@@ -108,12 +108,18 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                         columns: [
                           DataColumn(label: Text('Naziv drzave')),
                           DataColumn(
-                            label: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Actions',
-                                style: TextStyle(fontSize: 14),
-                              ),
+                            label: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 60,
+                                  child: Center(child: Text('Update')),
+                                ),
+                                SizedBox(
+                                  width: 60,
+                                  child: Center(child: Text('Delete')),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -132,7 +138,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NewDrzavaScreen()),
+                  MaterialPageRoute(builder: (context) =>  NewDrzavaScreen()),
                 );
               },
               child: Text('Create New Drzava'),
@@ -162,14 +168,31 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
               cells: [
                 DataCell(Text(x["naziv"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                  IconButton(
-                    icon: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.delete, color: Colors.red),
-                      ],
-                    ),
-                    onPressed: () => _confirmDelete(x["id"].toString()),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        child: IconButton(
+                          icon: Icon(Icons.edit, color: Colors.blue),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewDrzavaScreen(drzava: x),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 60,
+                        child: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => _confirmDelete(x["id"].toString()),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -177,6 +200,3 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
         .toList();
   }
 }
-
-
-

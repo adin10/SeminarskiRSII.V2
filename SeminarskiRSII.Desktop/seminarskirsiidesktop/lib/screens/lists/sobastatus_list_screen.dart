@@ -110,7 +110,8 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
                                 _buildDataColumn("Id"),
                                 _buildDataColumn("Status"),
                                 _buildDataColumn("Opis"),
-                                _buildDataColumn("Actions"),
+                                _buildDataColumn("Update"), // Separate column for Update
+                                _buildDataColumn("Delete"), // Separate column for Delete
                               ],
                               rows: _buildRows(),
                             ),
@@ -159,7 +160,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(4, (index) => DataCell(Text("No data..."))))
+        DataRow(cells: List.generate(5, (index) => DataCell(Text("No data..."))))
       ];
     }
 
@@ -171,14 +172,27 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
         return DataRow(
           cells: [
             _buildDataCell(sobaStatus["id"]?.toString() ?? ""),
-            _buildDataCell(sobaStatus["status"] ?? ""),
-            _buildDataCell(sobaStatus["opis"] ?? ""),
-            DataCell(
-              IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
-                onPressed: () => _confirmDelete(sobaStatus["id"].toString()),
-              ),
+    _buildDataCell(sobaStatus["status"] ?? ""),
+    _buildDataCell(sobaStatus["opis"] ?? ""),
+    DataCell( // Update button
+      IconButton(
+        icon: Icon(Icons.edit, color: Colors.blue),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewSobaStatusScreen(sobaStatus: sobaStatus),
             ),
+          );
+        },
+      ),
+    ),
+    DataCell( // Delete button
+      IconButton(
+        icon: Icon(Icons.delete, color: Colors.red),
+        onPressed: () => _confirmDelete(sobaStatus["id"].toString()),
+      ),
+    ),
           ],
           color: MaterialStateProperty.resolveWith<Color?>(
             (Set<MaterialState> states) {

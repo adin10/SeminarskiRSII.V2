@@ -6,7 +6,9 @@ import 'package:seminarskirsiidesktop/screens/lists/drzava_list_screen.dart';
 import '../../providers/base_provider.dart';
 
 class NewDrzavaScreen extends StatefulWidget {
-  const NewDrzavaScreen({Key? key}) : super(key: key);
+  final dynamic drzava;  // Add drzava parameter
+
+  NewDrzavaScreen({Key? key, this.drzava}) : super(key: key);  // Remove const and make drzava optional
 
   @override
   _NewDrzavaScreenState createState() => _NewDrzavaScreenState();
@@ -17,11 +19,21 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
   final _formKey = GlobalKey<FormState>();
   late String naziv;
 
-    @override
+  @override
+  void initState() {
+    super.initState();
+
+    // If we're updating an existing Drzava, populate the form
+    if (widget.drzava != null) {
+      _nazivController.text = widget.drzava['naziv'] ?? '';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Drzava'),
+        title: Text(widget.drzava == null ? 'Create New Drzava' : 'Update Drzava'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,6 +43,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                controller: _nazivController,
                 decoration: InputDecoration(labelText: 'Naziv Drzave'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -47,11 +60,15 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    // Call your method to create Drzava here
-                    _createDrzava();
+                    // Call the appropriate method for creating or updating
+                    if (widget.drzava == null) {
+                      _createDrzava();
+                    } else {
+                      _updateDrzava(widget.drzava['id']);
+                    }
                   }
                 },
-                child: Text('Save'),
+                child: Text(widget.drzava == null ? 'Save' : 'Update'),
               ),
             ],
           ),
@@ -61,50 +78,49 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
   }
 
   void _createDrzava() {
-    // Implement your logic to create Drzava here
-final request = DrzavaInsertRequest(
-      naziv: naziv,
-    );
+    final request = DrzavaInsertRequest(naziv: naziv);
 
-    // Pretvorite objekt request u JSON string
     final requestBody = jsonEncode(request.toJson());
-
     final ioc = HttpClient();
-    ioc.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
+    ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
     final http = IOClient(ioc);
-    // Izvršite HTTP POST zahtjev na server
     final url = Uri.parse("${BaseProvider.baseUrl}/Drzava");
-    http.post(url,
-        body: requestBody,
-        headers: {'Content-Type': 'application/json'}).then((response) {
+
+    http.post(url, body: requestBody, headers: {'Content-Type': 'application/json'}).then((response) {
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Drzava uspješno Dodata.'),
-            behavior: SnackBarBehavior.floating, // Display at the top
-          ),
-        );
-        // Uspješno poslan zahtjev
-        // Ovdje možete dodati odgovarajući postupak za prikaz poruke ili navigaciju na drugi ekran
-        //     Navigator.pushNamed(context, SobeScreen.sobeRouteName,
-        //          arguments: {
-        //   'userData': userdata,
-        //   'userId': userId ,
-        //  },);
-        Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DrzavaListScreen()),
-                );
-        // Navigator.pushNamed(
-        //     context, DrzavaListScreen.drzavaRouteName);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Drzava successfully created.'),
+          behavior: SnackBarBehavior.floating,
+        ));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const DrzavaListScreen()));
       } else {
-        // Pogreška pri slanju zahtjeva
-        // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
+        // Handle error
       }
     }).catchError((error) {
-      // Pogreška prilikom izvršavanja HTTP zahtjeva
-      // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
+      // Handle error
+    });
+  }
+
+  void _updateDrzava(int id) {
+    final request = DrzavaInsertRequest(naziv: naziv);
+    final requestBody = jsonEncode(request.toJson());
+    final ioc = HttpClient();
+    ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    final http = IOClient(ioc);
+    final url = Uri.parse("${BaseProvider.baseUrl}/Drzava/$id");
+
+    http.put(url, body: requestBody, headers: {'Content-Type': 'application/json'}).then((response) {
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Drzava successfully updated.'),
+          behavior: SnackBarBehavior.floating,
+        ));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const DrzavaListScreen()));
+      } else {
+        // Handle error
+      }
+    }).catchError((error) {
+      // Handle error
     });
   }
 
@@ -118,13 +134,9 @@ final request = DrzavaInsertRequest(
 class DrzavaInsertRequest {
   final String naziv;
 
-    DrzavaInsertRequest({
-    required this.naziv
-  });
+  DrzavaInsertRequest({required this.naziv});
 
-    Map<String, dynamic> toJson() {
-    return {
-      'naziv': naziv,
-    };
+  Map<String, dynamic> toJson() {
+    return {'naziv': naziv};
   }
 }

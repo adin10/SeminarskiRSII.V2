@@ -104,5 +104,4 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
         .cast<DataRow>();
     return list;
   }
-  
 }

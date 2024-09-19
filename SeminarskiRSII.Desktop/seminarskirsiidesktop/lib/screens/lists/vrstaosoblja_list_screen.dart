@@ -72,110 +72,117 @@ class _VrstaOsobljaListScreenState extends State<VrstaOsobljaListScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MasterScreenWidget(
-      title: 'Vrste osoblja',
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : Scrollbar(
+@override
+Widget build(BuildContext context) {
+  return MasterScreenWidget(
+    title: 'Vrste osoblja',
+    child: Column(
+      children: [
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: isLoading
+                ? Center(child: CircularProgressIndicator())
+                : Scrollbar(
+                    controller: _verticalController,
+                    thumbVisibility: true,
+                    child: SingleChildScrollView(
                       controller: _verticalController,
-                      thumbVisibility: true,
-                      child: SingleChildScrollView(
-                        controller: _verticalController,
-                        scrollDirection: Axis.vertical,
-                        child: Scrollbar(
+                      scrollDirection: Axis.vertical,
+                      child: Scrollbar(
+                        controller: _horizontalController,
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
                           controller: _horizontalController,
-                          thumbVisibility: true,
-                          child: SingleChildScrollView(
-                            controller: _horizontalController,
-                            scrollDirection: Axis.horizontal,
-                            child: DataTable(
-                              dataRowHeight: 60,
-                              headingRowHeight: 50,
-                              headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
-                              dividerThickness: 2,
-                              columnSpacing: 24,
-                              horizontalMargin: 12,
-                              columns: [
-                                DataColumn(label: Text('Id')),
-                                DataColumn(label: Text('Pozicija')),
-                                DataColumn(label: Text('Zaduzenje')),
-                                DataColumn(
-                                  label: Container(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Actions',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              rows: _buildRows(),
-                            ),
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                            dataRowHeight: 60,
+                            headingRowHeight: 50,
+                            headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                            dividerThickness: 2,
+                            columnSpacing: 24,
+                            horizontalMargin: 12,
+                            columns: [
+                              DataColumn(label: Text('Id')),
+                              DataColumn(label: Text('Pozicija')),
+                              DataColumn(label: Text('Zaduzenje')),
+                              DataColumn(label: Text('Update')),
+                              DataColumn(label: Text('Delete')),
+                            ],
+                            rows: _buildRows(),
                           ),
                         ),
                       ),
                     ),
-            ),
-          ),
-          SizedBox(height: 20),
-          Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const NewVrstaOsobljaScreen()),
-                );
-              },
-              child: Text('Create New Vrsta Osoblja'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  List<DataRow> _buildRows() {
-    if (data.isEmpty) {
-      return [
-        DataRow(cells: [
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(SizedBox.shrink()),
-        ]),
-      ];
-    }
-
-    return data
-        .map<DataRow>((x) => DataRow(
-              cells: [
-                DataCell(Text(x["id"]?.toString() ?? "0")),
-                DataCell(Text(x["pozicija"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["zaduzenja"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
-                    onPressed: () => _confirmDelete(x["id"].toString()),
                   ),
-                ),
-              ],
-            ))
-        .toList();
+          ),
+        ),
+        SizedBox(height: 20),
+        Align(
+          alignment: Alignment.centerRight,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NewVrstaOsobljaScreen()),
+              );
+            },
+            child: Text('Create New Vrsta Osoblja'),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              textStyle: TextStyle(fontSize: 16),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+List<DataRow> _buildRows() {
+  if (data.isEmpty) {
+    return [
+      DataRow(cells: [
+        DataCell(Text("No data...")),
+        DataCell(Text("No data...")),
+        DataCell(Text("No data...")),
+        DataCell(SizedBox.shrink()),
+        DataCell(SizedBox.shrink()),
+      ]),
+    ];
   }
+
+  return data.map<DataRow>((x) {
+    return DataRow(
+      cells: [
+        DataCell(Text(x["id"]?.toString() ?? "0")),
+        DataCell(Text(x["pozicija"] ?? "", style: TextStyle(fontSize: 14))),
+        DataCell(Text(x["zaduzenja"] ?? "", style: TextStyle(fontSize: 14))),
+        DataCell( // Update button
+          IconButton(
+            icon: Icon(Icons.edit, color: Colors.blue),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewVrstaOsobljaScreen(vrstaOsoblja: x),
+                ),
+              );
+            },
+          ),
+        ),
+        DataCell( // Delete button
+          IconButton(
+            icon: Icon(Icons.delete, color: Colors.red),
+            onPressed: () => _confirmDelete(x["id"].toString()),
+          ),
+        ),
+      ],
+    );
+  }).toList();
+}
 }

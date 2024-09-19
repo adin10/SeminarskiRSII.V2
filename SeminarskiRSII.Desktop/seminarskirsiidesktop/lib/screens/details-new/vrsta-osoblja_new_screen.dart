@@ -6,7 +6,9 @@ import 'package:seminarskirsiidesktop/screens/lists/vrstaosoblja_list_screen.dar
 import '../../providers/base_provider.dart';
 
 class NewVrstaOsobljaScreen extends StatefulWidget {
-  const NewVrstaOsobljaScreen({Key? key}) : super(key: key);
+  final dynamic vrstaOsoblja; // For edit functionality
+
+  const NewVrstaOsobljaScreen({Key? key, this.vrstaOsoblja}) : super(key: key);
 
   @override
   _NewVrstaOsobljaScreenState createState() => _NewVrstaOsobljaScreenState();
@@ -16,14 +18,21 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
   TextEditingController _pozicijaController = TextEditingController();
   TextEditingController _zaduzenjaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late String pozicija;
-  late String zaduzenja;
 
-    @override
+  @override
+  void initState() {
+    super.initState();
+    if (widget.vrstaOsoblja != null) {
+      _pozicijaController.text = widget.vrstaOsoblja['pozicija'] ?? '';
+      _zaduzenjaController.text = widget.vrstaOsoblja['zaduzenja'] ?? '';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Vrsta osoblja'),
+        title: Text(widget.vrstaOsoblja != null ? 'Edit Vrsta osoblja' : 'Create New Vrsta osoblja'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -41,9 +50,6 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
                   }
                   return null;
                 },
-                onSaved: (value) {
-                  pozicija = value!;
-                },
               ),
               TextFormField(
                 controller: _zaduzenjaController,
@@ -54,17 +60,12 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
                   }
                   return null;
                 },
-                onSaved: (value) {
-                  zaduzenja = value!;
-                },
               ),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // Call your method to create Drzava here
-                    _createVrstaOsoblja();
+                    _createOrUpdateVrstaOsoblja();
                   }
                 },
                 child: Text('Save'),
@@ -76,76 +77,29 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
     );
   }
 
-  void _createVrstaOsoblja() {
-    // Implement your logic to create Drzava here
-final request = VrstaOsobljaInsertRequest(
-      pozicija: pozicija,
-      zaduzenja: zaduzenja
-    );
-
-    // Pretvorite objekt request u JSON string
-    final requestBody = jsonEncode(request.toJson());
+  void _createOrUpdateVrstaOsoblja() async {
+    final requestBody = jsonEncode({
+      'pozicija': _pozicijaController.text,
+      'zaduzenja': _zaduzenjaController.text,
+    });
 
     final ioc = HttpClient();
-    ioc.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
+    ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
     final http = IOClient(ioc);
-    // Izvršite HTTP POST zahtjev na server
-    final url = Uri.parse("${BaseProvider.baseUrl}/VrstaOsoblja");
-    http.post(url,
-        body: requestBody,
-        headers: {'Content-Type': 'application/json'}).then((response) {
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Vrsta Osoblja uspješno Dodata.'),
-            behavior: SnackBarBehavior.floating, // Display at the top
-          ),
-        );
-        // Uspješno poslan zahtjev
-        // Ovdje možete dodati odgovarajući postupak za prikaz poruke ili navigaciju na drugi ekran
-        //     Navigator.pushNamed(context, SobeScreen.sobeRouteName,
-        //          arguments: {
-        //   'userData': userdata,
-        //   'userId': userId ,
-        //  },);
-        Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const VrstaOsobljaListScreen()),
-                );
-        // Navigator.pushNamed(
-        //     context, DrzavaListScreen.drzavaRouteName);
+
+    try {
+      if (widget.vrstaOsoblja == null) {
+        // Creating new entry (POST request)
+        final url = Uri.parse("${BaseProvider.baseUrl}/VrstaOsoblja");
+        await http.post(url, body: requestBody, headers: {"Content-Type": "application/json"});
       } else {
-        // Pogreška pri slanju zahtjeva
-        // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
+        // Updating existing entry (PUT request)
+        final url = Uri.parse("${BaseProvider.baseUrl}/VrstaOsoblja/${widget.vrstaOsoblja['id']}");
+        await http.put(url, body: requestBody, headers: {"Content-Type": "application/json"});
       }
-    }).catchError((error) {
-      // Pogreška prilikom izvršavanja HTTP zahtjeva
-      // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
-    });
-  }
-
-  @override
-  void dispose() {
-    _pozicijaController.dispose();
-    _zaduzenjaController.dispose();
-    super.dispose();
-  }
-}
-
-class VrstaOsobljaInsertRequest {
-  final String pozicija;
-  final String zaduzenja;
-
-    VrstaOsobljaInsertRequest({
-    required this.pozicija,
-    required this.zaduzenja
-  });
-
-    Map<String, dynamic> toJson() {
-    return {
-      'pozicija': pozicija,
-      'zaduzenja': zaduzenja
-    };
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const VrstaOsobljaListScreen()));
+    } catch (error) {
+      print(error); // Handle error
+    }
   }
 }
