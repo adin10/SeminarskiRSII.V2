@@ -16,7 +16,7 @@ class RezervacijaProvider with ChangeNotifier{
     http = IOClient(client);
   }
   
-  Future<dynamic> get(dynamic searchObject) async {
+  Future<List<dynamic>> get(dynamic searchObject) async {
     var url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
     // var headers = CreateHeaders();
     // var response = await http!.get(url, headers: headers);

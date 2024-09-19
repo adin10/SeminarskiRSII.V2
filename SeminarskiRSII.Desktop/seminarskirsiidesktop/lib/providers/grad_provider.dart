@@ -32,6 +32,20 @@ class GradProvider with ChangeNotifier{
     }
   }
 
+      Future<void> delete(String id) async {
+    final url = Uri.parse("${BaseProvider.baseUrl}/Grad/$id"); // Adjust the URL as needed
+
+    final response = await http!.delete(url);
+
+    if (response.statusCode == 200) {
+      // Optionally handle successful deletion here
+      print('Successfully deleted');
+      notifyListeners(); // Notify listeners if you want to refresh data
+    } else {
+      throw Exception('Failed to delete item');
+    }
+  }
+
   bool isValidResponse(Response response){
     if(response.statusCode < 299){
       return true;

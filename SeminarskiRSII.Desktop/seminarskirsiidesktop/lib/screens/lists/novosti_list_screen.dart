@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/novosti_provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/novosti_new_screen.dart';
@@ -15,9 +13,14 @@ class NovostiListScreen extends StatefulWidget {
 }
 
 class _NovostiListScreenState extends State<NovostiListScreen> {
-
   late NovostiProvider _novostiProvider;
-  dynamic data = {};
+  dynamic data;
+  bool isLoading = true;
+
+  // Scroll controllers
+  final ScrollController _verticalController = ScrollController();
+  final ScrollController _horizontalController = ScrollController();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -25,58 +28,75 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
     loadData();
   }
 
-   Future loadData() async {
+  Future loadData() async {
     var tmpData = await _novostiProvider.get(null);
     setState(() {
       data = tmpData;
+      isLoading = false;
     });
   }
-  
- @override
+
+  @override
+  void dispose() {
+    // Dispose scroll controllers
+    _verticalController.dispose();
+    _horizontalController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
       title: 'Novosti',
-      child: Container(
-           child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(children: [
-                    Container(
-                      height: 200,
-                      width: 1000,
-                      child: DataTable(
-                        columnSpacing: 12,
-                        horizontalMargin: 12,
-                        columns: [
-                          DataColumn(
-                              label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Id",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Naslov",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Sadrzaj",
-                                      style: TextStyle(fontSize: 14)))),
-                            DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Datum obavjesti",
-                                      style: TextStyle(fontSize: 14)))),
-                            DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Autor",
-                                      style: TextStyle(fontSize: 14)))),
-                        ],
-                        rows: _buildPlanAndProgrammeList(),
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : Scrollbar(
+                      controller: _verticalController,
+                      thumbVisibility: true,
+                      child: SingleChildScrollView(
+                        controller: _verticalController,
+                        scrollDirection: Axis.vertical,
+                        child: Scrollbar(
+                          controller: _horizontalController,
+                          thumbVisibility: true,
+                          child: SingleChildScrollView(
+                            controller: _horizontalController,
+                            scrollDirection: Axis.horizontal,
+                            child: DataTable(
+                              dataRowHeight: 60,
+                              headingRowHeight: 50,
+                              headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                              dividerThickness: 2,
+                              columnSpacing: 24,
+                              horizontalMargin: 12,
+                              columns: [
+                                _buildDataColumn("Id"),
+                                _buildDataColumn("Naslov"),
+                                _buildDataColumn("Sadrzaj"),
+                                _buildDataColumn("Datum obavjesti"),
+                                _buildDataColumn("Autor"),
+                              ],
+                              rows: _buildRows(),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-            ElevatedButton(
+            ),
+          ),
+          SizedBox(height: 20),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -84,41 +104,82 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
                 );
               },
               child: Text('Create New Notification'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: TextStyle(fontSize: 16),
+              ),
             ),
-                  ]),
-                )
-      )
+          ),
+        ],
+      ),
     );
   }
-  List<DataRow> _buildPlanAndProgrammeList() {
-    if (data.length == 0) {
-      return [
-        DataRow(cells: [
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data..."))
-        ])
-      ];
-    }
 
-    List<DataRow> list = data
-        .map((x) => DataRow(
-              cells: [
-                DataCell(Text(x["id"]?.toString() ?? "0")),
-                DataCell(
-                    Text(x["naslov"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                    Text(x["sadrzaj"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                    Text(x["datumObjave"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(
-                  Text("${x["osoblje"]["ime"]} ${x["osoblje"]["prezime"]}" ?? "", style: TextStyle(fontSize: 14))),
-              ],
-            ))
-        .toList()
-        .cast<DataRow>();
-    return list;
+  DataColumn _buildDataColumn(String label) {
+    return DataColumn(
+      label: Text(
+        label,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: Colors.blueGrey[700],
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  List<DataRow> _buildRows() {
+  if (data == null || data.isEmpty) {
+    return [
+      DataRow(cells: List.generate(5, (index) => DataCell(Text("No data..."))))
+    ];
+  }
+
+  return List<DataRow>.generate(
+    data.length,
+    (index) {
+      var novost = data[index];
+
+      // Format datumObjave as date only
+      String formattedDate = '';
+      if (novost["datumObjave"] != null) {
+        DateTime date = DateTime.parse(novost["datumObjave"]);
+        formattedDate = DateFormat('dd-MM-yyyy').format(date);  // Customize the format as needed
+      }
+
+      return DataRow(
+        cells: [
+          _buildDataCell(novost["id"]?.toString() ?? ""),
+          _buildDataCell(novost["naslov"] ?? ""),
+          _buildDataCell(novost["sadrzaj"] ?? ""),
+          _buildDataCell(formattedDate),  // Use formatted date
+          _buildDataCell(
+            "${novost["osoblje"]["ime"] ?? ""} ${novost["osoblje"]["prezime"] ?? ""}",
+          ),
+        ],
+        color: MaterialStateProperty.resolveWith<Color?>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.hovered)) {
+              return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
+            }
+            return null;
+          },
+        ),
+      );
+    },
+  );
+}
+
+  DataCell _buildDataCell(String value) {
+    return DataCell(
+      Text(
+        value,
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey[800],
+        ),
+      ),
+    );
   }
 }

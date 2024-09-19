@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import '../../providers/drzava_provider.dart';
 import '../../widgets/master_screen.dart';
@@ -17,6 +15,11 @@ class DrzavaListScreen extends StatefulWidget {
 class _DrzavaListScreenState extends State<DrzavaListScreen> {
   late DrzavaProvider _drzavaProvider;
   dynamic data = {};
+
+  // Scroll controllers
+  final ScrollController _verticalController = ScrollController();
+  final ScrollController _horizontalController = ScrollController();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -24,43 +27,108 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
     loadData();
   }
 
-   Future loadData() async {
+  Future loadData() async {
     var tmpData = await _drzavaProvider.get(null);
     setState(() {
       data = tmpData;
     });
   }
-  
- @override
+
+  Future<void> _confirmDelete(String id) async {
+    final bool? confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Confirm Deletion'),
+        content: Text('Are you sure you want to delete this country?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text('Delete'),
+          ),
+        ],
+      ),
+    );
+    if (confirm ?? false) {
+      try {
+        await _drzavaProvider.delete(id);
+        setState(() {
+          loadData(); // Refresh data after deletion
+        });
+      } catch (e) {
+        // Handle error
+        print(e);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    // Dispose scroll controllers
+    _verticalController.dispose();
+    _horizontalController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
       title: 'Drzave',
-      child: Container(
-           child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(children: [
-                    Container(
-                      height: 200,
-                      width: 1000,
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              child: Scrollbar(
+                controller: _verticalController,
+                thumbVisibility: true,
+                child: SingleChildScrollView(
+                  controller: _verticalController,
+                  scrollDirection: Axis.vertical,
+                  child: Scrollbar(
+                    controller: _horizontalController,
+                    thumbVisibility: true,
+                    child: SingleChildScrollView(
+                      controller: _horizontalController,
+                      scrollDirection: Axis.horizontal,
                       child: DataTable(
-                        columnSpacing: 12,
+                        dataRowHeight: 60,
+                        headingRowHeight: 50,
+                        headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                        dividerThickness: 2,
+                        columnSpacing: 24,
                         horizontalMargin: 12,
                         columns: [
+                          DataColumn(label: Text('Naziv drzave')),
                           DataColumn(
-                              label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Id",
-                                      style: TextStyle(fontSize: 14)))),
-                          DataColumn(
-                               label: Container(
-                                  alignment: Alignment.center,
-                                  child: Text("Naziv drzave",
-                                      style: TextStyle(fontSize: 14)))),
+                            label: Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Actions',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ),
                         ],
-                        rows: _buildPlanAndProgrammeList(),
+                        rows: _buildRows(),
                       ),
                     ),
-                          ElevatedButton(
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -68,33 +136,47 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                 );
               },
               child: Text('Create New Drzava'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: TextStyle(fontSize: 16),
+              ),
             ),
-                  ]),
-                )
-      )
+          ),
+        ],
+      ),
     );
   }
-  List<DataRow> _buildPlanAndProgrammeList() {
+
+  List<DataRow> _buildRows() {
     if (data.length == 0) {
       return [
         DataRow(cells: [
           DataCell(Text("No data...")),
-          DataCell(Text("No data..."))
+          DataCell(SizedBox.shrink()),
         ])
       ];
     }
 
-    List<DataRow> list = data
-        .map((x) => DataRow(
+    return data
+        .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["id"]?.toString() ?? "0")),
+                DataCell(Text(x["naziv"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(
-                    Text(x["naziv"] ?? "", style: TextStyle(fontSize: 14))),
+                  IconButton(
+                    icon: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.delete, color: Colors.red),
+                      ],
+                    ),
+                    onPressed: () => _confirmDelete(x["id"].toString()),
+                  ),
+                ),
               ],
             ))
-        .toList()
-        .cast<DataRow>();
-    return list;
+        .toList();
   }
-  
 }
+
+
+
