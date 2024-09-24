@@ -113,7 +113,21 @@ class _SobaListScreenState extends State<SobaListScreen> {
                                 _buildDataColumn("Opis Sobe"),
                                 _buildDataColumn("Soba Status"),
                                 _buildDataColumn("Slika"),
-                                _buildDataColumn("Actions"),
+                                   DataColumn(
+                                  label: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 60,
+                                        child: Center(child: Text('Update')),
+                                      ),
+                                      SizedBox(
+                                        width: 60,
+                                        child: Center(child: Text('Delete')),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                               rows: _buildRows(),
                             ),
@@ -162,7 +176,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(6, (index) => DataCell(Text("No data..."))))
+        DataRow(cells: List.generate(7, (index) => DataCell(Text("No data..."))))
       ];
     }
 
@@ -187,12 +201,34 @@ class _SobaListScreenState extends State<SobaListScreen> {
                 ),
               ),
             ),
-            DataCell(
-              IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
-                onPressed: () => _confirmDelete(soba["id"].toString()),
-              ),
-            ),
+               DataCell(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        child: IconButton(
+                          icon: Icon(Icons.edit, color: Colors.blue),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewSobaScreen(soba: soba),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 60,
+                        child: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => _confirmDelete(soba["id"].toString()),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
           ],
           color: MaterialStateProperty.resolveWith<Color?>(
             (Set<MaterialState> states) {

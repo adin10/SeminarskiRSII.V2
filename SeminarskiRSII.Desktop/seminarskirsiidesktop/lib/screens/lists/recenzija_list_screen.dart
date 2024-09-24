@@ -1,140 +1,5 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/src/widgets/placeholder.dart';
-// import 'package:provider/provider.dart';
-// import 'package:seminarskirsiidesktop/screens/details-new/recenzija_new_screen.dart';
-
-// import '../../providers/recenzija_provider.dart';
-// import '../../widgets/master_screen.dart';
-
-// class RecenzijaListScreen extends StatefulWidget {
-//   const RecenzijaListScreen({super.key});
-
-//   @override
-//   State<RecenzijaListScreen> createState() => _RecenzijaListScreenState();
-// }
-
-// class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
-
-//   late RecenzijaProvider _recenzijaProvider;
-//   dynamic data = {};
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//     _recenzijaProvider = context.read<RecenzijaProvider>();
-//     loadData();
-//   }
-
-//     Future loadData() async {
-//     var tmpData = await _recenzijaProvider.get(null);
-//     setState(() {
-//       data = tmpData;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MasterScreenWidget(
-//       title: 'Sve Recenzije',
-//       child: Container(
-//            child: SingleChildScrollView(
-//                   scrollDirection: Axis.horizontal,
-//                   child: Column(children: [
-//                     Container(
-//                       height: 200,
-//                       width: 1000,
-//                       child: DataTable(
-//                         columnSpacing: 12,
-//                         horizontalMargin: 12,
-//                         columns: [
-//                           DataColumn(
-//                               label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Id",
-//                                       style: TextStyle(fontSize: 14)))),
-//                           DataColumn(
-//                               label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Ime",
-//                                       style: TextStyle(fontSize: 14)))),
-//                           DataColumn(
-//                               label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Prezime",
-//                                       style: TextStyle(fontSize: 14)))),
-//                           DataColumn(
-//                               label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Soba broj",
-//                                       style: TextStyle(fontSize: 14)))),
-//                           DataColumn(
-//                                label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Ocjena",
-//                                       style: TextStyle(fontSize: 14)))),
-//                           DataColumn(
-//                                label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Komentar",
-//                                       style: TextStyle(fontSize: 14)))),
-//                         ],
-//                         rows: _buildPlanAndProgrammeList(),
-//                       ),
-//                     ),
-//             ElevatedButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(builder: (context) => const NewRecenzijaScreen()),
-//                 );
-//               },
-//               child: Text('Create New Recenzija'),
-//             ),
-//                   ]),
-//                 )
-//       )
-//     );
-//   }
-//   List<DataRow> _buildPlanAndProgrammeList() {
-//     if (data.length == 0) {
-//       return [
-//         DataRow(cells: [
-//           DataCell(Text("No data...")),
-//           DataCell(Text("No data...")),
-//           DataCell(Text("No data...")),
-//           DataCell(Text("No data...")),
-//           DataCell(Text("No data...")),
-//           DataCell(Text("No data..."))
-//         ])
-//       ];
-//     }
-
-//     List<DataRow> list = data
-//         .map((x) => DataRow(
-//               cells: [
-//                 DataCell(Text(x["id"]?.toString() ?? "0")),
-//                 DataCell(
-//                     Text(x["gost"]["ime"] ?? "", style: TextStyle(fontSize: 14))),
-//                 DataCell(
-//                     Text(x["gost"]["prezime"] ?? "", style: TextStyle(fontSize: 14))),
-//                 DataCell(
-//                   Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-//                 DataCell(
-//                   Text(x["ocjena"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-//                 DataCell(
-//                   Text(x["komentar"] ?? "", style: TextStyle(fontSize: 14))),
-//               ],
-//             ))
-//         .toList()
-//         .cast<DataRow>();
-//     return list;
-//   }
-// }
-
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seminarskirsiidesktop/screens/details-new/recenzija_new_screen.dart';
 import '../../providers/recenzija_provider.dart';
 import '../../widgets/master_screen.dart';
 
@@ -149,6 +14,10 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
   late RecenzijaProvider _recenzijaProvider;
   dynamic data;
   bool isLoading = true;
+
+  // Scroll controllers
+  final ScrollController _verticalController = ScrollController();
+  final ScrollController _horizontalController = ScrollController();
 
   @override
   void didChangeDependencies() {
@@ -166,99 +35,106 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
   }
 
   @override
+  void dispose() {
+    _verticalController.dispose();
+    _horizontalController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
       title: 'Sve Recenzije',
-      child: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: DataTable(
-                        columnSpacing: 20,
-                        horizontalMargin: 20,
-                        columns: [
-                          DataColumn(
-                            label: Container(
-                              alignment: Alignment.center,
-                              child: Text("Id", style: TextStyle(fontSize: 14)),
+      child: Column(
+        children: [
+          Expanded(
+            child: Center( // Centering the whole container
+              child: Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : Scrollbar(
+                        controller: _verticalController,
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          controller: _verticalController,
+                          scrollDirection: Axis.vertical,
+                          child: Scrollbar(
+                            controller: _horizontalController,
+                            thumbVisibility: true,
+                            child: SingleChildScrollView(
+                              controller: _horizontalController,
+                              scrollDirection: Axis.horizontal,
+                              child: Center(
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(maxWidth: 800), // Adjust width as needed
+                                  child: DataTable(
+                                    dataRowHeight: 60,
+                                    headingRowHeight: 50,
+                                    headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                                    dividerThickness: 2,
+                                    columnSpacing: 24,
+                                    horizontalMargin: 12,
+                                    columns: [
+                                      _buildDataColumn("Id"),
+                                      _buildDataColumn("Ime"),
+                                      _buildDataColumn("Prezime"),
+                                      _buildDataColumn("Soba broj"),
+                                      _buildDataColumn("Ocjena"),
+                                      _buildDataColumn("Komentar"),
+                                    ],
+                                    rows: _buildRows(),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          DataColumn(
-                            label: Container(
-                              alignment: Alignment.center,
-                              child: Text("Ime", style: TextStyle(fontSize: 14)),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Container(
-                              alignment: Alignment.center,
-                              child: Text("Prezime", style: TextStyle(fontSize: 14)),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Container(
-                              alignment: Alignment.center,
-                              child: Text("Soba broj", style: TextStyle(fontSize: 14)),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Container(
-                              alignment: Alignment.center,
-                              child: Text("Ocjena", style: TextStyle(fontSize: 14)),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Container(
-                              alignment: Alignment.center,
-                              child: Text("Komentar", style: TextStyle(fontSize: 14)),
-                            ),
-                          ),
-                        ],
-                        rows: _buildPlanAndProgrammeList(),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const NewRecenzijaScreen()),
-                      );
-                    },
-                    child: Text('Create New Recenzija'),
-                  ),
-                ),
-              ],
+              ),
             ),
+          ),
+        ],
+      ),
     );
   }
 
-  List<DataRow> _buildPlanAndProgrammeList() {
+  DataColumn _buildDataColumn(String label) {
+    return DataColumn(
+      label: Text(
+        label,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: Colors.blueGrey[700],
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
         DataRow(cells: [
           DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
-          DataCell(Text("No data...")),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
         ])
       ];
     }
 
-    List<DataRow> list = data
+    return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["id"]?.toString() ?? "0")),
+                DataCell(Text(x["id"].toString(), style: TextStyle(fontSize: 14))),
                 DataCell(Text(x["gost"]["ime"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(Text(x["gost"]["prezime"] ?? "", style: TextStyle(fontSize: 14))),
                 DataCell(Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
@@ -267,6 +143,5 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
               ],
             ))
         .toList();
-    return list;
   }
 }
