@@ -16,6 +16,7 @@ import 'package:seminarskirsiidesktop/providers/sobastatus_provider.dart';
 import 'package:seminarskirsiidesktop/providers/vrstaosoblja_provider.dart';
 import 'package:seminarskirsiidesktop/screens/lists/drzava_list_screen.dart';
 import 'package:seminarskirsiidesktop/screens/lists/gosti_list_screen.dart';
+import 'package:seminarskirsiidesktop/screens/lists/novosti_list_screen.dart';
 import 'package:seminarskirsiidesktop/utils/util.dart';
 
 void main() {
@@ -196,7 +197,7 @@ class LoginPage extends StatelessWidget {
                       // var data = await _gostiProvider.get(null);
                       // print("data,$data");
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const GostiListScreen()));
+                          builder: (context) => const NovostiListScreen()));
                     // } on Exception catch (e) {
                       // showDialog(
                       //     context: context,

@@ -128,7 +128,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NewSobaStatusScreen()),
+                  MaterialPageRoute(builder: (context) =>  NewSobaStatusScreen()),
                 );
               },
               child: Text('Create New Room Status'),
