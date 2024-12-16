@@ -1,7 +1,10 @@
-// import 'dart:js';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/io_client.dart';
 import 'package:provider/provider.dart';
+import 'package:seminarskirsiidesktop/providers/base_provider.dart';
 import 'package:seminarskirsiidesktop/providers/cjenovnik_provider.dart';
 import 'package:seminarskirsiidesktop/providers/drzava_provider.dart';
 import 'package:seminarskirsiidesktop/providers/gosti_provider.dart';
@@ -36,37 +39,19 @@ void main() {
       ChangeNotifierProvider(create: (_) => SobaOsobljeProvider())
     ],
     child: const MyMaterialApp(),
-    //  child: MaterialApp(
-    //     debugShowCheckedModeBanner: true,
-    //     routes: {
-    //       DrzavaListScreen.drzavaRouteName: (context) => const DrzavaListScreen()    
-    //     },
-    //     onGenerateRoute: (settings) {},
-    //   ),
   ));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      // home: const MyAppBar(),
       home: const MyMaterialApp(),
     );
   }
@@ -149,73 +134,178 @@ class MyMaterialApp extends StatelessWidget {
   }
 }
 
+// class LoginPage extends StatelessWidget {
+//   LoginPage({super.key});
+//   final TextEditingController _usernameController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Stack(
+//         children: [
+//           // Background image
+//           Container(
+//             decoration: BoxDecoration(
+//               image: DecorationImage(
+//                 image: AssetImage('assets/images/profileHotel.jpg'),
+//                 fit: BoxFit.cover,
+//               ),
+//             ),
+//           ),
+//           // Form content
+//           Center(
+//             child: Container(
+//               padding: EdgeInsets.all(16),
+//               decoration: BoxDecoration(
+//                 color: Colors.white.withOpacity(0.9),
+//                 borderRadius: BorderRadius.circular(12),
+//               ),
+//               constraints: BoxConstraints(maxWidth: 400, maxHeight: 400),
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   TextField(
+//                     decoration: InputDecoration(labelText: 'Username'),
+//                     controller: _usernameController,
+//                   ),
+//                   SizedBox(height: 8),
+//                   TextField(
+//                     decoration: InputDecoration(labelText: 'Password'),
+//                     obscureText: true,
+//                     controller: _passwordController,
+//                   ),
+//                   SizedBox(height: 20),
+//                   ElevatedButton(
+//                     onPressed: () async {
+//                       var username = _usernameController.text;
+//                       var password = _passwordController.text;
+//                       print('login $username i $password');
+
+//                       Navigator.of(context).push(MaterialPageRoute(
+//                           builder: (context) => const NovostiListScreen()));
+//                     },
+//                     child: Text('Submit'),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  TextEditingController _usernameController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
-  // late GostiProvider _gostiProvider;
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _login(BuildContext context) async {
+    final String username = _usernameController.text.trim();
+    final String password = _passwordController.text.trim();
+
+    if (username.isEmpty || password.isEmpty) {
+      _showErrorDialog(context, "Username and password cannot be empty.");
+      return;
+    }
+
+    final Uri url = Uri.parse("${BaseProvider.baseUrl}/Login/authenticateAdministration");
+    final Map<String, String> headers = {'Content-Type': 'application/json'};
+    final Map<String, String> body = {'username': username, 'password': password};
+
+    try {
+       final ioc = HttpClient();
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    final http = IOClient(ioc);
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: json.encode(body),
+      );
+
+      if (response.statusCode == 200) {
+        // Login successful, navigate to the desired screen
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const NovostiListScreen()),
+        );
+      } else {
+        // Login failed
+        final Map<String, dynamic> responseBody = json.decode(response.body);
+        String errorMessage = responseBody['message'] ?? 'Login failed. Please try again.';
+        _showErrorDialog(context, errorMessage);
+      }
+    } catch (error) {
+      _showErrorDialog(context, "An error occurred. Please try again later.");
+    }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Login Failed"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // _gostiProvider = context.read<GostiProvider>();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Center(
-        child: Container(
-          constraints: BoxConstraints(maxWidth: 400, maxHeight: 400),
-          child: Card(
-            child: Column(children: [
-              Image.asset(
-                'assets/images/soba.jpg',
-                height: 150,
-                width: 150,
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/profileHotel.jpg'),
+                fit: BoxFit.cover,
               ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Username'),
-                controller: _usernameController,
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Password'),
-                controller: _passwordController,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    var username = _usernameController.text;
-                    var password = _passwordController.text;
-                    print('login $username i $password');
-
-                    // Authorization.username = username;
-                    // Authorization.password = password;
-                    // try {
-                      // var data = await _gostiProvider.get(null);
-                      // print("data,$data");
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const NovostiListScreen()));
-                    // } on Exception catch (e) {
-                      // showDialog(
-                      //     context: context,
-                      //     builder: (BuildContext contex) => AlertDialog(
-                      //           title: Text("error"),
-                      //           content: Text(e.toString()),
-                      //           actions: [
-                      //             TextButton(
-                      //                 onPressed: () => {Navigator.pop(context)},
-                      //                 child: Text("OK"))
-                      //           ],
-                      //         ));
-                    // }
-                  },
-                  child: Text('Submit'))
-            ]),
+            ),
           ),
-        ),
+          // Form content
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              constraints: const BoxConstraints(maxWidth: 400, maxHeight: 400),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    decoration: const InputDecoration(labelText: 'Username'),
+                    controller: _usernameController,
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    decoration: const InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                    controller: _passwordController,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => _login(context),
+                    child: const Text('Submit'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

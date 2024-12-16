@@ -45,6 +45,20 @@ class SobaOsobljeProvider with ChangeNotifier{
     }
   }
 
+  Future<void> delete(String id) async {
+    final url = Uri.parse("${BaseProvider.baseUrl}/SobaOsoblje/$id"); // Adjust the URL as needed
+
+    final response = await http!.delete(url);
+
+    if (response.statusCode == 200) {
+      // Optionally handle successful deletion here
+      print('Successfully deleted');
+      notifyListeners(); // Notify listeners if you want to refresh data
+    } else {
+      throw Exception('Failed to delete item');
+    }
+  }
+
   Map<String,String> CreateHeaders(){
     String username = Authorization.username ?? "";
     String password = Authorization.password ?? "";
