@@ -16,7 +16,7 @@ namespace SeminarskiRSII.WebApi.Interfaces
 
         public Task<Osoblje> Delete(int id);
         public Task<Osoblje> Authenticiraj(string username, string pass);
-        
+        public Task<Osoblje> ChangePassword(int id, ChangePasswordRequest request);
 
     }
 }

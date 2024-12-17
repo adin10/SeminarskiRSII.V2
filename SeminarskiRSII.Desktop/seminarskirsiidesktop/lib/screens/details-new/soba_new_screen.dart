@@ -157,7 +157,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                   ),
                   SizedBox(height: 20),
                   _buildDropdownField(
-                    labelText: 'Država',
+                    labelText: 'Soba Status',
                     value: sobaStatusId,
                     items: statusiSoba.map<DropdownMenuItem<int>>((sobaStatus) {
                       return DropdownMenuItem<int>(

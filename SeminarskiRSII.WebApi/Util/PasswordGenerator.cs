@@ -29,5 +29,24 @@ namespace SeminarskiRSII.WebApi.Util
             byte[] inArray = algorithm.ComputeHash(dst);
             return Convert.ToBase64String(inArray);
         }
+
+        public static string GenerateRandomPassword(int length = 8)
+        {
+            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
+            StringBuilder password = new StringBuilder();
+            byte[] randomBytes = new byte[length];
+
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomBytes);
+            }
+
+            for (int i = 0; i < length; i++)
+            {
+                int index = randomBytes[i] % validChars.Length;
+                password.Append(validChars[index]);
+            }
+            return password.ToString();
+        }
     }
 }

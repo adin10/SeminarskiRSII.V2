@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using SeminarskiRSII.WebApi.Interfaces;
 using SeminarskiRSII.WebAPI.Exceptions;
+using SeminarskiRSII.WebApi.Util;
 
 namespace SeminarskiRSII.WebApi.Services
 {
@@ -91,7 +92,15 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Osoblje> Insert(OsobljeInsertRequest insert)
         {
+            if (string.IsNullOrWhiteSpace(insert.Lozinka) || string.IsNullOrWhiteSpace(insert.PotvrdiLozinku))
+            {
+                string defaultPassword = PasswordGenerator.GenerateRandomPassword(12);
+                insert.Lozinka = defaultPassword;
+                insert.PotvrdiLozinku = defaultPassword;
+            }
+
             var entity = _mapper.Map<Osoblje>(insert);
+
             if (insert.Lozinka != insert.PotvrdiLozinku)
             {
                 throw new UserException("Lozinke se ne podudaraju");
@@ -115,9 +124,20 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Osoblje> Update(int id, OsobljeInsertRequest request)
         {
+            if (string.IsNullOrWhiteSpace(request.Lozinka) || string.IsNullOrWhiteSpace(request.PotvrdiLozinku))
+            {
+                string defaultPassword = PasswordGenerator.GenerateRandomPassword(12);
+                request.Lozinka = defaultPassword;
+                request.PotvrdiLozinku = defaultPassword;
+            }
+
             var entity = await _context.Osoblje.FindAsync(id);
-            _context.Osoblje.Attach(entity);
-            _context.Osoblje.Update(entity);
+            if(entity != null)
+            {
+                _context.Osoblje.Attach(entity);
+                _context.Osoblje.Update(entity);
+            }
+
             //____________________________________________________________
             var korisnickeUloge = await _context.OsobljeUloge.Where(x => x.OsobljeId == id).ToListAsync();
             foreach(var item in korisnickeUloge)
@@ -155,6 +175,35 @@ namespace SeminarskiRSII.WebApi.Services
             var entity = await _context.Osoblje.FindAsync(id);
             _context.Osoblje.Remove(entity);
             await _context.SaveChangesAsync();
+            return _mapper.Map<Model.Models.Osoblje>(entity);
+        }
+
+        public async Task<Model.Models.Osoblje> ChangePassword(int id, ChangePasswordRequest request)
+        {
+            var entity = await _context.Osoblje.FirstOrDefaultAsync(x => x.Id == id);
+            if (entity == null)
+            {
+                throw new UserException("User not found!");
+            }
+
+            // Check if the old password is correct
+            if (entity.LozinkaHash != GenerateHash(entity.LozinkaSalt, request.OldPassword))
+            {
+                throw new UserException("Old password is incorrect!");
+            }
+
+            // Check if new password and confirmed new password match
+            if (request.NewPassword != request.ConfirmNewPassword)
+            {
+                throw new UserException("New passwords do not match!");
+            }
+
+            // Generate new salt and hash for the new password
+            entity.LozinkaSalt = GenerateSalt();
+            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.NewPassword);
+
+            _context.SaveChanges();
+
             return _mapper.Map<Model.Models.Osoblje>(entity);
         }
     }

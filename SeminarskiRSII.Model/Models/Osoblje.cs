@@ -13,6 +13,8 @@ namespace SeminarskiRSII.Model.Models
         public string KorisnickoIme { get; set; }
         public string Telefon { get; set; }
         public byte[] Slika { get; set; }
+        public string Lozinka { get; set; }
+        public string PotvrdiLozinku { get; set; }
         public ICollection<OsobljeUloge> OsobljeUloge { get; set; }
         public string Uloge { get; set; }
 
