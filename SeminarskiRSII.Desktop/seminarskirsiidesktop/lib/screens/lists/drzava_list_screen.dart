@@ -38,16 +38,16 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this country?'),
+        title: const Text('Confirm Deletion'),
+        content: const Text('Are you sure you want to delete this country?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -81,7 +81,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.grey.shade300),
@@ -101,11 +101,11 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                       child: DataTable(
                         dataRowHeight: 60,
                         headingRowHeight: 50,
-                        headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                        headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                         dividerThickness: 2,
                         columnSpacing: 24,
                         horizontalMargin: 12,
-                        columns: [
+                        columns: const [
                           DataColumn(label: Text('Naziv drzave')),
                           DataColumn(
                             label: Row(
@@ -131,7 +131,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.center,
             child: ElevatedButton(
@@ -141,11 +141,11 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                   MaterialPageRoute(builder: (context) =>  NewDrzavaScreen()),
                 );
               },
-              child: Text('Create New Drzava'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: TextStyle(fontSize: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: const TextStyle(fontSize: 16),
               ),
+              child: Text('Create New Drzava'),
             ),
           ),
         ],
@@ -156,7 +156,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
   List<DataRow> _buildRows() {
     if (data.length == 0) {
       return [
-        DataRow(cells: [
+        const DataRow(cells: [
           DataCell(Text("No data...")),
           DataCell(SizedBox.shrink()),
         ])
@@ -166,7 +166,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["naziv"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(Text(x["naziv"] ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +174,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                       SizedBox(
                         width: 60,
                         child: IconButton(
-                          icon: Icon(Icons.edit, color: Colors.blue),
+                          icon: const Icon(Icons.edit, color: Colors.blue),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -188,7 +188,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                       SizedBox(
                         width: 60,
                         child: IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
+                          icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _confirmDelete(x["id"].toString()),
                         ),
                       ),

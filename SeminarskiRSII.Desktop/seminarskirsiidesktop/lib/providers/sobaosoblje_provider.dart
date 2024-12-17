@@ -10,7 +10,7 @@ import 'package:seminarskirsiidesktop/utils/util.dart';
 import 'base_provider.dart';
 
 class SobaOsobljeProvider with ChangeNotifier{
-  HttpClient client = new HttpClient();
+  HttpClient client = HttpClient();
   IOClient? http;
   SobaOsobljeProvider() {
     client.badCertificateCallback = (cert, host, port) => true;
@@ -29,7 +29,7 @@ class SobaOsobljeProvider with ChangeNotifier{
     return data;
     }
     else{
-      return throw new Exception("Something wenw wrong");
+      return throw Exception("Something wenw wrong");
     }
   }
 
@@ -38,10 +38,10 @@ class SobaOsobljeProvider with ChangeNotifier{
       return true;
     }
     else if(response.statusCode == 401){
-      throw new Exception("Unauthorized");
+      throw Exception("Unauthorized");
     }
     else{
-      throw new Exception("Something went wrong");
+      throw Exception("Something went wrong");
     }
   }
 

@@ -40,16 +40,16 @@ class _GradListScreenState extends State<GradListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this city?'),
+        title: const Text('Confirm Deletion'),
+        content: const Text('Are you sure you want to delete this city?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -83,13 +83,13 @@ class _GradListScreenState extends State<GradListScreen> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : Scrollbar(
                       controller: _verticalController,
                       thumbVisibility: true,
@@ -105,7 +105,7 @@ class _GradListScreenState extends State<GradListScreen> {
                             child: DataTable(
                               dataRowHeight: 60,
                               headingRowHeight: 50,
-                              headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
                               columnSpacing: 24,
                               horizontalMargin: 12,
@@ -114,7 +114,7 @@ class _GradListScreenState extends State<GradListScreen> {
                                 _buildDataColumn("Naziv grada"),
                                 _buildDataColumn("Postanski broj"),
                                 _buildDataColumn("Drzava"),
-                                DataColumn(
+                                const DataColumn(
                                   label: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -138,21 +138,21 @@ class _GradListScreenState extends State<GradListScreen> {
                     ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  NewGradScreen()),
+                  MaterialPageRoute(builder: (context) =>  const NewGradScreen()),
                 );
               },
-              child: Text('Create New Grad'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: TextStyle(fontSize: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: const TextStyle(fontSize: 16),
               ),
+              child: Text('Create New Grad'),
             ),
           ),
         ],
@@ -177,7 +177,7 @@ class _GradListScreenState extends State<GradListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: [
+        const DataRow(cells: [
           DataCell(Text("No data...")),
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
@@ -190,10 +190,10 @@ class _GradListScreenState extends State<GradListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["id"].toString(), style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["nazivGrada"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["postanskiBroj"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["drzava"]?["naziv"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(Text(x["id"].toString(), style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["nazivGrada"] ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["postanskiBroj"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["drzava"]?["naziv"] ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -201,7 +201,7 @@ class _GradListScreenState extends State<GradListScreen> {
                       SizedBox(
                         width: 60,
                         child: IconButton(
-                          icon: Icon(Icons.edit, color: Colors.blue),
+                          icon: const Icon(Icons.edit, color: Colors.blue),
                               onPressed: () {
                                   Navigator.push(
                                     context,
@@ -217,7 +217,7 @@ class _GradListScreenState extends State<GradListScreen> {
                       SizedBox(
                         width: 60,
                         child: IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
+                          icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _confirmDelete(x["id"].toString()),
                         ),
                       ),

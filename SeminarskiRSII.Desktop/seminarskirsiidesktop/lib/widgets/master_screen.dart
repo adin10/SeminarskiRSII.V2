@@ -377,15 +377,15 @@ class _MasterScreenState extends State<MasterScreenWidget> {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Confirm Logout'),
-        content: Text('Are you sure you want to log out?'),
+        title: const Text('Confirm Logout'),
+        content: const Text('Are you sure you want to log out?'),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               // Close the dialog and do not log out
               Navigator.of(context).pop();
             },
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -396,7 +396,7 @@ class _MasterScreenState extends State<MasterScreenWidget> {
                 (route) => false, // Remove all existing routes
               );
             },
-            child: Text('Logout'),
+            child: const Text('Logout'),
           ),
         ],
       );

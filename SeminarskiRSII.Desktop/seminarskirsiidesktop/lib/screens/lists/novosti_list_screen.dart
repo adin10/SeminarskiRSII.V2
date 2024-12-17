@@ -225,16 +225,16 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this country?'),
+        title: const Text('Confirm Deletion'),
+        content: const Text('Are you sure you want to delete this country?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -267,13 +267,13 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : Scrollbar(
                       controller: _verticalController,
                       thumbVisibility: true,
@@ -289,7 +289,7 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
                             child: DataTable(
                               dataRowHeight: 60,
                               headingRowHeight: 50,
-                              headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
                               columnSpacing: 24,
                               horizontalMargin: 12,
@@ -311,7 +311,7 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
                     ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
@@ -321,11 +321,11 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
                   MaterialPageRoute(builder: (context) => const NewNovostScreen()),
                 );
               },
-              child: Text('Create New Notification'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: TextStyle(fontSize: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: const TextStyle(fontSize: 16),
               ),
+              child: Text('Create New Notification'),
             ),
           ),
         ],
@@ -350,7 +350,7 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(7, (index) => DataCell(Text("No data..."))))
+        DataRow(cells: List.generate(7, (index) => const DataCell(Text("No data..."))))
       ];
     }
 
@@ -376,7 +376,7 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
             ),
       DataCell( // Update button
       IconButton(
-        icon: Icon(Icons.edit, color: Colors.blue),
+        icon: const Icon(Icons.edit, color: Colors.blue),
         onPressed: () {
           Navigator.push(
             context,
@@ -389,14 +389,14 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
     ),
     DataCell( // Delete button
       IconButton(
-        icon: Icon(Icons.delete, color: Colors.red),
+        icon: const Icon(Icons.delete, color: Colors.red),
         onPressed: () => _confirmDelete(novost["id"].toString()),
       ),
     ),
           ],
-          color: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.hovered)) {
+          color: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.hovered)) {
                 return Colors.blueGrey.withOpacity(0.2);
               }
               return null;

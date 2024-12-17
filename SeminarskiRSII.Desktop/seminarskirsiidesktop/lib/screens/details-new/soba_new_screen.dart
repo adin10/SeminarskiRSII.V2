@@ -18,9 +18,9 @@ class NewSobaScreen extends StatefulWidget {
 }
 
 class _NewSobaScreenState extends State<NewSobaScreen> {
-  TextEditingController _brojSobeController = TextEditingController();
-  TextEditingController _brojSprataController = TextEditingController();
-  TextEditingController _opisSobeController = TextEditingController();
+  final TextEditingController _brojSobeController = TextEditingController();
+  final TextEditingController _brojSprataController = TextEditingController();
+  final TextEditingController _opisSobeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   File? _selectedImage;
   int? sobaStatusId; // Initialize as nullable
@@ -96,7 +96,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
                   blurRadius: 10,
@@ -120,7 +120,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildTextField(
                     controller: _brojSobeController,
                     labelText: 'Broj Sobe',
@@ -131,7 +131,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildTextField(
                     controller: _brojSprataController,
                     labelText: 'Broj Sprata',
@@ -143,7 +143,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildTextField(
                     controller: _opisSobeController,
                     labelText: 'Opis sobe',
@@ -155,7 +155,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildDropdownField(
                     labelText: 'Soba Status',
                     value: sobaStatusId,
@@ -177,7 +177,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       _slikaBytes != null
@@ -195,21 +195,21 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Center(
                     child: ElevatedButton(
                       onPressed: _handleSubmit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
                       child: Text(
                         widget.soba == null ? 'Create Room' : 'Update Room',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blueAccent,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
                       ),
                     ),
                   ),
@@ -234,17 +234,17 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle:
-            TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blueAccent, width: 2),
+          borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
           borderRadius: BorderRadius.circular(10),
         ),
         filled: true,
         fillColor: Colors.blue[50],
-        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       ),
       validator: validator,
     );
@@ -262,7 +262,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle:
-            TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -370,7 +370,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
         child: Material(
           color: Colors.transparent,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: BorderRadius.circular(8),
@@ -379,17 +379,17 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.check_circle,
                   color: Colors.white,
                   size: 24, // Icon size
                 ),
-                SizedBox(width: 8), // Space between icon and text
+                const SizedBox(width: 8), // Space between icon and text
                 Expanded(
                   child: Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                     ),
@@ -404,7 +404,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
 
     overlay.insert(overlayEntry);
     // Remove the toast after a duration
-    Future.delayed(Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
   }
 
   void _showErrorSnackBar() {
@@ -422,21 +422,21 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
         child: Material(
           color: Colors.transparent,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
             decoration: BoxDecoration(
               color: Colors.red, // Red background for the error
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               children: [
-                Icon(Icons.error,
+                const Icon(Icons.error,
                     color: Colors.white), // Error icon on the left
-                SizedBox(width: 10), // Space between the icon and the text
+                const SizedBox(width: 10), // Space between the icon and the text
                 Expanded(
                   child: Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ],
@@ -449,6 +449,6 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
     overlay.insert(overlayEntry);
 
     // Automatically remove the toast after a duration
-    Future.delayed(Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
   }
 }

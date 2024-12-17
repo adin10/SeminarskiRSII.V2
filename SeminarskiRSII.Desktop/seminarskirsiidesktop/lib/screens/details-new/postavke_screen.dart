@@ -314,7 +314,7 @@ import '../../widgets/master_screen.dart'; // Make sure this is where your sideb
 class PostavkeScreen extends StatefulWidget {
   final int osobljeId;
 
-  PostavkeScreen({required this.osobljeId});
+  const PostavkeScreen({super.key, required this.osobljeId});
 
   @override
   _PostavkeScreenState createState() => _PostavkeScreenState();
@@ -347,11 +347,11 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
         future: osoblje,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData) {
-            return Center(child: Text('No data found'));
+            return const Center(child: Text('No data found'));
           } else {
             Osoblje osobljeData = snapshot.data!;
             return Padding(
@@ -364,11 +364,11 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
                       radius: 60,
                       backgroundImage: osobljeData.slika != null
                           ? MemoryImage(Uint8List.fromList(osobljeData.slika!)) // Convert List<int> to Uint8List
-                          : AssetImage('assets/default_avatar.png') as ImageProvider,
+                          : const AssetImage('assets/default_avatar.png') as ImageProvider,
                       backgroundColor: Colors.transparent,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   // Name and personal information in a Card widget
                   Card(
                     elevation: 4,
@@ -383,47 +383,47 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
                           // Name
                           Text(
                             '${osobljeData.ime} ${osobljeData.prezime}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
                               color: Colors.blueAccent,
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           // Email
                           Text(
                             'Email: ${osobljeData.email}',
-                            style: TextStyle(fontSize: 16, color: Colors.black87),
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           // Username
                           Text(
                             'Username: ${osobljeData.korisnickoIme}',
-                            style: TextStyle(fontSize: 16, color: Colors.black87),
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
                           ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                           // Lozinka
                           Text(
                             'Lozinka: ${osobljeData.lozinka}',
-                            style: TextStyle(fontSize: 16, color: Colors.black87),
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           // Potvrdi lozinku
                           Text(
                             'Potvrdi lozinku: ${osobljeData.potvrdiLozinku}',
-                            style: TextStyle(fontSize: 16, color: Colors.black87),
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           // Phone
                           Text(
                             'Phone: ${osobljeData.telefon}',
-                            style: TextStyle(fontSize: 16, color: Colors.black87),
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           // Roles
                           Text(
                             'Roles: ${osobljeData.uloge}',
-                            style: TextStyle(fontSize: 16, color: Colors.black87),
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
                           ),
                         ],
                       ),

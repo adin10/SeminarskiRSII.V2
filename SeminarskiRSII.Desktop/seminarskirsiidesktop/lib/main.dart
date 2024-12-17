@@ -89,7 +89,7 @@ class _CounterState extends State<Counter> {
         Text('You have pushed button $_count times'),
         ElevatedButton(
           onPressed: _incrementCounter,
-          child: Text('Increment'),
+          child: const Text('Increment'),
         )
       ],
     );
@@ -106,14 +106,14 @@ class Layout extends StatelessWidget {
         Container(
           height: 100,
           color: Colors.blue,
-          child: Text('Example'),
           alignment: Alignment.center,
+          child: Text('Example'),
         ),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [Text('data1'), Text('data2'), Text('data3')],
         ),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [Text('red novi 1'), Text('red novi 2')],
         ),

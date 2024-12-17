@@ -282,9 +282,9 @@ class NewNovostScreen extends StatefulWidget {
 
 class _NewNovostScreenState extends State<NewNovostScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _naslovController = TextEditingController();
-  TextEditingController _sadrzajController = TextEditingController();
-  TextEditingController _datumController = TextEditingController();
+  final TextEditingController _naslovController = TextEditingController();
+  final TextEditingController _sadrzajController = TextEditingController();
+  final TextEditingController _datumController = TextEditingController();
 
   DateTime? _selectedDate;
   int? _selectedAutorId;
@@ -344,7 +344,7 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
                   blurRadius: 10,
@@ -368,7 +368,7 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildTextField(
                     controller: _naslovController,
                     labelText: 'Naslov',
@@ -379,7 +379,7 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildTextField(
                     controller: _sadrzajController,
                     labelText: 'Sadržaj',
@@ -390,13 +390,13 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildDatePickerField(
                     controller: _datumController,
                     labelText: 'Datum Objave',
                     onTap: () => _selectDate(context),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildDropdownField(
                     labelText: 'Autor',
                     value: _selectedAutorId,
@@ -418,19 +418,19 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Center(
                     child: ElevatedButton(
                       onPressed: _handleSubmit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
                       child: Text(
                         widget.novost == null ? 'Create Novost' : 'Update Novost',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blueAccent,
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
                       ),
                     ),
                   ),
@@ -452,17 +452,17 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+        labelStyle: const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blueAccent, width: 2),
+          borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
           borderRadius: BorderRadius.circular(10),
         ),
         filled: true,
         fillColor: Colors.blue[50],
-        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       ),
       validator: validator,
     );
@@ -480,17 +480,17 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
           controller: controller,
           decoration: InputDecoration(
             labelText: labelText,
-            labelStyle: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+            labelStyle: const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueAccent, width: 2),
+              borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
               borderRadius: BorderRadius.circular(10),
             ),
             filled: true,
             fillColor: Colors.blue[50],
-            contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -514,7 +514,7 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
       value: value,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+        labelStyle: const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -594,7 +594,7 @@ void showCustomSnackBar(BuildContext context, String message, Color backgroundCo
       child: Material(
         color: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(8),
@@ -603,17 +603,17 @@ void showCustomSnackBar(BuildContext context, String message, Color backgroundCo
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.check_circle,
                 color: Colors.white,
                 size: 24, // Icon size
               ),
-              SizedBox(width: 8), // Space between icon and text
+              const SizedBox(width: 8), // Space between icon and text
               Expanded(
                 child: Text(
                   message,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
@@ -628,7 +628,7 @@ void showCustomSnackBar(BuildContext context, String message, Color backgroundCo
 
   overlay.insert(overlayEntry);
   // Remove the toast after a duration
-  Future.delayed(Duration(seconds: 3)).then((_) => overlayEntry.remove());
+  Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
 }
 
 void _showErrorSnackBar() {
@@ -645,20 +645,20 @@ void showErrorToast(BuildContext context, String message) {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           decoration: BoxDecoration(
             color: Colors.red, // Red background for the error
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             children: [
-              Icon(Icons.error, color: Colors.white), // Error icon on the left
-              SizedBox(width: 10), // Space between the icon and the text
+              const Icon(Icons.error, color: Colors.white), // Error icon on the left
+              const SizedBox(width: 10), // Space between the icon and the text
               Expanded(
                 child: Text(
                   message,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
             ],
@@ -671,7 +671,7 @@ void showErrorToast(BuildContext context, String message) {
   overlay.insert(overlayEntry);
 
   // Automatically remove the toast after a duration
-  Future.delayed(Duration(seconds: 3)).then((_) => overlayEntry.remove());
+  Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
 }
 }
 

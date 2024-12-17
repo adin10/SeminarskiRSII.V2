@@ -270,11 +270,11 @@ class _NewOsobljeScreenState extends State<NewOsobljeScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _imeController = TextEditingController();
-  TextEditingController _prezimeController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _korisnickoImeController = TextEditingController();
-  TextEditingController _telefonController = TextEditingController();
+  final TextEditingController _imeController = TextEditingController();
+  final TextEditingController _prezimeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _korisnickoImeController = TextEditingController();
+  final TextEditingController _telefonController = TextEditingController();
 
   Uint8List? _slikaBytes;
 
@@ -415,7 +415,7 @@ class _NewOsobljeScreenState extends State<NewOsobljeScreen> {
               children: [
                 TextFormField(
                   controller: _imeController,
-                  decoration: InputDecoration(labelText: 'Ime', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'Ime', border: OutlineInputBorder()),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Ime is required';
@@ -426,7 +426,7 @@ class _NewOsobljeScreenState extends State<NewOsobljeScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _prezimeController,
-                  decoration: InputDecoration(labelText: 'Prezime', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'Prezime', border: OutlineInputBorder()),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Prezime is required';
@@ -437,7 +437,7 @@ class _NewOsobljeScreenState extends State<NewOsobljeScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Email is required';
@@ -448,7 +448,7 @@ class _NewOsobljeScreenState extends State<NewOsobljeScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _korisnickoImeController,
-                  decoration: InputDecoration(labelText: 'Korisničko ime', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'Korisničko ime', border: OutlineInputBorder()),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Korisničko ime is required';
@@ -459,7 +459,7 @@ class _NewOsobljeScreenState extends State<NewOsobljeScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _telefonController,
-                  decoration: InputDecoration(labelText: 'Telefon', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'Telefon', border: OutlineInputBorder()),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Telefon is required';

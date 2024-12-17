@@ -51,13 +51,13 @@ class _GostiListScreenState extends State<GostiListScreen> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : Scrollbar(
                       controller: _verticalController,
                       thumbVisibility: true,
@@ -73,7 +73,7 @@ class _GostiListScreenState extends State<GostiListScreen> {
                             child: DataTable(
                               dataRowHeight: 60,
                               headingRowHeight: 50,
-                              headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
                               columnSpacing: 24,
                               horizontalMargin: 12,
@@ -93,18 +93,18 @@ class _GostiListScreenState extends State<GostiListScreen> {
                     ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
               onPressed: () {
                 // Add your "Add New Guest" action here
               },
-              child: Text('Add New Guest'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: TextStyle(fontSize: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: const TextStyle(fontSize: 16),
               ),
+              child: Text('Add New Guest'),
             ),
           ),
         ],
@@ -129,7 +129,7 @@ class _GostiListScreenState extends State<GostiListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(6, (index) => DataCell(Text("No data..."))))
+        DataRow(cells: List.generate(6, (index) => const DataCell(Text("No data..."))))
       ];
     }
 
@@ -147,9 +147,9 @@ class _GostiListScreenState extends State<GostiListScreen> {
             _buildDataCell(guest["grad"]["nazivGrada"] ?? ""),
             _buildDataCell(guest["korisnickoIme"] ?? ""),
           ],
-          color: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.hovered)) {
+          color: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.hovered)) {
                 return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
               }
               return null;

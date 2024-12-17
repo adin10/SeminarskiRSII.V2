@@ -223,7 +223,7 @@ import '../../widgets/master_screen.dart';
 
 class NewDrzavaScreen extends StatefulWidget {
   final dynamic drzava;
-  NewDrzavaScreen({Key? key, this.drzava}) : super(key: key);
+  const NewDrzavaScreen({Key? key, this.drzava}) : super(key: key);
 
   @override
   _NewDrzavaScreenState createState() => _NewDrzavaScreenState();
@@ -231,7 +231,7 @@ class NewDrzavaScreen extends StatefulWidget {
 
 class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _nazivController = TextEditingController();
+  final TextEditingController _nazivController = TextEditingController();
 
   @override
   void initState() {
@@ -254,7 +254,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
                   blurRadius: 10,
@@ -278,7 +278,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildTextField(
                     controller: _nazivController,
                     labelText: 'Naziv Drzave',
@@ -289,23 +289,23 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Center(
                     child: ElevatedButton(
                       onPressed: _handleSubmit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
                       child: Text(
                         widget.drzava == null
                             ? 'Create Country'
                             : 'Update Country',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blueAccent,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
                       ),
                     ),
                   ),
@@ -330,17 +330,17 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle:
-            TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blueAccent, width: 2),
+          borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
           borderRadius: BorderRadius.circular(10),
         ),
         filled: true,
         fillColor: Colors.blue[50],
-        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       ),
       validator: validator,
     );
@@ -409,7 +409,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
         child: Material(
           color: Colors.transparent,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: BorderRadius.circular(8),
@@ -418,17 +418,17 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.check_circle,
                   color: Colors.white,
                   size: 24, // Icon size
                 ),
-                SizedBox(width: 8), // Space between icon and text
+                const SizedBox(width: 8), // Space between icon and text
                 Expanded(
                   child: Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                     ),
@@ -443,7 +443,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
 
     overlay.insert(overlayEntry);
     // Remove the toast after a duration
-    Future.delayed(Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
   }
 
   void _showErrorSnackBar() {
@@ -461,21 +461,21 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
         child: Material(
           color: Colors.transparent,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
             decoration: BoxDecoration(
               color: Colors.red, // Red background for the error
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               children: [
-                Icon(Icons.error,
+                const Icon(Icons.error,
                     color: Colors.white), // Error icon on the left
-                SizedBox(width: 10), // Space between the icon and the text
+                const SizedBox(width: 10), // Space between the icon and the text
                 Expanded(
                   child: Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ],
@@ -488,6 +488,6 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
     overlay.insert(overlayEntry);
 
     // Automatically remove the toast after a duration
-    Future.delayed(Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
   }
 }

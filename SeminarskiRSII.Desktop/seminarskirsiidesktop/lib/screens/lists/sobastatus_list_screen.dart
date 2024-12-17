@@ -38,16 +38,16 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this room status?'),
+        title: const Text('Confirm Deletion'),
+        content: const Text('Are you sure you want to delete this room status?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -80,13 +80,13 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : Scrollbar(
                       controller: _verticalController,
                       thumbVisibility: true,
@@ -102,7 +102,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
                             child: DataTable(
                               dataRowHeight: 60,
                               headingRowHeight: 50,
-                              headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
                               columnSpacing: 24,
                               horizontalMargin: 12,
@@ -121,7 +121,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
                     ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
@@ -131,11 +131,11 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
                   MaterialPageRoute(builder: (context) =>  NewSobaStatusScreen()),
                 );
               },
-              child: Text('Create New Room Status'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: TextStyle(fontSize: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: const TextStyle(fontSize: 16),
               ),
+              child: Text('Create New Room Status'),
             ),
           ),
         ],
@@ -160,7 +160,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(5, (index) => DataCell(Text("No data..."))))
+        DataRow(cells: List.generate(5, (index) => const DataCell(Text("No data..."))))
       ];
     }
 
@@ -176,7 +176,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
     _buildDataCell(sobaStatus["opis"] ?? ""),
     DataCell( // Update button
       IconButton(
-        icon: Icon(Icons.edit, color: Colors.blue),
+        icon: const Icon(Icons.edit, color: Colors.blue),
         onPressed: () {
           Navigator.push(
             context,
@@ -189,14 +189,14 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
     ),
     DataCell( // Delete button
       IconButton(
-        icon: Icon(Icons.delete, color: Colors.red),
+        icon: const Icon(Icons.delete, color: Colors.red),
         onPressed: () => _confirmDelete(sobaStatus["id"].toString()),
       ),
     ),
           ],
-          color: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.hovered)) {
+          color: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.hovered)) {
                 return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
               }
               return null;

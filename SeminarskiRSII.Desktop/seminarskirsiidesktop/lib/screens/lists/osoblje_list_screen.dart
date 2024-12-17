@@ -39,16 +39,16 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this employee?'),
+        title: const Text('Confirm Deletion'),
+        content: const Text('Are you sure you want to delete this employee?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -81,13 +81,13 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : Scrollbar(
                       controller: _verticalController,
                       thumbVisibility: true,
@@ -103,7 +103,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                             child: DataTable(
                               dataRowHeight: 60,
                               headingRowHeight: 50,
-                              headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
                               columnSpacing: 24,
                               horizontalMargin: 12,
@@ -126,7 +126,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                     ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
@@ -136,11 +136,11 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                   MaterialPageRoute(builder: (context) => const NewOsobljeScreen()),
                 );
               },
-              child: Text('Create New Employee'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: TextStyle(fontSize: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: const TextStyle(fontSize: 16),
               ),
+              child: Text('Create New Employee'),
             ),
           ),
         ],
@@ -165,7 +165,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(8, (index) => DataCell(Text("No data..."))))
+        DataRow(cells: List.generate(8, (index) => const DataCell(Text("No data..."))))
       ];
     }
 
@@ -191,7 +191,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
             ),
                  DataCell( // Update button
       IconButton(
-        icon: Icon(Icons.edit, color: Colors.blue),
+        icon: const Icon(Icons.edit, color: Colors.blue),
         onPressed: () {
           Navigator.push(
             context,
@@ -204,14 +204,14 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
     ),
     DataCell( // Delete button
       IconButton(
-        icon: Icon(Icons.delete, color: Colors.red),
+        icon: const Icon(Icons.delete, color: Colors.red),
         onPressed: () => _confirmDelete(employee["id"].toString()),
       ),
     ),
           ],
-          color: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.hovered)) {
+          color: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.hovered)) {
                 return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
               }
               return null;

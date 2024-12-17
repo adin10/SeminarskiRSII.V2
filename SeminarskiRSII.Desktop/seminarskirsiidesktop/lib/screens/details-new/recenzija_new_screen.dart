@@ -14,8 +14,8 @@ class NewRecenzijaScreen extends StatefulWidget {
 }
 
 class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
-  TextEditingController _komentarController = TextEditingController();
-  TextEditingController _ocjenaController = TextEditingController();
+  final TextEditingController _komentarController = TextEditingController();
+  final TextEditingController _ocjenaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late int ocjena;
   late String komentar;
@@ -75,7 +75,7 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dodaj Novu Recenziju'),
+        title: const Text('Dodaj Novu Recenziju'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -85,7 +85,7 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
                             DropdownButtonFormField<int>(
-                decoration: InputDecoration(labelText: 'Gost'),
+                decoration: const InputDecoration(labelText: 'Gost'),
                 items: gosti.map<DropdownMenuItem<int>>((gost) {
                   return DropdownMenuItem<int>(
                     value: gost['id'],
@@ -105,11 +105,11 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
                 },
               ),
                             DropdownButtonFormField<int>(
-                decoration: InputDecoration(labelText: 'soba'),
+                decoration: const InputDecoration(labelText: 'soba'),
                 items: sobe.map<DropdownMenuItem<int>>((soba) {
                   return DropdownMenuItem<int>(
                     value: soba['id'],
-                    child: Text("${soba['brojSobe'].toString()}"),
+                    child: Text(soba['brojSobe'].toString()),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -126,7 +126,7 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
               ),
               TextFormField(
                 controller: _ocjenaController,
-                decoration: InputDecoration(labelText: 'Ocjena'),
+                decoration: const InputDecoration(labelText: 'Ocjena'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the value';
@@ -139,7 +139,7 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
               ),
               TextFormField(
                 controller: _komentarController,
-                decoration: InputDecoration(labelText: 'Komentar'),
+                decoration: const InputDecoration(labelText: 'Komentar'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the text';
@@ -150,7 +150,7 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
                   komentar = value!;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -159,7 +159,7 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
                     _createNews();
                   }
                 },
-                child: Text('Save'),
+                child: const Text('Save'),
               ),
             ],
           ),

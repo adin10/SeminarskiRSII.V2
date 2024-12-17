@@ -285,16 +285,16 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this price?'),
+        title: const Text('Confirm Deletion'),
+        content: const Text('Are you sure you want to delete this price?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -328,13 +328,13 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : Scrollbar(
                       controller: _verticalController,
                       thumbVisibility: true,
@@ -350,7 +350,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                             child: DataTable(
                               dataRowHeight: 60,
                               headingRowHeight: 50,
-                              headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
                               columnSpacing: 24,
                               horizontalMargin: 12,
@@ -359,7 +359,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                                 _buildDataColumn("Broj dana"),
                                 _buildDataColumn("Cijena"),
                                 _buildDataColumn("Soba"),
-                                DataColumn(
+                                const DataColumn(
                                   label: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -383,21 +383,21 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                     ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  NewCjenovnikScreen()),
+                  MaterialPageRoute(builder: (context) =>  const NewCjenovnikScreen()),
                 );
               },
-              child: Text('Create New Cijena'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: TextStyle(fontSize: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: const TextStyle(fontSize: 16),
               ),
+              child: Text('Create New Cijena'),
             ),
           ),
         ],
@@ -422,7 +422,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: [
+        const DataRow(cells: [
           DataCell(Text("No data...")),
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
@@ -435,10 +435,10 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["id"].toString(), style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["brojDana"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["cijena"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(Text(x["id"].toString(), style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["brojDana"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["cijena"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -446,7 +446,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                       SizedBox(
                         width: 60,
                         child: IconButton(
-                          icon: Icon(Icons.edit, color: Colors.blue),
+                          icon: const Icon(Icons.edit, color: Colors.blue),
                               onPressed: () {
                                   Navigator.push(
                                     context,
@@ -462,7 +462,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                       SizedBox(
                         width: 60,
                         child: IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
+                          icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _confirmDelete(x["id"].toString()),
                         ),
                       ),

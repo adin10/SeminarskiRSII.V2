@@ -50,13 +50,13 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
           Expanded(
             child: Center( // Centering the whole container
               child: Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: Colors.grey.shade300),
                 ),
                 child: isLoading
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : Scrollbar(
                         controller: _verticalController,
                         thumbVisibility: true,
@@ -71,11 +71,11 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
                               scrollDirection: Axis.horizontal,
                               child: Center(
                                 child: ConstrainedBox(
-                                  constraints: BoxConstraints(maxWidth: 800), // Adjust width as needed
+                                  constraints: const BoxConstraints(maxWidth: 800), // Adjust width as needed
                                   child: DataTable(
                                     dataRowHeight: 60,
                                     headingRowHeight: 50,
-                                    headingRowColor: MaterialStateProperty.all(Colors.blueGrey[50]),
+                                    headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                                     dividerThickness: 2,
                                     columnSpacing: 24,
                                     horizontalMargin: 12,
@@ -120,7 +120,7 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: [
+        const DataRow(cells: [
           DataCell(Text("No data...")),
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
@@ -134,12 +134,12 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["id"].toString(), style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["gost"]["ime"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["gost"]["prezime"] ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["ocjena"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-                DataCell(Text(x["komentar"] ?? "", style: TextStyle(fontSize: 14))),
+                DataCell(Text(x["id"].toString(), style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["gost"]["ime"] ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["gost"]["prezime"] ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["soba"]["brojSobe"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["ocjena"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["komentar"] ?? "", style: const TextStyle(fontSize: 14))),
               ],
             ))
         .toList();
