@@ -160,6 +160,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/postavke_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import '../screens/lists/cjenovnik_list_screen.dart';
 import '../screens/lists/drzava_list_screen.dart';
@@ -303,10 +304,26 @@ class _MasterScreenState extends State<MasterScreenWidget> {
                           builder: (context) => const SobaOsobljeListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.group, 'Postavke', 12, () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PostavkeScreen(osobljeId: 6),
-                        ));
+                      // _buildMenuItem(Icons.group, 'Postavke', 12, () {
+                      //   Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => PostavkeScreen(osobljeId: userId),
+                      //   ));
+                      // }),
+                      _buildMenuItem(Icons.group, 'Postavke', 12, () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        final int? userId = prefs.getInt('loggedInUserId');
+
+                        if (userId != null) {
+                          // If userId is available, navigate to PostavkeScreen
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                PostavkeScreen(osobljeId: userId),
+                          ));
+                        } else {
+                          // If userId is not available, show error toast
+                          showErrorToast(context,
+                              'Unable to retrieve user ID. Please log in again.');
+                        }
                       }),
                       _buildMenuItem(Icons.logout, 'Logout', 13, () {
                         _handleLogout(context);
@@ -371,7 +388,66 @@ class _MasterScreenState extends State<MasterScreenWidget> {
       ),
     );
   }
-  void _handleLogout(BuildContext context) {
+
+Future<void> _navigateToPostavke(BuildContext context) async {
+  final prefs = await SharedPreferences.getInstance();
+  final int? userId = prefs.getInt('loggedInUserId');
+
+  if (userId != null) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => PostavkeScreen(osobljeId: userId),
+      ),
+    );
+  } else {
+    _showErrorSnackBar();
+  }
+}
+
+void _showErrorSnackBar() {
+  showErrorToast(context, 'Error occurred. Please try again later.');
+}
+
+void showErrorToast(BuildContext context, String message) {
+  final overlay = Overlay.of(context);
+  final overlayEntry = OverlayEntry(
+    builder: (context) => Positioned(
+      top: 20, // Position the toast at the top
+      left: MediaQuery.of(context).size.width * 0.15, // Center horizontally with reduced width
+      width: MediaQuery.of(context).size.width * 0.7, // Reduced width
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          decoration: BoxDecoration(
+            color: Colors.red, // Red background for the error
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.error, color: Colors.white), // Error icon on the left
+              const SizedBox(width: 10), // Space between the icon and the text
+              Expanded(
+                child: Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+
+  overlay.insert(overlayEntry);
+
+  // Automatically remove the toast after a duration
+  Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+}
+
+  void _handleLogout(BuildContext context) async {
   // Show a confirmation dialog before logging out
   showDialog(
     context: context,
@@ -388,9 +464,12 @@ class _MasterScreenState extends State<MasterScreenWidget> {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               // Close the dialog and navigate to the Login screen
               Navigator.of(context).pop(); // Close the dialog
+
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.remove('loggedInUserId');
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => LoginPage()),
                 (route) => false, // Remove all existing routes

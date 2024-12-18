@@ -21,6 +21,7 @@ import 'package:seminarskirsiidesktop/screens/lists/drzava_list_screen.dart';
 import 'package:seminarskirsiidesktop/screens/lists/gosti_list_screen.dart';
 import 'package:seminarskirsiidesktop/screens/lists/novosti_list_screen.dart';
 import 'package:seminarskirsiidesktop/utils/util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -230,6 +231,15 @@ class LoginPage extends StatelessWidget {
       );
 
       if (response.statusCode == 200) {
+              final Map<String, dynamic> responseBody = json.decode(response.body);
+
+      // Assuming the ID is returned as part of the response body
+      final int userId = responseBody['id']; // Adjust the key if different
+
+      // Store the ID using shared preferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('loggedInUserId', userId);
+
         // Login successful, navigate to the desired screen
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const NovostiListScreen()),

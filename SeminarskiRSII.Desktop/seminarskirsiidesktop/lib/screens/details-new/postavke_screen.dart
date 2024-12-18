@@ -308,6 +308,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:seminarskirsiidesktop/screens/details-new/change_password_screen.dart';
 import '../../providers/base_provider.dart';
 import '../../widgets/master_screen.dart'; // Make sure this is where your sidebar is defined
 
@@ -401,18 +402,18 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
                             'Username: ${osobljeData.korisnickoIme}',
                             style: const TextStyle(fontSize: 16, color: Colors.black87),
                           ),
-                        const SizedBox(height: 8),
-                          // Lozinka
-                          Text(
-                            'Lozinka: ${osobljeData.lozinka}',
-                            style: const TextStyle(fontSize: 16, color: Colors.black87),
-                          ),
-                          const SizedBox(height: 8),
-                          // Potvrdi lozinku
-                          Text(
-                            'Potvrdi lozinku: ${osobljeData.potvrdiLozinku}',
-                            style: const TextStyle(fontSize: 16, color: Colors.black87),
-                          ),
+                        // const SizedBox(height: 8),
+                        //   // Lozinka
+                        //   Text(
+                        //     'Lozinka: ${osobljeData.lozinka}',
+                        //     style: const TextStyle(fontSize: 16, color: Colors.black87),
+                        //   ),
+                        //   const SizedBox(height: 8),
+                        //   // Potvrdi lozinku
+                        //   Text(
+                        //     'Potvrdi lozinku: ${osobljeData.potvrdiLozinku}',
+                        //     style: const TextStyle(fontSize: 16, color: Colors.black87),
+                        //   ),
                           const SizedBox(height: 8),
                           // Phone
                           Text(
@@ -424,6 +425,29 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
                           Text(
                             'Roles: ${osobljeData.uloge}',
                             style: const TextStyle(fontSize: 16, color: Colors.black87),
+                          ),
+                          const SizedBox(height: 8),
+                                                   const SizedBox(height: 8),
+                          // Password
+                          Text(
+                            'Password: ••••••••', // Indication of password being set
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
+                          ),
+                          const SizedBox(height: 16),
+                          // Button to open ChangePasswordScreen
+                          ElevatedButton(
+                            onPressed: () {
+                              // Navigate to the ChangePasswordScreen
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChangePasswordScreen(
+                                    userId: widget.osobljeId,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: const Text('Change Password'),
                           ),
                         ],
                       ),
@@ -446,8 +470,8 @@ class Osoblje {
   final String email;
   final String korisnickoIme;
   final String telefon;
-  final String lozinka;
-  final String potvrdiLozinku;
+  // final String lozinka;
+  // final String potvrdiLozinku;
   final List<int>? slika; // byte array for image
   final String uloge;
 
@@ -458,8 +482,8 @@ class Osoblje {
     required this.email,
     required this.korisnickoIme,
     required this.telefon,
-    required this.lozinka,
-    required this.potvrdiLozinku,
+    // required this.lozinka,
+    // required this.potvrdiLozinku,
     this.slika,
     required this.uloge,
   });
@@ -472,8 +496,8 @@ class Osoblje {
       email: json['email'],
       korisnickoIme: json['korisnickoIme'],
       telefon: json['telefon'],
-      lozinka: json['lozinka'],
-      potvrdiLozinku: json['potvrdiLozinku'],
+      // lozinka: json['lozinka'],
+      // potvrdiLozinku: json['potvrdiLozinku'],
       slika: json['slika'] != null ? base64Decode(json['slika']) : null,
       uloge: json['uloge'] ?? '',
     );
