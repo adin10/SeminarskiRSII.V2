@@ -13,6 +13,7 @@ namespace SeminarskiRSII.WebApi.Mappers
         public Mapper()
         {
             CreateMap<Database.Osoblje, Osoblje>().ReverseMap();
+            CreateMap<Database.OsobljeUloge, OsobljeUloge>().ReverseMap();
             CreateMap<OsobljeInsertRequest, Database.Osoblje>().ReverseMap();
             CreateMap<Database.Gost, Osoblje>().ReverseMap();
 

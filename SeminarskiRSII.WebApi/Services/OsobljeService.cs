@@ -82,7 +82,7 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Osoblje> Get(int id)
         {
-            var entity = await _context.Osoblje.Include(x=>x.OsobljeUloge).Where(x => x.Id == id).FirstOrDefaultAsync();
+            var entity = await _context.Osoblje.Include(x=>x.OsobljeUloge).ThenInclude(x=>x.VrstaOsoblja).Where(x => x.Id == id).FirstOrDefaultAsync();
             if (entity is null)
             {
                 throw new UserException("Niije pronadjen korisnik!");
@@ -118,6 +118,7 @@ namespace SeminarskiRSII.WebApi.Services
                 VrstaOsobljaId = uloga
                 };
                await _context.OsobljeUloge.AddAsync(korisniciUloge);
+               _context.SaveChanges();
             }
             return _mapper.Map<Model.Models.Osoblje>(entity);
         }
