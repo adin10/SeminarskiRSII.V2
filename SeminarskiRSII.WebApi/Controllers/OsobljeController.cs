@@ -67,15 +67,15 @@ namespace SeminarskiRSII.WebApi.Controllers
             try
             {
                 var updatedUser = await _service.ChangePassword(id, request);
-                return Ok(updatedUser); // Return 200 OK with the updated user
+                return Ok(updatedUser);
             }
             catch (UserException ex)
             {
-                return BadRequest(ex.Message); // Return 400 BadRequest with the exception message
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error: " + ex.Message); // Return 500 Internal Server Error
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
     }

@@ -220,10 +220,10 @@ class LoginPage extends StatelessWidget {
     final Map<String, String> body = {'username': username, 'password': password};
 
     try {
-       final ioc = HttpClient();
-    ioc.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
-    final http = IOClient(ioc);
+      final ioc = HttpClient();
+      ioc.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      final http = IOClient(ioc);
       final response = await http.post(
         url,
         headers: headers,
@@ -231,14 +231,13 @@ class LoginPage extends StatelessWidget {
       );
 
       if (response.statusCode == 200) {
-              final Map<String, dynamic> responseBody = json.decode(response.body);
+        final Map<String, dynamic> responseBody = json.decode(response.body);
 
-      // Assuming the ID is returned as part of the response body
-      final int userId = responseBody['id']; // Adjust the key if different
+        final int userId = responseBody['id']; // Adjust the key if different
 
-      // Store the ID using shared preferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('loggedInUserId', userId);
+        // Store the ID using shared preferences
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setInt('loggedInUserId', userId);
 
         // Login successful, navigate to the desired screen
         Navigator.of(context).pushReplacement(
@@ -288,28 +287,57 @@ class LoginPage extends StatelessWidget {
           // Form content
           Center(
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(12),
               ),
-              constraints: const BoxConstraints(maxWidth: 400, maxHeight: 400),
+              constraints: const BoxConstraints(maxWidth: 450, maxHeight: 500), // Increased size
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Header
+                  const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  // Username TextField
                   TextField(
-                    decoration: const InputDecoration(labelText: 'Username'),
+                    decoration: const InputDecoration(
+                      labelText: 'Username',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.person),
+                    ),
                     controller: _usernameController,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
+                  
+                  // Password TextField
                   TextField(
-                    decoration: const InputDecoration(labelText: 'Password'),
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.lock),
+                    ),
                     obscureText: true,
                     controller: _passwordController,
                   ),
                   const SizedBox(height: 20),
+                  
+                  // Submit Button
                   ElevatedButton(
                     onPressed: () => _login(context),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12), backgroundColor: Colors.blue,
+                      textStyle: const TextStyle(fontSize: 16),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
                     child: const Text('Submit'),
                   ),
                 ],

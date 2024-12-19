@@ -315,6 +315,8 @@
 
 
 
+
+// radi kako treba
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -496,7 +498,6 @@ void _showErrorSnackBar() {
                   const SizedBox(height: 20),
                   _buildTextField(_telefonController, 'Telefon', keyboardType: TextInputType.phone),
                     const SizedBox(height: 20),
-                       const SizedBox(height: 20),
                   MultiSelectDialogField(
                     items: _pozicije.map((pozicija) {
                       return MultiSelectItem<int>(pozicija['id'], pozicija['pozicija']);

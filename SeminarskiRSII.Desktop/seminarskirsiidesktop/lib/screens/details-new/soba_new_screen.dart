@@ -183,8 +183,8 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                       _slikaBytes != null
                           ? Image.memory(
                               _slikaBytes!,
-                              width: 100,
-                              height: 100,
+                              width: 250,
+                              height: 140,
                               fit: BoxFit.cover,
                             )
                           : const Text("No Image Selected"),

@@ -334,7 +334,7 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
                     },
                     validator: (value) {
                       if (value == null) {
-                        return 'Please select a country';
+                        return 'Please select a room';
                       }
                       return null;
                     },

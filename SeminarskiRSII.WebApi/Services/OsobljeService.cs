@@ -125,13 +125,6 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Osoblje> Update(int id, OsobljeInsertRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Lozinka) || string.IsNullOrWhiteSpace(request.PotvrdiLozinku))
-            {
-                string defaultPassword = PasswordGenerator.GenerateRandomPassword(12);
-                request.Lozinka = defaultPassword;
-                request.PotvrdiLozinku = defaultPassword;
-            }
-
             var entity = await _context.Osoblje.FindAsync(id);
             if(entity != null)
             {
@@ -156,16 +149,7 @@ namespace SeminarskiRSII.WebApi.Services
                 await _context.OsobljeUloge.AddAsync(korisniciUloge);
             }
            await _context.SaveChangesAsync();
-            //______________________________________________________
-            if (!string.IsNullOrWhiteSpace(request.Lozinka))
-            {
-                if (request.Lozinka != request.PotvrdiLozinku)
-                {
-                    throw new Exception("Passwordi se ne slazu");
-                }
-                entity.LozinkaSalt =GenerateSalt();
-                entity.LozinkaHash =GenerateHash(entity.LozinkaSalt, request.Lozinka);
-            }
+
             _mapper.Map(request, entity);
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Osoblje>(entity);
