@@ -137,5 +137,34 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Gost>(entity);
         }
+
+        public async Task<Model.Models.Gost> ChangePassword(int id, ChangePasswordRequest request)
+        {
+            var entity = await _context.Gost.FirstOrDefaultAsync(x => x.Id == id);
+            if (entity == null)
+            {
+                throw new UserException("User not found!");
+            }
+
+            // Check if the old password is correct
+            if (entity.LozinkaHash != GenerateHash(entity.LozinkaSalt, request.OldPassword))
+            {
+                throw new UserException("Old password is incorrect!");
+            }
+
+            // Check if new password and confirmed new password match
+            if (request.NewPassword != request.ConfirmNewPassword)
+            {
+                throw new UserException("New passwords do not match!");
+            }
+
+            // Generate new salt and hash for the new password
+            entity.LozinkaSalt = GenerateSalt();
+            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.NewPassword);
+
+            _context.SaveChanges();
+
+            return _mapper.Map<Model.Models.Gost>(entity);
+        }
     }
 }

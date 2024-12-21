@@ -1,11 +1,11 @@
+
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seminarskirsmobile/main.dart';
 import 'package:seminarskirsmobile/providers/sobe_provider.dart';
-import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/rezervacija_screen.dart';
-
-import '../main.dart';
 
 class SobeScreen extends StatefulWidget {
   static const String sobeRouteName = '/sobe';
@@ -17,7 +17,7 @@ class SobeScreen extends StatefulWidget {
 }
 
 class _SobeScreenState extends State<SobeScreen> {
-  SobaProvider? _sobaProvider = null;
+  SobaProvider? _sobaProvider;
   dynamic data = {};
 
   @override
@@ -27,7 +27,7 @@ class _SobeScreenState extends State<SobeScreen> {
     loadData();
   }
 
-  Future loadData() async {
+  Future<void> loadData() async {
     var tmpData = await _sobaProvider?.get(null);
     setState(() {
       data = tmpData;
@@ -36,29 +36,27 @@ class _SobeScreenState extends State<SobeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic>? args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final GetUserResponse? userData =
+        ModalRoute.of(context)?.settings.arguments as GetUserResponse?;
 
-    if (args == null) {
-      // Handle the case when arguments are not available
-      // You can show an error message or navigate back to the previous screen
+    // Handle missing arguments
+    if (userData == null) {
       return Scaffold(
-        body: Center(
-          child: Text('Error: Missing arguments'),
+        appBar: AppBar(title: const Text('Error')),
+        body: const Center(
+          child: Text('Missing user data. Please go back and try again.'),
         ),
       );
     }
 
-    final GetUserResponse userData = args['userData'] as GetUserResponse;
-    final int userId = args['userId'] as int;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sobe"),
-        backgroundColor: Color.fromARGB(255, 200, 216, 199),
+        title: const Text("Sobe"),
+        backgroundColor: const Color.fromARGB(255, 200, 216, 199),
       ),
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/green.jpg"),
               fit: BoxFit.cover,
@@ -73,8 +71,8 @@ class _SobeScreenState extends State<SobeScreen> {
                           return Card(
                             child: Column(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                const Padding(
+                                  padding: EdgeInsets.all(16.0),
                                   child: Text(
                                     "Pregled svih slobodnih soba",
                                     style: TextStyle(
@@ -84,53 +82,46 @@ class _SobeScreenState extends State<SobeScreen> {
                                   ),
                                 ),
                                 AspectRatio(
-                                  aspectRatio:
-                                      1 / 1, // Omjer 1:1 za kvadratnu sliku
-                                  child: Expanded(
-                                    child: Container(
-                                      child: Image.memory(
-                                        base64Decode(x["slika"]),
-                                        fit: BoxFit.cover,
-                                      ),
+                                  aspectRatio: 1 / 1, // Square image
+                                  child: Container(
+                                    child: Image.memory(
+                                      base64Decode(x["slika"]),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 10),
-                                // Text("ID: ${x["id"]}"),
+                                const SizedBox(height: 10),
                                 Text("Broj sprata: ${x["brojSprata"]}"),
                                 Text("Broj sobe: ${x["brojSobe"]}"),
                                 Text("Opis sobe: ${x["opisSobe"]}"),
-                                // Text("Status sobe: ${x["sobaStatus"]["status"]}"),
                                 ElevatedButton(
                                   onPressed: () {
                                     IdGetter.Id = x["id"];
                                     Navigator.pushNamed(
                                       context,
-                                      RezervacijScreen
-                                          .dodajRezervacijuRouteName,
+                                      RezervacijScreen.dodajRezervacijuRouteName,
                                       arguments: {
                                         'userData': userData,
-                                        'userId': userId,
-                                        'selectedRoomId': x["id"]
+                                        'userId': userData.id, // Use id from GetUserResponse
+                                        'selectedRoomId': x["id"],
                                       },
                                     );
                                   },
-                                  child: Text("Rezervisi sobu"),
+                                  child: const Text("Rezerviši sobu"),
                                 ),
                               ],
                             ),
                           );
                         }).toList(),
                       )
-                    : Container(),
+                    : const Center(
+                        child: Text(
+                          "Nema dostupnih soba",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
               ),
-              SizedBox(height: 10),
-              // Icon(
-              //   // Icons.arrow_downward,
-              //   // size: 36,
-              //   // color: Colors.black,
-              // ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
         ),

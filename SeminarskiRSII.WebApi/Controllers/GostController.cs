@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using SeminarskiRSII.WebApi.Interfaces;
 using SeminarskiRSII.Model.Models;
+using SeminarskiRSII.WebAPI.Exceptions;
 
 namespace SeminarskiRSII.WebApi.Controllers
 {
@@ -51,6 +52,29 @@ namespace SeminarskiRSII.WebApi.Controllers
         public async Task<ActionResult<Gost>> Delete(int id)
         {
             return Ok(await _service.Delete(id));
+        }
+
+        [HttpPut("ChangePassword/{id}")]
+        public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePasswordRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Request cannot be null");
+            }
+
+            try
+            {
+                var updatedUser = await _service.ChangePassword(id, request);
+                return Ok(updatedUser);
+            }
+            catch (UserException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
     }
 }

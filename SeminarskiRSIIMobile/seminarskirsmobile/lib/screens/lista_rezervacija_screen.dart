@@ -1,14 +1,182 @@
+
+// import 'dart:convert';
+
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import 'package:seminarskirsmobile/providers/globals.dart';
+// import 'package:seminarskirsmobile/providers/rezervacija_provider.dart';
+// import '../main.dart';
+// import 'recenzija_screen.dart';
+
+// class ListaRezervacijaScreen extends StatefulWidget {
+//   static const String listaRezervacijaRouteName = '/listaRezervacija';
+
+//   const ListaRezervacijaScreen({Key? key}) : super(key: key);
+
+//   @override
+//   State<ListaRezervacijaScreen> createState() => _ListaRezervacijaScreenState();
+// }
+
+// class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
+//   RezervacijaProvider? _rezervacijaProvider;
+//   List<dynamic> data = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _rezervacijaProvider = context.read<RezervacijaProvider>();
+//     loadData(loggedUserID);
+//   }
+
+//   Future<void> loadData(int gostID) async {
+//     List<dynamic>? tmpData = await _rezervacijaProvider?.get(gostID: gostID);
+//     setState(() {
+//       data = tmpData ?? [];
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Lista rezervacija"),
+//         backgroundColor: const Color.fromARGB(255, 200, 216, 199),
+//       ),
+//       body: SafeArea(
+//         child: Container(
+//           decoration: const BoxDecoration(
+//             image: DecorationImage(
+//               image: AssetImage("assets/images/green.jpg"),
+//               fit: BoxFit.cover,
+//             ),
+//           ),
+//           child: Column(
+//             children: [
+//               Padding(
+//                 padding: const EdgeInsets.all(16.0),
+//                 child: Text(
+//                   "Lista rezervacija za gosta ${data.isNotEmpty ? '${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}' : ''}",
+//                   style: const TextStyle(
+//                     fontSize: 18,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//               Expanded(
+//                 child: data.isNotEmpty
+//                     ? PageView(
+//                         children: data.map<Widget>((reservation) {
+//                           return Card(
+//                             margin: const EdgeInsets.all(16.0),
+//                             shape: RoundedRectangleBorder(
+//                               borderRadius: BorderRadius.circular(12.0),
+//                             ),
+//                             elevation: 5,
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.stretch,
+//                               children: [
+//                                 ClipRRect(
+//                                   borderRadius: const BorderRadius.vertical(
+//                                     top: Radius.circular(12.0),
+//                                   ),
+//                                   child: AspectRatio(
+//                                     aspectRatio: 1 / 1,
+//                                     child: Image.memory(
+//                                       base64Decode(reservation["soba"]["slika"]),
+//                                       fit: BoxFit.cover,
+//                                     ),
+//                                   ),
+//                                 ),
+//                                 Padding(
+//                                   padding: const EdgeInsets.all(16.0),
+//                                   child: Column(
+//                                     crossAxisAlignment: CrossAxisAlignment.start,
+//                                     children: [
+//                                       Text(
+//                                         "Broj sobe: ${reservation["soba"]["brojSobe"]}",
+//                                         style: const TextStyle(
+//                                           fontSize: 16,
+//                                           fontWeight: FontWeight.bold,
+//                                         ),
+//                                       ),
+//                                       const SizedBox(height: 8),
+//                                       Text(
+//                                         "Početak rezervacije: ${reservation["datumRezervacije"]}",
+//                                         style: const TextStyle(
+//                                           fontSize: 14,
+//                                           color: Colors.grey,
+//                                         ),
+//                                       ),
+//                                       Text(
+//                                         "Završetak rezervacije: ${reservation["zavrsetakRezervacije"]}",
+//                                         style: const TextStyle(
+//                                           fontSize: 14,
+//                                           color: Colors.grey,
+//                                         ),
+//                                       ),
+//                                       const SizedBox(height: 16),
+//                                       Center(
+//                                         child: ElevatedButton(
+//                                           onPressed: () {
+//                                             IdGetter.Id = reservation["sobaId"];
+//                                             Navigator.pushNamed(
+//                                               context,
+//                                               RecenzijaScreen
+//                                                   .dodajRecenzijuRouteName,
+//                                               arguments: {
+//                                                 'selectedRoomId':
+//                                                     reservation["sobaId"]
+//                                               },
+//                                             );
+//                                           },
+//                                           style: ElevatedButton.styleFrom(
+//                                             backgroundColor:
+//                                                 const Color(0xFF88B088),
+//                                             shape: RoundedRectangleBorder(
+//                                               borderRadius:
+//                                                   BorderRadius.circular(8.0),
+//                                             ),
+//                                           ),
+//                                           child: const Text("Ostavite recenziju"),
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                           );
+//                         }).toList(),
+//                       )
+//                     : const Center(
+//                         child: Text(
+//                           "Nema dostupnih rezervacija",
+//                           style: TextStyle(fontSize: 18),
+//                         ),
+//                       ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class IdGetter {
+//   static int Id = 0;
+// }
+
+
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsmobile/providers/globals.dart';
 import 'package:seminarskirsmobile/providers/rezervacija_provider.dart';
-import 'package:seminarskirsmobile/screens/novosti_screen.dart';
-import 'package:seminarskirsmobile/screens/recenzija_screen.dart';
-
 import '../main.dart';
+import 'recenzija_screen.dart';
 
 class ListaRezervacijaScreen extends StatefulWidget {
   static const String listaRezervacijaRouteName = '/listaRezervacija';
@@ -21,22 +189,14 @@ class ListaRezervacijaScreen extends StatefulWidget {
 
 class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
   RezervacijaProvider? _rezervacijaProvider;
-  List<dynamic> data = []; // Update data variable type to List<dynamic>
+  List<dynamic> data = [];
 
   @override
   void initState() {
     super.initState();
     _rezervacijaProvider = context.read<RezervacijaProvider>();
-    // final gostID = 10;
     loadData(loggedUserID);
   }
-
-// Future<void> loadData() async {
-//   List<dynamic>? tmpData = await _rezervacijaProvider?.get(); // Update the type to List<dynamic>?
-//   setState(() {
-//     data = tmpData ?? []; // Assign tmpData to data variable, and handle null case
-//   });
-// }
 
   Future<void> loadData(int gostID) async {
     List<dynamic>? tmpData = await _rezervacijaProvider?.get(gostID: gostID);
@@ -45,16 +205,25 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
     });
   }
 
+  String formatDate(String dateString) {
+    try {
+      final date = DateTime.parse(dateString);
+      return DateFormat('dd.MM.yyyy').format(date);
+    } catch (e) {
+      return dateString;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Lista rezervacija"),
-        backgroundColor: Color.fromARGB(255, 200, 216, 199),
+        title: const Text("Lista rezervacija"),
+        backgroundColor: const Color.fromARGB(255, 200, 216, 199),
       ),
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/green.jpg"),
               fit: BoxFit.cover,
@@ -64,67 +233,121 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "Lista rezervacija za gosta ${data.isNotEmpty ? '${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}' : ''}",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+child: Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    const Text(
+      "Lista rezervacija za gosta:",
+      style: TextStyle(
+        fontSize: 20, // Slightly increased font size
+        fontWeight: FontWeight.normal, // No bold for the label
+      ),
+    ),
+    if (data.isNotEmpty)
+      Text(
+        '${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}',
+        style: const TextStyle(
+          fontSize: 20, // Slightly increased font size for name
+          fontWeight: FontWeight.bold, // Bold for ime i prezime
+          color: Colors.black87,
+        ),
+      ),
+  ],
+),
               ),
               Expanded(
                 child: data.isNotEmpty
                     ? PageView(
-                        children: data.map<Widget>((x) {
+                        children: data.map<Widget>((reservation) {
                           return Card(
+                            margin: const EdgeInsets.all(16.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            elevation: 5,
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                AspectRatio(
-                                  aspectRatio:
-                                      1 / 1, // Omjer 1:1 za kvadratnu sliku
-                                  child: Expanded(
-                                    child: Container(
-                                      child: Image.memory(
-                                        base64Decode(x["soba"]["slika"]),
-                                        fit: BoxFit.cover,
-                                      ),
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(12.0),
+                                  ),
+                                  child: AspectRatio(
+                                    aspectRatio: 1 / 1,
+                                    child: Image.memory(
+                                      base64Decode(reservation["soba"]["slika"]),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 10),
-                                Text(
-                                    "Pocetak rezervacije: ${x["datumRezervacije"]}"),
-                                Text(
-                                    "Zavrsetak rezervacije: ${x["zavrsetakRezervacije"]}"),
-                                Text("Broj sobe: ${x["soba"]["brojSobe"]}"),
-                                // Text("Gost: ${x["gost"]["ime"]} ${x["gost"]["prezime"]}"),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    IdGetter.Id = x["sobaId"];
-                                    Navigator.pushNamed(
-                                      context,
-                                      RecenzijaScreen.dodajRecenzijuRouteName,
-                                      arguments: {
-                                        'selectedRoomId': x["sobaId"]
-                                      },
-                                    );
-                                  },
-                                  child: Text("Ostavite recenziju"),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Broj sobe: ${reservation["soba"]["brojSobe"]}",
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        "Početak rezervacije: ${formatDate(reservation["datumRezervacije"])}",
+                                        style: const TextStyle(
+                                          fontSize: 16, // Slightly larger font size
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Završetak rezervacije: ${formatDate(reservation["zavrsetakRezervacije"])}",
+                                        style: const TextStyle(
+                                          fontSize: 16, // Slightly larger font size
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Center(
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            IdGetter.Id = reservation["sobaId"];
+                                            Navigator.pushNamed(
+                                              context,
+                                              RecenzijaScreen
+                                                  .dodajRecenzijuRouteName,
+                                              arguments: {
+                                                'selectedRoomId':
+                                                    reservation["sobaId"]
+                                              },
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                const Color(0xFF88B088),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
+                                          child: const Text("Ostavite recenziju"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           );
                         }).toList(),
                       )
-                    : Container(),
+                    : const Center(
+                        child: Text(
+                          "Nema dostupnih rezervacija",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
               ),
-              SizedBox(height: 10),
-              // Icon(
-              //   // Icons.arrow_downward,
-              //   // size: 36,
-              //   // color: Colors.black,
-              // ),
-              SizedBox(height: 10),
             ],
           ),
         ),
