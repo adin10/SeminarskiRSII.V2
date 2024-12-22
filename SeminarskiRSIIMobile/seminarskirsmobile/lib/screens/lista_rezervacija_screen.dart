@@ -219,7 +219,7 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Lista rezervacija"),
-        backgroundColor: const Color.fromARGB(255, 200, 216, 199),
+        backgroundColor: Colors.teal
       ),
       body: SafeArea(
         child: Container(
@@ -324,7 +324,7 @@ child: Column(
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                const Color(0xFF88B088),
+                                                 Colors.teal,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(8.0),

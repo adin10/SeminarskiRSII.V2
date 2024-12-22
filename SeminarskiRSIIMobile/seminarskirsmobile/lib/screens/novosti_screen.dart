@@ -172,7 +172,7 @@ class _NovostiScreenState extends State<NovostiScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Novosti"),
-        backgroundColor: Color.fromARGB(255, 200, 216, 199),
+        backgroundColor: Colors.teal,
       ),
       body: SafeArea(
         child: Container(

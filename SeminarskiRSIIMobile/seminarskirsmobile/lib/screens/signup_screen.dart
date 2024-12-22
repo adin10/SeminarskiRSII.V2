@@ -63,7 +63,7 @@ Future<void> _fetchGradove() async {
       appBar: AppBar(
         title: Text('Sign Up'),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.teal,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -125,7 +125,7 @@ Future<void> _fetchGradove() async {
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     minimumSize: Size(double.infinity, 50),
-                    backgroundColor: Color.fromARGB(255, 200, 216, 199),
+                    backgroundColor: Colors.teal,
                     textStyle: TextStyle(fontSize: 18),
                   ),
                 ),
