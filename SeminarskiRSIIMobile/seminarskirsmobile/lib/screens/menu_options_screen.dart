@@ -17,18 +17,12 @@ class OptionsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Options'),
+        title: Text('Hotel AS'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            // buildOptionCard(
-            //   context,
-            //   'Free Rooms',
-            //   Icons.hotel,
-            //   SobeScreen.sobeRouteName,
-            // ),
             buildOptionCard(
               context,
               'Slobodne sobe',
@@ -45,7 +39,7 @@ class OptionsScreen extends StatelessWidget {
             ),
             buildOptionCard(
               context,
-              'Your Reservations',
+              'Vase rezervacije',
               Icons.book,
               ListaRezervacijaScreen.listaRezervacijaRouteName,
               null
@@ -54,10 +48,9 @@ class OptionsScreen extends StatelessWidget {
               context,
               'Postavke',
               Icons.settings,
-              PostavkeScreen.routeName, // Add the route for settings when available
+              PostavkeScreen.routeName,
               userData
             ),
-            // Add logout option
             buildLogoutCard(context),
           ],
         ),
@@ -94,15 +87,12 @@ class OptionsScreen extends StatelessWidget {
     );
   }
 
-  // Logout logic
-// Logout card widget
   Widget buildLogoutCard(BuildContext context) {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8),
       elevation: 4,
       child: InkWell(
         onTap: () {
-          // Handle logout logic here
           logout(context);
         },
         child: Padding(
@@ -122,15 +112,13 @@ class OptionsScreen extends StatelessWidget {
     );
   }
 
-  // Logout logic
   void logout(BuildContext context) {
-    // Clear the user ID and any other session data
-    loggedUserID = 0; // Reset the logged-in user ID (ensure this is a global variable)
+    loggedUserID = 0;
 
     Navigator.pushNamedAndRemoveUntil(
       context,
-      '/', // The route name for the HomePage (login screen)
-      (Route<dynamic> route) => false, // This removes all previous routes
+      '/',
+      (Route<dynamic> route) => false,
     );
   }
 

@@ -1,13 +1,12 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/io_client.dart';
 import 'package:seminarskirsmobile/providers/base_provider.dart';
 import 'package:seminarskirsmobile/providers/globals.dart';
-import 'package:http/http.dart' as http;
-
 
 class ChangePasswordScreen extends StatefulWidget {
-  static const String routeName = '/changePassword'; // Route name
+  static const String routeName = '/changePassword';
 
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
@@ -21,7 +20,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   bool _isLoading = false;
   String _errorMessage = "";
 
-  // Key for form validation
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -61,39 +59,29 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         key: _formKey,
                         child: Column(
                           children: [
-                            buildPasswordField(
-                              controller: _oldPasswordController,
-                              label: 'Old Password',
-                              obscureText: true,
-                            ),
-                            buildPasswordField(
-                              controller: _newPasswordController,
-                              label: 'New Password',
-                              obscureText: true,
-                            ),
-                            buildPasswordField(
-                              controller: _confirmPasswordController,
-                              label: 'Confirm New Password',
-                              obscureText: true,
-                              validator: (value) {
-                                if (value != _newPasswordController.text) {
-                                  return 'Passwords do not match';
-                                }
-                                return null;
-                              },
-                            ),
+                            _buildTextField('Old Password',
+                                _oldPasswordController, 'Lozinka is required',
+                                obscureText: true),
+                            _buildTextField('New Password',
+                                _newPasswordController, 'Lozinka is required',
+                                obscureText: true),
+                            _buildTextField(
+                                'Confirm Password',
+                                _confirmPasswordController,
+                                'Lozinka is required',
+                                obscureText: true),
                             SizedBox(height: 20),
-
-                            // Change Password button
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
                               child: ElevatedButton(
                                 onPressed: _changePassword,
                                 child: Text("Change Your Password"),
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
                                   minimumSize: Size(double.infinity, 50),
-                                  backgroundColor: Color.fromARGB(255, 200, 216, 199),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 200, 216, 199),
                                   textStyle: TextStyle(fontSize: 18),
                                 ),
                               ),
@@ -112,7 +100,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  // Helper method to build a password text field
   Widget buildPasswordField({
     required TextEditingController controller,
     required String label,
@@ -135,45 +122,83 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  Future<void> _changePassword() async {
-    int id = loggedUserID;
-    print('poruka koji je ID');
-    print(id);
-    if (_newPasswordController.text != _confirmPasswordController.text) {
-      setState(() {
-        _errorMessage = "New passwords do not match";
-      });
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-      _errorMessage = "";
-    });
-
-    final response = await http.put(
-      Uri.parse("${BaseProvider.baseUrl}/Gost/ChangePassword/$id"),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'OldPassword': _oldPasswordController.text,
-        'NewPassword': _newPasswordController.text,
-        'confirmNewPassword': _confirmPasswordController.text
-      }),
+  Widget _buildTextField(
+      String label, TextEditingController controller, String errorMessage,
+      {TextInputType inputType = TextInputType.text,
+      bool obscureText = false,
+      String? compareValue}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: const TextStyle(
+              color: Colors.blueAccent, fontWeight: FontWeight.bold),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          filled: true,
+          fillColor: Colors.blue[50],
+        ),
+        keyboardType: inputType,
+        obscureText: obscureText,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return errorMessage;
+          }
+          if (compareValue != null && value != compareValue) {
+            return 'Lozinke se ne podudaraju';
+          }
+          return null;
+        },
+      ),
     );
+  }
 
-    setState(() {
-      _isLoading = false;
+  void _changePassword() {
+    int id = loggedUserID;
+    final requestBody = jsonEncode({
+      'OldPassword': _oldPasswordController.text,
+      'NewPassword': _newPasswordController.text,
+      'confirmNewPassword': _confirmPasswordController.text,
     });
+    _submitData(
+        requestBody, "${BaseProvider.baseUrl}/Gost/ChangePassword/$id", 'PUT');
+  }
 
-    if (response.statusCode == 200) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Password changed successfully!")),
-      );
-      Navigator.pop(context);
-    } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error while saving!")),
-      );
-    }
+  void _submitData(String requestBody, String url, String method) {
+    final ioc = HttpClient();
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    final http = IOClient(ioc);
+    final uri = Uri.parse(url);
+
+    final Future response = http.put(uri,
+        body: requestBody, headers: {'Content-Type': 'application/json'});
+
+    response.then((res) {
+      if (res.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration successful!')),
+        );
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/',
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        final responseData = jsonDecode(response as String);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(responseData['message'] ?? 'Registration failed')),
+        );
+      }
+    });
   }
 }
