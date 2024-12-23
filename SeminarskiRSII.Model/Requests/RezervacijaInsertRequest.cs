@@ -6,5 +6,6 @@
         public int? SobaId { get; set; }
         public DateTime DatumRezervacije { get; set; }
         public DateTime ZavrsetakRezervacije { get; set; }
+        public List<int> UslugaIds { get; set; } 
     }
 }

@@ -38,7 +38,7 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
             {
                 insert.SobaId = id;
             }
-            insert.BrojDana = int.Parse(txtBrojdana.Text);
+            insert.Valuta = txtBrojdana.Text;
             insert.Cijena = float.Parse(txtCijena.Text);
             if (_id.HasValue)
             {
@@ -61,7 +61,7 @@ namespace SeminarskiRSII.WinUI.Cjenovnik
             {
                 var list = await _service.getByID<Model.Models.Cjenovnik>(_id);
                 cmbSoba.SelectedValue = list.SobaId;
-                txtBrojdana.Text = list.BrojDana.ToString();
+                txtBrojdana.Text = list.Valuta;
                 txtCijena.Text = list.Cijena.ToString();
             }
         }

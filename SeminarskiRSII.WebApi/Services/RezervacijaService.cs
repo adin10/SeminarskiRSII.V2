@@ -10,6 +10,7 @@ using SeminarskiRSII.WebApi.Interfaces;
 using Microsoft.ML;
 using SeminarskiRSII.Model.ML;
 using Microsoft.ML.Trainers;
+using SeminarskiRSII.WebApi.Migrations;
 
 namespace SeminarskiRSII.WebApi.Services
 {
@@ -61,11 +62,39 @@ namespace SeminarskiRSII.WebApi.Services
             return _mapper.Map<Model.Models.Rezervacija>(entity);
         }
 
+        //public async Task<Model.Models.Rezervacija> Insert(RezervacijaInsertRequest insert)
+        //{
+        //    var entity = _mapper.Map<Database.Rezervacija>(insert);
+        //    await _context.Rezervacija.AddAsync(entity);
+        //    await _context.SaveChangesAsync();
+        //    return _mapper.Map<Model.Models.Rezervacija>(entity);
+        //}
+
         public async Task<Model.Models.Rezervacija> Insert(RezervacijaInsertRequest insert)
         {
+            // Calculate the total price
+            float totalPrice = await CalculateTotalPrice(insert.SobaId.Value, insert.DatumRezervacije, insert.ZavrsetakRezervacije, insert.UslugaIds);
+
+            // Map the reservation
             var entity = _mapper.Map<Database.Rezervacija>(insert);
+            entity.Cijena = totalPrice; // Add the calculated price to the reservation
+
             await _context.Rezervacija.AddAsync(entity);
             await _context.SaveChangesAsync();
+
+            // Handle UslugaIds
+            if (insert.UslugaIds != null && insert.UslugaIds.Any())
+            {
+                var rezervacijaUsluge = insert.UslugaIds.Select(uslugaId => new RezervacijaUsluga
+                {
+                    RezervacijaID = entity.Id,
+                    UslugaId = uslugaId
+                }).ToList();
+
+                await _context.RezervacijaUsluga.AddRangeAsync(rezervacijaUsluge);
+                await _context.SaveChangesAsync();
+            }
+
             return _mapper.Map<Model.Models.Rezervacija>(entity);
         }
 
@@ -150,6 +179,33 @@ namespace SeminarskiRSII.WebApi.Services
                .Select(x => x.Item1).Take(3).ToList();
             var mapperList = _mapper.Map<List<Model.Models.Rezervacija>>(finalResult);
             return mapperList;
+        }
+
+        private async Task<float> CalculateTotalPrice(int sobaId, DateTime startDate, DateTime endDate, List<int> uslugaIds)
+        {
+
+            var cjenovnik = await _context.Cjenovnik
+                .Where(c => c.SobaId == sobaId)
+                .FirstOrDefaultAsync();
+
+            if (cjenovnik == null)
+            {
+                throw new Exception("Cjenovnik entry not found for the specified Soba and number of days.");
+            }
+
+            float totalRoomPrice = cjenovnik.Cijena;
+
+            // Calculate the total service price
+            float totalServicePrice = 0;
+            if (uslugaIds != null && uslugaIds.Any())
+            {
+                totalServicePrice = await _context.Usluga
+                    .Where(u => uslugaIds.Contains(u.UslugaID))
+                    .SumAsync(u => u.Cijena);
+            }
+
+            // Return the final price
+            return totalRoomPrice + totalServicePrice;
         }
     }
 }

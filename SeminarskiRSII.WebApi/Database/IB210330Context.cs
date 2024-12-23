@@ -32,6 +32,8 @@ namespace SeminarskiRSII.WebApi.Database
         public virtual DbSet<SobaStatus> SobaStatus { get; set; } = null!;
         public virtual DbSet<VrstaOsoblja> VrstaOsoblja { get; set; } = null!;
         public virtual DbSet<Usluga> Usluga { get; set; }
+        public virtual DbSet<RezervacijaUsluga> RezervacijaUsluga { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

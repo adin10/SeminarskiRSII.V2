@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeminarskiRSII.WebApi.Database;
 
@@ -11,9 +12,10 @@ using SeminarskiRSII.WebApi.Database;
 namespace SeminarskiRSII.WebApi.Migrations
 {
     [DbContext(typeof(IB210330Context))]
-    partial class IB210330ContextModelSnapshot : ModelSnapshot
+    [Migration("20241223115221_rezervacijaUsluga")]
+    partial class rezervacijaUsluga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +33,9 @@ namespace SeminarskiRSII.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("BrojDana")
+                        .HasColumnType("int");
+
                     b.Property<float>("Cijena")
                         .HasColumnType("real")
                         .HasColumnName("cijena");
@@ -38,9 +43,6 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.Property<int>("SobaId")
                         .HasColumnType("int")
                         .HasColumnName("sobaID");
-
-                    b.Property<string>("Valuta")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

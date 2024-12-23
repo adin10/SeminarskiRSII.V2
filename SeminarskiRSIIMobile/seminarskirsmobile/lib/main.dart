@@ -258,7 +258,7 @@ class HomePage extends StatelessWidget {
         throw Exception('Invalid credentials');
       }
       if (response.statusCode != 200) {
-        throw Exception('Wrong username or password');
+        throw Exception('Pogresan Username ili Lozinka');
       }
 
       final finalData = GetUserResponse.fromJson(jsonDecode(response.body));

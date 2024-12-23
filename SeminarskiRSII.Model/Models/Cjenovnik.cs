@@ -8,9 +8,8 @@ namespace SeminarskiRSII.Model.Models
     {
         public int Id { get; set; }
         public int SobaId { get; set; }
-        public int BrojDana { get; set; }
         public float Cijena { get; set; }
-
+        public string? Valuta { get; set; }
         public Soba Soba { get; set; }
     }
 }

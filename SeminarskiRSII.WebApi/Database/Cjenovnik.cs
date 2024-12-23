@@ -7,9 +7,8 @@ namespace SeminarskiRSII.WebApi.Database
     {
         public int Id { get; set; }
         public int SobaId { get; set; }
-        public int BrojDana { get; set; }
+        public string? Valuta { get; set; }
         public float Cijena { get; set; }
-
         public virtual Soba Soba { get; set; } = null!;
     }
 }

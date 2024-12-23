@@ -356,8 +356,8 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                               horizontalMargin: 12,
                               columns: [
                                 _buildDataColumn("Id"),
-                                _buildDataColumn("Broj dana"),
                                 _buildDataColumn("Cijena"),
+                                _buildDataColumn("Valuta"),
                                 _buildDataColumn("Soba"),
                                 const DataColumn(
                                   label: Row(
@@ -436,8 +436,8 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
         .map<DataRow>((x) => DataRow(
               cells: [
                 DataCell(Text(x["id"].toString(), style: const TextStyle(fontSize: 14))),
-                DataCell(Text(x["brojDana"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["cijena"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["valuta"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(
                   Row(

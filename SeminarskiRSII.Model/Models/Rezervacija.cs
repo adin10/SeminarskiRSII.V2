@@ -9,6 +9,7 @@ namespace SeminarskiRSII.Model.Models
         public int Id { get; set; }
         public DateTime DatumRezervacije { get; set; }
         public DateTime ZavrsetakRezervacije { get; set; }
+        public float TotalPrice { get; set; }
         public int? GostId { get; set; }
         public Gost Gost { get; set; }
         public int? SobaId { get; set; }
