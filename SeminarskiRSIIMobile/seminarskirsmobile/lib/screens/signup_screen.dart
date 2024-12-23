@@ -20,7 +20,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController telefonController = TextEditingController();
   final TextEditingController korisnickoImeController = TextEditingController();
   final TextEditingController lozinkaController = TextEditingController();
-  final TextEditingController potvrdiLozinkuController = TextEditingController();
+  final TextEditingController potvrdiLozinkuController =
+      TextEditingController();
 
   int? selectedGrad;
   List<dynamic> _gradoviList = [];
@@ -32,30 +33,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _fetchGradove();
   }
 
-Future<void> _fetchGradove() async {
-  setState(() {
-    _isLoading = true;
-  });
-  try {
-    var fetchedGradovi = await GradProvider().get('');
-    
-    if (fetchedGradovi == null) {
-      throw Exception("No data received");
-    }
+  Future<void> _fetchGradove() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      var fetchedGradovi = await GradProvider().get('');
 
-    setState(() {
-      _gradoviList = fetchedGradovi;
-    });
-  } catch (error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Failed to load gradovi: $error')),
-    );
-  } finally {
-    setState(() {
-      _isLoading = false;
-    });
+      if (fetchedGradovi == null) {
+        throw Exception("No data received");
+      }
+
+      setState(() {
+        _gradoviList = fetchedGradovi;
+      });
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load gradovi: $error')),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -72,20 +73,22 @@ Future<void> _fetchGradove() async {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
               Center(
                 child: Text(
-                  'Create Your Account',
+                  'Kreirajte profil',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(height: 20),
-              // Fields
               _buildTextField('Ime', imeController, 'Ime is required'),
-              _buildTextField('Prezime', prezimeController, 'Prezime is required'),
-              _buildTextField('Email', emailController, 'Valid email is required', inputType: TextInputType.emailAddress),
-              _buildTextField('Telefon', telefonController, 'Telefon is required', inputType: TextInputType.phone),
-              // Dropdown for Grad
+              _buildTextField(
+                  'Prezime', prezimeController, 'Prezime is required'),
+              _buildTextField(
+                  'Email', emailController, 'Valid email is required',
+                  inputType: TextInputType.emailAddress),
+              _buildTextField(
+                  'Telefon', telefonController, 'Telefon is required',
+                  inputType: TextInputType.phone),
               const SizedBox(height: 20),
               _isLoading
                   ? Center(child: CircularProgressIndicator())
@@ -111,12 +114,15 @@ Future<void> _fetchGradove() async {
                       },
                     ),
               SizedBox(height: 16),
-              _buildTextField('Korisnicko Ime', korisnickoImeController, 'Korisnicko Ime is required'),
-              _buildTextField('Lozinka', lozinkaController, 'Lozinka is required', obscureText: true),
-              _buildTextField('Potvrdi Lozinku', potvrdiLozinkuController, 'Lozinke se ne podudaraju',
+              _buildTextField('Korisnicko Ime', korisnickoImeController,
+                  'Korisnicko Ime is required'),
+              _buildTextField(
+                  'Lozinka', lozinkaController, 'Lozinka is required',
+                  obscureText: true),
+              _buildTextField('Potvrdi Lozinku', potvrdiLozinkuController,
+                  'Lozinke se ne podudaraju',
                   obscureText: true, compareValue: lozinkaController.text),
               SizedBox(height: 20),
-              // Submit Button
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
@@ -136,17 +142,17 @@ Future<void> _fetchGradove() async {
       ),
     );
   }
-        
+
   void _registerUser() {
     final requestBody = jsonEncode({
-       'ime': imeController.text,
-       'prezime': prezimeController.text,
-       'email': emailController.text,
-        'telefon': telefonController.text,
-        'gradId': selectedGrad,
-        'korisnickoIme': korisnickoImeController.text,
-        'lozinka': lozinkaController.text,
-        'potvrdiLozinku': potvrdiLozinkuController.text,
+      'ime': imeController.text,
+      'prezime': prezimeController.text,
+      'email': emailController.text,
+      'telefon': telefonController.text,
+      'gradId': selectedGrad,
+      'korisnickoIme': korisnickoImeController.text,
+      'lozinka': lozinkaController.text,
+      'potvrdiLozinku': potvrdiLozinkuController.text,
     });
     _submitData(requestBody, "${BaseProvider.baseUrl}/Gost", 'POST');
   }
@@ -182,7 +188,7 @@ Future<void> _fetchGradove() async {
     });
   }
 
-   Widget _buildDropdownField({
+  Widget _buildDropdownField({
     required String labelText,
     required int? value,
     required List<DropdownMenuItem<int>> items,
@@ -193,13 +199,15 @@ Future<void> _fetchGradove() async {
       value: value,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle:
-            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+        labelStyle: const TextStyle(
+          color: Color(0xFF2C3333),
+          fontWeight: FontWeight.bold,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         filled: true,
-        fillColor: Colors.blue[50],
+        fillColor: const Color(0xFFD9E4DD),
       ),
       items: items,
       onChanged: onChanged,
@@ -207,25 +215,33 @@ Future<void> _fetchGradove() async {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, String errorMessage,
-      {TextInputType inputType = TextInputType.text, bool obscureText = false, String? compareValue}) {
+  Widget _buildTextField(
+      String label, TextEditingController controller, String errorMessage,
+      {TextInputType inputType = TextInputType.text,
+      bool obscureText = false,
+      String? compareValue}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-           labelStyle:
-            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
-            border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        filled: true,
-        fillColor: Colors.blue[50],
+          labelStyle: const TextStyle(
+            color: Color(0xFF2C3333),
+            fontWeight: FontWeight.bold,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Color(0xFF395B64),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          filled: true,
+          fillColor: const Color(0xFFD9E4DD),
         ),
         keyboardType: inputType,
         obscureText: obscureText,
