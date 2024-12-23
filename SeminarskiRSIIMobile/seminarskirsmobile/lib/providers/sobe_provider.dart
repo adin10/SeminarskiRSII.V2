@@ -33,4 +33,26 @@ class SobaProvider with ChangeNotifier {
       throw Exception("User not allowed");
     }
   }
+
+  Future<dynamic> getCjenovnik(dynamic searchObject) async {
+    var token = "";
+    if (token == null) {
+      throw Exception("Token not found");
+    }
+
+    var url = Uri.parse("${BaseProvider.baseUrl}/Cjenovnik");
+    
+    var response = await http!.get(url, 
+    // headers: {
+      // "Authorization": "Bearer $token",
+    // }
+    );
+
+    if (response.statusCode < 400) {
+      var data = jsonDecode(response.body);
+      return data;
+    } else {
+      throw Exception("User not allowed");
+    }
+  }
 }

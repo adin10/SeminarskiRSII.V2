@@ -35,7 +35,8 @@ namespace SeminarskiRSII.WebApi.Mappers
             CreateMap<DrzavaSearchRequest, Database.Drzava>();
             CreateMap<DrzavaInsertRequest, Database.Drzava>();
 
-
+            CreateMap<Database.Usluga, Usluga>();
+            CreateMap<UslugaInsertRequest, Database.Usluga>();
 
             CreateMap<Database.Grad, Grad>();
             CreateMap<GradInsertRequest, Database.Grad>();
@@ -51,6 +52,7 @@ namespace SeminarskiRSII.WebApi.Mappers
 
             CreateMap<Database.Rezervacija, Rezervacija>();
             CreateMap<RezervacijaInsertRequest, Database.Rezervacija>();
+            CreateMap<Database.RezervacijaUsluga, RezervacijaUsluge>().ReverseMap();
 
             CreateMap<Database.Recenzija,Recenzija>();
             CreateMap<RecenzijaInsertRequest, Database.Recenzija>();

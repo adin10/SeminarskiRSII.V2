@@ -67,7 +67,7 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                     const Text(
                       "Lista rezervacija za gosta:",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.normal,
                       ),
                     ),
@@ -87,8 +87,11 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                 child: data.isNotEmpty
                     ? PageView(
                         children: data.map<Widget>((reservation) {
+                        final datumRezervacije = DateTime.parse(reservation["datumRezervacije"]);
+                        final zavrsetakRezervacije = DateTime.parse(reservation["zavrsetakRezervacije"]);
+                        final now = DateTime.now();
                           return Card(
-                            margin: const EdgeInsets.all(16.0),
+                            margin: const EdgeInsets.all(10.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0),
                             ),
@@ -122,7 +125,7 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
+                                      const SizedBox(height: 6),
                                       Text(
                                         "Početak rezervacije: ${formatDate(reservation["datumRezervacije"])}",
                                         style: const TextStyle(
@@ -132,6 +135,26 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                       ),
                                       Text(
                                         "Završetak rezervacije: ${formatDate(reservation["zavrsetakRezervacije"])}",
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                     // Displaying the label for services
+Text(
+                                        "Usluge koje ste rezervisali:",
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Text(
+                                        reservation["rezervacijaUsluge"]
+                                            .map<String>((usluga) =>
+                                                usluga["usluga"]["naziv"]
+                                                    as String)
+                                            .join(
+                                                ", "), // Join the services with commas
                                         style: const TextStyle(
                                           fontSize: 16,
                                           color: Colors.grey,

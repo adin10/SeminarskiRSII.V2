@@ -32,7 +32,7 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<List<Model.Models.Cjenovnik>> GetList()
         {
-            var list = await _context.Cjenovnik.Include(s => s.Soba).ThenInclude(s=>s.SobaStatus).ToListAsync();
+            var list = await _context.Cjenovnik.Include(s => s.Soba).ThenInclude(s=>s.SobaStatus).Where(s=>s.Soba.SobaStatus.Status == "Slobodna").ToListAsync();
             return _mapper.Map<List<Model.Models.Cjenovnik>>(list);
         }
 

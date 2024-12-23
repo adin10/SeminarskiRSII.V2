@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
+import 'package:seminarskirsmobile/providers/usluge_provider.dart';
 import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
 import 'dart:convert';
 import '../main.dart';
@@ -24,6 +25,40 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
   int? sobaId;
   DateTime? datumRezervacije;
   DateTime? zavrsetakRezervacije;
+  List<int> selectedUslugaIds = []; // To store selected service IDs
+  List<dynamic> _uslugeList = [];
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAvailableUsluge();
+  }
+
+  Future<void> fetchAvailableUsluge() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      var fetchedUsluge = await UslugeProvider().get('');
+
+      if (fetchedUsluge == null) {
+        throw Exception("No data received");
+      }
+
+      setState(() {
+        _uslugeList = fetchedUsluge;
+      });
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load gradovi: $error')),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +76,14 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     final GetUserResponse userData = args['userData'] as GetUserResponse;
     final int userId = args['userId'] as int;
     final int? selectedRoomId = args['selectedRoomId'] as int?;
+
+    if (userId == null || selectedRoomId == null) {
+      return Scaffold(
+        body: Center(
+          child: Text('Error: Missing required arguments'),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -81,6 +124,18 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
                   });
                 },
               ),
+              SizedBox(height: 16.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Odaberite Usluge",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8.0),
+                  _buildCheckboxes(),
+                ],
+              ),
               SizedBox(height: 24.0),
               ElevatedButton(
                 onPressed: () {
@@ -103,6 +158,52 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       ),
     );
   }
+
+Widget _buildCheckboxes() {
+  if (_isLoading) {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  if (_uslugeList.isEmpty) {
+    return Center(child: Text("No Usluge available."));
+  }
+
+  return ListView.builder(
+    shrinkWrap: true, // Ensures it fits within a column
+    itemCount: _uslugeList.length,
+    itemBuilder: (context, index) {
+      final option = _uslugeList[index];
+      final int? uslugaId = option['uslugaID'] as int?;
+      print('test test');
+      print(uslugaId);
+      
+      // Determine if the service is selected
+      final isSelected = selectedUslugaIds.contains(uslugaId);
+
+      return CheckboxListTile(
+        title: Text(option['naziv'] ?? 'Unknown'),
+        value: isSelected,
+        onChanged: (bool? selected) {
+          if (selected == true) {
+            // Add the uslugaId to the list if it is selected
+            if (uslugaId != null && !selectedUslugaIds.contains(uslugaId)) {
+              setState(() {
+                selectedUslugaIds.add(uslugaId); // Update state with the selected ID
+              });
+            }
+          } else {
+            // Remove the uslugaId from the list if it is unselected
+            if (uslugaId != null) {
+              setState(() {
+                selectedUslugaIds.remove(uslugaId); // Update state to remove the ID
+              });
+            }
+          }
+        },
+      );
+    },
+  );
+}
 
   Widget _buildDateField({
     required String label,
@@ -143,6 +244,10 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     );
   }
 
+  String formatDate(DateTime date) {
+    return "${date.day}.${date.month}.${date.year}";
+  }
+
   void _submitForm(int userId, GetUserResponse userdata, int selectedRoomId) {
     if (datumRezervacije == null || zavrsetakRezervacije == null) {
       return;
@@ -172,6 +277,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       sobaId: selectedRoomId,
       datumRezervacije: datumRezervacije!,
       zavrsetakRezervacije: zavrsetakRezervacije!,
+      uslugaIds: selectedUslugaIds,
     );
 
     final requestBody = jsonEncode(request.toJson());
@@ -195,10 +301,6 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       }
     }).catchError((error) {});
   }
-
-  String formatDate(DateTime date) {
-    return "${date.day}.${date.month}.${date.year}";
-  }
 }
 
 class RezervacijaInsertRequest {
@@ -206,12 +308,14 @@ class RezervacijaInsertRequest {
   final int? sobaId;
   final DateTime datumRezervacije;
   final DateTime zavrsetakRezervacije;
+  final List<int> uslugaIds;
 
   RezervacijaInsertRequest({
     required this.gostId,
     required this.sobaId,
     required this.datumRezervacije,
     required this.zavrsetakRezervacije,
+    required this.uslugaIds,
   });
 
   Map<String, dynamic> toJson() {
@@ -220,6 +324,7 @@ class RezervacijaInsertRequest {
       'sobaId': sobaId,
       'datumRezervacije': datumRezervacije.toIso8601String(),
       'zavrsetakRezervacije': zavrsetakRezervacije.toIso8601String(),
+      'uslugaIds': uslugaIds,
     };
   }
 }

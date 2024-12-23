@@ -31,4 +31,18 @@ class RezervacijaProvider with ChangeNotifier {
       return null;
     }
   }
+
+  Future<void> delete(String id) async {
+    final url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija/$id"); 
+
+    final response = await http!.delete(url);
+
+    if (response.statusCode == 200) {
+      print('Successfully deleted');
+      notifyListeners();
+    } else {
+      throw Exception('Failed to delete item');
+    }
+  }
+
 }

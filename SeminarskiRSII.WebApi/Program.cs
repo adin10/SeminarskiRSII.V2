@@ -43,6 +43,7 @@ builder.Services.AddScoped<IRezervacijaService, RezervacijaService>();
 builder.Services.AddScoped<IOsobljeService, OsobljeService>();
 builder.Services.AddScoped<INovostiService, NovostiService>();
 builder.Services.AddScoped<INotifikacijeService, NotifikacijeService>();
+builder.Services.AddScoped<IUslugaService, UslugaService>();
 builder.Services.AddScoped<IGostiNotifikacijeService, GostiNotifikacijeService>();
 
 //builder.Services.AddScoped<ICRUDService<Model.Models.Notifikacije, NotifikacijeSearchRequest, NotifikacijeInsertRequest, NotifikacijeInsertRequest>, NotifikacijaService>();

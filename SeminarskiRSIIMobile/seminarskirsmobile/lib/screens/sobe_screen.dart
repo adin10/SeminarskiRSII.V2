@@ -26,7 +26,7 @@ class _SobeScreenState extends State<SobeScreen> {
   }
 
   Future<void> loadData() async {
-    var tmpData = await _sobaProvider?.get(null);
+    var tmpData = await _sobaProvider?.getCjenovnik(null);
     setState(() {
       data = tmpData;
     });
@@ -83,7 +83,7 @@ class _SobeScreenState extends State<SobeScreen> {
                                   aspectRatio: 1 / 1,
                                   child: Container(
                                     child: Image.memory(
-                                      base64Decode(x["slika"]),
+                                      base64Decode(x["soba"]["slika"]),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -97,21 +97,28 @@ class _SobeScreenState extends State<SobeScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Broj sprata: ${x["brojSprata"]}",
+                                        "Broj sprata: ${x["soba"]["brojSprata"]}",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       Text(
-                                        "Broj sobe: ${x["brojSobe"]}",
+                                        "Broj sobe: ${x["soba"]["brojSobe"]}",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       Text(
-                                        "Opis sobe: ${x["opisSobe"]}",
+                                        "Opis sobe: ${x["soba"]["opisSobe"]}",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                                                    Text(
+                                        "Cijena: ${x["cijena"]}",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
@@ -128,7 +135,17 @@ class _SobeScreenState extends State<SobeScreen> {
                                     width: double.infinity,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        IdGetter.Id = x["id"];
+                                        final roomId = x["soba"]["id"] as int?;
+                                        if (roomId == null) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Greška: ID sobe nije dostupan.')),
+                                          );
+                                          return;
+                                        }
+                                         IdGetter.Id = roomId;
                                         Navigator.pushNamed(
                                           context,
                                           RezervacijScreen
@@ -136,7 +153,7 @@ class _SobeScreenState extends State<SobeScreen> {
                                           arguments: {
                                             'userData': userData,
                                             'userId': userData.id,
-                                            'selectedRoomId': x["id"],
+                                            'selectedRoomId': roomId,
                                           },
                                         );
                                       },

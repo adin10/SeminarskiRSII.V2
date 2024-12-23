@@ -35,8 +35,7 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<List<Model.Models.Rezervacija>> GetList(RezervacijaSearchRequest search)
         {
-
-            var query = _context.Rezervacija.Include(r => r.Gost).Include(r => r.Soba).AsQueryable();
+            var query = _context.Rezervacija.Include(r => r.Gost).Include(r => r.Soba).Include(r=>r.RezervacijaUsluge).ThenInclude(r=>r.Usluga).AsQueryable();
             if (search != null)
             {
                 if (search.BrojSobe.HasValue)
@@ -72,12 +71,10 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Rezervacija> Insert(RezervacijaInsertRequest insert)
         {
-            // Calculate the total price
             float totalPrice = await CalculateTotalPrice(insert.SobaId.Value, insert.DatumRezervacije, insert.ZavrsetakRezervacije, insert.UslugaIds);
 
-            // Map the reservation
             var entity = _mapper.Map<Database.Rezervacija>(insert);
-            entity.Cijena = totalPrice; // Add the calculated price to the reservation
+            entity.Cijena = totalPrice;
 
             await _context.Rezervacija.AddAsync(entity);
             await _context.SaveChangesAsync();
