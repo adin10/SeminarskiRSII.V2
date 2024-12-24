@@ -22,7 +22,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Change Password"),
+        title: Text("Promjena lozinke"),
         backgroundColor: Colors.teal,
       ),
       body: SafeArea(
@@ -43,7 +43,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Change Your Password",
+                        "Promjenite vasu lozinku",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -56,21 +56,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         child: Column(
                           children: [
                             _buildTextField(
-                              label: 'Old Password',
+                              label: 'Stara lozinka',
                               controller: _oldPasswordController,
-                              errorMessage: 'Old password is required',
+                              errorMessage: 'Stara lozinka je obavezno polje',
                               obscureText: true,
                             ),
                             _buildTextField(
-                              label: 'New Password',
+                              label: 'Nova lozinka',
                               controller: _newPasswordController,
-                              errorMessage: 'New password is required',
+                              errorMessage: 'Nova lozinka je obavezno polje',
                               obscureText: true,
                             ),
                             _buildTextField(
-                              label: 'Confirm Password',
+                              label: 'Povrdite novu lozinku',
                               controller: _confirmPasswordController,
-                              errorMessage: 'Passwords do not match',
+                              errorMessage: 'Passwordi se ne slazu',
                               obscureText: true,
                               customValidator: (value) =>
                                   value == _newPasswordController.text,
@@ -87,7 +87,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 ),
                               ),
                               child: const Text(
-                                "Change Password",
+                                "Promjeni lozinku",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),

@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
+        title: Text('Registracija'),
         centerTitle: true,
         backgroundColor: Colors.teal,
       ),
@@ -80,20 +80,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              _buildTextField('Ime', imeController, 'Ime is required'),
+              _buildTextField('Ime', imeController, 'Ime je obavezno polje'),
               _buildTextField(
-                  'Prezime', prezimeController, 'Prezime is required'),
+                  'Prezime', prezimeController, 'Prezime je obavezno polje'),
               _buildTextField(
-                  'Email', emailController, 'Valid email is required',
+                  'Email', emailController, 'Email je obavezno polje',
                   inputType: TextInputType.emailAddress),
               _buildTextField(
-                  'Telefon', telefonController, 'Telefon is required',
+                  'Telefon', telefonController, 'Telefon je obavezno poslje',
                   inputType: TextInputType.phone),
               const SizedBox(height: 20),
               _isLoading
                   ? Center(child: CircularProgressIndicator())
                   : _buildDropdownField(
-                      labelText: 'Gradovi',
+                      labelText: 'Odaberi grad',
                       value: selectedGrad,
                       items: _gradoviList.map<DropdownMenuItem<int>>((grad) {
                         return DropdownMenuItem<int>(
@@ -108,16 +108,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                       validator: (value) {
                         if (value == null) {
-                          return 'Please select a country';
+                          return 'Morate Odabrati grad';
                         }
                         return null;
                       },
                     ),
               SizedBox(height: 16),
               _buildTextField('Korisnicko Ime', korisnickoImeController,
-                  'Korisnicko Ime is required'),
+                  'Korisnicko Ime je obavezno polje'),
               _buildTextField(
-                  'Lozinka', lozinkaController, 'Lozinka is required',
+                  'Lozinka', lozinkaController, 'Lozinka je obavezno polje',
                   obscureText: true),
               _buildTextField('Potvrdi Lozinku', potvrdiLozinkuController,
                   'Lozinke se ne podudaraju',
@@ -127,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
                   onPressed: _registerUser,
-                  child: Text("Sign Up"),
+                  child: Text("Kreiraj profil"),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     minimumSize: Size(double.infinity, 50),
@@ -170,7 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     response.then((res) {
       if (res.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration successful!')),
+          SnackBar(content: Text('Registracija uspjesna!')),
         );
 
         Navigator.pushNamedAndRemoveUntil(
@@ -182,7 +182,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         final responseData = jsonDecode(response as String);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content: Text(responseData['message'] ?? 'Registration failed')),
+              content: Text(responseData['message'] ?? 'Neuspjesna registracija')),
         );
       }
     });

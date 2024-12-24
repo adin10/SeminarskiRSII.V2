@@ -42,7 +42,7 @@ class PostavkeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "User Profile",
+                        "Informacije o vama",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -51,18 +51,18 @@ class PostavkeScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 16),
                       buildUserInfoRow(
-                          label: 'Full Name:',
+                          label: 'Ime i prezime:',
                           value: '${userData.ime} ${userData.prezime}'),
                       buildUserInfoRow(
-                          label: 'Username:',
+                          label: 'Korisnicko ime:',
                           value: userData.korisnickoIme ?? ''),
                       Divider(thickness: 1, color: Colors.grey[400]),
                       buildUserInfoRow(
                           label: 'Email:', value: userData.email ?? ''),
                       buildUserInfoRow(
-                          label: 'Phone:', value: userData.telefon ?? ''),
+                          label: 'Telefon:', value: userData.telefon ?? ''),
                       SizedBox(height: 16),
-                      buildUserInfoRow(label: 'Password:', value: '******'),
+                      buildUserInfoRow(label: 'Lozinka:', value: '******'),
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {

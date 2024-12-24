@@ -159,67 +159,67 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     );
   }
 
- Widget _buildCheckboxes() {
-  if (_isLoading) {
-    return Center(child: CircularProgressIndicator());
-  }
+  Widget _buildCheckboxes() {
+    if (_isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
 
-  if (_uslugeList.isEmpty) {
-    return Center(child: Text("Problem prilikom ucitavanja usluga."));
-  }
+    if (_uslugeList.isEmpty) {
+      return Center(child: Text("Problem prilikom ucitavanja usluga."));
+    }
 
-  return ListView.builder(
-    shrinkWrap: true,
-    itemCount: _uslugeList.length,
-    itemBuilder: (context, index) {
-      final option = _uslugeList[index];
-      final int? uslugaId = option['uslugaID'] as int?;
-      final String naziv = option['naziv'] ?? 'Unknown';
-      final String cijena = option['cijena']?.toStringAsFixed(2) ?? '0.00';
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: _uslugeList.length,
+      itemBuilder: (context, index) {
+        final option = _uslugeList[index];
+        final int? uslugaId = option['uslugaID'] as int?;
+        final String naziv = option['naziv'] ?? 'Unknown';
+        final String cijena = option['cijena']?.toStringAsFixed(2) ?? '0.00';
 
-      final isSelected = selectedUslugaIds.contains(uslugaId);
+        final isSelected = selectedUslugaIds.contains(uslugaId);
 
-      return CheckboxListTile(
-        activeColor: Colors.teal,
-        title: Row(
-          children: [
-            Expanded(
-              child: Text(
-                naziv,
-                style: TextStyle(fontSize: 16),
+        return CheckboxListTile(
+          activeColor: Colors.teal,
+          title: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  naziv,
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
-            ),
-            Text(
-              'Cijena: $cijena KM',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey[700],
+              Text(
+                'Cijena: $cijena KM',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[700],
+                ),
               ),
-            ),
-          ],
-        ),
-        value: isSelected,
-        onChanged: (bool? selected) {
-          if (selected == true) {
-            if (uslugaId != null && !selectedUslugaIds.contains(uslugaId)) {
-              setState(() {
-                selectedUslugaIds.add(uslugaId);
-              });
+            ],
+          ),
+          value: isSelected,
+          onChanged: (bool? selected) {
+            if (selected == true) {
+              if (uslugaId != null && !selectedUslugaIds.contains(uslugaId)) {
+                setState(() {
+                  selectedUslugaIds.add(uslugaId);
+                });
+              }
+            } else {
+              if (uslugaId != null) {
+                setState(() {
+                  selectedUslugaIds.remove(uslugaId);
+                });
+              }
             }
-          } else {
-            if (uslugaId != null) {
-              setState(() {
-                selectedUslugaIds.remove(uslugaId);
-              });
-            }
-          }
-        },
-      );
-    },
-  );
-}
+          },
+        );
+      },
+    );
+  }
 
   Widget _buildDateField({
     required String label,

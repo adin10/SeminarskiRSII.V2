@@ -70,7 +70,8 @@ class HomePage extends StatelessWidget {
                 children: [
                   Positioned(
                     top: 120,
-                    left: 40,
+                    left: 0,
+                    right: 0,
                     child: Center(
                       child: Text(
                         "HOTEL AS",
@@ -184,7 +185,7 @@ class HomePage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Don't have an account?",
+                                  "Nemate kreiran profil?",
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,
@@ -210,7 +211,7 @@ class HomePage extends StatelessWidget {
                                     );
                                   },
                                   child: Text(
-                                    "Sign Up",
+                                    "Kreiraj profil",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
