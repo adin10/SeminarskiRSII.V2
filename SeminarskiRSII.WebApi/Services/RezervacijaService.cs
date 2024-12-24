@@ -27,6 +27,12 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Rezervacija> Delete(int id)
         {
+            var usluge = await _context.RezervacijaUsluga.Where(x => x.RezervacijaID == id).ToListAsync();
+            foreach(var x in usluge)
+            {
+                _context.RezervacijaUsluga.Remove(x);
+                await _context.SaveChangesAsync();
+            }
             var entity = await _context.Rezervacija.FindAsync(id);
             _context.Rezervacija.Remove(entity);
             await _context.SaveChangesAsync();
@@ -60,14 +66,6 @@ namespace SeminarskiRSII.WebApi.Services
             var entity = await _context.Rezervacija.Include(r => r.Gost).Include(r => r.Soba).FirstOrDefaultAsync(x=>x.Id ==id);
             return _mapper.Map<Model.Models.Rezervacija>(entity);
         }
-
-        //public async Task<Model.Models.Rezervacija> Insert(RezervacijaInsertRequest insert)
-        //{
-        //    var entity = _mapper.Map<Database.Rezervacija>(insert);
-        //    await _context.Rezervacija.AddAsync(entity);
-        //    await _context.SaveChangesAsync();
-        //    return _mapper.Map<Model.Models.Rezervacija>(entity);
-        //}
 
         public async Task<Model.Models.Rezervacija> Insert(RezervacijaInsertRequest insert)
         {
@@ -180,6 +178,7 @@ namespace SeminarskiRSII.WebApi.Services
 
         private async Task<float> CalculateTotalPrice(int sobaId, DateTime startDate, DateTime endDate, List<int> uslugaIds)
         {
+            int brojDana = (endDate - startDate).Days;
 
             var cjenovnik = await _context.Cjenovnik
                 .Where(c => c.SobaId == sobaId)
@@ -190,9 +189,8 @@ namespace SeminarskiRSII.WebApi.Services
                 throw new Exception("Cjenovnik entry not found for the specified Soba and number of days.");
             }
 
-            float totalRoomPrice = cjenovnik.Cijena;
+            float totalRoomPrice = cjenovnik.Cijena * brojDana;
 
-            // Calculate the total service price
             float totalServicePrice = 0;
             if (uslugaIds != null && uslugaIds.Any())
             {
@@ -201,8 +199,7 @@ namespace SeminarskiRSII.WebApi.Services
                     .SumAsync(u => u.Cijena);
             }
 
-            // Return the final price
-            return totalRoomPrice + totalServicePrice;
+            return totalRoomPrice + (totalServicePrice * brojDana);
         }
     }
 }

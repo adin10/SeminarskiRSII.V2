@@ -117,8 +117,8 @@ class _SobeScreenState extends State<SobeScreen> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                                                    Text(
-                                        "Cijena: ${x["cijena"]}",
+                                      Text(
+                                        "Cijena: ${x["cijena"]} ${x["valuta"]}",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
@@ -145,7 +145,7 @@ class _SobeScreenState extends State<SobeScreen> {
                                           );
                                           return;
                                         }
-                                         IdGetter.Id = roomId;
+                                        IdGetter.Id = roomId;
                                         Navigator.pushNamed(
                                           context,
                                           RezervacijScreen

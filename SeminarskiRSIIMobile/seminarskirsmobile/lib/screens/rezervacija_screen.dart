@@ -25,7 +25,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
   int? sobaId;
   DateTime? datumRezervacije;
   DateTime? zavrsetakRezervacije;
-  List<int> selectedUslugaIds = []; // To store selected service IDs
+  List<int> selectedUslugaIds = [];
   List<dynamic> _uslugeList = [];
   bool _isLoading = false;
 
@@ -159,43 +159,59 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     );
   }
 
-Widget _buildCheckboxes() {
+ Widget _buildCheckboxes() {
   if (_isLoading) {
     return Center(child: CircularProgressIndicator());
   }
 
   if (_uslugeList.isEmpty) {
-    return Center(child: Text("No Usluge available."));
+    return Center(child: Text("Problem prilikom ucitavanja usluga."));
   }
 
   return ListView.builder(
-    shrinkWrap: true, // Ensures it fits within a column
+    shrinkWrap: true,
     itemCount: _uslugeList.length,
     itemBuilder: (context, index) {
       final option = _uslugeList[index];
       final int? uslugaId = option['uslugaID'] as int?;
-      print('test test');
-      print(uslugaId);
-      
-      // Determine if the service is selected
+      final String naziv = option['naziv'] ?? 'Unknown';
+      final String cijena = option['cijena']?.toStringAsFixed(2) ?? '0.00';
+
       final isSelected = selectedUslugaIds.contains(uslugaId);
 
       return CheckboxListTile(
-        title: Text(option['naziv'] ?? 'Unknown'),
+        activeColor: Colors.teal,
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                naziv,
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            Text(
+              'Cijena: $cijena KM',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[700],
+              ),
+            ),
+          ],
+        ),
         value: isSelected,
         onChanged: (bool? selected) {
           if (selected == true) {
-            // Add the uslugaId to the list if it is selected
             if (uslugaId != null && !selectedUslugaIds.contains(uslugaId)) {
               setState(() {
-                selectedUslugaIds.add(uslugaId); // Update state with the selected ID
+                selectedUslugaIds.add(uslugaId);
               });
             }
           } else {
-            // Remove the uslugaId from the list if it is unselected
             if (uslugaId != null) {
               setState(() {
-                selectedUslugaIds.remove(uslugaId); // Update state to remove the ID
+                selectedUslugaIds.remove(uslugaId);
               });
             }
           }

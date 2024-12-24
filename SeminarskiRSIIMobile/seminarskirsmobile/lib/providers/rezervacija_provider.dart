@@ -32,17 +32,16 @@ class RezervacijaProvider with ChangeNotifier {
     }
   }
 
-  Future<void> delete(String id) async {
-    final url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija/$id"); 
-
-    final response = await http!.delete(url);
-
-    if (response.statusCode == 200) {
-      print('Successfully deleted');
-      notifyListeners();
-    } else {
-      throw Exception('Failed to delete item');
-    }
+  Future<bool> otkazi(String id) async {
+  try {
+    final response = await http!.delete(
+      Uri.parse("${BaseProvider.baseUrl}/Rezervacija/$id"),
+      headers: {'Content-Type': 'application/json'},
+    );
+    return response.statusCode == 200;
+  } catch (e) {
+    return false;
   }
+}
 
 }
