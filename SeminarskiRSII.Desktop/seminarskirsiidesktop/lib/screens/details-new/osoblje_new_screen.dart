@@ -433,8 +433,8 @@ class _NewOsobljeScreenState extends State<NewOsobljeScreen> {
         showCustomSnackBar(
           context,
           widget.osoblje == null
-              ? 'Osoblje successfully created.'
-              : 'Osoblje successfully updated.',
+              ? 'Uposlenik uspjesno kreiran.'
+              : 'Uposlenik uspjesno modifikovan.',
           Colors.green,
         );
         Navigator.push(
@@ -454,7 +454,7 @@ void _showErrorSnackBar() {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: widget.osoblje == null ? 'Create New Osoblje' : 'Update Osoblje',
+      title: widget.osoblje == null ? 'Kreiraj novog uposlenika' : 'Uredi informacije o uposleniku',
       child: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -479,8 +479,8 @@ void _showErrorSnackBar() {
                 children: [
                   Text(
                     widget.osoblje == null
-                        ? 'Enter New Osoblje Details'
-                        : 'Update Osoblje Details',
+                        ? 'Unesite informacije'
+                        : 'Uredite informacije',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey[700],
@@ -502,9 +502,9 @@ void _showErrorSnackBar() {
                     items: _pozicije.map((pozicija) {
                       return MultiSelectItem<int>(pozicija['id'], pozicija['pozicija']);
                     }).toList(),
-                    title: Text("Select Pozicije"),
+                    title: Text("Odaberite poziciju"),
                     selectedColor: Colors.blue,
-                    buttonText: Text("Select Pozicije"),
+                    buttonText: Text("Odaberite poziciju"),
                     onConfirm: (values) {
                       setState(() {
                         _selectedPozicije = values;
@@ -522,11 +522,11 @@ void _showErrorSnackBar() {
                             height: 100,
                             fit: BoxFit.cover,
                           )
-                        : const Text("No Image Selected"),
+                        : const Text("Slika nije odabrana"),
                     const SizedBox(width: 16),
                     ElevatedButton(
                       onPressed: _pickImage,
-                      child: const Text('Pick Image'),
+                      child: const Text('Odaberi sliku'),
                     ),
                   ],
                 ),
@@ -542,7 +542,7 @@ void _showErrorSnackBar() {
                         ),
                       ),
                       child: Text(
-                        widget.osoblje == null ? 'Create Osoblje' : 'Update Osoblje',
+                        widget.osoblje == null ? 'Dodaj uposlenika' : 'Uredi informacije',
                         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -574,7 +574,7 @@ void _showErrorSnackBar() {
         contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       ),
       keyboardType: keyboardType,
-      validator: (value) => value == null || value.isEmpty ? 'Please enter $labelText' : null,
+      validator: (value) => value == null || value.isEmpty ? 'Molim vas unesite $labelText' : null,
     );
   }
 

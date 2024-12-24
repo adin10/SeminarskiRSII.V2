@@ -8,50 +8,46 @@ import 'package:http/io_client.dart';
 import 'package:seminarskirsiidesktop/utils/util.dart';
 import 'base_provider.dart';
 
-class RezervacijaProvider with ChangeNotifier{
+class RezervacijaProvider with ChangeNotifier {
   HttpClient client = HttpClient();
   IOClient? http;
   RezervacijaProvider() {
     client.badCertificateCallback = (cert, host, port) => true;
     http = IOClient(client);
   }
-  
+
   Future<List<dynamic>> get(dynamic searchObject) async {
     var url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
-    // var headers = CreateHeaders();
-    // var response = await http!.get(url, headers: headers);
-        var response = await http!.get(url,);
-        print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
-    if(isValidResponse(response)){
-    var data = jsonDecode(response.body);
-    return data;
-    }
-    else{
+    var response = await http!.get(
+      url,
+    );
+    if (isValidResponse(response)) {
+      var data = jsonDecode(response.body);
+      return data;
+    } else {
       return throw Exception("Something wenw wrong");
     }
   }
 
-  bool isValidResponse(Response response){
-    if(response.statusCode < 299){
+  bool isValidResponse(Response response) {
+    if (response.statusCode < 299) {
       return true;
-    }
-    else if(response.statusCode == 401){
+    } else if (response.statusCode == 401) {
       throw Exception("Unauthorized");
-    }
-    else{
+    } else {
       throw Exception("Something went wrong");
     }
   }
 
-  Map<String,String> CreateHeaders(){
+  Map<String, String> CreateHeaders() {
     String username = Authorization.username ?? "";
     String password = Authorization.password ?? "";
 
-    String basicAuth = "Basic ${base64Encode(utf8.encode('$username:$password'))}";
+    String basicAuth =
+        "Basic ${base64Encode(utf8.encode('$username:$password'))}";
     var headers = {
-      "Content-Type" : "Application/json",
-      "Authorization" : basicAuth
+      "Content-Type": "Application/json",
+      "Authorization": basicAuth
     };
     return headers;
   }

@@ -140,7 +140,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: const TextStyle(fontSize: 16),
               ),
-              child: Text('Create New Employee'),
+              child: Text('Dodaj novog uposlenika'),
             ),
           ),
         ],

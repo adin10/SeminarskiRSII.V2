@@ -135,7 +135,7 @@ Widget build(BuildContext context) {
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               textStyle: const TextStyle(fontSize: 16),
             ),
-            child: Text('Create New Vrsta Osoblja'),
+            child: Text('Dodaj novu poziciju'),
           ),
         ),
       ],

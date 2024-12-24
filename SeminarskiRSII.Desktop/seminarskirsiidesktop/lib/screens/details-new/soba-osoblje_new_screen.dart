@@ -1,206 +1,3 @@
-// import 'dart:convert';
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:http/io_client.dart';
-// import 'package:seminarskirsiidesktop/screens/lists/gradovi_list_screen.dart';
-// import 'package:seminarskirsiidesktop/screens/lists/sobaosoblje_list_screen.dart';
-// import '../../providers/base_provider.dart';
-
-// class NewSobaOsobljeScreen extends StatefulWidget {
-//   const NewSobaOsobljeScreen({Key? key}) : super(key: key);
-
-//   @override
-//   _NewSobaOsobljeScreenState createState() => _NewSobaOsobljeScreenState();
-// }
-
-// class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
-//   final _formKey = GlobalKey<FormState>();
-//   late int sobaId;
-//   late int osobljeId;
-//   List<dynamic> sobe = []; // List to hold countries
-//   List<dynamic> osoblje = []; // List to hold countries
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _fetchSobe();
-//     _fetchOsoblje();
-//   }
-
-//   Future<void> _fetchSobe() async {
-//     final ioc = HttpClient();
-//     ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-//     final http = IOClient(ioc);
-//     final url = Uri.parse("${BaseProvider.baseUrl}/Soba"); // Replace with your endpoint
-
-//     try {
-//       final response = await http.get(url, headers: {'Content-Type': 'application/json'});
-//       if (response.statusCode == 200) {
-//         setState(() {
-//           sobe = json.decode(response.body);
-//         });
-//       } else {
-//         // Handle error
-//       }
-//     } catch (error) {
-//       // Handle error
-//     }
-//   }
-
-//     Future<void> _fetchOsoblje() async {
-//     final ioc = HttpClient();
-//     ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-//     final http = IOClient(ioc);
-//     final url = Uri.parse("${BaseProvider.baseUrl}/Osoblje"); // Replace with your endpoint
-
-//     try {
-//       final response = await http.get(url, headers: {'Content-Type': 'application/json'});
-//       if (response.statusCode == 200) {
-//         setState(() {
-//           osoblje = json.decode(response.body);
-//         });
-//       } else {
-//         // Handle error
-//       }
-//     } catch (error) {
-//       // Handle error
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Dodjeli sobu uposleniku'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Form(
-//           key: _formKey,
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               DropdownButtonFormField<int>(
-//                 decoration: InputDecoration(labelText: 'Soba'),
-//                 items: sobe.map<DropdownMenuItem<int>>((soba) {
-//                   return DropdownMenuItem<int>(
-//                     value: soba['id'],
-//                     child: Text(soba['brojSobe'].toString()),
-//                   );
-//                 }).toList(),
-//                 onChanged: (value) {
-//                   setState(() {
-//                     sobaId = value!;
-//                   });
-//                 },
-//                 validator: (value) {
-//                   if (value == null) {
-//                     return 'Please select Soba';
-//                   }
-//                   return null;
-//                 },
-//               ),
-//                DropdownButtonFormField<int>(
-//                 decoration: InputDecoration(labelText: 'Osoblje'),
-//                 items: osoblje.map<DropdownMenuItem<int>>((osoba) {
-//                   return DropdownMenuItem<int>(
-//                     value: osoba['id'],
-//                     child: Text("${osoba['ime']} ${osoba['prezime']}"),
-//                   );
-//                 }).toList(),
-//                 onChanged: (value) {
-//                   setState(() {
-//                     osobljeId = value!;
-//                   });
-//                 },
-//                 validator: (value) {
-//                   if (value == null) {
-//                     return 'Please select Uposlenik';
-//                   }
-//                   return null;
-//                 },
-//               ),
-//               SizedBox(height: 16),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   if (_formKey.currentState!.validate()) {
-//                     _formKey.currentState!.save();
-//                     // Call your method to create Drzava here
-//                     _createSobaOsoblje();
-//                   }
-//                 },
-//                 child: Text('Save'),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   void _createSobaOsoblje() {
-//     // Implement your logic to create Grad here
-//     final request = SobaOsobljeInsertRequest(
-//       sobaId: sobaId,
-//       osobljeId: osobljeId
-//     );
-
-//     // Pretvorite objekt request u JSON string
-//     final requestBody = jsonEncode(request.toJson());
-
-//     final ioc = HttpClient();
-//     ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-//     final http = IOClient(ioc);
-//     // Izvršite HTTP POST zahtjev na server
-//     final url = Uri.parse("${BaseProvider.baseUrl}/SobaOsoblje");
-//     http.post(url,
-//         body: requestBody,
-//         headers: {'Content-Type': 'application/json'}).then((response) {
-//       if (response.statusCode == 200) {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           const SnackBar(
-//             content: Text('Soba uspjesno dodjeljena uposleniku.'),
-//             behavior: SnackBarBehavior.floating, // Display at the top
-//           ),
-//         );
-//         // Uspješno poslan zahtjev
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(builder: (context) => const SobaOsobljeListScreen()),
-//         );
-//       } else {
-//         // Pogreška pri slanju zahtjeva
-//         // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
-//       }
-//     }).catchError((error) {
-//       // Pogreška prilikom izvršavanja HTTP zahtjeva
-//       // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     super.dispose();
-//   }
-// }
-
-// class SobaOsobljeInsertRequest {
-//   final int sobaId;
-//   final int osobljeId;
-
-//   SobaOsobljeInsertRequest({
-//     required this.sobaId,
-//     required this.osobljeId
-//   });
-
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'sobaId': sobaId,
-//       'osobljeId': osobljeId
-//     };
-//   }
-// }
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -261,8 +58,8 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
   Widget build(BuildContext context) {
     return MasterScreenWidget(
       title: widget.sobaOsoblje == null
-          ? 'Create New Soba Osoblje'
-          : 'Update Soba Osbolje',
+          ? 'Zaduzite uposleniku sobu'
+          : 'Uredite zaduzenje',
       child: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -287,8 +84,8 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
                 children: [
                   Text(
                     widget.sobaOsoblje == null
-                        ? 'Enter New Soba Osoblje Details'
-                        : 'Update Soba Osoblje Details',
+                        ? 'Unesite informacije'
+                        : 'Uredite informacije',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey[700],
@@ -312,7 +109,7 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
                     },
                     validator: (value) {
                       if (value == null) {
-                        return 'Please select Osoblje';
+                        return 'Odaberite uposlenika';
                       }
                       return null;
                     },
@@ -334,7 +131,7 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
                     },
                     validator: (value) {
                       if (value == null) {
-                        return 'Please select a room';
+                        return 'Odaberite sobu';
                       }
                       return null;
                     },
@@ -345,15 +142,15 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
                       onPressed: _handleSubmit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                       ),
                       child: Text(
                         widget.sobaOsoblje == null
-                            ? 'Create Soba Osoblje'
-                            : 'Update Soba Osoblje',
+                            ? 'Kreiraj zaduzenje'
+                            : 'Uredi zaduzenje',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -379,8 +176,8 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
       value: value,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle:
-            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+        labelStyle: const TextStyle(
+            color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -438,8 +235,8 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
         showCustomSnackBar(
           context,
           method == 'POST'
-              ? 'Soba Osoblje successfully created.'
-              : 'Soba Osoblje successfully updated.',
+              ? 'Zaduzenje uspjesno kreirano.'
+              : 'Zaduzenje uspjesno uredjeno.',
           Colors.green,
         );
         Navigator.push(
@@ -457,9 +254,8 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top:
-            20, // Adjust this value to position the toast at the desired height
-        left: MediaQuery.of(context).size.width * 0.20, // Center horizontally
+        top: 20,
+        left: MediaQuery.of(context).size.width * 0.20,
         width: MediaQuery.of(context).size.width * 0.6,
         child: Material(
           color: Colors.transparent,
@@ -476,9 +272,9 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
                 const Icon(
                   Icons.check_circle,
                   color: Colors.white,
-                  size: 24, // Icon size
+                  size: 24,
                 ),
-                const SizedBox(width: 8), // Space between icon and text
+                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     message,
@@ -497,8 +293,8 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
     );
 
     overlay.insert(overlayEntry);
-    // Remove the toast after a duration
-    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3))
+        .then((_) => overlayEntry.remove());
   }
 
   void _showErrorSnackBar() {
@@ -509,23 +305,21 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: 20, // Position the toast at the top
-        left: MediaQuery.of(context).size.width *
-            0.15, // Center horizontally with reduced width
-        width: MediaQuery.of(context).size.width * 0.7, // Reduced width
+        top: 20,
+        left: MediaQuery.of(context).size.width * 0.15,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: Material(
           color: Colors.transparent,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
             decoration: BoxDecoration(
-              color: Colors.red, // Red background for the error
+              color: Colors.red,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               children: [
-                const Icon(Icons.error,
-                    color: Colors.white), // Error icon on the left
-                const SizedBox(width: 10), // Space between the icon and the text
+                const Icon(Icons.error, color: Colors.white),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     message,
@@ -542,7 +336,7 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
 
     overlay.insert(overlayEntry);
 
-    // Automatically remove the toast after a duration
-    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3))
+        .then((_) => overlayEntry.remove());
   }
 }

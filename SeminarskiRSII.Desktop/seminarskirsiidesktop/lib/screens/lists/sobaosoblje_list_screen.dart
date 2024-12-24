@@ -262,7 +262,7 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: const TextStyle(fontSize: 16),
               ),
-              child: Text('Create New Soba Osoblje'),
+              child: Text('Zaduzi uposlenika'),
             ),
           ),
         ],

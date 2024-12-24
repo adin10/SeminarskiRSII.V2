@@ -1,109 +1,3 @@
-// import 'dart:convert';
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:http/io_client.dart';
-// import 'package:seminarskirsiidesktop/screens/lists/vrstaosoblja_list_screen.dart';
-// import '../../providers/base_provider.dart';
-
-// class NewVrstaOsobljaScreen extends StatefulWidget {
-//   final dynamic vrstaOsoblja; // For edit functionality
-
-//   const NewVrstaOsobljaScreen({Key? key, this.vrstaOsoblja}) : super(key: key);
-
-//   @override
-//   _NewVrstaOsobljaScreenState createState() => _NewVrstaOsobljaScreenState();
-// }
-
-// class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
-//   TextEditingController _pozicijaController = TextEditingController();
-//   TextEditingController _zaduzenjaController = TextEditingController();
-//   final _formKey = GlobalKey<FormState>();
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     if (widget.vrstaOsoblja != null) {
-//       _pozicijaController.text = widget.vrstaOsoblja['pozicija'] ?? '';
-//       _zaduzenjaController.text = widget.vrstaOsoblja['zaduzenja'] ?? '';
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.vrstaOsoblja != null ? 'Edit Vrsta osoblja' : 'Create New Vrsta osoblja'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Form(
-//           key: _formKey,
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               TextFormField(
-//                 controller: _pozicijaController,
-//                 decoration: InputDecoration(labelText: 'Pozicija'),
-//                 validator: (value) {
-//                   if (value == null || value.isEmpty) {
-//                     return 'Please enter the position';
-//                   }
-//                   return null;
-//                 },
-//               ),
-//               TextFormField(
-//                 controller: _zaduzenjaController,
-//                 decoration: InputDecoration(labelText: 'Zaduzenja'),
-//                 validator: (value) {
-//                   if (value == null || value.isEmpty) {
-//                     return 'Please enter the zaduzenja';
-//                   }
-//                   return null;
-//                 },
-//               ),
-//               SizedBox(height: 16),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   if (_formKey.currentState!.validate()) {
-//                     _createOrUpdateVrstaOsoblja();
-//                   }
-//                 },
-//                 child: Text('Save'),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   void _createOrUpdateVrstaOsoblja() async {
-//     final requestBody = jsonEncode({
-//       'pozicija': _pozicijaController.text,
-//       'zaduzenja': _zaduzenjaController.text,
-//     });
-
-//     final ioc = HttpClient();
-//     ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-//     final http = IOClient(ioc);
-
-//     try {
-//       if (widget.vrstaOsoblja == null) {
-//         // Creating new entry (POST request)
-//         final url = Uri.parse("${BaseProvider.baseUrl}/VrstaOsoblja");
-//         await http.post(url, body: requestBody, headers: {"Content-Type": "application/json"});
-//       } else {
-//         // Updating existing entry (PUT request)
-//         final url = Uri.parse("${BaseProvider.baseUrl}/VrstaOsoblja/${widget.vrstaOsoblja['id']}");
-//         await http.put(url, body: requestBody, headers: {"Content-Type": "application/json"});
-//       }
-//       Navigator.push(context, MaterialPageRoute(builder: (context) => const VrstaOsobljaListScreen()));
-//     } catch (error) {
-//       print(error); // Handle error
-//     }
-//   }
-// }
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -118,7 +12,7 @@ import '../../providers/base_provider.dart';
 import '../../widgets/master_screen.dart';
 
 class NewVrstaOsobljaScreen extends StatefulWidget {
-  final dynamic vrstaOsoblja; // For edit functionality
+  final dynamic vrstaOsoblja;
 
   const NewVrstaOsobljaScreen({Key? key, this.vrstaOsoblja}) : super(key: key);
 
@@ -145,8 +39,8 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
   Widget build(BuildContext context) {
     return MasterScreenWidget(
       title: widget.vrstaOsoblja == null
-          ? 'Create New Vrsta Osoblja'
-          : 'Update Vrsta Osoblja',
+          ? 'Kreirajte novu poziciju'
+          : 'Uredite poziciju',
       child: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -171,8 +65,8 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
                 children: [
                   Text(
                     widget.vrstaOsoblja == null
-                        ? 'Enter New Vrsta Osoblja'
-                        : 'Update Vrsta Osoblja',
+                        ? 'Unesite informacije'
+                        : 'Uredite informacije',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey[700],
@@ -185,7 +79,7 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
                     labelText: 'Pozicija',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter pozicija';
+                        return 'Unesite naziv pozicije';
                       }
                       return null;
                     },
@@ -196,7 +90,7 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
                     labelText: 'Zaduzenje',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter zaduzenje';
+                        return 'Uneiste zaduzenja za poziciju';
                       }
                       return null;
                     },
@@ -214,8 +108,8 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
                       ),
                       child: Text(
                         widget.vrstaOsoblja == null
-                            ? 'Create Vrsta Osoblja'
-                            : 'Update Vrsta Osoblja',
+                            ? 'Kreiraj poziciju'
+                            : 'Uredi poziciju',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -303,8 +197,8 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
         showCustomSnackBar(
           context,
           method == 'POST'
-              ? 'Vrsta Osoblja successfully created.'
-              : 'Vrsta Osoblja successfully updated.',
+              ? 'Pozicija uspjesno kreirana.'
+              : 'Pozicija uspjesno uredjena.',
           Colors.green,
         );
         Navigator.push(
@@ -323,8 +217,8 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         top:
-            20, // Adjust this value to position the toast at the desired height
-        left: MediaQuery.of(context).size.width * 0.20, // Center horizontally
+            20,
+        left: MediaQuery.of(context).size.width * 0.20,
         width: MediaQuery.of(context).size.width * 0.6,
         child: Material(
           color: Colors.transparent,
@@ -341,9 +235,9 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
                 const Icon(
                   Icons.check_circle,
                   color: Colors.white,
-                  size: 24, // Icon size
+                  size: 24,
                 ),
-                const SizedBox(width: 8), // Space between icon and text
+                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     message,
@@ -362,7 +256,6 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
     );
 
     overlay.insert(overlayEntry);
-    // Remove the toast after a duration
     Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
   }
 
@@ -374,23 +267,23 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: 20, // Position the toast at the top
+        top: 20,
         left: MediaQuery.of(context).size.width *
-            0.15, // Center horizontally with reduced width
-        width: MediaQuery.of(context).size.width * 0.7, // Reduced width
+            0.15,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: Material(
           color: Colors.transparent,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
             decoration: BoxDecoration(
-              color: Colors.red, // Red background for the error
+              color: Colors.red,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               children: [
                 const Icon(Icons.error,
-                    color: Colors.white), // Error icon on the left
-                const SizedBox(width: 10), // Space between the icon and the text
+                    color: Colors.white),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     message,
@@ -407,7 +300,6 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
 
     overlay.insert(overlayEntry);
 
-    // Automatically remove the toast after a duration
     Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
   }
 }

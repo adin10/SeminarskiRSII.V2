@@ -139,7 +139,7 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: const TextStyle(fontSize: 16),
               ),
-              child: Text('Create New Notification'),
+              child: Text('Kreiraj novu vijest'),
             ),
           ),
         ],

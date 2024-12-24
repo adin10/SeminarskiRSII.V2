@@ -152,7 +152,7 @@ class _GradListScreenState extends State<GradListScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: const TextStyle(fontSize: 16),
               ),
-              child: Text('Create New Grad'),
+              child: Text('Dodaj novi grad'),
             ),
           ),
         ],

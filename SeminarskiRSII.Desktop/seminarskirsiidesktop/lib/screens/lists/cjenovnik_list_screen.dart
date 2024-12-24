@@ -397,7 +397,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: const TextStyle(fontSize: 16),
               ),
-              child: Text('Create New Cijena'),
+              child: Text('Dodaj novu cijenu'),
             ),
           ),
         ],

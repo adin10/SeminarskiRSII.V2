@@ -145,7 +145,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: const TextStyle(fontSize: 16),
               ),
-              child: Text('Create New Drzava'),
+              child: Text('Dodaj novu drzavu'),
             ),
           ),
         ],

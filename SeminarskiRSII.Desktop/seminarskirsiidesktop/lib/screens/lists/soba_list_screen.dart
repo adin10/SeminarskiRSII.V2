@@ -151,7 +151,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: const TextStyle(fontSize: 16),
               ),
-              child: Text('Create New Room'),
+              child: Text('Dodaj novu sobu'),
             ),
           ),
         ],

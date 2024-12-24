@@ -33,8 +33,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     _fetchSobe();
 
     if (widget.cjenovnik != null) {
-      _valutaController.text =
-          widget.cjenovnik!['valuta']?.toString() ?? '';
+      _valutaController.text = widget.cjenovnik!['valuta']?.toString() ?? '';
       _cijenaController.text = widget.cjenovnik!['cijena']?.toString() ?? '';
       _selectedSobaId = widget.cjenovnik!['soba']?['id'];
     }
@@ -50,7 +49,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: widget.cjenovnik == null ? 'Create New Cijena' : 'Update Cijena',
+      title:
+          widget.cjenovnik == null ? 'Kreiraj novu cijenu' : 'Uredite cijenu',
       child: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -75,8 +75,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                 children: [
                   Text(
                     widget.cjenovnik == null
-                        ? 'Enter New Cijena'
-                        : 'Update Cijena details',
+                        ? 'Unesite informacije'
+                        : 'Uredite informacije',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey[700],
@@ -124,11 +124,11 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                         const TextInputType.numberWithOptions(decimal: true),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a price';
+                        return 'Unesite cijenu';
                       }
                       final double? parsedValue = double.tryParse(value);
                       if (parsedValue == null) {
-                        return 'Please enter a valid number';
+                        return 'Unesite validan broj';
                       }
                       return null;
                     },
@@ -139,15 +139,15 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                       onPressed: _handleSubmit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                       ),
                       child: Text(
                         widget.cjenovnik == null
-                            ? 'Create Price'
-                            : 'Update Price',
+                            ? 'Kreiraj cijenu'
+                            : 'Uredi cijenu',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -173,8 +173,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle:
-            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+        labelStyle: const TextStyle(
+            color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -184,7 +184,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
         ),
         filled: true,
         fillColor: Colors.blue[50],
-        contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       ),
       validator: validator,
     );
@@ -201,8 +202,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
       value: value,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle:
-            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+        labelStyle: const TextStyle(
+            color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -262,8 +263,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
         showCustomSnackBar(
           context,
           method == 'POST'
-              ? 'Cjenovnik successfully created.'
-              : 'Cjenovnik successfully updated.',
+              ? 'Cijena uspjesno kreirana.'
+              : 'Cijena uspjesno uredjena.',
           Colors.green,
         );
         Navigator.push(
@@ -281,9 +282,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top:
-            20, // Adjust this value to position the toast at the desired height
-        left: MediaQuery.of(context).size.width * 0.20, // Center horizontally
+        top: 20,
+        left: MediaQuery.of(context).size.width * 0.20,
         width: MediaQuery.of(context).size.width * 0.6,
         child: Material(
           color: Colors.transparent,
@@ -300,9 +300,9 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                 const Icon(
                   Icons.check_circle,
                   color: Colors.white,
-                  size: 24, // Icon size
+                  size: 24,
                 ),
-                const SizedBox(width: 8), // Space between icon and text
+                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     message,
@@ -321,8 +321,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     );
 
     overlay.insert(overlayEntry);
-    // Remove the toast after a duration
-    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3))
+        .then((_) => overlayEntry.remove());
   }
 
   void _showErrorSnackBar() {
@@ -333,23 +333,21 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: 20, // Position the toast at the top
-        left: MediaQuery.of(context).size.width *
-            0.15, // Center horizontally with reduced width
-        width: MediaQuery.of(context).size.width * 0.7, // Reduced width
+        top: 20,
+        left: MediaQuery.of(context).size.width * 0.15,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: Material(
           color: Colors.transparent,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
             decoration: BoxDecoration(
-              color: Colors.red, // Red background for the error
+              color: Colors.red,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               children: [
-                const Icon(Icons.error,
-                    color: Colors.white), // Error icon on the left
-                const SizedBox(width: 10), // Space between the icon and the text
+                const Icon(Icons.error, color: Colors.white),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     message,
@@ -366,7 +364,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
 
     overlay.insert(overlayEntry);
 
-    // Automatically remove the toast after a duration
-    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3))
+        .then((_) => overlayEntry.remove());
   }
 }

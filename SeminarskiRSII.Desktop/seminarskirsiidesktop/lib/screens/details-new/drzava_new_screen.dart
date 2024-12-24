@@ -1,214 +1,3 @@
-// import 'dart:convert';
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:http/io_client.dart';
-// import 'package:seminarskirsiidesktop/screens/lists/drzava_list_screen.dart';
-// import '../../providers/base_provider.dart';
-
-// class NewDrzavaScreen extends StatefulWidget {
-//   final dynamic drzava;
-
-//   NewDrzavaScreen({Key? key, this.drzava}) : super(key: key);
-
-//   @override
-//   _NewDrzavaScreenState createState() => _NewDrzavaScreenState();
-// }
-
-// class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
-//   TextEditingController _nazivController = TextEditingController();
-//   final _formKey = GlobalKey<FormState>();
-//   late String naziv;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     if (widget.drzava != null) {
-//       _nazivController.text = widget.drzava['naziv'] ?? '';
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(
-//           widget.drzava == null ? 'Create New Drzava' : 'Update Drzava',
-//           style: TextStyle(
-//             fontSize: 22,
-//             fontWeight: FontWeight.bold,
-//             color: Colors.white,
-//           ),
-//         ),
-//         backgroundColor: Colors.blueAccent,
-//       ),
-//       body: Center(
-//         child: SingleChildScrollView(
-//           child: Container(
-//              width: 550,  // Set a fixed width for the form container
-//             padding: const EdgeInsets.all(24.0),  // Add padding around the form
-//             decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(15),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: Colors.black12,
-//                   blurRadius: 10,
-//                   spreadRadius: 2,
-//                   offset: Offset(0, 5),  // Shadow for a floating effect
-//                 ),
-//               ],
-//             ),
-//             child: Form(
-//               key: _formKey,
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(
-//                     widget.drzava == null ? 'Enter New Drzava Details' : 'Update Drzava Details',
-//                     style: TextStyle(
-//                       fontSize: 18,
-//                       color: Colors.grey[700],
-//                       fontWeight: FontWeight.w600,
-//                     ),
-//                   ),
-//                   SizedBox(height: 20),
-//                   TextFormField(
-//                     controller: _nazivController,
-//                     decoration: InputDecoration(
-//                       labelText: 'Naziv Drzave',
-//                       labelStyle: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
-//                       border: OutlineInputBorder(
-//                         borderRadius: BorderRadius.circular(10),
-//                       ),
-//                       focusedBorder: OutlineInputBorder(
-//                         borderSide: BorderSide(color: Colors.blueAccent, width: 2),
-//                         borderRadius: BorderRadius.circular(10),
-//                       ),
-//                       filled: true,
-//                       fillColor: Colors.blue[50],
-//                       contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-//                     ),
-//                     validator: (value) {
-//                       if (value == null || value.isEmpty) {
-//                         return 'Please enter the name of the Drzava';
-//                       }
-//                       return null;
-//                     },
-//                     onSaved: (value) {
-//                       naziv = value!;
-//                     },
-//                   ),
-//                   SizedBox(height: 30),
-//                   Center(  // Center the button within the form
-//                     child: ElevatedButton(
-//                       onPressed: () {
-//                         if (_formKey.currentState!.validate()) {
-//                           _formKey.currentState!.save();
-//                           if (widget.drzava == null) {
-//                             _createDrzava();
-//                           } else {
-//                             _updateDrzava(widget.drzava['id']);
-//                           }
-//                         }
-//                       },
-//                       child: Text(
-//                         widget.drzava == null ? 'Create Drzava' : 'Update Drzava',
-//                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-//                       ),
-//                       style: ElevatedButton.styleFrom(
-//                         primary: Colors.blueAccent,
-//                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-//                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   void _createDrzava() {
-//     final request = DrzavaInsertRequest(naziv: naziv);
-//     final requestBody = jsonEncode(request.toJson());
-//     final ioc = HttpClient();
-//     ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-//     final http = IOClient(ioc);
-//     final url = Uri.parse("${BaseProvider.baseUrl}/Drzava");
-
-//     http.post(url, body: requestBody, headers: {'Content-Type': 'application/json'}).then((response) {
-//       if (response.statusCode == 200) {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(
-//             content: Text('Drzava successfully created.'),
-//             backgroundColor: Colors.green,
-//           ),
-//         );
-//         Navigator.pushReplacement(
-//             context, MaterialPageRoute(builder: (context) => const DrzavaListScreen()));
-//       } else {
-//         _showErrorSnackBar();
-//       }
-//     }).catchError((error) {
-//       _showErrorSnackBar();
-//     });
-//   }
-
-//   void _updateDrzava(int id) {
-//     final request = DrzavaInsertRequest(naziv: naziv);
-//     final requestBody = jsonEncode(request.toJson());
-//     final ioc = HttpClient();
-//     ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-//     final http = IOClient(ioc);
-//     final url = Uri.parse("${BaseProvider.baseUrl}/Drzava/$id");
-
-//     http.put(url, body: requestBody, headers: {'Content-Type': 'application/json'}).then((response) {
-//       if (response.statusCode == 200) {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(
-//             content: Text('Drzava successfully updated.'),
-//             backgroundColor: Colors.green,
-//           ),
-//         );
-//         Navigator.pushReplacement(
-//             context, MaterialPageRoute(builder: (context) => const DrzavaListScreen()));
-//       } else {
-//         _showErrorSnackBar();
-//       }
-//     }).catchError((error) {
-//       _showErrorSnackBar();
-//     });
-//   }
-
-//   void _showErrorSnackBar() {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(
-//         content: Text('Something went wrong. Please try again.'),
-//         backgroundColor: Colors.red,
-//       ),
-//     );
-//   }
-
-//   @override
-//   void dispose() {
-//     _nazivController.dispose();
-//     super.dispose();
-//   }
-// }
-
-// class DrzavaInsertRequest {
-//   final String naziv;
-
-//   DrzavaInsertRequest({required this.naziv});
-
-//   Map<String, dynamic> toJson() {
-//     return {'naziv': naziv};
-//   }
-// }
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -245,7 +34,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: widget.drzava == null ? 'Create New Country' : 'Update Country',
+      title: widget.drzava == null ? 'Kreiraj novu drzavu' : 'Uredite drzavu',
       child: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -270,8 +59,8 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
                 children: [
                   Text(
                     widget.drzava == null
-                        ? 'Enter New Country Details'
-                        : 'Update Country Details',
+                        ? 'Unesite informacije'
+                        : 'Uredite informacije',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey[700],
@@ -284,7 +73,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
                     labelText: 'Naziv Drzave',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a country name';
+                        return 'Unesite naziv drzave';
                       }
                       return null;
                     },
@@ -295,15 +84,15 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
                       onPressed: _handleSubmit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                       ),
                       child: Text(
                         widget.drzava == null
-                            ? 'Create Country'
-                            : 'Update Country',
+                            ? 'Dodaj Drzavu'
+                            : 'Uredi Drzavu',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -329,8 +118,8 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle:
-            const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+        labelStyle: const TextStyle(
+            color: Colors.blueAccent, fontWeight: FontWeight.bold),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -340,7 +129,8 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
         ),
         filled: true,
         fillColor: Colors.blue[50],
-        contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       ),
       validator: validator,
     );
@@ -385,8 +175,8 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
         showCustomSnackBar(
           context,
           method == 'POST'
-              ? 'Drzava successfully created.'
-              : 'Drzava successfully updated.',
+              ? 'Drzava uspjesno dodata.'
+              : 'Drzava uspjesno uredjena.',
           Colors.green,
         );
         Navigator.push(context,
@@ -402,9 +192,8 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top:
-            20, // Adjust this value to position the toast at the desired height
-        left: MediaQuery.of(context).size.width * 0.20, // Center horizontally
+        top: 20,
+        left: MediaQuery.of(context).size.width * 0.20,
         width: MediaQuery.of(context).size.width * 0.6,
         child: Material(
           color: Colors.transparent,
@@ -421,9 +210,9 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
                 const Icon(
                   Icons.check_circle,
                   color: Colors.white,
-                  size: 24, // Icon size
+                  size: 24,
                 ),
-                const SizedBox(width: 8), // Space between icon and text
+                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     message,
@@ -442,8 +231,8 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
     );
 
     overlay.insert(overlayEntry);
-    // Remove the toast after a duration
-    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3))
+        .then((_) => overlayEntry.remove());
   }
 
   void _showErrorSnackBar() {
@@ -454,10 +243,9 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: 20, // Position the toast at the top
-        left: MediaQuery.of(context).size.width *
-            0.15, // Center horizontally with reduced width
-        width: MediaQuery.of(context).size.width * 0.7, // Reduced width
+        top: 20,
+        left: MediaQuery.of(context).size.width * 0.15,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: Material(
           color: Colors.transparent,
           child: Container(
@@ -468,9 +256,8 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
             ),
             child: Row(
               children: [
-                const Icon(Icons.error,
-                    color: Colors.white), // Error icon on the left
-                const SizedBox(width: 10), // Space between the icon and the text
+                const Icon(Icons.error, color: Colors.white),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     message,
@@ -486,8 +273,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
     );
 
     overlay.insert(overlayEntry);
-
-    // Automatically remove the toast after a duration
-    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3))
+        .then((_) => overlayEntry.remove());
   }
 }
