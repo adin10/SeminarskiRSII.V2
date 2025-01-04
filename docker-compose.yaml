@@ -1,0 +1,26 @@
+services:
+  hotelas_sqlserver:
+    image: mcr.microsoft.com/mssql/server
+    container_name: ib210330_sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "YourStrongPassword!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+  hotelas_webapi:
+    build:
+      context: .
+      dockerfile: SeminarskiRSII.WebApi/Dockerfile
+    container_name: ib210330_api
+    ports:
+      - "8080:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__HotelAS: "Server=hotelas_sqlserver;Database=IB210330;User Id=sa;Password=YourStrongPassword!;"
+    depends_on:
+      - hotelas_sqlserver
+
+volumes:
+  sqlserverdata:

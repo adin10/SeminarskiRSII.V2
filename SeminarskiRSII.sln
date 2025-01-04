@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeminarskiRSII.Model", "Sem
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{221BD252-C43C-4BD6-B5C7-79391EDD43D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeminarskiRSII.WinUI", "SeminarskiRSII.WinUI\SeminarskiRSII.WinUI.csproj", "{17956C32-9097-4E48-974C-EC682F238D74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeminarskiRSII.WinUI", "SeminarskiRSII.WinUI\SeminarskiRSII.WinUI.csproj", "{17956C32-9097-4E48-974C-EC682F238D74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeminarskiRSII.WebApiDodatni", "SeminarskiRSII.WebApiDodatni\SeminarskiRSII.WebApiDodatni.csproj", "{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{17956C32-9097-4E48-974C-EC682F238D74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17956C32-9097-4E48-974C-EC682F238D74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17956C32-9097-4E48-974C-EC682F238D74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
