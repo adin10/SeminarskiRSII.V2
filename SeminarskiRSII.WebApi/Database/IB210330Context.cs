@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using SeminarskiRSII.WebApi.Database.DataSeed;
 
 namespace SeminarskiRSII.WebApi.Database
 {
@@ -309,6 +310,21 @@ namespace SeminarskiRSII.WebApi.Database
 
                 entity.Property(e => e.Zaduzenja).HasColumnName("zaduzenja");
             });
+
+            modelBuilder.SeedDrzava();
+            modelBuilder.SeedGrad();
+            modelBuilder.SeedUsluga();
+            modelBuilder.SeedSobaStatus();
+            modelBuilder.SeedVrstaOsoblja();
+            modelBuilder.SeedGost();
+            modelBuilder.SeedSoba();
+            modelBuilder.SeedOsoblje();
+            modelBuilder.SeedOsobljeUloge();
+            modelBuilder.SeedSobaOsoblje();
+            modelBuilder.SeedNovosti();
+            modelBuilder.SeedRezervacija();
+            modelBuilder.SeedRecenzija();
+            modelBuilder.SeedRezervacijaUsluga();
 
             OnModelCreatingPartial(modelBuilder);
         }
