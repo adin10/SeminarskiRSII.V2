@@ -38,16 +38,16 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this room status?'),
+        title: const Text('Obrisi status'),
+        content: const Text('Da li ste sigurni da zelite obrisati status?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Odustani'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Obrisi'),
           ),
         ],
       ),
@@ -56,10 +56,9 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
       try {
         await _sobaStatusProvider.delete(id);
         setState(() {
-          loadData(); // Refresh data after deletion
+          loadData();
         });
       } catch (e) {
-        // Handle error
         print(e);
       }
     }
@@ -104,14 +103,13 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
                               headingRowHeight: 50,
                               headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
-                              columnSpacing: 24,
-                              horizontalMargin: 12,
+                              columnSpacing: 40,
+                              horizontalMargin: 25,
                               columns: [
-                                _buildDataColumn("Id"),
                                 _buildDataColumn("Status"),
                                 _buildDataColumn("Opis"),
-                                _buildDataColumn("Update"), // Separate column for Update
-                                _buildDataColumn("Delete"), // Separate column for Delete
+                                _buildDataColumn("Uredi"),
+                                _buildDataColumn("Obrisi"),
                               ],
                               rows: _buildRows(),
                             ),
@@ -171,10 +169,9 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
 
         return DataRow(
           cells: [
-            _buildDataCell(sobaStatus["id"]?.toString() ?? ""),
     _buildDataCell(sobaStatus["status"] ?? ""),
     _buildDataCell(sobaStatus["opis"] ?? ""),
-    DataCell( // Update button
+    DataCell(
       IconButton(
         icon: const Icon(Icons.edit, color: Colors.blue),
         onPressed: () {
@@ -187,7 +184,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
         },
       ),
     ),
-    DataCell( // Delete button
+    DataCell(
       IconButton(
         icon: const Icon(Icons.delete, color: Colors.red),
         onPressed: () => _confirmDelete(sobaStatus["id"].toString()),
@@ -197,7 +194,7 @@ class _SobaStatusListScreenState extends State<SobaStatusListScreen> {
           color: WidgetStateProperty.resolveWith<Color?>(
             (Set<WidgetState> states) {
               if (states.contains(WidgetState.hovered)) {
-                return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
+                return Colors.blueGrey.withOpacity(0.2);
               }
               return null;
             },

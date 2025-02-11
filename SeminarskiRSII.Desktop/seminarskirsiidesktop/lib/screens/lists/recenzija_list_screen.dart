@@ -15,7 +15,6 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
   dynamic data;
   bool isLoading = true;
 
-  // Scroll controllers
   final ScrollController _verticalController = ScrollController();
   final ScrollController _horizontalController = ScrollController();
 
@@ -48,7 +47,7 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
       child: Column(
         children: [
           Expanded(
-            child: Center( // Centering the whole container
+            child: Center(
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -71,16 +70,15 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
                               scrollDirection: Axis.horizontal,
                               child: Center(
                                 child: ConstrainedBox(
-                                  constraints: const BoxConstraints(maxWidth: 800), // Adjust width as needed
+                                  constraints: const BoxConstraints(maxWidth: 800),
                                   child: DataTable(
                                     dataRowHeight: 60,
                                     headingRowHeight: 50,
                                     headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                                     dividerThickness: 2,
-                                    columnSpacing: 24,
-                                    horizontalMargin: 12,
+                                    columnSpacing: 40,
+                                    horizontalMargin: 25,
                                     columns: [
-                                      _buildDataColumn("Id"),
                                       _buildDataColumn("Ime"),
                                       _buildDataColumn("Prezime"),
                                       _buildDataColumn("Soba broj"),
@@ -134,7 +132,6 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["id"].toString(), style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["gost"]["ime"] ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["gost"]["prezime"] ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["soba"]["brojSobe"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),

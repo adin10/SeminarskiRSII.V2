@@ -17,7 +17,6 @@ class _GradListScreenState extends State<GradListScreen> {
   dynamic data;
   bool isLoading = true;
 
-  // Scroll controllers
   final ScrollController _verticalController = ScrollController();
   final ScrollController _horizontalController = ScrollController();
 
@@ -40,16 +39,16 @@ class _GradListScreenState extends State<GradListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this city?'),
+        title: const Text('Obrisi grad'),
+        content: const Text('Da li ste sigurni da zelite obrisati grad?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Odustani'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Obrisi'),
           ),
         ],
       ),
@@ -58,10 +57,9 @@ class _GradListScreenState extends State<GradListScreen> {
       try {
         await _gradProvider.delete(id);
         setState(() {
-          loadData(); // Refresh data after deletion
+          loadData();
         });
       } catch (e) {
-        // Handle error
         print(e);
       }
     }
@@ -69,7 +67,6 @@ class _GradListScreenState extends State<GradListScreen> {
 
   @override
   void dispose() {
-    // Dispose scroll controllers
     _verticalController.dispose();
     _horizontalController.dispose();
     super.dispose();
@@ -104,13 +101,12 @@ class _GradListScreenState extends State<GradListScreen> {
                             scrollDirection: Axis.horizontal,
                             child: DataTable(
                               dataRowHeight: 60,
-                              headingRowHeight: 50,
+                              headingRowHeight: 60,
                               headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
-                              columnSpacing: 24,
-                              horizontalMargin: 12,
+                              columnSpacing: 40,
+                              horizontalMargin: 25,
                               columns: [
-                                _buildDataColumn("Id"),
                                 _buildDataColumn("Naziv grada"),
                                 _buildDataColumn("Postanski broj"),
                                 _buildDataColumn("Drzava"),
@@ -120,11 +116,11 @@ class _GradListScreenState extends State<GradListScreen> {
                                     children: [
                                       SizedBox(
                                         width: 60,
-                                        child: Center(child: Text('Update')),
+                                        child: Center(child: Text('Uredi')),
                                       ),
                                       SizedBox(
                                         width: 60,
-                                        child: Center(child: Text('Delete')),
+                                        child: Center(child: Text('Obrisi')),
                                       ),
                                     ],
                                   ),
@@ -182,7 +178,6 @@ class _GradListScreenState extends State<GradListScreen> {
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
-          DataCell(SizedBox.shrink()),
         ])
       ];
     }
@@ -190,7 +185,6 @@ class _GradListScreenState extends State<GradListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["id"].toString(), style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["nazivGrada"] ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["postanskiBroj"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["drzava"]?["naziv"] ?? "", style: const TextStyle(fontSize: 14))),
@@ -207,7 +201,7 @@ class _GradListScreenState extends State<GradListScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => NewGradScreen(
-                                        grad: x, // Pass the entire grad object
+                                        grad: x,
                                       ),
                                     ),
                                   );

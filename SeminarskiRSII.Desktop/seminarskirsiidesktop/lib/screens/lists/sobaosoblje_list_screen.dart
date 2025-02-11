@@ -1,112 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/src/widgets/placeholder.dart';
-// import 'package:provider/provider.dart';
-// import 'package:seminarskirsiidesktop/screens/details-new/soba-osoblje_new_screen.dart';
-// import '../../providers/sobaosoblje_provider.dart';
-// import '../../widgets/master_screen.dart';
-
-// class SobaOsobljeListScreen extends StatefulWidget {
-//   const SobaOsobljeListScreen({super.key});
-
-//   @override
-//   State<SobaOsobljeListScreen> createState() => _SobaOsobljeListScreenState();
-// }
-
-// class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
-
-//   late SobaOsobljeProvider _sobaOsobljeProvider;
-//   dynamic data = {};
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//     _sobaOsobljeProvider = context.read<SobaOsobljeProvider>();
-//     loadData();
-//   }
-
-//    Future loadData() async {
-//     var tmpData = await _sobaOsobljeProvider.get(null);
-//     setState(() {
-//       data = tmpData;
-//     });
-//   }
-  
-//  @override
-//   Widget build(BuildContext context) {
-//     return MasterScreenWidget(
-//       title: 'Zaduzenja po sobama',
-//       child: Container(
-//            child: SingleChildScrollView(
-//                   scrollDirection: Axis.horizontal,
-//                   child: Column(children: [
-//                     Container(
-//                       height: 200,
-//                       width: 1000,
-//                       child: DataTable(
-//                         columnSpacing: 12,
-//                         horizontalMargin: 12,
-//                         columns: [
-//                           DataColumn(
-//                               label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Id",
-//                                       style: TextStyle(fontSize: 14)))),
-//                           DataColumn(
-//                                label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Soba",
-//                                       style: TextStyle(fontSize: 14)))),
-//                           DataColumn(
-//                                label: Container(
-//                                   alignment: Alignment.center,
-//                                   child: Text("Osoblje",
-//                                       style: TextStyle(fontSize: 14)))),
-//                         ],
-//                         rows: _buildPlanAndProgrammeList(),
-//                       ),
-//                     ),
-//             ElevatedButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(builder: (context) => const NewSobaOsobljeScreen()),
-//                 );
-//               },
-//               child: Text('Create New Soba Osoblje'),
-//             ),
-//                   ]),
-//                 )
-//       )
-//     );
-//   }
-//   List<DataRow> _buildPlanAndProgrammeList() {
-//     if (data.length == 0) {
-//       return [
-//         DataRow(cells: [
-//           DataCell(Text("No data...")),
-//           DataCell(Text("No data...")),
-//           DataCell(Text("No data..."))
-//         ])
-//       ];
-//     }
-
-//     List<DataRow> list = data
-//         .map((x) => DataRow(
-//               cells: [
-//                 DataCell(Text(x["id"]?.toString() ?? "0")),
-//                 DataCell(
-//                     Text(x["soba"]["brojSobe"]?.toString() ?? "", style: TextStyle(fontSize: 14))),
-//                 DataCell(
-//                     Text("${x["osoblje"]["ime"]} ${x["osoblje"]["prezime"]}" ?? "", style: TextStyle(fontSize: 14))),
-//               ],
-//             ))
-//         .toList()
-//         .cast<DataRow>();
-//     return list;
-//   }
-// }
-
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/grad_provider.dart';
@@ -128,7 +19,6 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
   dynamic data;
   bool isLoading = true;
 
-  // Scroll controllers
   final ScrollController _verticalController = ScrollController();
   final ScrollController _horizontalController = ScrollController();
 
@@ -151,16 +41,16 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this soba osoblje?'),
+        title: const Text('Obrisi zaduzenje'),
+        content: const Text('Da li ste sigurni da zelite obrisati zaduzenje uposleniku?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Odustani'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Obrisi'),
           ),
         ],
       ),
@@ -169,10 +59,9 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
       try {
         await _sobaOsobljeProvider.delete(id);
         setState(() {
-          loadData(); // Refresh data after deletion
+          loadData();
         });
       } catch (e) {
-        // Handle error
         print(e);
       }
     }
@@ -218,10 +107,9 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
                               headingRowHeight: 50,
                               headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
-                              columnSpacing: 24,
-                              horizontalMargin: 12,
+                              columnSpacing: 40,
+                              horizontalMargin: 25,
                               columns: [
-                                _buildDataColumn("Id"),
                                 _buildDataColumn("Soba"),
                                 _buildDataColumn("Osoblje"),
                                 const DataColumn(
@@ -230,11 +118,11 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
                                     children: [
                                       SizedBox(
                                         width: 60,
-                                        child: Center(child: Text('Update')),
+                                        child: Center(child: Text('Uredi')),
                                       ),
                                       SizedBox(
                                         width: 60,
-                                        child: Center(child: Text('Delete')),
+                                        child: Center(child: Text('Obrisi')),
                                       ),
                                     ],
                                   ),
@@ -298,7 +186,6 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["id"].toString(), style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(
                   "${x["osoblje"]?["ime"] ?? ""} ${x["osoblje"]?["prezime"] ?? ""}",
@@ -316,7 +203,7 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => NewSobaOsobljeScreen(
-                                        sobaOsoblje: x, // Pass the entire grad object
+                                        sobaOsoblje: x,
                                       ),
                                     ),
                                   );

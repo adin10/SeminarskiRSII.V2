@@ -39,16 +39,16 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this country?'),
+        title: const Text('Obrisi novost'),
+        content: const Text('Da li ste sigurni da zelite obrisati novost?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Odustani'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Obrisi'),
           ),
         ],
       ),
@@ -57,10 +57,9 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
       try {
         await _novostiProvider.delete(id);
         setState(() {
-          loadData(); // Refresh data after deletion
+          loadData();
         });
       } catch (e) {
-        // Handle error
         print(e);
       }
     }
@@ -105,16 +104,15 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
                               headingRowHeight: 50,
                               headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
-                              columnSpacing: 24,
-                              horizontalMargin: 12,
+                              columnSpacing: 40,
+                              horizontalMargin: 25,
                               columns: [
-                                _buildDataColumn("Id"),
                                 _buildDataColumn("Naslov"),
                                 _buildDataColumn("Sadrzaj"),
                                 _buildDataColumn("Datum obavjesti"),
                                 _buildDataColumn("Autor"),
-                                _buildDataColumn("Update"), // Separate column for Update
-                                _buildDataColumn("Delete"), // Separate column for Delete
+                                _buildDataColumn("Uredi"),
+                                _buildDataColumn("Obrisi"),
 
                               ],
                               rows: _buildRows(),
@@ -164,7 +162,7 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(7, (index) => const DataCell(Text("No data..."))))
+        DataRow(cells: List.generate(6, (index) => const DataCell(Text("No data..."))))
       ];
     }
 
@@ -181,14 +179,13 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
 
         return DataRow(
           cells: [
-            _buildDataCell(novost["id"]?.toString() ?? ""),
             _buildDataCell(novost["naslov"] ?? ""),
             _buildDataCell(novost["sadrzaj"] ?? ""),
             _buildDataCell(formattedDate),
             _buildDataCell(
               "${novost["osoblje"]["ime"] ?? ""} ${novost["osoblje"]["prezime"] ?? ""}",
             ),
-      DataCell( // Update button
+      DataCell(
       IconButton(
         icon: const Icon(Icons.edit, color: Colors.blue),
         onPressed: () {
@@ -201,7 +198,7 @@ class _NovostiListScreenState extends State<NovostiListScreen> {
         },
       ),
     ),
-    DataCell( // Delete button
+    DataCell(
       IconButton(
         icon: const Icon(Icons.delete, color: Colors.red),
         onPressed: () => _confirmDelete(novost["id"].toString()),

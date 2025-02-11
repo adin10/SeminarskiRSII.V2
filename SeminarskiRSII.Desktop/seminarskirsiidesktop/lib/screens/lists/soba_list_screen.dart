@@ -40,16 +40,16 @@ class _SobaListScreenState extends State<SobaListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this room?'),
+        title: const Text('Obrisi sobu'),
+        content: const Text('Da li ste sigurni da zelite obrisati sobu?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Odustani'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Obrisi'),
           ),
         ],
       ),
@@ -58,7 +58,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
       try {
         await _sobaProvider.delete(id);
         setState(() {
-          loadData(); // Refresh data after deletion
+          loadData();
         });
       } catch (e) {
         print(e);
@@ -105,8 +105,8 @@ class _SobaListScreenState extends State<SobaListScreen> {
                               headingRowHeight: 50,
                               headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
-                              columnSpacing: 24,
-                              horizontalMargin: 12,
+                              columnSpacing: 40,
+                              horizontalMargin: 25,
                               columns: [
                                 _buildDataColumn("Broj Sobe"),
                                 _buildDataColumn("Broj Sprata"),
@@ -119,11 +119,11 @@ class _SobaListScreenState extends State<SobaListScreen> {
                                     children: [
                                       SizedBox(
                                         width: 60,
-                                        child: Center(child: Text('Update')),
+                                        child: Center(child: Text('Uredi')),
                                       ),
                                       SizedBox(
                                         width: 60,
-                                        child: Center(child: Text('Delete')),
+                                        child: Center(child: Text('Obrisi')),
                                       ),
                                     ],
                                   ),
@@ -193,8 +193,8 @@ class _SobaListScreenState extends State<SobaListScreen> {
             _buildDataCell(soba["sobaStatus"]["status"] ?? ""),
             DataCell(
               SizedBox(
-                width: 60, // Set a fixed width for the image
-                height: 40, // Set a height to maintain aspect ratio
+                width: 60,
+                height: 40,
                 child: Image.memory(
                   base64Decode(soba["slika"]),
                   fit: BoxFit.cover,
@@ -233,7 +233,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
           color: WidgetStateProperty.resolveWith<Color?>(
             (Set<WidgetState> states) {
               if (states.contains(WidgetState.hovered)) {
-                return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
+                return Colors.blueGrey.withOpacity(0.2);
               }
               return null;
             },

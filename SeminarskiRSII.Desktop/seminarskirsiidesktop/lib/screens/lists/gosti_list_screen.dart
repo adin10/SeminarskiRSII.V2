@@ -16,7 +16,6 @@ class _GostiListScreenState extends State<GostiListScreen> {
   dynamic data;
   bool isLoading = true;
 
-  // Scroll controllers
   final ScrollController _verticalController = ScrollController();
   final ScrollController _horizontalController = ScrollController();
 
@@ -37,7 +36,6 @@ class _GostiListScreenState extends State<GostiListScreen> {
 
   @override
   void dispose() {
-    // Dispose scroll controllers
     _verticalController.dispose();
     _horizontalController.dispose();
     super.dispose();
@@ -75,8 +73,8 @@ class _GostiListScreenState extends State<GostiListScreen> {
                               headingRowHeight: 50,
                               headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
-                              columnSpacing: 24,
-                              horizontalMargin: 12,
+                              columnSpacing: 40,
+                              horizontalMargin: 25,
                               columns: [
                                 _buildDataColumn("Ime"),
                                 _buildDataColumn("Prezime"),
@@ -91,20 +89,6 @@ class _GostiListScreenState extends State<GostiListScreen> {
                         ),
                       ),
                     ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: () {
-                // Add your "Add New Guest" action here
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: const TextStyle(fontSize: 16),
-              ),
-              child: Text('Add New Guest'),
             ),
           ),
         ],
@@ -150,7 +134,7 @@ class _GostiListScreenState extends State<GostiListScreen> {
           color: WidgetStateProperty.resolveWith<Color?>(
             (Set<WidgetState> states) {
               if (states.contains(WidgetState.hovered)) {
-                return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
+                return Colors.blueGrey.withOpacity(0.2);
               }
               return null;
             },

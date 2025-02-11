@@ -16,7 +16,6 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
   late DrzavaProvider _drzavaProvider;
   dynamic data = {};
 
-  // Scroll controllers
   final ScrollController _verticalController = ScrollController();
   final ScrollController _horizontalController = ScrollController();
 
@@ -38,16 +37,16 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this country?'),
+        title: const Text('Obrisi drzavu'),
+        content: const Text('Da li ste sigurni da zelite obrisati drzavu?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Odustani'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Obrisi'),
           ),
         ],
       ),
@@ -56,10 +55,9 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
       try {
         await _drzavaProvider.delete(id);
         setState(() {
-          loadData(); // Refresh data after deletion
+          loadData();
         });
       } catch (e) {
-        // Handle error
         print(e);
       }
     }
@@ -67,7 +65,6 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
 
   @override
   void dispose() {
-    // Dispose scroll controllers
     _verticalController.dispose();
     _horizontalController.dispose();
     super.dispose();
@@ -103,8 +100,8 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                         headingRowHeight: 50,
                         headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                         dividerThickness: 2,
-                        columnSpacing: 24,
-                        horizontalMargin: 12,
+                        columnSpacing: 40,
+                        horizontalMargin: 25,
                         columns: const [
                           DataColumn(label: Text('Naziv drzave')),
                           DataColumn(
@@ -113,11 +110,11 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                               children: [
                                 SizedBox(
                                   width: 60,
-                                  child: Center(child: Text('Update')),
+                                  child: Center(child: Text('Uredi')),
                                 ),
                                 SizedBox(
                                   width: 60,
-                                  child: Center(child: Text('Delete')),
+                                  child: Center(child: Text('Obrisi')),
                                 ),
                               ],
                             ),

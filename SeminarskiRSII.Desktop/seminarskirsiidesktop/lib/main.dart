@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 import 'package:provider/provider.dart';
@@ -135,71 +134,6 @@ class MyMaterialApp extends StatelessWidget {
   }
 }
 
-// class LoginPage extends StatelessWidget {
-//   LoginPage({super.key});
-//   final TextEditingController _usernameController = TextEditingController();
-//   final TextEditingController _passwordController = TextEditingController();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Stack(
-//         children: [
-//           // Background image
-//           Container(
-//             decoration: BoxDecoration(
-//               image: DecorationImage(
-//                 image: AssetImage('assets/images/profileHotel.jpg'),
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//           ),
-//           // Form content
-//           Center(
-//             child: Container(
-//               padding: EdgeInsets.all(16),
-//               decoration: BoxDecoration(
-//                 color: Colors.white.withOpacity(0.9),
-//                 borderRadius: BorderRadius.circular(12),
-//               ),
-//               constraints: BoxConstraints(maxWidth: 400, maxHeight: 400),
-//               child: Column(
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: [
-//                   TextField(
-//                     decoration: InputDecoration(labelText: 'Username'),
-//                     controller: _usernameController,
-//                   ),
-//                   SizedBox(height: 8),
-//                   TextField(
-//                     decoration: InputDecoration(labelText: 'Password'),
-//                     obscureText: true,
-//                     controller: _passwordController,
-//                   ),
-//                   SizedBox(height: 20),
-//                   ElevatedButton(
-//                     onPressed: () async {
-//                       var username = _usernameController.text;
-//                       var password = _passwordController.text;
-//                       print('login $username i $password');
-
-//                       Navigator.of(context).push(MaterialPageRoute(
-//                           builder: (context) => const NovostiListScreen()));
-//                     },
-//                     child: Text('Submit'),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
-
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
@@ -233,18 +167,15 @@ class LoginPage extends StatelessWidget {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseBody = json.decode(response.body);
 
-        final int userId = responseBody['id']; // Adjust the key if different
+        final int userId = responseBody['id'];
 
-        // Store the ID using shared preferences
         final prefs = await SharedPreferences.getInstance();
         await prefs.setInt('loggedInUserId', userId);
 
-        // Login successful, navigate to the desired screen
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const NovostiListScreen()),
         );
       } else {
-        // Login failed
         final Map<String, dynamic> responseBody = json.decode(response.body);
         String errorMessage = responseBody['message'] ?? 'Login failed. Please try again.';
         _showErrorDialog(context, errorMessage);
@@ -275,7 +206,6 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -284,7 +214,6 @@ class LoginPage extends StatelessWidget {
               ),
             ),
           ),
-          // Form content
           Center(
             child: Container(
               padding: const EdgeInsets.all(24),
@@ -292,13 +221,12 @@ class LoginPage extends StatelessWidget {
                 color: Colors.white.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(12),
               ),
-              constraints: const BoxConstraints(maxWidth: 450, maxHeight: 500), // Increased size
+              constraints: const BoxConstraints(maxWidth: 450, maxHeight: 500),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Header
                   const Text(
-                    'Login',
+                    'Hotel AS',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -307,7 +235,6 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   
-                  // Username TextField
                   TextField(
                     decoration: const InputDecoration(
                       labelText: 'Username',
@@ -318,7 +245,6 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   
-                  // Password TextField
                   TextField(
                     decoration: const InputDecoration(
                       labelText: 'Password',
@@ -330,7 +256,6 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   
-                  // Submit Button
                   ElevatedButton(
                     onPressed: () => _login(context),
                     style: ElevatedButton.styleFrom(
@@ -338,7 +263,7 @@ class LoginPage extends StatelessWidget {
                       textStyle: const TextStyle(fontSize: 16),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
-                    child: const Text('Submit'),
+                    child: const Text('Prijavi se'),
                   ),
                 ],
               ),

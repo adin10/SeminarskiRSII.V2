@@ -39,16 +39,16 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this employee?'),
+        title: const Text('Obrisi uposlenika'),
+        content: const Text('Da li ste sigurni da zelite obrisati uposlenika?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Odustani'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Obrisi'),
           ),
         ],
       ),
@@ -57,10 +57,9 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
       try {
         await _osobljeProvider.delete(id);
         setState(() {
-          loadData(); // Refresh data after deletion
+          loadData();
         });
       } catch (e) {
-        // Handle error
         print(e);
       }
     }
@@ -105,10 +104,9 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                               headingRowHeight: 50,
                               headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
-                              columnSpacing: 24,
+                              columnSpacing: 25,
                               horizontalMargin: 12,
                               columns: [
-                                // Remove the 'Id' column to match the previous screens
                                 _buildDataColumn("Ime"),
                                 _buildDataColumn("Prezime"),
                                 _buildDataColumn("Email"),
@@ -189,7 +187,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                 height: 50,
               ),
             ),
-                 DataCell( // Update button
+                 DataCell(
       IconButton(
         icon: const Icon(Icons.edit, color: Colors.blue),
         onPressed: () {
@@ -202,7 +200,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
         },
       ),
     ),
-    DataCell( // Delete button
+    DataCell(
       IconButton(
         icon: const Icon(Icons.delete, color: Colors.red),
         onPressed: () => _confirmDelete(employee["id"].toString()),
@@ -212,7 +210,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
           color: WidgetStateProperty.resolveWith<Color?>(
             (Set<WidgetState> states) {
               if (states.contains(WidgetState.hovered)) {
-                return Colors.blueGrey.withOpacity(0.2); // Highlight on hover
+                return Colors.blueGrey.withOpacity(0.2);
               }
               return null;
             },
