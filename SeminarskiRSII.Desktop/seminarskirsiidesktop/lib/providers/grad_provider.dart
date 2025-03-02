@@ -16,20 +16,23 @@ class GradProvider with ChangeNotifier {
     http = IOClient(client);
   }
 
-  Future<dynamic> get(dynamic searchObject) async {
-    var url = Uri.parse("${BaseProvider.baseUrl}/Grad");
+  Future<dynamic> get(Map<String, dynamic>? searchObject) async {
+  var uri = Uri.parse("${BaseProvider.baseUrl}/Grad").replace(
+    queryParameters: searchObject != null ? 
+      searchObject.map((key, value) => MapEntry(key, value.toString())) 
+      : {},
+  );
 
-    var response = await http!.get(
-      url,
-    );
+  print("Request URL: $uri"); // Debugging
 
-    if (isValidResponse(response)) {
-      var data = jsonDecode(response.body);
-      return data;
-    } else {
-      return throw Exception("Something wenw wrong");
-    }
+  var response = await http!.get(uri);
+
+  if (isValidResponse(response)) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception("Something went wrong");
   }
+}
 
   Future<void> delete(String id) async {
     final url = Uri.parse("${BaseProvider.baseUrl}/Grad/$id");

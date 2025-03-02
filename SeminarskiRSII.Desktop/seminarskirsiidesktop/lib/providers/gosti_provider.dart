@@ -16,19 +16,26 @@ class GostiProvider with ChangeNotifier {
     http = IOClient(client);
   }
 
-  Future<dynamic> get(dynamic searchObject) async {
-    var url = Uri.parse("${BaseProvider.baseUrl}/Gost");
-    var response = await http!.get(
-      url,
-    );
+  Future<dynamic> get({String? ime, String? prezime}) async {
+  var queryParams = <String, String>{};
 
-    if (isValidResponse(response)) {
-      var data = jsonDecode(response.body);
-      return data;
-    } else {
-      return throw Exception("Something wenw wrong");
-    }
+  if (ime != null && ime.isNotEmpty) {
+    queryParams['ime'] = ime;
   }
+  if (prezime != null && prezime.isNotEmpty) {
+    queryParams['prezime'] = prezime;
+  }
+
+  var url = Uri.parse("${BaseProvider.baseUrl}/Gost").replace(queryParameters: queryParams);
+
+  var response = await http!.get(url);
+
+  if (isValidResponse(response)) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception("Something went wrong");
+  }
+}
 
   bool isValidResponse(Response response) {
     if (response.statusCode < 299) {

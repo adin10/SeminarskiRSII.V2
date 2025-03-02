@@ -16,18 +16,24 @@ class NovostiProvider with ChangeNotifier {
     http = IOClient(client);
   }
 
-  Future<dynamic> get(dynamic searchObject) async {
-    var url = Uri.parse("${BaseProvider.baseUrl}/Novosti");
-    var response = await http!.get(
-      url,
+  Future<dynamic> get(Map<String, dynamic>? searchObject) async {
+    var uri = Uri.parse("${BaseProvider.baseUrl}/Novosti").replace(
+      queryParameters: searchObject != null
+          ? searchObject.map((key, value) => MapEntry(key, value.toString()))
+          : {},
     );
+
+    print("Request URL: $uri");
+
+    var response = await http!.get(uri);
+
     if (isValidResponse(response)) {
-      var data = jsonDecode(response.body);
-      return data;
+      return jsonDecode(response.body);
     } else {
-      return throw Exception("Something wenw wrong");
+      throw Exception("Something went wrong");
     }
   }
+
 
   Future<void> delete(String id) async {
     final url = Uri.parse("${BaseProvider.baseUrl}/Novosti/$id");
