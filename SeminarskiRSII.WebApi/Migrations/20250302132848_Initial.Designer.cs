@@ -12,8 +12,8 @@ using SeminarskiRSII.WebApi.Database;
 namespace SeminarskiRSII.WebApi.Migrations
 {
     [DbContext(typeof(IB210330Context))]
-    [Migration("20240916143546_newtable")]
-    partial class newtable
+    [Migration("20250302132848_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,9 +33,6 @@ namespace SeminarskiRSII.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BrojDana")
-                        .HasColumnType("int");
-
                     b.Property<float>("Cijena")
                         .HasColumnType("real")
                         .HasColumnName("cijena");
@@ -43,6 +40,9 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.Property<int>("SobaId")
                         .HasColumnType("int")
                         .HasColumnName("sobaID");
+
+                    b.Property<string>("Valuta")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -67,6 +67,23 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("drzava", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Naziv = "Bosna i Hercegovina"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Naziv = "Hrvatska"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Naziv = "Srbija"
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Gost", b =>
@@ -112,6 +129,68 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasIndex(new[] { "GradId" }, "IX_gost_gradID");
 
                     b.ToTable("gost", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "adin.smajkic@gmail.com",
+                            GradId = 1,
+                            Ime = "Adin",
+                            KorisnickoIme = "adin1998",
+                            LozinkaHash = "ZG+m4HIibaJpXMVrtXhp9+QQiDE=",
+                            LozinkaSalt = "8yGM2clNjUvFcuobbcqRSg==",
+                            Prezime = "Smajkic",
+                            Telefon = "5842521"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "ahmed.sm@gmail.com",
+                            GradId = 2,
+                            Ime = "ahmed",
+                            KorisnickoIme = "ahmo",
+                            LozinkaHash = "57dqXte2i8RuxpISQMzOjW/kYUA=",
+                            LozinkaSalt = "uSHCckjLFYgVNJRSWd2W5g==",
+                            Prezime = "smajic",
+                            Telefon = "062263580"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "novikorisnk.test@gmail.com",
+                            GradId = 3,
+                            Ime = "test",
+                            KorisnickoIme = "test98",
+                            LozinkaHash = "nEE+3SNUp4E2UX5xfPGpH6R+ELA=",
+                            LozinkaSalt = "uFdyLQoAo6+BtcRfOYC0Og==",
+                            Prezime = "novi korisnik",
+                            Telefon = "52515215"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "dd.ss@gmail.com",
+                            GradId = 1,
+                            Ime = "aaaa",
+                            KorisnickoIme = "aadd",
+                            LozinkaHash = "TPBs9dFgTsf0SmZpnSfQcmyIISE=",
+                            LozinkaSalt = "cJCHfu17NRuIYzB3bS9onw==",
+                            Prezime = "dddd",
+                            Telefon = "43743743"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "huso.smajkic@gmail.com",
+                            GradId = 4,
+                            Ime = "huso",
+                            KorisnickoIme = "huso55",
+                            LozinkaHash = "cLhzBmLT6jPfLssPnXTSFOLBehw=",
+                            LozinkaSalt = "uy9mahnWC7AvJIt+6qeWPg==",
+                            Prezime = "smajkic",
+                            Telefon = "1234214"
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.GostiNotifikacije", b =>
@@ -167,6 +246,50 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasIndex(new[] { "DrzavaId" }, "IX_grad_drzavaID");
 
                     b.ToTable("grad", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DrzavaId = 1,
+                            NazivGrada = "Mostar",
+                            PostanskiBroj = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DrzavaId = 1,
+                            NazivGrada = "Sarajevo",
+                            PostanskiBroj = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DrzavaId = 1,
+                            NazivGrada = "Tuzla",
+                            PostanskiBroj = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DrzavaId = 2,
+                            NazivGrada = "Zagreb",
+                            PostanskiBroj = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DrzavaId = 3,
+                            NazivGrada = "Beograd",
+                            PostanskiBroj = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DrzavaId = 1,
+                            NazivGrada = "Bihac",
+                            PostanskiBroj = 0
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Notifikacije", b =>
@@ -219,6 +342,32 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasIndex(new[] { "OsobljeId" }, "IX_novosti_osobljeID");
 
                     b.ToTable("novosti", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DatumObjave = new DateTime(2024, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Naslov = "Akcije za novu godinu",
+                            OsobljeId = 1,
+                            Sadrzaj = "Docekajte novu godinu u nasem hotelu uz nikad povoljnije cijene"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DatumObjave = new DateTime(2024, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Naslov = "Svi smjestajni kapaciteti popunjeni",
+                            OsobljeId = 4,
+                            Sadrzaj = "Prethodni vikend, svi smjestajni kapaciteti bili popunjeni"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DatumObjave = new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Naslov = "Posjeta hotelu",
+                            OsobljeId = 4,
+                            Sadrzaj = "Nas hotel posjetila reprezentacija Bosne i Hercegovine"
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Osoblje", b =>
@@ -261,6 +410,56 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("osoblje", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "adin.smajkic@gmail.com",
+                            Ime = "adiiiin",
+                            KorisnickoIme = "adin1998",
+                            LozinkaHash = "XsHiRH3wqycFCD4pG26l5xPqJgo=",
+                            LozinkaSalt = "FnmwHukhLVZJJLzL2Jg8HQ==",
+                            Prezime = "smaajkic",
+                            Slika = new byte[0],
+                            Telefon = "061981256"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "haris.tulic@edu.fit.ba",
+                            Ime = "Haris",
+                            KorisnickoIme = "tulatula",
+                            LozinkaHash = "RLkYnZGEW+Otmx0Kn78tQmSLxgk=",
+                            LozinkaSalt = "A3bYgzz6F0Yvq/9KStj2oQ==",
+                            Prezime = "Tulic",
+                            Slika = new byte[0],
+                            Telefon = "0620626"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "dina.bjelic@gmail.com",
+                            Ime = "Dina",
+                            KorisnickoIme = "dina99",
+                            LozinkaHash = "XsHiRH3wqycFCD4pG26l5xPqJgo=",
+                            LozinkaSalt = "A3bYgzz6F0Yvq/9KStj2oQ==",
+                            Prezime = "Bjelic",
+                            Slika = new byte[0],
+                            Telefon = "062897542"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "smajo.durakovic@gmail.com",
+                            Ime = "Smajo",
+                            KorisnickoIme = "smajo95",
+                            LozinkaHash = "RLkYnZGEW+Otmx0Kn78tQmSLxgk=",
+                            LozinkaSalt = "A3bYgzz6F0Yvq/9KStj2oQ==",
+                            Prezime = "Durakovic",
+                            Slika = new byte[0],
+                            Telefon = "525521215"
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.OsobljeUloge", b =>
@@ -290,6 +489,36 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasIndex(new[] { "VrstaOsobljaId" }, "IX_osobljeUloge_vrstaOsobljaID");
 
                     b.ToTable("osobljeUloge", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            OsobljeUlogeId = 1,
+                            DatumIzmjene = new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OsobljeId = 1,
+                            VrstaOsobljaId = 1
+                        },
+                        new
+                        {
+                            OsobljeUlogeId = 2,
+                            DatumIzmjene = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OsobljeId = 2,
+                            VrstaOsobljaId = 3
+                        },
+                        new
+                        {
+                            OsobljeUlogeId = 3,
+                            DatumIzmjene = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OsobljeId = 3,
+                            VrstaOsobljaId = 4
+                        },
+                        new
+                        {
+                            OsobljeUlogeId = 4,
+                            DatumIzmjene = new DateTime(2025, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OsobljeId = 4,
+                            VrstaOsobljaId = 3
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Recenzija", b =>
@@ -324,6 +553,40 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasIndex(new[] { "SobaId" }, "IX_recenzija_sobaID");
 
                     b.ToTable("recenzija", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            GostId = 1,
+                            Komentar = "Prezadovoljan hotelom i uslugom",
+                            Ocjena = 10,
+                            SobaId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            GostId = 2,
+                            Komentar = "Hrana nije bila bas najbolja",
+                            Ocjena = 8,
+                            SobaId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            GostId = 3,
+                            Komentar = "Sve preporuke za ovaj hotel",
+                            Ocjena = 9,
+                            SobaId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            GostId = 4,
+                            Komentar = "Prezadovoljan sa svim",
+                            Ocjena = 10,
+                            SobaId = 3
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Rezervacija", b =>
@@ -334,6 +597,9 @@ namespace SeminarskiRSII.WebApi.Migrations
                         .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<float>("Cijena")
+                        .HasColumnType("real");
 
                     b.Property<DateTime>("DatumRezervacije")
                         .HasColumnType("datetime2")
@@ -353,22 +619,116 @@ namespace SeminarskiRSII.WebApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("sobaID");
 
-                    b.Property<int?>("UslugaId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ZavrsetakRezervacije")
                         .HasColumnType("datetime2")
                         .HasColumnName("zavrsetakRezervacije");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UslugaId");
-
                     b.HasIndex(new[] { "GostId" }, "IX_rezervacija_gostID");
 
                     b.HasIndex(new[] { "SobaId" }, "IX_rezervacija_sobaID");
 
                     b.ToTable("rezervacija", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Cijena = 305f,
+                            DatumRezervacije = new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GostId = 1,
+                            SobaId = 1,
+                            ZavrsetakRezervacije = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Cijena = 295f,
+                            DatumRezervacije = new DateTime(2024, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GostId = 2,
+                            SobaId = 1,
+                            ZavrsetakRezervacije = new DateTime(2024, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Cijena = 215f,
+                            DatumRezervacije = new DateTime(2024, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GostId = 3,
+                            SobaId = 2,
+                            ZavrsetakRezervacije = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Cijena = 350f,
+                            DatumRezervacije = new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GostId = 4,
+                            SobaId = 3,
+                            ZavrsetakRezervacije = new DateTime(2024, 12, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("SeminarskiRSII.WebApi.Database.RezervacijaUsluga", b =>
+                {
+                    b.Property<int>("RezervacijaUslugaID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RezervacijaUslugaID"), 1L, 1);
+
+                    b.Property<int?>("RezervacijaID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UslugaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RezervacijaUslugaID");
+
+                    b.HasIndex("RezervacijaID");
+
+                    b.HasIndex("UslugaId");
+
+                    b.ToTable("RezervacijaUsluga");
+
+                    b.HasData(
+                        new
+                        {
+                            RezervacijaUslugaID = 1,
+                            RezervacijaID = 1,
+                            UslugaId = 1
+                        },
+                        new
+                        {
+                            RezervacijaUslugaID = 2,
+                            RezervacijaID = 1,
+                            UslugaId = 2
+                        },
+                        new
+                        {
+                            RezervacijaUslugaID = 3,
+                            RezervacijaID = 1,
+                            UslugaId = 4
+                        },
+                        new
+                        {
+                            RezervacijaUslugaID = 4,
+                            RezervacijaID = 2,
+                            UslugaId = 3
+                        },
+                        new
+                        {
+                            RezervacijaUslugaID = 5,
+                            RezervacijaID = 3,
+                            UslugaId = 4
+                        },
+                        new
+                        {
+                            RezervacijaUslugaID = 6,
+                            RezervacijaID = 3,
+                            UslugaId = 2
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Soba", b =>
@@ -408,6 +768,44 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasIndex(new[] { "SobaStatusId" }, "IX_soba_sobaStatusID");
 
                     b.ToTable("soba", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BrojSobe = 1,
+                            BrojSprata = 1,
+                            OpisSobe = "Soba u tisini",
+                            Slika = new byte[0],
+                            SobaStatusId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BrojSobe = 2,
+                            BrojSprata = 1,
+                            OpisSobe = "Soba u tisini",
+                            Slika = new byte[0],
+                            SobaStatusId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BrojSobe = 3,
+                            BrojSprata = 1,
+                            OpisSobe = "Soba s pogledom na more",
+                            Slika = new byte[0],
+                            SobaStatusId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BrojSobe = 4,
+                            BrojSprata = 2,
+                            OpisSobe = "Soba s pogledom na cijeli grad",
+                            Slika = new byte[0],
+                            SobaStatusId = 1
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.SobaOsoblje", b =>
@@ -434,6 +832,32 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasIndex(new[] { "SobaId" }, "IX_sobaOsoblje_sobaID");
 
                     b.ToTable("sobaOsoblje", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OsobljeId = 4,
+                            SobaId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            OsobljeId = 4,
+                            SobaId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            OsobljeId = 4,
+                            SobaId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            OsobljeId = 4,
+                            SobaId = 4
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.SobaStatus", b =>
@@ -456,6 +880,20 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("sobaStatus", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Opis = "Soba Slobodna za rezervisanje",
+                            Status = "Slobodna"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Opis = "Soba trenutacno zauzeta",
+                            Status = "Zauzeta"
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Usluga", b =>
@@ -480,6 +918,36 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasKey("UslugaID");
 
                     b.ToTable("Usluga");
+
+                    b.HasData(
+                        new
+                        {
+                            UslugaID = 1,
+                            Cijena = 10,
+                            Naziv = "Dorucak",
+                            Opis = "Dorucak u hotelu"
+                        },
+                        new
+                        {
+                            UslugaID = 2,
+                            Cijena = 15,
+                            Naziv = "Rucak",
+                            Opis = "Rucak u hotelu"
+                        },
+                        new
+                        {
+                            UslugaID = 3,
+                            Cijena = 50,
+                            Naziv = "Masaza",
+                            Opis = "Usluge masaze"
+                        },
+                        new
+                        {
+                            UslugaID = 4,
+                            Cijena = 75,
+                            Naziv = "Sauna",
+                            Opis = "Koristenje saune"
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.VrstaOsoblja", b =>
@@ -502,6 +970,32 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("vrstaOsoblja", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Pozicija = "Direktor",
+                            Zaduzenja = "Vodjenje posla i upravljanje ljudima i poslovima"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Pozicija = "Administracija",
+                            Zaduzenja = "vodjenje hotela i ugovaranje dogadjaja"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Pozicija = "Recepcionar",
+                            Zaduzenja = "Docekivanje gostiju i davanje svih potrebnih informacija"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Pozicija = "Spremacica",
+                            Zaduzenja = "Spremanje i ciscenje soba kako bi nasi gosti bili zadovoljni uslugom"
+                        });
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Cjenovnik", b =>
@@ -628,13 +1122,22 @@ namespace SeminarskiRSII.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SeminarskiRSII.WebApi.Database.Usluga", "Usluga")
-                        .WithMany()
-                        .HasForeignKey("UslugaId");
-
                     b.Navigation("Gost");
 
                     b.Navigation("Soba");
+                });
+
+            modelBuilder.Entity("SeminarskiRSII.WebApi.Database.RezervacijaUsluga", b =>
+                {
+                    b.HasOne("SeminarskiRSII.WebApi.Database.Rezervacija", "Rezervacija")
+                        .WithMany("RezervacijaUsluge")
+                        .HasForeignKey("RezervacijaID");
+
+                    b.HasOne("SeminarskiRSII.WebApi.Database.Usluga", "Usluga")
+                        .WithMany("RezervacijaUsluge")
+                        .HasForeignKey("UslugaId");
+
+                    b.Navigation("Rezervacija");
 
                     b.Navigation("Usluga");
                 });
@@ -707,6 +1210,11 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.Navigation("SobaOsoblje");
                 });
 
+            modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Rezervacija", b =>
+                {
+                    b.Navigation("RezervacijaUsluge");
+                });
+
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Soba", b =>
                 {
                     b.Navigation("Cjenovnik");
@@ -721,6 +1229,11 @@ namespace SeminarskiRSII.WebApi.Migrations
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.SobaStatus", b =>
                 {
                     b.Navigation("Soba");
+                });
+
+            modelBuilder.Entity("SeminarskiRSII.WebApi.Database.Usluga", b =>
+                {
+                    b.Navigation("RezervacijaUsluge");
                 });
 
             modelBuilder.Entity("SeminarskiRSII.WebApi.Database.VrstaOsoblja", b =>

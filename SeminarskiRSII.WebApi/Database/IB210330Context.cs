@@ -311,6 +311,7 @@ namespace SeminarskiRSII.WebApi.Database
                 entity.Property(e => e.Zaduzenja).HasColumnName("zaduzenja");
             });
 
+            modelBuilder.SeedCjenovnik();
             modelBuilder.SeedDrzava();
             modelBuilder.SeedGrad();
             modelBuilder.SeedUsluga();

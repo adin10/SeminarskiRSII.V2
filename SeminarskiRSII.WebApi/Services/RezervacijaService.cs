@@ -10,7 +10,6 @@ using SeminarskiRSII.WebApi.Interfaces;
 using Microsoft.ML;
 using SeminarskiRSII.Model.ML;
 using Microsoft.ML.Trainers;
-using SeminarskiRSII.WebApi.Migrations;
 
 namespace SeminarskiRSII.WebApi.Services
 {
