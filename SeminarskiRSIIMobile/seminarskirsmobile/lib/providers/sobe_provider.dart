@@ -55,4 +55,14 @@ class SobaProvider with ChangeNotifier {
       throw Exception("User not allowed");
     }
   }
+
+  Future<List<dynamic>> getRecommendations() async {
+    var url = Uri.parse("${BaseProvider.baseUrl}/soba/recommendation");
+    var response = await http!.get(url);
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception("Failed to load recommendations");
+  }
+}
 }

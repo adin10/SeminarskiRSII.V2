@@ -164,7 +164,7 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                           ),
                                         ),
                                         Text(
-                                          "Ukupna cijena: ${reservation["cijena"]}",
+                                          "Ukupna cijena: ${reservation["cijena"]} KM",
                                           style: const TextStyle(
                                             fontSize: 15,
                                             color: Colors.grey,

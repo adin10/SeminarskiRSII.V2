@@ -4,6 +4,7 @@ import 'package:seminarskirsmobile/providers/globals.dart';
 import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/postavke_screen.dart';
+import 'package:seminarskirsmobile/screens/recommendation_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
 
 class OptionsScreen extends StatelessWidget {
@@ -62,6 +63,13 @@ class OptionsScreen extends StatelessWidget {
                 userData,
               ),
               buildLogoutCard(context),
+              buildOptionCard(
+                context,
+                'Recommendation system',
+                Icons.hotel,
+                RecommendationScreen.routeName,
+                null,
+              ),
             ],
           ),
         ),

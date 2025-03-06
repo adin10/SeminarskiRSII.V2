@@ -17,6 +17,7 @@ import 'package:seminarskirsmobile/screens/menu_options_screen.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/postavke_screen.dart';
 import 'package:seminarskirsmobile/screens/recenzija_screen.dart';
+import 'package:seminarskirsmobile/screens/recommendation_screen.dart';
 import 'package:seminarskirsmobile/screens/rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/signup_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
@@ -43,6 +44,14 @@ void main() => runApp(MultiProvider(
           OptionsScreen.optionsRouteName: (context) => OptionsScreen(),
           PostavkeScreen.routeName: (context) => PostavkeScreen(),
           ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
+          RecommendationScreen.routeName: (context) => RecommendationScreen(),
+        },
+      onGenerateRoute: (settings) {
+          if (settings.name == RecommendationScreen.routeName) {
+            return MaterialPageRoute(
+                builder: (context) => RecommendationScreen());
+          }
+          return null;
         },
       ),
     ));
