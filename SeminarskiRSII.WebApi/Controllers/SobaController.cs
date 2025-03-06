@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using SeminarskiRSII.Model.Models;
 using SeminarskiRSII.WebApi.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.ML.Trainers;
+using Microsoft.ML;
 
 namespace SeminarskiRSII.WebApi.Controllers
 {
@@ -51,6 +53,12 @@ namespace SeminarskiRSII.WebApi.Controllers
         public async Task<ActionResult<Soba>> Delete(int id)
         {
             return Ok(await _service.Delete(id));
+        }
+
+        [HttpGet("recommendation")]
+        public ActionResult<Soba> RecommendationSystem()
+        {
+            return Ok(_service.RecommendPopularRooms());
         }
     }
     //public class SobaController : BaseCRUDController<Model.Soba, SobaSearchRequest, SobaInsertRequest, SobaInsertRequest>

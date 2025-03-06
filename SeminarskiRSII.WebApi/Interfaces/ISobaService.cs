@@ -14,5 +14,6 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<Soba> Insert(SobaInsertRequest insert);
         public Task<Soba> Update(int id, SobaInsertRequest update);
         public Task<Soba> Delete(int id);
+        public List<Soba> RecommendPopularRooms(); 
     }
 }

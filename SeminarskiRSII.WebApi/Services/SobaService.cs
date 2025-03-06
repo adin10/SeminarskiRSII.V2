@@ -10,6 +10,7 @@ using SeminarskiRSII.WebApi.Interfaces;
 using Microsoft.ML.Trainers;
 using Microsoft.ML;
 using SeminarskiRSII.Model.ML;
+using Microsoft.ML.Data;
 
 namespace SeminarskiRSII.WebApi.Services
 {
@@ -55,7 +56,7 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Soba> Get(int id)
         {
-            var entity = await _context.Soba.Include(x=>x.SobaStatus).FirstOrDefaultAsync(x=>x.Id == id);
+            var entity = await _context.Soba.Include(x => x.SobaStatus).FirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<Model.Models.Soba>(entity);
         }
 
@@ -74,6 +75,93 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Soba>(entity);
         }
+
+        static ITransformer model = null;
+        static MLContext mlContext = null;
+        public List<Model.Models.Soba> RecommendPopularRooms()
+        {
+            if (mlContext == null)
+            {
+                mlContext = new MLContext();
+
+                var reservations = _context.Rezervacija
+                    .GroupBy(r => r.SobaId)
+                    .Select(group => new RoomEntry
+                    {
+                        SobaID = (uint)group.Key,
+                        Label = (float)group.Count()
+                    })
+                    .ToList();
+
+                if (!reservations.Any())
+                {
+                    return Enumerable.Empty<Model.Models.Soba>().ToList();
+                }
+
+                var trainData = mlContext.Data.LoadFromEnumerable(reservations);
+
+                MatrixFactorizationTrainer.Options options = new MatrixFactorizationTrainer.Options();
+                options.MatrixColumnIndexColumnName = nameof(RoomEntry.SobaID);
+                options.MatrixRowIndexColumnName = nameof(RoomEntry.SobaID);
+                options.LabelColumnName = nameof(RoomEntry.Label);
+                options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
+                options.Alpha = 0.01;
+                options.Lambda = 0.025;
+                options.C = 0.00001;
+
+                var trainer = mlContext.Recommendation().Trainers.MatrixFactorization(options);
+                model = trainer.Fit(trainData);
+            }
+
+            var allItems = _context.Soba.ToList();
+            if (allItems == null)
+            {
+                return new List<Model.Models.Soba>();
+            }
+
+            var mappedRooms = _mapper.Map<List<Model.Models.Soba>>(allItems);
+
+            if (model == null)
+            {
+                return Enumerable.Empty<Model.Models.Soba>().ToList();
+            }
+
+            var predictionResult = new List<Tuple<Model.Models.Soba, float>>();
+
+            foreach (var item in mappedRooms)
+            {
+                var predictionEngine = mlContext.Model.CreatePredictionEngine<RoomEntry, RoomPrediction>(model);
+                var prediction = predictionEngine.Predict(new RoomEntry()
+                {
+                    SobaID = (uint)item.Id
+                });
+
+                var reservationCount = _context.Rezervacija.Count(r => r.SobaId == item.Id);
+                predictionResult.Add(new Tuple<Model.Models.Soba, float>(item, prediction.Score * reservationCount)); // Povećavamo relevantnost prema broju rezervacija
+            }
+
+            var finalResult = predictionResult
+                .OrderByDescending(x => x.Item2)
+                .Select(x => x.Item1)
+                .Take(3)
+                .ToList();
+
+            return finalResult;
+        }
+    }
+
+    public class RoomEntry
+    {
+        [KeyType(count:2000)]
+        public uint SobaID { get; set; }
+        [KeyType(count: 2000)]
+        public uint SobaIDRelated { get; set; }
+        public float Label { get; set; }
+    }
+
+    public class RoomPrediction
+    {
+        public float Score { get; set; }
     }
     //public class SobaService : BaseCRUDService<Model.Soba, SobaSearchRequest,Database.Soba, SobaInsertRequest, SobaInsertRequest>
     //{

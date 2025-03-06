@@ -14,7 +14,7 @@ namespace SeminarskiRSII.WebApiDodatni.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=IB210330;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=IB210330_V3;Trusted_Connection=True;");
             }
         }
 

@@ -14,7 +14,5 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<Rezervacija> Insert(RezervacijaInsertRequest insert);
         public Task<Rezervacija> Update(int id, RezervacijaInsertRequest update);
         public Task<Rezervacija> Delete(int id);
-        public List<Rezervacija> Recommend(int gostID);
-
     }
 }

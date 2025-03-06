@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeminarskiRSII.WebApi.Database;
 
@@ -11,9 +12,10 @@ using SeminarskiRSII.WebApi.Database;
 namespace SeminarskiRSII.WebApi.Migrations
 {
     [DbContext(typeof(IB210330Context))]
-    partial class IB210330ContextModelSnapshot : ModelSnapshot
+    [Migration("20250306211624_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,42 +276,42 @@ namespace SeminarskiRSII.WebApi.Migrations
                             Id = 1,
                             DrzavaId = 1,
                             NazivGrada = "Mostar",
-                            PostanskiBroj = 88000
+                            PostanskiBroj = 0
                         },
                         new
                         {
                             Id = 2,
                             DrzavaId = 1,
                             NazivGrada = "Sarajevo",
-                            PostanskiBroj = 71000
+                            PostanskiBroj = 0
                         },
                         new
                         {
                             Id = 3,
                             DrzavaId = 1,
                             NazivGrada = "Tuzla",
-                            PostanskiBroj = 75000
+                            PostanskiBroj = 0
                         },
                         new
                         {
                             Id = 4,
                             DrzavaId = 2,
                             NazivGrada = "Zagreb",
-                            PostanskiBroj = 44000
+                            PostanskiBroj = 0
                         },
                         new
                         {
                             Id = 5,
                             DrzavaId = 3,
                             NazivGrada = "Beograd",
-                            PostanskiBroj = 49000
+                            PostanskiBroj = 0
                         },
                         new
                         {
                             Id = 6,
                             DrzavaId = 1,
                             NazivGrada = "Bihac",
-                            PostanskiBroj = 77000
+                            PostanskiBroj = 0
                         });
                 });
 
