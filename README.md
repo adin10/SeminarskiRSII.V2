@@ -12,13 +12,13 @@ Aplikacija za pretrazivanje, upravljanje i rezervaciju hotelskih soba i apartman
   username: adin1998                                                                                                                                              
   password: adin98
 <br>
-  If you want to start desktop application using dart define <br>
+   If you want to start desktop application using dart define <br>
  flutter run --dart-define=baseUrl=http://10.0.2.2:5000/api -d windows<br>
 
   
 ### Mobile user:
   username: huso55                                                                                                                                                     
-  password: huso55
+  password: huso55<br>
   This is the default mobile user. You can create your own by clicking register button.
    
   
