@@ -1,0 +1,2 @@
+C:/Users/user/source/repos/SeminarskiRSII/SeminarskiRSIIMobile/seminarskirsmobile/android/app/.cxx/RelWithDebInfo/u461y215/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/user/source/repos/SeminarskiRSII/SeminarskiRSIIMobile/seminarskirsmobile/android/app/.cxx/RelWithDebInfo/u461y215/arm64-v8a/CMakeFiles/rebuild_cache.dir
