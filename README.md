@@ -13,7 +13,7 @@ Aplikacija za pretrazivanje, upravljanje i rezervaciju hotelskih soba i apartman
   password: adin98
 <br>
    If you want to start desktop application using dart define <br>
- flutter run --dart-define=baseUrl=http://10.0.2.2:5000/api -d windows<br>
+ flutter run --dart-define=baseUrl=http://10.0.2.2:8080/api -d windows<br>
 
   
 ### Mobile user:
@@ -28,7 +28,7 @@ Aplikacija za pretrazivanje, upravljanje i rezervaciju hotelskih soba i apartman
   <br>
   
   If you want to start application using dart define <br>
- flutter run --dart-define=baseUrl=http://10.0.2.2:5000/api <br>
+ flutter run --dart-define=baseUrl=http://10.0.2.2:8080/api <br>
 
 
 
