@@ -1,6 +1,4 @@
-# SeminarskiRSII
-<br>
-# HotelAS:: :: FIT-Razvoj softvera II
+# HotelAS:: FIT-Razvoj softvera II
 Aplikacija za pretrazivanje, upravljanje i rezervaciju hotelskih soba i apartmana.  
 
 # Docker
@@ -22,7 +20,7 @@ Aplikacija za pretrazivanje, upravljanje i rezervaciju hotelskih soba i apartman
   username: huso55                                                                                                                                                     
   password: huso55
   
-  # Flutter
+  
   flutter pub get                                                                                                                                                       
   flutter emulators --launch Pixel 2 API 30                                                                                                                         
   flutter run <br> 
