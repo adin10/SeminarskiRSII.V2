@@ -166,5 +166,20 @@ namespace SeminarskiRSII.WebApi.Services
 
             return _mapper.Map<Model.Models.Gost>(entity);
         }
+
+        public async Task<Model.Models.Gost> UpdateUserProfile(int id, UpdateUserProfile request)
+        {
+            var gost = await _context.Gost.FindAsync(id);
+            if(gost == null)
+            {
+                throw new UserException("Gost not found!");
+            }
+
+            gost.Email = request.Email;
+            gost.KorisnickoIme = request.KorisnickoIme;
+            gost.Telefon = request.Telefon;
+            await _context.SaveChangesAsync();
+            return _mapper.Map<Model.Models.Gost>(gost);
+        }
     }
 }

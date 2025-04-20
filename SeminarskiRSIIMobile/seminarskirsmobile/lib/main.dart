@@ -21,6 +21,7 @@ import 'package:seminarskirsmobile/screens/recommendation_screen.dart';
 import 'package:seminarskirsmobile/screens/rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/signup_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
+import 'package:seminarskirsmobile/screens/update_profile_screen.dart';
 
 void main() => runApp(MultiProvider(
       providers: [
@@ -44,9 +45,17 @@ void main() => runApp(MultiProvider(
           OptionsScreen.optionsRouteName: (context) => OptionsScreen(),
           PostavkeScreen.routeName: (context) => PostavkeScreen(),
           ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
+          // UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
           RecommendationScreen.routeName: (context) => RecommendationScreen(),
         },
       onGenerateRoute: (settings) {
+          if (settings.name == UpdateProfileScreen.routeName) {
+            final args = settings.arguments as GetUserResponse;
+
+            return MaterialPageRoute(
+              builder: (context) => UpdateProfileScreen(userData: args),
+            );
+          }
           if (settings.name == RecommendationScreen.routeName) {
             return MaterialPageRoute(
                 builder: (context) => RecommendationScreen());

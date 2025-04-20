@@ -76,5 +76,11 @@ namespace SeminarskiRSII.WebApi.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+
+        [HttpPut("UpdateProfile/{id}")]
+        public async Task<ActionResult<Gost>> UpdateProfile(int id, UpdateUserProfile request)
+        {
+            return Ok(await _service.UpdateUserProfile(id, request));
+        }
     }
 }

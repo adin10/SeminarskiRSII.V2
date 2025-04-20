@@ -20,6 +20,7 @@ class OptionsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Hotel AS'),
         backgroundColor: Colors.teal,
+        automaticallyImplyLeading: false,
         elevation: 0,
       ),
       body: Container(
