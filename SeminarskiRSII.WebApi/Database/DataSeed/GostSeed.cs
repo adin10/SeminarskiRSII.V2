@@ -18,7 +18,9 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     KorisnickoIme = "adin1998",
                     LozinkaHash = "ZG+m4HIibaJpXMVrtXhp9+QQiDE=",
                     LozinkaSalt = "8yGM2clNjUvFcuobbcqRSg==",
-                    Telefon = "5842521"
+                    Telefon = "5842521",
+                    DatumRegistracije = new DateTime(2025, 01, 01),
+                    Status = true
                 },
                 new Gost()
                 {
@@ -30,7 +32,9 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     KorisnickoIme = "ahmo",
                     LozinkaHash = "57dqXte2i8RuxpISQMzOjW/kYUA=",
                     LozinkaSalt = "uSHCckjLFYgVNJRSWd2W5g==",
-                    Telefon = "062263580"
+                    Telefon = "062263580",
+                    DatumRegistracije = new DateTime(2025, 01, 01),
+                    Status = true
                 },
                 new Gost()
                 {
@@ -42,7 +46,9 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     KorisnickoIme = "test98",
                     LozinkaHash = "nEE+3SNUp4E2UX5xfPGpH6R+ELA=",
                     LozinkaSalt = "uFdyLQoAo6+BtcRfOYC0Og==",
-                    Telefon = "52515215"
+                    Telefon = "52515215",
+                    DatumRegistracije = new DateTime(2025, 02, 01),
+                    Status = false
                 },
                 new Gost()
                 {
@@ -54,7 +60,9 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     KorisnickoIme = "aadd",
                     LozinkaHash = "TPBs9dFgTsf0SmZpnSfQcmyIISE=",
                     LozinkaSalt = "cJCHfu17NRuIYzB3bS9onw==",
-                    Telefon = "43743743"
+                    Telefon = "43743743",
+                    DatumRegistracije = new DateTime(2025, 04, 04),
+                    Status = false
                 },
                 new Gost()
                 {
@@ -66,7 +74,9 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     KorisnickoIme = "huso55",
                     LozinkaHash = "cLhzBmLT6jPfLssPnXTSFOLBehw=",
                     LozinkaSalt = "uy9mahnWC7AvJIt+6qeWPg==",
-                    Telefon = "1234214"
+                    Telefon = "1234214",
+                    DatumRegistracije = new DateTime(2024, 12, 31),
+                    Status = true
                 }
             };
             modelBuilder.Entity<Gost>().HasData(gosti);

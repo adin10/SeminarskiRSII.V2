@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeminarskiRSII.WebApi.Database;
 
@@ -11,9 +12,10 @@ using SeminarskiRSII.WebApi.Database;
 namespace SeminarskiRSII.WebApi.Migrations
 {
     [DbContext(typeof(IB210330Context))]
-    partial class IB210330ContextModelSnapshot : ModelSnapshot
+    [Migration("20250427214417_addingAdditionalFields")]
+    partial class addingAdditionalFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,7 +163,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                         new
                         {
                             Id = 1,
-                            DatumRegistracije = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumRegistracije = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "adin.smajkic@gmail.com",
                             GradId = 1,
                             Ime = "Adin",
@@ -169,13 +171,13 @@ namespace SeminarskiRSII.WebApi.Migrations
                             LozinkaHash = "ZG+m4HIibaJpXMVrtXhp9+QQiDE=",
                             LozinkaSalt = "8yGM2clNjUvFcuobbcqRSg==",
                             Prezime = "Smajkic",
-                            Status = true,
+                            Status = false,
                             Telefon = "5842521"
                         },
                         new
                         {
                             Id = 2,
-                            DatumRegistracije = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumRegistracije = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ahmed.sm@gmail.com",
                             GradId = 2,
                             Ime = "ahmed",
@@ -183,13 +185,13 @@ namespace SeminarskiRSII.WebApi.Migrations
                             LozinkaHash = "57dqXte2i8RuxpISQMzOjW/kYUA=",
                             LozinkaSalt = "uSHCckjLFYgVNJRSWd2W5g==",
                             Prezime = "smajic",
-                            Status = true,
+                            Status = false,
                             Telefon = "062263580"
                         },
                         new
                         {
                             Id = 3,
-                            DatumRegistracije = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumRegistracije = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "novikorisnk.test@gmail.com",
                             GradId = 3,
                             Ime = "test",
@@ -203,7 +205,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                         new
                         {
                             Id = 4,
-                            DatumRegistracije = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumRegistracije = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "dd.ss@gmail.com",
                             GradId = 1,
                             Ime = "aaaa",
@@ -217,7 +219,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                         new
                         {
                             Id = 5,
-                            DatumRegistracije = new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumRegistracije = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "huso.smajkic@gmail.com",
                             GradId = 4,
                             Ime = "huso",
@@ -225,7 +227,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                             LozinkaHash = "cLhzBmLT6jPfLssPnXTSFOLBehw=",
                             LozinkaSalt = "uy9mahnWC7AvJIt+6qeWPg==",
                             Prezime = "smajkic",
-                            Status = true,
+                            Status = false,
                             Telefon = "1234214"
                         });
                 });

@@ -21,6 +21,8 @@ namespace SeminarskiRSII.WebApi.Database
         public string? LozinkaSalt { get; set; }
         public string? Telefon { get; set; }
         public int GradId { get; set; }
+        public DateTime DatumRegistracije { get; set; }
+        public bool Status { get; set; }
 
         public virtual Grad Grad { get; set; } = null!;
         public virtual ICollection<GostiNotifikacije> GostiNotifikacije { get; set; }
