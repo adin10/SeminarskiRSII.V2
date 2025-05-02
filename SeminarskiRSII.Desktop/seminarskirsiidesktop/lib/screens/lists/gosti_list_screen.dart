@@ -317,8 +317,10 @@ class _GostiListScreenState extends State<GostiListScreen> {
                                 _buildDataColumn("Prezime"),
                                 _buildDataColumn("Email"),
                                 _buildDataColumn("Telefon"),
-                                _buildDataColumn("Naziv grada"),
+                                _buildDataColumn("Grad"),
                                 _buildDataColumn("Korisnicko ime"),
+                                _buildDataColumn("Datum registracije"),
+                                _buildDataColumn("Status")
                               ],
                               rows: _buildRows(),
                             ),
@@ -357,6 +359,8 @@ class _GostiListScreenState extends State<GostiListScreen> {
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink())
         ])
       ];
     }
@@ -370,6 +374,11 @@ class _GostiListScreenState extends State<GostiListScreen> {
                 DataCell(Text(x["telefon"] ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["grad"]["nazivGrada"] ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["korisnickoIme"] ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["datumRegistracije"] != null
+                  ? DateTime.parse(x["datumRegistracije"]).toLocal().toString().split(' ')[0]
+                  : "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["status"] == true ? "Aktivan" : "Neaktivan",
+              style: const TextStyle(fontSize: 14))),
               ],
             ))
         .toList();
