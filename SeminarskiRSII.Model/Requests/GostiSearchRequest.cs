@@ -10,5 +10,7 @@ namespace SeminarskiRSII.Model.Requests
         public string? prezime { get; set; }
         public int? gradID { get; set; }
         public string? KorisnickoIme { get; set; }
+        public bool? Status { get; set; }
+
     }
 }

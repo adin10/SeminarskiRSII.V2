@@ -16,7 +16,7 @@ class GostiProvider with ChangeNotifier {
     http = IOClient(client);
   }
 
-  Future<dynamic> get({String? ime, String? prezime}) async {
+  Future<dynamic> get({String? ime, String? prezime, bool? status}) async {
   var queryParams = <String, String>{};
 
   if (ime != null && ime.isNotEmpty) {
@@ -24,6 +24,10 @@ class GostiProvider with ChangeNotifier {
   }
   if (prezime != null && prezime.isNotEmpty) {
     queryParams['prezime'] = prezime;
+  }
+
+  if (status != null) {
+    queryParams['status'] = status.toString();
   }
 
   var url = Uri.parse("${BaseProvider.baseUrl}/Gost").replace(queryParameters: queryParams);

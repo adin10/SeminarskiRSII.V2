@@ -66,28 +66,50 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<List<Model.Models.Gost>> GetList(GostiSearchRequest search)
         {
-            var query = _context.Gost.Include(g => g.Grad).ThenInclude(g=>g.Drzava).AsQueryable();
+            var query = _context.Gost.Include(g => g.Grad).AsQueryable();
             if (search != null)
             {
                 if (search.gradID.HasValue)
                 {
                     query = query.Where(v => v.GradId == search.gradID.Value);
                 }
+                if (!string.IsNullOrWhiteSpace(search?.ime))
+                {
+                    query = query.Where(x => x.Ime.ToLower().Contains(search.ime.ToLower()));
+                }
+                if (!string.IsNullOrWhiteSpace(search?.prezime))
+                {
+                    query = query.Where(x => x.Prezime.ToLower().Contains(search.prezime.ToLower()));
+                }
+                if (!string.IsNullOrWhiteSpace(search?.KorisnickoIme))
+                {
+                    query = query.Where(x => x.KorisnickoIme.ToLower().Contains(search.KorisnickoIme.ToLower()));
+                }
+                if (search.Status.HasValue)
+                {
+                    query = query.Where(x => x.Status == search.Status.Value);
+                }
             }
-            if (!string.IsNullOrWhiteSpace(search?.ime))
+            var gosti = await query.ToListAsync();
+
+            var gostIds = gosti.Select(x => x.Id).ToList();
+            var ocjene = await _context.Recenzija.Where(x => gostIds.Contains(x.GostId))
+                .GroupBy(x => x.GostId).Select(g => new
+                {
+                    GostId = g.Key,
+                    ProsjecnaOcjena = g.Average(r => r.Ocjena)
+                })
+        .ToListAsync();
+
+            var mapped = _mapper.Map<List<Model.Models.Gost>>(gosti);
+
+            foreach (var gost in mapped)
             {
-                query = query.Where(x => x.Ime.ToLower().Contains(search.ime.ToLower()));
+                var ocjena = ocjene.FirstOrDefault(o => o.GostId == gost.Id);
+                gost.ProsjecnaOcjena = ocjena?.ProsjecnaOcjena;
             }
-            if (!string.IsNullOrWhiteSpace(search?.prezime))
-            {
-                query = query.Where(x => x.Prezime.ToLower().Contains(search.prezime.ToLower()));
-            }
-            if (!string.IsNullOrWhiteSpace(search?.KorisnickoIme))
-            {
-                query = query.Where(x => x.KorisnickoIme.ToLower().Contains(search.KorisnickoIme.ToLower()));
-            }
-            var list = await query.ToListAsync();
-            return _mapper.Map<List<Model.Models.Gost>>(list);
+
+            return mapped;
         }
 
         public async Task<Model.Models.Gost> Get(int id)

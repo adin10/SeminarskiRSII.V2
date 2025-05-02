@@ -17,6 +17,7 @@ namespace SeminarskiRSII.Model.Models
         public string LozinkaHash { get; set; }
         public string LozinkaSalt { get; set; }
         public DateTime DatumRegistracije { get; set; }
+        public double? ProsjecnaOcjena { get; set; }
         public bool Status { get; set; }
         //public string Grad { get; set; }
         public override string ToString()
