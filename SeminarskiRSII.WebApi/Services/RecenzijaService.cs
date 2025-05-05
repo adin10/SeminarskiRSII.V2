@@ -25,9 +25,15 @@ namespace SeminarskiRSII.WebApi.Services
             var query = _context.Recenzija.Include(r => r.Gost).Include(r=>r.Soba).AsQueryable();
             if (search != null)
             {
+                if (!string.IsNullOrWhiteSpace(search.ImePrezime))
+                {
+                    var imePrezime = search.ImePrezime.ToLower();
+                    query = query.Where(x => x.Gost.Ime.ToLower().Contains(imePrezime) ||
+                    x.Gost.Prezime.ToLower().Contains(imePrezime));
+                }
                 if (search.ocjena.HasValue)
                 {
-                    query = query.Where(r => r.Ocjena == search.ocjena.Value);
+                    query = query.Where(r => r.Ocjena == search.ocjena);
                 }
                 if (search.BrojSobe.HasValue)
                 {

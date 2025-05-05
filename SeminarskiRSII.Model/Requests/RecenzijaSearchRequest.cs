@@ -8,5 +8,6 @@ namespace SeminarskiRSII.Model.Requests
     {
         public int? ocjena { get; set; }
         public int? BrojSobe { get; set; }
+        public string? ImePrezime { get; set; }
     }
 }
