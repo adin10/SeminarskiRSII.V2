@@ -1,206 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:seminarskirsiidesktop/providers/gosti_provider.dart';
-// import '../../widgets/master_screen.dart';
-
-// class GostiListScreen extends StatefulWidget {
-//   const GostiListScreen({super.key});
-
-//   @override
-//   State<GostiListScreen> createState() => _GostiListScreenState();
-// }
-
-// class _GostiListScreenState extends State<GostiListScreen> {
-//   late GostiProvider _gostiProvider;
-//   dynamic data;
-//   bool isLoading = true;
-
-//   final TextEditingController _imeController = TextEditingController();
-//   final TextEditingController _prezimeController = TextEditingController();
-
-//   final ScrollController _verticalController = ScrollController();
-//   final ScrollController _horizontalController = ScrollController();
-
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//     _gostiProvider = context.read<GostiProvider>();
-//     loadData();
-//   }
-
-//   Future<void> loadData() async {
-//     setState(() {
-//       isLoading = true;
-//     });
-
-//     var tmpData = await _gostiProvider.get(
-//       ime: _imeController.text.isNotEmpty ? _imeController.text : null,
-//       prezime: _prezimeController.text.isNotEmpty ? _prezimeController.text : null,
-//     );
-
-//     setState(() {
-//       data = tmpData;
-//       isLoading = false;
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     _imeController.dispose();
-//     _prezimeController.dispose();
-//     _verticalController.dispose();
-//     _horizontalController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MasterScreenWidget(
-//       title: 'Gosti',
-//       child: Column(
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: Row(
-//               children: [
-//                 Expanded(
-//                   child: TextField(
-//                     controller: _imeController,
-//                     decoration: InputDecoration(
-//                       labelText: 'Pretraga po imenu',
-//                       suffixIcon: IconButton(
-//                         icon: Icon(Icons.search),
-//                         onPressed: loadData,
-//                       ),
-//                     ),
-//                     onEditingComplete: loadData,
-//                   ),
-//                 ),
-//                 const SizedBox(width: 16),
-//                 Expanded(
-//                   child: TextField(
-//                     controller: _prezimeController,
-//                     decoration: InputDecoration(
-//                       labelText: 'Pretraga po prezimenu',
-//                       suffixIcon: IconButton(
-//                         icon: Icon(Icons.search),
-//                         onPressed: loadData,
-//                       ),
-//                     ),
-//                     onEditingComplete: loadData,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-
-//           Expanded(
-//             child: Container(
-//               padding: const EdgeInsets.all(16),
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(12),
-//                 border: Border.all(color: Colors.grey.shade300),
-//               ),
-//               child: isLoading
-//                   ? const Center(child: CircularProgressIndicator())
-//                   : Scrollbar(
-//                       controller: _verticalController,
-//                       thumbVisibility: true,
-//                       child: SingleChildScrollView(
-//                         controller: _verticalController,
-//                         scrollDirection: Axis.vertical,
-//                         child: Scrollbar(
-//                           controller: _horizontalController,
-//                           thumbVisibility: true,
-//                           child: SingleChildScrollView(
-//                             controller: _horizontalController,
-//                             scrollDirection: Axis.horizontal,
-//                             child: DataTable(
-//                               dataRowHeight: 60,
-//                               headingRowHeight: 60,
-//                               headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
-//                               dividerThickness: 2,
-//                               columnSpacing: 40,
-//                               horizontalMargin: 25,
-//                               columns: [
-//                                 _buildDataColumn("Ime"),
-//                                 _buildDataColumn("Prezime"),
-//                                 _buildDataColumn("Email"),
-//                                 _buildDataColumn("Telefon"),
-//                                 _buildDataColumn("Grad"),
-//                                 _buildDataColumn("Korisnicko ime"),
-//                                 _buildDataColumn("Datum registracije"),
-//                                 _buildDataColumn("Status"),
-//                                 _buildDataColumn("Prosjecna ocjena")
-//                               ],
-//                               rows: _buildRows(),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   DataColumn _buildDataColumn(String label) {
-//     return DataColumn(
-//       label: Text(
-//         label,
-//         style: TextStyle(
-//           fontWeight: FontWeight.bold,
-//           fontSize: 14,
-//           color: Colors.blueGrey[700],
-//         ),
-//         textAlign: TextAlign.center,
-//       ),
-//     );
-//   }
-
-//   List<DataRow> _buildRows() {
-//     if (data == null || data.isEmpty) {
-//       return [
-//         const DataRow(cells: [
-//           DataCell(Text("No data...")),
-//           DataCell(SizedBox.shrink()),
-//           DataCell(SizedBox.shrink()),
-//           DataCell(SizedBox.shrink()),
-//           DataCell(SizedBox.shrink()),
-//           DataCell(SizedBox.shrink()),
-//           DataCell(SizedBox.shrink()),
-//           DataCell(SizedBox.shrink()),
-//           DataCell(SizedBox.shrink())
-//         ])
-//       ];
-//     }
-
-//     return data
-//         .map<DataRow>((x) => DataRow(
-//               cells: [
-//                 DataCell(Text(x["ime"] ?? "", style: const TextStyle(fontSize: 14))),
-//                 DataCell(Text(x["prezime"] ?? "", style: const TextStyle(fontSize: 14))),
-//                 DataCell(Text(x["email"] ?? "", style: const TextStyle(fontSize: 14))),
-//                 DataCell(Text(x["telefon"] ?? "", style: const TextStyle(fontSize: 14))),
-//                 DataCell(Text(x["grad"]["nazivGrada"] ?? "", style: const TextStyle(fontSize: 14))),
-//                 DataCell(Text(x["korisnickoIme"] ?? "", style: const TextStyle(fontSize: 14))),
-//                 DataCell(Text(x["datumRegistracije"] != null
-//                   ? DateTime.parse(x["datumRegistracije"]).toLocal().toString().split(' ')[0]
-//                   : "", style: const TextStyle(fontSize: 14))),
-//                 DataCell(Text(x["status"] == true ? "Aktivan" : "Neaktivan",
-//               style: const TextStyle(fontSize: 14))),
-//                 DataCell(Text(x["prosjecnaOcjena"] != null
-//               ? (x["prosjecnaOcjena"] as num).toStringAsFixed(2)
-//               : "N/A", style: const TextStyle(fontSize: 14)))
-//               ],
-//             ))
-//         .toList();
-//   }
-// }
-
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/gosti_provider.dart';
@@ -223,6 +20,8 @@ class _GostiListScreenState extends State<GostiListScreen> {
 
   final ScrollController _verticalController = ScrollController();
   final ScrollController _horizontalController = ScrollController();
+  int _currentPage = 1;
+  final int _itemsPerPage = 10;
 
   String? _statusFilter;
   final List<DropdownMenuItem<String?>> _statusOptions = const [
@@ -241,6 +40,7 @@ class _GostiListScreenState extends State<GostiListScreen> {
   Future<void> loadData() async {
     setState(() {
       isLoading = true;
+      _currentPage = 1;
     });
 
     var tmpData = await _gostiProvider.get(
@@ -253,6 +53,48 @@ class _GostiListScreenState extends State<GostiListScreen> {
       data = tmpData;
       isLoading = false;
     });
+  }
+
+  List<dynamic> get _pagedData {
+    int start = (_currentPage - 1) * _itemsPerPage;
+    int end = start + _itemsPerPage;
+    return data.sublist(start, end > data.length ? data.length : end);
+  }
+
+  Widget _buildPaginationControls() {
+    if (data == null || data.isEmpty) return const SizedBox();
+
+    int totalPages = (data.length / _itemsPerPage).ceil();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: _currentPage > 1
+                ? () {
+                    setState(() {
+                      _currentPage--;
+                    });
+                  }
+                : null,
+          ),
+          Text("Stranica $_currentPage od $totalPages | Ukupno: ${data.length}"),
+          IconButton(
+            icon: const Icon(Icons.chevron_right),
+            onPressed: _currentPage < totalPages
+                ? () {
+                    setState(() {
+                      _currentPage++;
+                    });
+                  }
+                : null,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -367,6 +209,7 @@ class _GostiListScreenState extends State<GostiListScreen> {
                     ),
             ),
           ),
+          _buildPaginationControls(),
         ],
       ),
     );
@@ -389,23 +232,14 @@ class _GostiListScreenState extends State<GostiListScreen> {
   }
 
   List<DataRow> _buildRows() {
-    if (data == null || data.isEmpty) {
+    if (_pagedData.isEmpty) {
       return [
-        const DataRow(cells: [
-          DataCell(Center(child: Text("No data..."))),
-          DataCell(SizedBox.shrink()),
-          DataCell(SizedBox.shrink()),
-          DataCell(SizedBox.shrink()),
-          DataCell(SizedBox.shrink()),
-          DataCell(SizedBox.shrink()),
-          DataCell(SizedBox.shrink()),
-          DataCell(SizedBox.shrink()),
-          DataCell(SizedBox.shrink())
-        ])
+        DataRow(
+          cells: List.generate(9, (_) => const DataCell(Text("No data..."))),
+        )
       ];
     }
-
-    return data.map<DataRow>((x) => DataRow(cells: [
+    return _pagedData.map<DataRow>((x) => DataRow(cells: [
       DataCell(Center(child: Text(x["ime"] ?? "", style: const TextStyle(fontSize: 14)))),
       DataCell(Center(child: Text(x["prezime"] ?? "", style: const TextStyle(fontSize: 14)))),
       DataCell(Center(child: Text(x["email"] ?? "", style: const TextStyle(fontSize: 14)))),
