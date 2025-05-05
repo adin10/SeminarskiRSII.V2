@@ -43,18 +43,32 @@ namespace SeminarskiRSII.WebApi.Services
             var query = _context.Rezervacija.Include(r => r.Gost).Include(r => r.Soba).Include(r=>r.RezervacijaUsluge).ThenInclude(r=>r.Usluga).AsQueryable();
             if (search != null)
             {
-                if (search.BrojSobe.HasValue)
+                if (search.sobaID.HasValue)
                 {
-                    query = query.Where(r => r.Soba.BrojSobe == search.BrojSobe.Value);
+                    query = query.Where(r => r.Soba.Id == search.sobaID);
+                }
+                if (!string.IsNullOrWhiteSpace(search.ImePrezime))
+                {
+                    var imePrezime = search.ImePrezime.ToLower();
+                    query = query.Where(x => x.Gost.Ime.ToLower().Contains(imePrezime) ||
+                    x.Gost.Prezime.ToLower().Contains(imePrezime));
+                }
+                if (search.DatumRezervacije.HasValue)
+                {
+                    query = query.Where(x => x.DatumRezervacije >= search.DatumRezervacije);
+                }
+                if (search.ZavrsetakRezervacije.HasValue)
+                {
+                    query = query.Where(r => r.ZavrsetakRezervacije <= search.ZavrsetakRezervacije);
+                }
+                if (search.SamoBuduce == true)
+                {
+                    query = query.Where(x => x.DatumRezervacije >= DateTime.Now);
                 }
                 if (search.gostID.HasValue)
                 {
                     query = query.Where(r => r.GostId == search.gostID);
                 }
-            }
-            if (!string.IsNullOrWhiteSpace(search?.KorisnickoIme))
-            {
-                query = query.Where(x => x.Gost.KorisnickoIme.ToLower().Contains(search.KorisnickoIme.ToLower()));
             }
             var list =await query.ToListAsync();
             return _mapper.Map<List<Model.Models.Rezervacija>>(list);

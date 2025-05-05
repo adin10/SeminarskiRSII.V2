@@ -16,19 +16,44 @@ class RezervacijaProvider with ChangeNotifier {
     http = IOClient(client);
   }
 
-  Future<List<dynamic>> get(dynamic searchObject) async {
-    var url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
-    var response = await http!.get(
-      url,
-    );
-    if (isValidResponse(response)) {
-      var data = jsonDecode(response.body);
-      return data;
-    } else {
-      return throw Exception("Something wenw wrong");
-    }
+  // Future<List<dynamic>> get(dynamic searchObject) async {
+  //   var url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
+  //   var response = await http!.get(
+  //     url,
+  //   );
+  //   if (isValidResponse(response)) {
+  //     var data = jsonDecode(response.body);
+  //     return data;
+  //   } else {
+  //     return throw Exception("Something wenw wrong");
+  //   }
+  // }
+
+Future<List<dynamic>> get(dynamic searchObject) async {
+  var queryString = "";
+
+  if (searchObject != null) {
+    final queryParameters = <String, String>{};
+
+    searchObject.forEach((key, value) {
+      if (value != null && value.toString().isNotEmpty) {
+        queryParameters[key] = value.toString();
+      }
+    });
+
+    queryString = "?" + Uri(queryParameters: queryParameters).query;
   }
 
+  final url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija$queryString");
+
+  final response = await http!.get(url);
+
+  if (isValidResponse(response)) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception("Something went wrong");
+  }
+}
   bool isValidResponse(Response response) {
     if (response.statusCode < 299) {
       return true;
