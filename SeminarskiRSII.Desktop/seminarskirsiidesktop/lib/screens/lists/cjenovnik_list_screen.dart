@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/cjenovnik_provider.dart';
-import 'package:seminarskirsiidesktop/providers/grad_provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/cjenovnik_new_screen.dart';
-import 'package:seminarskirsiidesktop/screens/details-new/grad_new_screen.dart';
 import '../../widgets/master_screen.dart';
-import '../details-new/drzava_new_screen.dart';
 
 class CjenovnikListScreen extends StatefulWidget {
   const CjenovnikListScreen({super.key});
@@ -112,6 +109,8 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                                 _buildDataColumn("Cijena"),
                                 _buildDataColumn("Valuta"),
                                 _buildDataColumn("Soba"),
+                                _buildDataColumn("Vrijedi Od"),
+                                _buildDataColumn("Vrijedi Do"),
                                 const DataColumn(
                                   label: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -180,6 +179,8 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink())
         ])
       ];
     }
@@ -190,6 +191,12 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                 DataCell(Text(x["cijena"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["valuta"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Center(child: Text(x["vrijediOd"] != null
+                    ? DateTime.parse(x["vrijediOd"]).toLocal().toString().split(' ')[0]
+                    : "", style: const TextStyle(fontSize: 14)))),
+                DataCell(Center(child: Text(x["vrijediDo"] != null
+                    ? DateTime.parse(x["vrijediDo"]).toLocal().toString().split(' ')[0]
+                    : "", style: const TextStyle(fontSize: 14)))),
                 DataCell(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

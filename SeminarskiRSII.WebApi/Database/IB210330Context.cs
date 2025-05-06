@@ -58,6 +58,10 @@ namespace SeminarskiRSII.WebApi.Database
 
                 entity.Property(e => e.SobaId).HasColumnName("sobaID");
 
+                entity.Property(e => e.VrijediOd).HasColumnName("vrijediOd");
+
+                entity.Property(e => e.VrijediDo).HasColumnName("vrijediDo");
+
                 entity.HasOne(d => d.Soba)
                     .WithMany(p => p.Cjenovnik)
                     .HasForeignKey(d => d.SobaId);
@@ -89,6 +93,8 @@ namespace SeminarskiRSII.WebApi.Database
                 entity.Property(e => e.Prezime).HasColumnName("prezime");
 
                 entity.Property(e => e.Telefon).HasColumnName("telefon");
+
+                entity.Property(e => e.DatumRegistracije).HasColumnName("datumRegistracije");
 
                 entity.HasOne(d => d.Grad)
                     .WithMany(p => p.Gost)
@@ -212,6 +218,8 @@ namespace SeminarskiRSII.WebApi.Database
                 entity.Property(e => e.Ocjena).HasColumnName("ocjena");
 
                 entity.Property(e => e.SobaId).HasColumnName("sobaID");
+
+                entity.Property(e => e.DatumRecenzije).HasColumnName("datumRecenzije");
 
                 entity.HasOne(d => d.Gost)
                     .WithMany(p => p.Recenzija)

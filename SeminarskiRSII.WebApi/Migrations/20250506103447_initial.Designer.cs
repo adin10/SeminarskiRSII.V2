@@ -12,8 +12,8 @@ using SeminarskiRSII.WebApi.Database;
 namespace SeminarskiRSII.WebApi.Migrations
 {
     [DbContext(typeof(IB210330Context))]
-    [Migration("20250306213805_postanskiBroj")]
-    partial class postanskiBroj
+    [Migration("20250506103447_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,6 +44,14 @@ namespace SeminarskiRSII.WebApi.Migrations
                     b.Property<string>("Valuta")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("VrijediDo")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("vrijediDo");
+
+                    b.Property<DateTime>("VrijediOd")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("vrijediOd");
+
                     b.HasKey("Id");
 
                     b.HasIndex(new[] { "SobaId" }, "IX_cjenovnik_sobaID");
@@ -56,21 +64,27 @@ namespace SeminarskiRSII.WebApi.Migrations
                             Id = 1,
                             Cijena = 50f,
                             SobaId = 1,
-                            Valuta = "KM"
+                            Valuta = "KM",
+                            VrijediDo = new DateTime(2025, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VrijediOd = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             Cijena = 150f,
                             SobaId = 2,
-                            Valuta = "KM"
+                            Valuta = "KM",
+                            VrijediDo = new DateTime(2025, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VrijediOd = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
                             Cijena = 100f,
                             SobaId = 3,
-                            Valuta = "KM"
+                            Valuta = "KM",
+                            VrijediDo = new DateTime(2025, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VrijediOd = new DateTime(2025, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -118,6 +132,10 @@ namespace SeminarskiRSII.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DatumRegistracije")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("datumRegistracije");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("email");
@@ -143,6 +161,9 @@ namespace SeminarskiRSII.WebApi.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("prezime");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Telefon")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("telefon");
@@ -157,6 +178,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                         new
                         {
                             Id = 1,
+                            DatumRegistracije = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "adin.smajkic@gmail.com",
                             GradId = 1,
                             Ime = "Adin",
@@ -164,11 +186,13 @@ namespace SeminarskiRSII.WebApi.Migrations
                             LozinkaHash = "ZG+m4HIibaJpXMVrtXhp9+QQiDE=",
                             LozinkaSalt = "8yGM2clNjUvFcuobbcqRSg==",
                             Prezime = "Smajkic",
+                            Status = true,
                             Telefon = "5842521"
                         },
                         new
                         {
                             Id = 2,
+                            DatumRegistracije = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ahmed.sm@gmail.com",
                             GradId = 2,
                             Ime = "ahmed",
@@ -176,11 +200,13 @@ namespace SeminarskiRSII.WebApi.Migrations
                             LozinkaHash = "57dqXte2i8RuxpISQMzOjW/kYUA=",
                             LozinkaSalt = "uSHCckjLFYgVNJRSWd2W5g==",
                             Prezime = "smajic",
+                            Status = true,
                             Telefon = "062263580"
                         },
                         new
                         {
                             Id = 3,
+                            DatumRegistracije = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "novikorisnk.test@gmail.com",
                             GradId = 3,
                             Ime = "test",
@@ -188,11 +214,13 @@ namespace SeminarskiRSII.WebApi.Migrations
                             LozinkaHash = "nEE+3SNUp4E2UX5xfPGpH6R+ELA=",
                             LozinkaSalt = "uFdyLQoAo6+BtcRfOYC0Og==",
                             Prezime = "novi korisnik",
+                            Status = false,
                             Telefon = "52515215"
                         },
                         new
                         {
                             Id = 4,
+                            DatumRegistracije = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "dd.ss@gmail.com",
                             GradId = 1,
                             Ime = "aaaa",
@@ -200,11 +228,13 @@ namespace SeminarskiRSII.WebApi.Migrations
                             LozinkaHash = "TPBs9dFgTsf0SmZpnSfQcmyIISE=",
                             LozinkaSalt = "cJCHfu17NRuIYzB3bS9onw==",
                             Prezime = "dddd",
+                            Status = false,
                             Telefon = "43743743"
                         },
                         new
                         {
                             Id = 5,
+                            DatumRegistracije = new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "huso.smajkic@gmail.com",
                             GradId = 4,
                             Ime = "huso",
@@ -212,6 +242,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                             LozinkaHash = "cLhzBmLT6jPfLssPnXTSFOLBehw=",
                             LozinkaSalt = "uy9mahnWC7AvJIt+6qeWPg==",
                             Prezime = "smajkic",
+                            Status = true,
                             Telefon = "1234214"
                         });
                 });
@@ -553,6 +584,10 @@ namespace SeminarskiRSII.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DatumRecenzije")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("datumRecenzije");
+
                     b.Property<int>("GostId")
                         .HasColumnType("int")
                         .HasColumnName("gostID");
@@ -581,6 +616,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                         new
                         {
                             Id = 1,
+                            DatumRecenzije = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GostId = 1,
                             Komentar = "Prezadovoljan hotelom i uslugom",
                             Ocjena = 10,
@@ -589,6 +625,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                         new
                         {
                             Id = 2,
+                            DatumRecenzije = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GostId = 2,
                             Komentar = "Hrana nije bila bas najbolja",
                             Ocjena = 8,
@@ -597,6 +634,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                         new
                         {
                             Id = 3,
+                            DatumRecenzije = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GostId = 3,
                             Komentar = "Sve preporuke za ovaj hotel",
                             Ocjena = 9,
@@ -605,6 +643,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                         new
                         {
                             Id = 4,
+                            DatumRecenzije = new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GostId = 4,
                             Komentar = "Prezadovoljan sa svim",
                             Ocjena = 10,

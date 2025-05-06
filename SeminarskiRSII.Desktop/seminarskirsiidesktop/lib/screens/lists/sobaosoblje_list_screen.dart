@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seminarskirsiidesktop/providers/grad_provider.dart';
-import 'package:seminarskirsiidesktop/screens/details-new/grad_new_screen.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/soba-osoblje_new_screen.dart';
 import '../../providers/sobaosoblje_provider.dart';
 import '../../widgets/master_screen.dart';
-import '../details-new/drzava_new_screen.dart';
 
 class SobaOsobljeListScreen extends StatefulWidget {
   const SobaOsobljeListScreen({super.key});

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SeminarskiRSII.WebApi.Migrations
 {
-    public partial class Init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -193,7 +193,9 @@ namespace SeminarskiRSII.WebApi.Migrations
                     LozinkaHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LozinkaSalt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     telefon = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    gradID = table.Column<int>(type: "int", nullable: false)
+                    gradID = table.Column<int>(type: "int", nullable: false),
+                    datumRegistracije = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -235,7 +237,9 @@ namespace SeminarskiRSII.WebApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     sobaID = table.Column<int>(type: "int", nullable: false),
                     Valuta = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    cijena = table.Column<float>(type: "real", nullable: false)
+                    cijena = table.Column<float>(type: "real", nullable: false),
+                    vrijediOd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    vrijediDo = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,7 +287,8 @@ namespace SeminarskiRSII.WebApi.Migrations
                     gostID = table.Column<int>(type: "int", nullable: false),
                     sobaID = table.Column<int>(type: "int", nullable: false),
                     ocjena = table.Column<int>(type: "int", nullable: false),
-                    komentar = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    komentar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    datumRecenzije = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -440,12 +445,12 @@ namespace SeminarskiRSII.WebApi.Migrations
                 columns: new[] { "ID", "drzavaID", "nazivGrada", "PostanskiBroj" },
                 values: new object[,]
                 {
-                    { 1, 1, "Mostar", 0 },
-                    { 2, 1, "Sarajevo", 0 },
-                    { 3, 1, "Tuzla", 0 },
-                    { 4, 2, "Zagreb", 0 },
-                    { 5, 3, "Beograd", 0 },
-                    { 6, 1, "Bihac", 0 }
+                    { 1, 1, "Mostar", 88000 },
+                    { 2, 1, "Sarajevo", 71000 },
+                    { 3, 1, "Tuzla", 75000 },
+                    { 4, 2, "Zagreb", 44000 },
+                    { 5, 3, "Beograd", 49000 },
+                    { 6, 1, "Bihac", 77000 }
                 });
 
             migrationBuilder.InsertData(
@@ -482,24 +487,24 @@ namespace SeminarskiRSII.WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "cjenovnik",
-                columns: new[] { "ID", "cijena", "sobaID", "Valuta" },
+                columns: new[] { "ID", "cijena", "sobaID", "Valuta", "vrijediDo", "vrijediOd" },
                 values: new object[,]
                 {
-                    { 1, 50f, 1, "KM" },
-                    { 2, 150f, 2, "KM" },
-                    { 3, 100f, 3, "KM" }
+                    { 1, 50f, 1, "KM", new DateTime(2025, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 150f, 2, "KM", new DateTime(2025, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, 100f, 3, "KM", new DateTime(2025, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "gost",
-                columns: new[] { "ID", "email", "gradID", "ime", "KorisnickoIme", "LozinkaHash", "LozinkaSalt", "prezime", "telefon" },
+                columns: new[] { "ID", "datumRegistracije", "email", "gradID", "ime", "KorisnickoIme", "LozinkaHash", "LozinkaSalt", "prezime", "Status", "telefon" },
                 values: new object[,]
                 {
-                    { 1, "adin.smajkic@gmail.com", 1, "Adin", "adin1998", "ZG+m4HIibaJpXMVrtXhp9+QQiDE=", "8yGM2clNjUvFcuobbcqRSg==", "Smajkic", "5842521" },
-                    { 2, "ahmed.sm@gmail.com", 2, "ahmed", "ahmo", "57dqXte2i8RuxpISQMzOjW/kYUA=", "uSHCckjLFYgVNJRSWd2W5g==", "smajic", "062263580" },
-                    { 3, "novikorisnk.test@gmail.com", 3, "test", "test98", "nEE+3SNUp4E2UX5xfPGpH6R+ELA=", "uFdyLQoAo6+BtcRfOYC0Og==", "novi korisnik", "52515215" },
-                    { 4, "dd.ss@gmail.com", 1, "aaaa", "aadd", "TPBs9dFgTsf0SmZpnSfQcmyIISE=", "cJCHfu17NRuIYzB3bS9onw==", "dddd", "43743743" },
-                    { 5, "huso.smajkic@gmail.com", 4, "huso", "huso55", "cLhzBmLT6jPfLssPnXTSFOLBehw=", "uy9mahnWC7AvJIt+6qeWPg==", "smajkic", "1234214" }
+                    { 1, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "adin.smajkic@gmail.com", 1, "Adin", "adin1998", "ZG+m4HIibaJpXMVrtXhp9+QQiDE=", "8yGM2clNjUvFcuobbcqRSg==", "Smajkic", true, "5842521" },
+                    { 2, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "ahmed.sm@gmail.com", 2, "ahmed", "ahmo", "57dqXte2i8RuxpISQMzOjW/kYUA=", "uSHCckjLFYgVNJRSWd2W5g==", "smajic", true, "062263580" },
+                    { 3, new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "novikorisnk.test@gmail.com", 3, "test", "test98", "nEE+3SNUp4E2UX5xfPGpH6R+ELA=", "uFdyLQoAo6+BtcRfOYC0Og==", "novi korisnik", false, "52515215" },
+                    { 4, new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "dd.ss@gmail.com", 1, "aaaa", "aadd", "TPBs9dFgTsf0SmZpnSfQcmyIISE=", "cJCHfu17NRuIYzB3bS9onw==", "dddd", false, "43743743" },
+                    { 5, new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "huso.smajkic@gmail.com", 4, "huso", "huso55", "cLhzBmLT6jPfLssPnXTSFOLBehw=", "uy9mahnWC7AvJIt+6qeWPg==", "smajkic", true, "1234214" }
                 });
 
             migrationBuilder.InsertData(
@@ -515,13 +520,13 @@ namespace SeminarskiRSII.WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "recenzija",
-                columns: new[] { "ID", "gostID", "komentar", "ocjena", "sobaID" },
+                columns: new[] { "ID", "datumRecenzije", "gostID", "komentar", "ocjena", "sobaID" },
                 values: new object[,]
                 {
-                    { 1, 1, "Prezadovoljan hotelom i uslugom", 10, 1 },
-                    { 2, 2, "Hrana nije bila bas najbolja", 8, 2 },
-                    { 3, 3, "Sve preporuke za ovaj hotel", 9, 2 },
-                    { 4, 4, "Prezadovoljan sa svim", 10, 3 }
+                    { 1, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Prezadovoljan hotelom i uslugom", 10, 1 },
+                    { 2, new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Hrana nije bila bas najbolja", 8, 2 },
+                    { 3, new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Sve preporuke za ovaj hotel", 9, 2 },
+                    { 4, new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Prezadovoljan sa svim", 10, 3 }
                 });
 
             migrationBuilder.InsertData(
