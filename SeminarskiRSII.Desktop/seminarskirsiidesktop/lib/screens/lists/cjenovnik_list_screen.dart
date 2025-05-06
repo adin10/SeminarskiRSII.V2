@@ -136,22 +136,43 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  const NewCjenovnikScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: const TextStyle(fontSize: 16),
-              ),
-              child: Text('Dodaj novu cijenu'),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.centerRight,
+          //   child: ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) =>  const NewCjenovnikScreen()),
+          //       );
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          //       textStyle: const TextStyle(fontSize: 16),
+          //     ),
+          //     child: Text('Dodaj novu cijenu'),
+          //   ),
+          // ),
+          Padding(
+  padding: const EdgeInsets.only(right: 24.0, bottom: 16.0),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const NewCjenovnikScreen()),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          textStyle: const TextStyle(fontSize: 16),
+        ),
+        child: const Text('Dodaj novu cijenu'),
+      ),
+    ],
+  ),
+),
         ],
       ),
     );

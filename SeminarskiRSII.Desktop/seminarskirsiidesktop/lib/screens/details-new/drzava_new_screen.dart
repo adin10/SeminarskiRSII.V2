@@ -2,11 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
-import 'package:intl/intl.dart';
-import 'package:seminarskirsiidesktop/providers/drzava_provider.dart';
-import 'package:seminarskirsiidesktop/providers/grad_provider.dart';
 import 'package:seminarskirsiidesktop/screens/lists/drzava_list_screen.dart';
-import 'package:seminarskirsiidesktop/screens/lists/gradovi_list_screen.dart';
 import '../../providers/base_provider.dart';
 import '../../widgets/master_screen.dart';
 

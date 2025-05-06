@@ -3,11 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
-import 'package:seminarskirsiidesktop/providers/drzava_provider.dart';
-import 'package:seminarskirsiidesktop/providers/grad_provider.dart';
 import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
 import 'package:seminarskirsiidesktop/screens/lists/cjenovnik_list_screen.dart';
-import 'package:seminarskirsiidesktop/screens/lists/gradovi_list_screen.dart';
 import '../../providers/base_provider.dart';
 import '../../widgets/master_screen.dart';
 
@@ -22,10 +19,15 @@ class NewCjenovnikScreen extends StatefulWidget {
 
 class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _valutaController = TextEditingController();
   final TextEditingController _cijenaController = TextEditingController();
+  final TextEditingController _vrijediOdController = TextEditingController();
+  final TextEditingController _vrijediDoController = TextEditingController();
   int? _selectedSobaId;
+  String? _selectedValuta;
   List<dynamic> _sobeList = [];
+  DateTime? _selectedDateVrijediOd;
+  DateTime? _selectedDateVrijediDo;
+  final List<String> _valute = ['KM', 'EUR', 'USD'];
 
   @override
   void initState() {
@@ -33,9 +35,18 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     _fetchSobe();
 
     if (widget.cjenovnik != null) {
-      _valutaController.text = widget.cjenovnik!['valuta']?.toString() ?? '';
       _cijenaController.text = widget.cjenovnik!['cijena']?.toString() ?? '';
+      _selectedValuta = widget.cjenovnik!['valuta']?.toString();
       _selectedSobaId = widget.cjenovnik!['soba']?['id'];
+      if (widget.cjenovnik!['vrijediOd'] != null) {
+        _selectedDateVrijediOd = DateTime.parse(widget.cjenovnik!['vrijediOd']);
+        _vrijediOdController.text = DateFormat('dd-MM-yyyy').format(_selectedDateVrijediOd!);
+      }
+
+      if (widget.cjenovnik!['vrijediDo'] != null) {
+        _selectedDateVrijediDo = DateTime.parse(widget.cjenovnik!['vrijediDo']);
+        _vrijediDoController.text = DateFormat('dd-MM-yyyy').format(_selectedDateVrijediDo!);
+      }
     }
   }
 
@@ -46,11 +57,42 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     });
   }
 
+    Future<void> _selectVrijediOdDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateVrijediOd ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null && picked != _selectedDateVrijediOd) {
+      setState(() {
+        _selectedDateVrijediOd = picked;
+        _vrijediOdController.text = DateFormat('dd-MM-yyyy').format(picked);
+      });
+    }
+  }
+
+    Future<void> _selectVrijediDoDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateVrijediDo ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null && picked != _selectedDateVrijediDo) {
+      setState(() {
+        _selectedDateVrijediDo = picked;
+        _vrijediDoController.text = DateFormat('dd-MM-yyyy').format(picked);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title:
-          widget.cjenovnik == null ? 'Kreiraj novu cijenu' : 'Uredite cijenu',
+      title: widget.cjenovnik == null ? 'Kreiraj novu cijenu' : 'Uredite cijenu',
       child: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -106,12 +148,32 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  _buildTextField(
-                    controller: _valutaController,
-                    labelText: 'Valuta',
+                  DropdownButtonFormField<String>(
+                    value: _selectedValuta,
+                    decoration: InputDecoration(
+                      labelText: 'Valuta',
+                      labelStyle: const TextStyle(
+                          color: Colors.blueAccent, fontWeight: FontWeight.bold),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      filled: true,
+                      fillColor: Colors.blue[50],
+                    ),
+                    items: _valute.map((valuta) {
+                      return DropdownMenuItem(
+                        value: valuta,
+                        child: Text(valuta),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedValuta = value;
+                      });
+                    },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Unesite valutu';
+                        return 'Odaberite valutu';
                       }
                       return null;
                     },
@@ -133,6 +195,18 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                       return null;
                     },
                   ),
+                  const SizedBox(height: 20),
+                  _buildDatePickerField(
+                    controller: _vrijediOdController,
+                    labelText: 'Vrijedi Od',
+                    onTap: () => _selectVrijediOdDate(context),
+                  ),
+                  const SizedBox(height: 20),
+                  _buildDatePickerField(
+                    controller: _vrijediDoController,
+                    labelText: 'Vrijedi Do',
+                    onTap: () => _selectVrijediDoDate(context),
+                  ),
                   const SizedBox(height: 30),
                   Center(
                     child: ElevatedButton(
@@ -148,7 +222,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                         widget.cjenovnik == null
                             ? 'Kreiraj cijenu'
                             : 'Uredi cijenu',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -229,18 +303,22 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
 
   void _createCjenovnik() {
     final requestBody = jsonEncode({
-      'Valuta': _valutaController.text,
+      'Valuta': _selectedValuta,
       'Cijena': double.tryParse(_cijenaController.text),
       'SobaId': _selectedSobaId,
+      'VrijediOd': _selectedDateVrijediOd?.toIso8601String(),
+      'VrijediDo': _selectedDateVrijediDo?.toIso8601String(),
     });
     _submitData(requestBody, "${BaseProvider.baseUrl}/Cjenovnik", 'POST');
   }
 
   void _updateCjenovnik(int id) {
     final requestBody = jsonEncode({
-      'valuta': _valutaController.text,
+      'valuta': _selectedValuta,
       'Cijena': double.tryParse(_cijenaController.text),
       'SobaId': _selectedSobaId,
+      'VrijediOd': _selectedDateVrijediOd?.toIso8601String(),
+      'VrijediDo': _selectedDateVrijediDo?.toIso8601String(),
     });
     _submitData(requestBody, "${BaseProvider.baseUrl}/Cjenovnik/$id", 'PUT');
   }
@@ -263,14 +341,14 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
         showCustomSnackBar(
           context,
           method == 'POST'
-              ? 'Cijena uspjesno kreirana.'
-              : 'Cijena uspjesno uredjena.',
+              ? 'Cijena uspješno kreirana.'
+              : 'Cijena uspješno uređena.',
           Colors.green,
         );
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const CjenovnikListScreen()));
+          context,
+          MaterialPageRoute(builder: (context) => const CjenovnikListScreen()),
+        );
       } else {
         _showErrorSnackBar();
       }
@@ -297,20 +375,13 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.check_circle,
-                  color: Colors.white,
-                  size: 24,
-                ),
+                const Icon(Icons.check_circle, color: Colors.white, size: 24),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ],
@@ -321,12 +392,48 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     );
 
     overlay.insert(overlayEntry);
-    Future.delayed(const Duration(seconds: 3))
-        .then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+  }
+
+   Widget _buildDatePickerField({
+    required TextEditingController controller,
+    required String labelText,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AbsorbPointer(
+        child: TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: labelText,
+            labelStyle: const TextStyle(
+                color: Colors.blueAccent, fontWeight: FontWeight.bold),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            filled: true,
+            fillColor: Colors.blue[50],
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please select a date';
+            }
+            return null;
+          },
+        ),
+      ),
+    );
   }
 
   void _showErrorSnackBar() {
-    showErrorToast(context, 'Error occurred. Please try again later.');
+    showErrorToast(context, 'Greška. Pokušajte ponovo kasnije.');
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -363,8 +470,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     );
 
     overlay.insert(overlayEntry);
-
-    Future.delayed(const Duration(seconds: 3))
-        .then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
   }
 }
+
