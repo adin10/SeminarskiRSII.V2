@@ -346,7 +346,7 @@ class _RezervacijaListScreenState extends State<RezervacijaListScreen> {
   Future<void> loadData() async {
     setState(() {
       isLoading = true;
-      _currentPage = 1; // reset page on filter
+      _currentPage = 1;
     });
 
     final sobeResult = await _sobaProvider.get(null);

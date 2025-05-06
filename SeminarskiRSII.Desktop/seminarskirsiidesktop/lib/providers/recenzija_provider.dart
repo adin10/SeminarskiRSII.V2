@@ -32,6 +32,8 @@ Future<List<dynamic>> get(dynamic searchObject) async {
   }
 
   final url = Uri.parse("${BaseProvider.baseUrl}/Recenzija$queryString");
+      print("RecenzijaProvider -> Requesting URL: $url");
+
 
   final response = await http!.get(url);
 
@@ -41,7 +43,6 @@ Future<List<dynamic>> get(dynamic searchObject) async {
     throw Exception("Something went wrong");
   }
 }
-
   bool isValidResponse(Response response) {
     if (response.statusCode < 299) {
       return true;
@@ -51,6 +52,7 @@ Future<List<dynamic>> get(dynamic searchObject) async {
       throw Exception("Something went wrong");
     }
   }
+
 
   Map<String, String> CreateHeaders() {
     String username = Authorization.username ?? "";

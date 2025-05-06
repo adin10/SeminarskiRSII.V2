@@ -13,6 +13,6 @@ namespace SeminarskiRSII.Model.Models
         public Soba soba { get; set; }
         public int Ocjena { get; set; }
         public string Komentar { get; set; }
-        public DateTime DatumRecenzije { get; set; }
+        //public DateTime DatumRecenzije { get; set; }
     }
 }

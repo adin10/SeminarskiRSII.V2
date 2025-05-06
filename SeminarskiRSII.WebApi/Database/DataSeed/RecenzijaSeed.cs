@@ -16,7 +16,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     SobaId = 1,
                     Ocjena = 10,
                     Komentar = "Prezadovoljan hotelom i uslugom",
-                    DatumRecenzije = new DateTime(2025, 01, 01),
+                    //DatumRecenzije = new DateTime(2025, 01, 01),
                 },
                 new Recenzija()
                 {
@@ -25,7 +25,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     SobaId = 2,
                     Ocjena = 8,
                     Komentar = "Hrana nije bila bas najbolja",
-                    DatumRecenzije = new DateTime(2025, 04, 04),
+                    //DatumRecenzije = new DateTime(2025, 04, 04),
                 },
                 new Recenzija()
                 {
@@ -34,7 +34,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     SobaId = 2,
                     Ocjena = 9,
                     Komentar = "Sve preporuke za ovaj hotel",
-                    DatumRecenzije = new DateTime(2025, 05, 05),
+                    //DatumRecenzije = new DateTime(2025, 05, 05),
                 },
                 new Recenzija()
                 {
@@ -43,7 +43,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     SobaId = 3,
                     Ocjena = 10,
                     Komentar = "Prezadovoljan sa svim",
-                    DatumRecenzije = new DateTime(2025, 02, 03),
+                    //DatumRecenzije = new DateTime(2025, 02, 03),
                 }
             });
             modelBuilder.Entity<Recenzija>().HasData(list);

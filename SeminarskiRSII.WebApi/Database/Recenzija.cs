@@ -10,7 +10,7 @@ namespace SeminarskiRSII.WebApi.Database
         public int SobaId { get; set; }
         public int Ocjena { get; set; }
         public string? Komentar { get; set; }
-        public DateTime DatumRecenzije { get; set; }
+        //public DateTime DatumRecenzije { get; set; }
 
         public virtual Gost Gost { get; set; } = null!;
         public virtual Soba Soba { get; set; } = null!;

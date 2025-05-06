@@ -157,6 +157,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
 
 import '../../providers/recenzija_provider.dart';
 import '../../widgets/master_screen.dart';
@@ -170,9 +171,11 @@ class RecenzijaListScreen extends StatefulWidget {
 
 class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
   late RecenzijaProvider _recenzijaProvider;
+  late SobaProvider _sobaProvider;
 
   List<dynamic> data = [];
   bool isLoading = true;
+  List<dynamic> sobe = [];
 
   final TextEditingController _imePrezimeController = TextEditingController();
   final TextEditingController _ocjenaController = TextEditingController();
@@ -181,6 +184,7 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
 
   String? _imePrezime;
   int? _ocjena;
+  int? _selectedSobaId;
 
   int _currentPage = 1;
   final int _itemsPerPage = 10;
@@ -189,6 +193,7 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _recenzijaProvider = context.read<RecenzijaProvider>();
+    _sobaProvider = context.read<SobaProvider>();
     _loadData();
   }
 
@@ -198,12 +203,15 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
       _currentPage = 1;
     });
 
+    final sobeResult = await _sobaProvider.get(null);
     final recenzijeResult = await _recenzijaProvider.get({
       'imePrezime': _imePrezime,
       'ocjena': _ocjena,
+      'sobaID': _selectedSobaId,
     });
 
     setState(() {
+      sobe = sobeResult;
       data = recenzijeResult;
       isLoading = false;
     });
@@ -265,6 +273,28 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
                 _loadData();
               },
             ),
+          ),
+          DropdownButton<int?>(
+            hint: const Text("Sve sobe"),
+            value: sobe.any((s) => s['id'] == _selectedSobaId) ? _selectedSobaId : null,
+            items: [
+              const DropdownMenuItem<int?>(
+                value: null,
+                child: Text("Sve sobe"),
+              ),
+              ...sobe.map<DropdownMenuItem<int?>>((soba) {
+                return DropdownMenuItem<int?>(
+                  value: soba['id'],
+                  child: Text("Broj sobe: ${soba['brojSobe']}"),
+                );
+              }).toList(),
+            ],
+            onChanged: (value) {
+              setState(() {
+                _selectedSobaId = value;
+              });
+              _loadData();
+            },
           ),
         ],
       ),
