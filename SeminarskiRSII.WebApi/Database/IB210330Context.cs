@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using SeminarskiRSII.WebApi.Database.DataSeed;
 
 namespace SeminarskiRSII.WebApi.Database
@@ -34,8 +31,7 @@ namespace SeminarskiRSII.WebApi.Database
         public virtual DbSet<VrstaOsoblja> VrstaOsoblja { get; set; } = null!;
         public virtual DbSet<Usluga> Usluga { get; set; }
         public virtual DbSet<RezervacijaUsluga> RezervacijaUsluga { get; set; }
-
-
+        public DbSet<NovostProcitana> NovostProcitana { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

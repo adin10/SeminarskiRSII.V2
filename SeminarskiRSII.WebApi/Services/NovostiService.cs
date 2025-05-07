@@ -55,9 +55,32 @@ namespace SeminarskiRSII.WebApi.Services
             return _mapper.Map<Model.Models.Novosti>(entity);
         }
 
+        //public async Task<List<Model.Models.Novosti>> GetList(NovostiSearchRequest search)
+        //{
+        //    var query = _context.Novosti.Include(x=>x.Osoblje).AsQueryable();
+        //    if (search != null)
+        //    {
+        //        if (!string.IsNullOrWhiteSpace(search.Naslov))
+        //        {
+        //            query = query.Where(x => x.Naslov.ToLower().Contains(search.Naslov.ToLower()));
+        //        }
+        //        if (!string.IsNullOrWhiteSpace(search.Sadrzaj))
+        //        {
+        //            query = query.Where(x => x.Sadrzaj.ToLower().Contains(search.Sadrzaj.ToLower()));
+        //        }
+        //        if (search.DatumObjave.HasValue)
+        //        {
+        //            query = query.Where(x => x.DatumObjave == search.DatumObjave);
+        //        }
+        //    }
+        //    var list = await query.OrderByDescending(x=>x.DatumObjave).ToListAsync();
+        //    return _mapper.Map<List<Model.Models.Novosti>>(list);
+        //}
+
         public async Task<List<Model.Models.Novosti>> GetList(NovostiSearchRequest search)
         {
-            var query = _context.Novosti.Include(x=>x.Osoblje).AsQueryable();
+            var query = _context.Novosti.Include(x => x.Osoblje).AsQueryable();
+
             if (search != null)
             {
                 if (!string.IsNullOrWhiteSpace(search.Naslov))
@@ -73,8 +96,24 @@ namespace SeminarskiRSII.WebApi.Services
                     query = query.Where(x => x.DatumObjave == search.DatumObjave);
                 }
             }
-            var list = await query.OrderByDescending(x=>x.DatumObjave).ToListAsync();
-            return _mapper.Map<List<Model.Models.Novosti>>(list);
+
+            var list = await query.OrderByDescending(x => x.DatumObjave).ToListAsync();
+            var mapped = _mapper.Map<List<Model.Models.Novosti>>(list);
+
+            if (search?.GostId != null)
+            {
+                var procitane = await _context.NovostProcitana
+                    .Where(x => x.GostId == search.GostId)
+                    .Select(x => x.NovostId)
+                    .ToListAsync();
+
+                foreach (var item in mapped)
+                {
+                    item.Procitano = procitane.Contains(item.Id);
+                }
+            }
+
+            return mapped;
         }
 
         public async Task<Model.Models.Novosti> Insert(NovostiInsertRequest insert)
@@ -99,6 +138,23 @@ namespace SeminarskiRSII.WebApi.Services
             _context.Novosti.Remove(entity);
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Novosti>(entity);
+        }
+
+        public async Task MarkAsRead(MarkAsReadRequest request)
+        {
+            var exists = await _context.NovostProcitana
+                .AnyAsync(x => x.NovostId == request.NovostId && x.GostId == request.GostId);
+
+            if (!exists)
+            {
+                _context.NovostProcitana.Add(new NovostProcitana
+                {
+                    NovostId = request.NovostId,
+                    GostId = request.GostId,
+                    Datum = DateTime.Now
+                });
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

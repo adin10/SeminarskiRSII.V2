@@ -14,5 +14,7 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<Novosti> Insert(NovostiInsertRequest insert);
         public Task<Novosti> Update(int ID, NovostiInsertRequest update);
         public Task<Novosti> Delete(int id);
+        public Task MarkAsRead(MarkAsReadRequest request);
+        
     }
 }

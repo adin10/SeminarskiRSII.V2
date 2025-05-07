@@ -52,6 +52,13 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(await _service.Delete(id));
         }
+
+        [HttpPost("markAsRead")]
+        public async Task<IActionResult> MarkAsRead([FromBody] MarkAsReadRequest request)
+        {
+            await _service.MarkAsRead(request);
+            return Ok();
+        }
     }
 
     //[AllowAnonymous]

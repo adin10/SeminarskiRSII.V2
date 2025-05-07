@@ -427,7 +427,9 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:http/io_client.dart';
 import 'package:seminarskirsiidesktop/providers/osoblje_provider.dart';
@@ -453,6 +455,7 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
   DateTime? _selectedDate;
   int? _selectedAutorId;
   List<dynamic> _osobljeList = [];
+  Uint8List? _slikaBytes;
 
   @override
   void initState() {
@@ -469,6 +472,9 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
       }
 
       _selectedAutorId = widget.novost!['osoblje']?['id'];
+      if (widget.novost!['slika'] != null) {
+      _slikaBytes = base64Decode(widget.novost!['slika']);
+    }
     }
   }
 
@@ -478,6 +484,19 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
       _osobljeList = fetchedOsoblje;
     });
   }
+
+    Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+      setState(() {
+        _slikaBytes = bytes;
+      });
+    }
+  }
+
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -552,7 +571,25 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
                       }
                       return null;
                     },
-                    maxLines: 10,
+                    maxLines: 7,
+                  ),
+                   const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      _slikaBytes != null
+                          ? Image.memory(
+                              _slikaBytes!,
+                              width: 250,
+                              height: 140,
+                              fit: BoxFit.cover,
+                            )
+                          : const Text("Niste odabrali sliku"),
+                      const SizedBox(width: 16),
+                      ElevatedButton(
+                        onPressed: _pickImage,
+                        child: const Text('Odaberi sliku'),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   _buildDatePickerField(
@@ -718,6 +755,9 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
       'naslov': _naslovController.text,
       'sadrzaj': _sadrzajController.text,
       'datumObjave': _selectedDate?.toIso8601String(),
+      'slika': _slikaBytes != null
+          ? base64Encode(_slikaBytes!)
+          : widget.novost!['slika'],
       'osobljeId': _selectedAutorId,
     });
     _submitData(requestBody, "${BaseProvider.baseUrl}/Novosti", 'POST');
@@ -728,6 +768,9 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
       'naslov': _naslovController.text,
       'sadrzaj': _sadrzajController.text,
       'datumObjave': _selectedDate?.toIso8601String(),
+      'slika': _slikaBytes != null
+          ? base64Encode(_slikaBytes!)
+          : widget.novost!['slika'],
       'osobljeId': _selectedAutorId,
     });
     _submitData(requestBody, "${BaseProvider.baseUrl}/Novosti/$id", 'PUT');

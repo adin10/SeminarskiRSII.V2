@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SeminarskiRSII.Model.Models
@@ -15,6 +16,10 @@ namespace SeminarskiRSII.Model.Models
 
         public int? OsobljeId { get; set; }
         public Osoblje Osoblje { get; set; }
+
+        public byte[]? Slika { get; set; }
+        [NotMapped]
+        public bool Procitano { get; set; }
 
         public override string ToString()
         {

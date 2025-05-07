@@ -11,6 +11,7 @@ namespace SeminarskiRSII.Model.Requests
         public string Naslov { get; set; }
         [Required]
         public string Sadrzaj { get; set; }
+        public byte[] Slika { get; set; }
         [Required]
         public DateTime DatumObjave { get; set; }
         [Required]

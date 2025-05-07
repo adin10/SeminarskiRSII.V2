@@ -10,5 +10,6 @@ namespace SeminarskiRSII.Model.Requests
         public string? Sadrzaj { get; set; }
         public DateTime? DatumObjave { get; set; }
         public int? OsobljeId { get; set; }
+        public int? GostId { get; set; }
     }
 }

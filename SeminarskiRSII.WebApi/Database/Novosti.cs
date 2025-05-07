@@ -15,7 +15,7 @@ namespace SeminarskiRSII.WebApi.Database
         public string? Sadrzaj { get; set; }
         public DateTime? DatumObjave { get; set; }
         public int OsobljeId { get; set; }
-
+        public byte[]? Slika { get; set; }
         public virtual Osoblje Osoblje { get; set; } = null!;
         public virtual ICollection<Notifikacije> Notifikacije { get; set; }
     }
