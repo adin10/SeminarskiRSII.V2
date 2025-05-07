@@ -44,5 +44,11 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(await _service.Update(id, update));
         }
+
+        [HttpPut("obrisiKomentar/{id}")]
+        public async Task<ActionResult<Recenzija>> ObrisiKomentar(int id)
+        {
+            return Ok(await _service.ObrisiKomentar(id));
+        }
     }
 }

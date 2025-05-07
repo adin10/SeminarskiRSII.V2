@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seminarskirsiidesktop/screens/lists/usluga_list_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/details-new/postavke_screen.dart';
 import '../screens/lists/cjenovnik_list_screen.dart';
@@ -134,17 +135,22 @@ class _MasterScreenState extends State<MasterScreenWidget> {
                           builder: (context) => const CjenovnikListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.bed, 'Soba', 10, () {
+                      _buildMenuItem(Icons.attach_money, 'Usluge', 10, () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const UslugaListScreen(),
+                        ));
+                      }),
+                      _buildMenuItem(Icons.bed, 'Soba', 11, () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const SobaListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.group, 'Soba Osoblje', 11, () {
+                      _buildMenuItem(Icons.group, 'Soba Osoblje', 12, () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const SobaOsobljeListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.settings, 'Postavke', 12, () async {
+                      _buildMenuItem(Icons.settings, 'Postavke', 13, () async {
                         final prefs = await SharedPreferences.getInstance();
                         final int? userId = prefs.getInt('loggedInUserId');
 
@@ -153,10 +159,10 @@ class _MasterScreenState extends State<MasterScreenWidget> {
                             builder: (context) => PostavkeScreen(osobljeId: userId),
                           ));
                         } else {
-                          showErrorToast(context, 'Unable to retrieve user ID. Please log in again.');
+                          showErrorToast(context, 'Neuspjesno dohvatanje ID. Pokusajte ponovo.');
                         }
                       }),
-                      _buildMenuItem(Icons.logout, 'Logout', 13, () {
+                      _buildMenuItem(Icons.logout, 'Logout', 14, () {
                         _handleLogout(context);
                       }),
                     ],

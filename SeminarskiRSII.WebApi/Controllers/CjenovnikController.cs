@@ -26,6 +26,12 @@ namespace SeminarskiRSII.WebApi.Controllers
             return Ok(await _service.GetList());
         }
 
+        [HttpGet("getAllCijene")]
+        public async Task<ActionResult<List<Cjenovnik>>> getAllCijene()
+        {
+            return Ok(await _service.getAllCijene());
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Cjenovnik>> Get(int id)
         {

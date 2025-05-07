@@ -30,6 +30,7 @@
 //   int? _ocjena;
 //   int? _selectedSobaId;
 //   bool _sortAscending = true;
+//   bool _sortByRating = false;
 
 //   int _currentPage = 1;
 //   final int _itemsPerPage = 10;
@@ -55,10 +56,18 @@
 //       'sobaID': _selectedSobaId,
 //     });
 
-//     if (_sortAscending) {
-//       recenzijeResult.sort((a, b) => DateTime.parse(a["datumRecenzije"]).compareTo(DateTime.parse(b["datumRecenzije"])));
+//     if (_sortByRating) {
+//       recenzijeResult.sort((a, b) =>
+//           _sortAscending
+//               ? (a["ocjena"] ?? 0).compareTo(b["ocjena"] ?? 0)
+//               : (b["ocjena"] ?? 0).compareTo(a["ocjena"] ?? 0));
 //     } else {
-//       recenzijeResult.sort((a, b) => DateTime.parse(b["datumRecenzije"]).compareTo(DateTime.parse(a["datumRecenzije"])));
+//       recenzijeResult.sort((a, b) =>
+//           _sortAscending
+//               ? DateTime.parse(a["datumRecenzije"])
+//                   .compareTo(DateTime.parse(b["datumRecenzije"]))
+//               : DateTime.parse(b["datumRecenzije"])
+//                   .compareTo(DateTime.parse(a["datumRecenzije"])));
 //     }
 
 //     setState(() {
@@ -242,12 +251,36 @@
 //                                       _buildDataColumn("Ime"),
 //                                       _buildDataColumn("Prezime"),
 //                                       _buildDataColumn("Soba"),
-//                                       _buildDataColumn("Ocjena"),
+//                                       DataColumn(
+//                                         label: InkWell(
+//                                           onTap: () {
+//                                             setState(() {
+//                                               _sortByRating = true;
+//                                               _sortAscending = !_sortAscending;
+//                                             });
+//                                             _loadData();
+//                                           },
+//                                           child: Row(
+//                                             children: [
+//                                               const Text("Ocjena"),
+//                                               Icon(
+//                                                 _sortByRating
+//                                                     ? (_sortAscending
+//                                                         ? Icons.arrow_upward
+//                                                         : Icons.arrow_downward)
+//                                                     : Icons.unfold_more,
+//                                                 size: 16,
+//                                               ),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
 //                                       _buildDataColumn("Komentar"),
 //                                       DataColumn(
 //                                         label: InkWell(
 //                                           onTap: () {
 //                                             setState(() {
+//                                               _sortByRating = false;
 //                                               _sortAscending = !_sortAscending;
 //                                             });
 //                                             _loadData();
@@ -255,7 +288,14 @@
 //                                           child: Row(
 //                                             children: [
 //                                               const Text("Datum rezervacije"),
-//                                               Icon(_sortAscending ? Icons.arrow_upward : Icons.arrow_downward, size: 16),
+//                                               Icon(
+//                                                 !_sortByRating
+//                                                     ? (_sortAscending
+//                                                         ? Icons.arrow_upward
+//                                                         : Icons.arrow_downward)
+//                                                     : Icons.unfold_more,
+//                                                 size: 16,
+//                                               ),
 //                                             ],
 //                                           ),
 //                                         ),
@@ -344,11 +384,12 @@
 // }
 
 
+
+// ... tvoji postojeći importi
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
-
 import '../../providers/recenzija_provider.dart';
 import '../../widgets/master_screen.dart';
 
@@ -511,7 +552,6 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
 
   Widget _buildPaginationControls() {
     if (data.isEmpty) return const SizedBox();
-
     int totalPages = (data.length / _itemsPerPage).ceil();
 
     return Padding(
@@ -543,6 +583,11 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _deleteComment(int id) async {
+    await _recenzijaProvider.update(id);
+    await _loadData();
   }
 
   @override
@@ -646,6 +691,7 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
                                           ),
                                         ),
                                       ),
+                                      _buildDataColumn("Obriši komentar"), // 🔹 DODANO
                                     ],
                                     rows: _buildRows(),
                                   ),
@@ -663,6 +709,65 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
       ),
     );
   }
+
+  List<DataRow> _buildRows() {
+    if (_pagedData.isEmpty) {
+      return [
+        DataRow(
+          cells: List.generate(7, (_) => const DataCell(Text("No data..."))),
+        )
+      ];
+    }
+
+    return _pagedData.map((recenzija) {
+      final gost = recenzija['gost'] ?? {};
+      final soba = recenzija['soba'] ?? {};
+      var datumRecenzije = recenzija["datumRecenzije"] != null
+          ? DateFormat('dd-MM-yyyy').format(DateTime.parse(recenzija["datumRecenzije"]))
+          : "";
+
+      return DataRow(
+        cells: [
+          _buildDataCell(gost['ime'] ?? ''),
+          _buildDataCell(gost['prezime'] ?? ''),
+          _buildDataCell(soba['brojSobe']?.toString() ?? ''),
+          _buildDataCell(recenzija['ocjena']?.toString() ?? ''),
+          _buildDataCell(recenzija['komentar'] ?? ''),
+          _buildDataCell(datumRecenzije),
+          DataCell(
+            IconButton(
+              icon: const Icon(Icons.delete, color: Colors.red),
+              tooltip: "Obriši komentar",
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("Potvrda"),
+                    content: const Text("Da li ste sigurni da želite obrisati komentar?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text("Otkaži"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text("Obriši"),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (confirmed == true) {
+                  await _deleteComment(recenzija['id']);
+                }
+              },
+            ),
+          ), // 🔹 DODANO
+        ],
+      );
+    }).toList();
+  }
+}
 
   DataColumn _buildDataColumn(String label) {
     return DataColumn(
@@ -690,41 +795,3 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
     );
   }
 
-  List<DataRow> _buildRows() {
-    if (_pagedData.isEmpty) {
-      return [
-        DataRow(
-          cells: List.generate(6, (_) => const DataCell(Text("No data..."))),
-        )
-      ];
-    }
-
-    return _pagedData.map((recenzija) {
-      final gost = recenzija['gost'] ?? {};
-      final soba = recenzija['soba'] ?? {};
-
-      var datumRecenzije = recenzija["datumRecenzije"] != null
-          ? DateFormat('dd-MM-yyyy').format(DateTime.parse(recenzija["datumRecenzije"]))
-          : "";
-
-      return DataRow(
-        cells: [
-          _buildDataCell(gost['ime'] ?? ''),
-          _buildDataCell(gost['prezime'] ?? ''),
-          _buildDataCell(soba['brojSobe']?.toString() ?? ''),
-          _buildDataCell(recenzija['ocjena']?.toString() ?? ''),
-          _buildDataCell(recenzija['komentar'] ?? ''),
-          _buildDataCell(datumRecenzije)
-        ],
-        color: WidgetStateProperty.resolveWith<Color?>(
-          (Set<WidgetState> states) {
-            if (states.contains(WidgetState.hovered)) {
-              return Colors.blueGrey.withOpacity(0.2);
-            }
-            return null;
-          },
-        ),
-      );
-    }).toList();
-  }
-}

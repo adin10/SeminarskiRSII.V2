@@ -15,11 +15,9 @@ import 'package:seminarskirsiidesktop/providers/rezervacija_provider.dart';
 import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
 import 'package:seminarskirsiidesktop/providers/sobaosoblje_provider.dart';
 import 'package:seminarskirsiidesktop/providers/sobastatus_provider.dart';
+import 'package:seminarskirsiidesktop/providers/usluga_provider.dart';
 import 'package:seminarskirsiidesktop/providers/vrstaosoblja_provider.dart';
-import 'package:seminarskirsiidesktop/screens/lists/drzava_list_screen.dart';
-import 'package:seminarskirsiidesktop/screens/lists/gosti_list_screen.dart';
 import 'package:seminarskirsiidesktop/screens/lists/novosti_list_screen.dart';
-import 'package:seminarskirsiidesktop/utils/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -29,6 +27,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => OsobljeProvider()),
       ChangeNotifierProvider(create: (_) => GradProvider()),
       ChangeNotifierProvider(create: (_) => DrzavaProvider()),
+      ChangeNotifierProvider(create: (_) => UslugaProvider()),
       ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
       ChangeNotifierProvider(create: (_) => RecenzijaProvider()),
       ChangeNotifierProvider(create: (_) => NovostiProvider()),

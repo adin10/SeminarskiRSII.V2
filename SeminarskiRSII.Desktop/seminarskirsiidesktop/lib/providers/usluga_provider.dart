@@ -8,19 +8,21 @@ import 'package:http/io_client.dart';
 import 'package:seminarskirsiidesktop/utils/util.dart';
 import 'base_provider.dart';
 
-class CjenovnikProvider with ChangeNotifier {
+class UslugaProvider with ChangeNotifier {
   HttpClient client = HttpClient();
   IOClient? http;
-  CjenovnikProvider() {
+  UslugaProvider() {
     client.badCertificateCallback = (cert, host, port) => true;
     http = IOClient(client);
   }
 
   Future<dynamic> get(dynamic searchObject) async {
-    var url = Uri.parse("${BaseProvider.baseUrl}/Cjenovnik/getAllCijene");
+    var url = Uri.parse("${BaseProvider.baseUrl}/Usluge");
+
     var response = await http!.get(
       url,
     );
+
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
       return data;
@@ -30,7 +32,7 @@ class CjenovnikProvider with ChangeNotifier {
   }
 
   Future<void> delete(String id) async {
-    final url = Uri.parse("${BaseProvider.baseUrl}/Cjenovnik/$id");
+    final url = Uri.parse("${BaseProvider.baseUrl}/Usluge/$id");
 
     final response = await http!.delete(url);
 

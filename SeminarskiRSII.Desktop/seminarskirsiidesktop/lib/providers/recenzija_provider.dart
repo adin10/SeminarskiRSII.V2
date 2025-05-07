@@ -53,6 +53,18 @@ Future<List<dynamic>> get(dynamic searchObject) async {
     }
   }
 
+  Future<dynamic> update(int id) async {
+    var url = Uri.parse("${BaseProvider.baseUrl}/Recenzija/ObrisiKomentar/$id");
+
+    // var jsonRequest = jsonEncode(data);
+    var response = await http!.put(url);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception("Greška prilikom ažuriranja: ${response.body}");
+    }
+  }
 
   Map<String, String> CreateHeaders() {
     String username = Authorization.username ?? "";

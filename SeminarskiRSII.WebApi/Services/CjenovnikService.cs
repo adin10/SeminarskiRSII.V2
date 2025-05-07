@@ -57,5 +57,11 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Cjenovnik>(entity);
         }
+
+        public async Task<List<Model.Models.Cjenovnik>> getAllCijene()
+        {
+            var list = await _context.Cjenovnik.Include(s => s.Soba).ThenInclude(s => s.SobaStatus).ToListAsync();
+            return _mapper.Map<List<Model.Models.Cjenovnik>>(list);
+        }
     }
 }
