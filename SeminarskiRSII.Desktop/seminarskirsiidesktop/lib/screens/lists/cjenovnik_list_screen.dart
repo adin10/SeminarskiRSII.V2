@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/cjenovnik_provider.dart';
@@ -74,7 +76,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: 'Cijene',
+      title: 'Lista svih cijena',
       child: Column(
         children: [
           Expanded(
@@ -101,7 +103,8 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                             child: DataTable(
                               dataRowHeight: 60,
                               headingRowHeight: 50,
-                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
+                              headingRowColor:
+                                  WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
                               columnSpacing: 40,
                               horizontalMargin: 25,
@@ -115,10 +118,10 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                                   label: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        width: 60,
-                                        child: Center(child: Text('Uredi')),
-                                      ),
+                                      // SizedBox(
+                                      //   width: 60,
+                                      //   child: Center(child: Text('Uredi')),
+                                      // ),
                                       SizedBox(
                                         width: 60,
                                         child: Center(child: Text('Obrisi')),
@@ -135,44 +138,29 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                     ),
             ),
           ),
-          const SizedBox(height: 20),
-          // Align(
-          //   alignment: Alignment.centerRight,
-          //   child: ElevatedButton(
-          //     onPressed: () {
-          //       Navigator.push(
-          //         context,
-          //         MaterialPageRoute(builder: (context) =>  const NewCjenovnikScreen()),
-          //       );
-          //     },
-          //     style: ElevatedButton.styleFrom(
-          //       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          //       textStyle: const TextStyle(fontSize: 16),
-          //     ),
-          //     child: Text('Dodaj novu cijenu'),
+          // const SizedBox(height: 20),
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 24.0, bottom: 16.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.end,
+          //     children: [
+          //       ElevatedButton(
+          //         onPressed: () {
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(builder: (context) => const NewCjenovnikScreen(x)),
+          //           );
+          //         },
+          //         style: ElevatedButton.styleFrom(
+          //           padding: const EdgeInsets.symmetric(
+          //               horizontal: 24, vertical: 12),
+          //           textStyle: const TextStyle(fontSize: 16),
+          //         ),
+          //         child: const Text('Dodaj novu cijenu'),
+          //       ),
+          //     ],
           //   ),
           // ),
-          Padding(
-  padding: const EdgeInsets.only(right: 24.0, bottom: 16.0),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-      ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const NewCjenovnikScreen()),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: const TextStyle(fontSize: 16),
-        ),
-        child: const Text('Dodaj novu cijenu'),
-      ),
-    ],
-  ),
-),
         ],
       ),
     );
@@ -209,35 +197,59 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["cijena"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
-                DataCell(Text(x["valuta"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
-                DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
-                DataCell(Center(child: Text(x["vrijediOd"] != null
-                    ? DateTime.parse(x["vrijediOd"]).toLocal().toString().split(' ')[0]
-                    : "", style: const TextStyle(fontSize: 14)))),
-                DataCell(Center(child: Text(x["vrijediDo"] != null
-                    ? DateTime.parse(x["vrijediDo"]).toLocal().toString().split(' ')[0]
-                    : "", style: const TextStyle(fontSize: 14)))),
+                DataCell(Text(x["cijena"]?.toString() ?? "",
+                    style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["valuta"]?.toString() ?? "",
+                    style: const TextStyle(fontSize: 14))),
+                // DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "",
+                //     style: const TextStyle(fontSize: 14))),
+                  DataCell(
+              SizedBox(
+                width: 70,
+                height: 40,
+                child: Image.memory(
+                  base64Decode(x["soba"]["slika"]),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+                DataCell(Center(
+                    child: Text(
+                        x["vrijediOd"] != null
+                            ? DateTime.parse(x["vrijediOd"])
+                                .toLocal()
+                                .toString()
+                                .split(' ')[0]
+                            : "",
+                        style: const TextStyle(fontSize: 14)))),
+                DataCell(Center(
+                    child: Text(
+                        x["vrijediDo"] != null
+                            ? DateTime.parse(x["vrijediDo"])
+                                .toLocal()
+                                .toString()
+                                .split(' ')[0]
+                            : "",
+                        style: const TextStyle(fontSize: 14)))),
                 DataCell(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: 60,
-                        child: IconButton(
-                          icon: const Icon(Icons.edit, color: Colors.blue),
-                              onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => NewCjenovnikScreen(
-                                        cjenovnik: x,
-                                      ),
-                                    ),
-                                  );
-                                }
-                        ),
-                      ),
+                      // SizedBox(
+                      //   width: 60,
+                      //   child: IconButton(
+                      //       icon: const Icon(Icons.edit, color: Colors.blue),
+                      //       onPressed: () {
+                      //         Navigator.push(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //             builder: (context) => NewCjenovnikScreen(
+                      //               cjenovnik: x,
+                      //             ),
+                      //           ),
+                      //         );
+                      //       }),
+                      // ),
                       SizedBox(
                         width: 60,
                         child: IconButton(

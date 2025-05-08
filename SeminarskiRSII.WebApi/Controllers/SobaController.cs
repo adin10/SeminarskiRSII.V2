@@ -60,6 +60,12 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(_service.RecommendPopularRooms());
         }
+
+        [HttpGet("sobaZauzeta/{id}")]
+        public async Task<ActionResult<bool>> SobaZauzeta(int id)
+        {
+            return Ok(await _service.SobaZauzeta(id));
+        }
     }
     //public class SobaController : BaseCRUDController<Model.Soba, SobaSearchRequest, SobaInsertRequest, SobaInsertRequest>
     //{

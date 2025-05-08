@@ -21,8 +21,10 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
   final TextEditingController _brojSobeController = TextEditingController();
   final TextEditingController _brojSprataController = TextEditingController();
   final TextEditingController _opisSobeController = TextEditingController();
+  late TextEditingController _statusController;
   final _formKey = GlobalKey<FormState>();
   File? _selectedImage;
+  String statusSobeTekst = "";
   int? sobaStatusId;
   List<dynamic> statusiSoba = [];
   Uint8List? _slikaBytes;
@@ -30,10 +32,19 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchSobaStatus();
-    if (widget.soba != null) {
-      _initializeFields();
-    }
+    _statusController = TextEditingController();
+    // _fetchSobaStatus();
+    // if (widget.soba != null) {
+    //   _initializeFields();
+    // }
+      if (widget.soba != null) {
+    _initializeFields();
+    _fetchSobaStatus(); // samo kad uređuješ postojeću sobu
+  } else {
+    // nova soba => podrazumijevani status je "Slobodna"
+    statusSobeTekst = "Slobodna";
+    _statusController.text = "Slobodna";
+  }
   }
 
   void _initializeFields() {
@@ -47,25 +58,33 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
   }
 
   Future<void> _fetchSobaStatus() async {
-    final ioc = HttpClient();
-    ioc.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
-    final http = IOClient(ioc);
-    final url = Uri.parse("${BaseProvider.baseUrl}/SobaStatus");
-
-    try {
-      final response =
-          await http.get(url, headers: {'Content-Type': 'application/json'});
-      if (response.statusCode == 200) {
-        setState(() {
-          statusiSoba = json.decode(response.body);
-          if (widget.soba == null && statusiSoba.isNotEmpty) {
-            sobaStatusId = statusiSoba.first['id'];
-          }
-        });
-      } else {}
-    } catch (error) {}
+  final ioc = HttpClient();
+  ioc.badCertificateCallback =
+      (X509Certificate cert, String host, int port) => true;
+  final http = IOClient(ioc);
+  final id = widget.soba['id'];
+  final url = Uri.parse("${BaseProvider.baseUrl}/Soba/sobaZauzeta/$id");
+  
+  try {
+    final response =
+        await http.get(url, headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      final isZauzeta = json.decode(response.body) == true;
+      setState(() {
+        statusSobeTekst = isZauzeta ? "Zauzeta" : "Slobodna";
+        _statusController.text = isZauzeta ? "Zauzeta" : "Slobodna";
+      });
+    } else {
+      setState(() {
+        statusSobeTekst = "Nepoznat status";
+      });
+    }
+  } catch (error) {
+    setState(() {
+      statusSobeTekst = "Greška pri dohvaćanju statusa";
+    });
   }
+}
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -151,26 +170,9 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  _buildDropdownField(
-                    labelText: 'Soba Status',
-                    value: sobaStatusId,
-                    items: statusiSoba.map<DropdownMenuItem<int>>((sobaStatus) {
-                      return DropdownMenuItem<int>(
-                        value: sobaStatus['id'],
-                        child: Text(sobaStatus['status']),
-                      );
-                    }).toList(),
-                    onChanged: (int? newValue) {
-                      setState(() {
-                        sobaStatusId = newValue;
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Odaberite status sobe';
-                      }
-                      return null;
-                    },
+                  _buildReadOnlyField(
+                    labelText: 'Status sobe',
+                    controller: _statusController,
                   ),
                   const SizedBox(height: 20),
                   Row(
@@ -270,6 +272,31 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
       validator: validator,
     );
   }
+
+Widget _buildReadOnlyField({required String labelText, required TextEditingController controller}) {
+  return TextFormField(
+    readOnly: true,
+    controller: controller,
+    decoration: InputDecoration(
+      labelText: labelText,
+      labelStyle: const TextStyle(
+        color: Colors.blueAccent,
+        fontWeight: FontWeight.bold,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      filled: true,
+      fillColor: Colors.blue[50],
+      contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+    ),
+    style: const TextStyle(color: Colors.black87),
+  );
+}
 
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {

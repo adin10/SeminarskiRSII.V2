@@ -47,11 +47,20 @@ namespace SeminarskiRSII.WebApi.Services
                 {
                     query = query.Where(l => l.BrojSobe == search.BrojSobe.Value);
                 }
-
             }
 
             var list = await query.ToListAsync();
-            return _mapper.Map<List<Model.Models.Soba>>(list);
+            var mapped = _mapper.Map<List<Model.Models.Soba>>(list);
+
+            var cijene = await _context.Cjenovnik.ToListAsync();
+            foreach(var x in mapped)
+            {
+                var cijena = cijene.FirstOrDefault(c => c.SobaId == x.Id);
+                x.Cijena = cijena?.Cijena;
+                x.Valuta = cijena?.Valuta;
+                x.CijenaId = cijena?.Id;
+            }
+            return mapped;
         }
 
         public async Task<Model.Models.Soba> Get(int id)
@@ -147,6 +156,24 @@ namespace SeminarskiRSII.WebApi.Services
                 .ToList();
 
             return finalResult;
+        }
+
+        public async Task<bool> SobaZauzeta(int id)
+        {
+            var sobaId = await _context.Soba.FirstOrDefaultAsync(x=>x.Id == id);
+            var sobaIdRezervacije = await _context.Rezervacija.Where(x=>x.SobaId == id).ToListAsync();
+            foreach(var x in sobaIdRezervacije)
+            {
+                if(DateTime.Today >= x.DatumRezervacije && DateTime.Today <= x.ZavrsetakRezervacije)
+                {
+                    return true;
+                }
+                if (DateTime.Today == x.DatumRezervacije || DateTime.Today == x.ZavrsetakRezervacije)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

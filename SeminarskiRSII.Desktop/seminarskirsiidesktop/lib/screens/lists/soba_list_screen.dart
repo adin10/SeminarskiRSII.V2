@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seminarskirsiidesktop/screens/details-new/cjenovnik_new_screen.dart';
 import '../../providers/soba_provider.dart';
 import '../../widgets/master_screen.dart';
 import '../details-new/soba_new_screen.dart';
@@ -112,6 +113,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
                                 _buildDataColumn("Broj Sprata"),
                                 _buildDataColumn("Opis Sobe"),
                                 _buildDataColumn("Soba Status"),
+                                _buildDataColumn("Cijena"),
                                 _buildDataColumn("Slika"),
                                    const DataColumn(
                                   label: Row(
@@ -191,9 +193,10 @@ class _SobaListScreenState extends State<SobaListScreen> {
             _buildDataCell(soba["brojSprata"]?.toString() ?? ""),
             _buildDataCell(soba["opisSobe"] ?? ""),
             _buildDataCell(soba["sobaStatus"]["status"] ?? ""),
+            _buildPriceCell(soba),
             DataCell(
               SizedBox(
-                width: 60,
+                width: 70,
                 height: 40,
                 child: Image.memory(
                   base64Decode(soba["slika"]),
@@ -254,4 +257,49 @@ class _SobaListScreenState extends State<SobaListScreen> {
       ),
     );
   }
+
+DataCell _buildPriceCell(dynamic soba) {
+  final cijena = soba["cijena"];
+  final valuta = soba["valuta"];
+  final sobaId = soba["id"];
+  final cijenaId = soba["cijenaId"]; // Pretpostavka: postoji ovo polje ako cijena postoji
+
+  void navigateToCjenovnik() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NewCjenovnikScreen(
+          sobaId: sobaId,
+          cijenaId: cijena != null ? cijenaId : null,
+        ),
+      ),
+    );
+  }
+
+  if (cijena == null || valuta == null) {
+    return DataCell(
+      TextButton(
+        onPressed: navigateToCjenovnik,
+        child: const Text('Dodaj cijenu'),
+      ),
+    );
+  } else {
+    return DataCell(
+      InkWell(
+        onTap: navigateToCjenovnik,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Text(
+            "$cijena $valuta",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.blue.shade700,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 }

@@ -41,6 +41,19 @@ class CjenovnikProvider with ChangeNotifier {
     }
   }
 
+    Future<dynamic> getById(String id) async {
+    final url = Uri.parse("${BaseProvider.baseUrl}/Cjenovnik/$id");
+
+    final response = await http!.get(url);
+
+     if (isValidResponse(response)) {
+      var data = jsonDecode(response.body);
+      return data;
+    } else {
+      return throw Exception("Something wenw wrong");
+    }
+  }
+
   bool isValidResponse(Response response) {
     if (response.statusCode < 299) {
       return true;

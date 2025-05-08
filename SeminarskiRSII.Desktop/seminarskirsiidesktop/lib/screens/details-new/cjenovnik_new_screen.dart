@@ -3,15 +3,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
+import 'package:seminarskirsiidesktop/providers/cjenovnik_provider.dart';
 import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
 import 'package:seminarskirsiidesktop/screens/lists/cjenovnik_list_screen.dart';
 import '../../providers/base_provider.dart';
 import '../../widgets/master_screen.dart';
 
 class NewCjenovnikScreen extends StatefulWidget {
-  final Map<String, dynamic>? cjenovnik;
+  final int sobaId;
+  final int? cijenaId; // null znači da kreiraš novu cijenu
 
-  const NewCjenovnikScreen({Key? key, this.cjenovnik}) : super(key: key);
+  const NewCjenovnikScreen({
+    Key? key,
+    required this.sobaId,
+    this.cijenaId,
+  }) : super(key: key);
 
   @override
   _NewCjenovnikScreenState createState() => _NewCjenovnikScreenState();
@@ -28,24 +34,42 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
   DateTime? _selectedDateVrijediOd;
   DateTime? _selectedDateVrijediDo;
   final List<String> _valute = ['KM', 'EUR', 'USD'];
+  Map<String, dynamic>? _cjenovnikData;
 
   @override
   void initState() {
     super.initState();
     _fetchSobe();
+    _selectedSobaId = widget.sobaId;
+    _loadCjenovnik(); // Poziv async metode bez await-a
+  }
 
-    if (widget.cjenovnik != null) {
-      _cijenaController.text = widget.cjenovnik!['cijena']?.toString() ?? '';
-      _selectedValuta = widget.cjenovnik!['valuta']?.toString();
-      _selectedSobaId = widget.cjenovnik!['soba']?['id'];
-      if (widget.cjenovnik!['vrijediOd'] != null) {
-        _selectedDateVrijediOd = DateTime.parse(widget.cjenovnik!['vrijediOd']);
-        _vrijediOdController.text = DateFormat('dd-MM-yyyy').format(_selectedDateVrijediOd!);
-      }
+  Future<void> _loadCjenovnik() async {
+    if (widget.cijenaId != null) {
+      try {
+        _cjenovnikData =
+            await CjenovnikProvider().getById(widget.cijenaId.toString());
+        var cjenovnik = _cjenovnikData!;
 
-      if (widget.cjenovnik!['vrijediDo'] != null) {
-        _selectedDateVrijediDo = DateTime.parse(widget.cjenovnik!['vrijediDo']);
-        _vrijediDoController.text = DateFormat('dd-MM-yyyy').format(_selectedDateVrijediDo!);
+        setState(() {
+          _cijenaController.text = cjenovnik['cijena']?.toString() ?? '';
+          _selectedValuta = cjenovnik['valuta']?.toString();
+          _selectedSobaId = cjenovnik['soba']?['id'];
+
+          if (cjenovnik['vrijediOd'] != null) {
+            _selectedDateVrijediOd = DateTime.parse(cjenovnik['vrijediOd']);
+            _vrijediOdController.text =
+                DateFormat('dd-MM-yyyy').format(_selectedDateVrijediOd!);
+          }
+
+          if (cjenovnik['vrijediDo'] != null) {
+            _selectedDateVrijediDo = DateTime.parse(cjenovnik['vrijediDo']);
+            _vrijediDoController.text =
+                DateFormat('dd-MM-yyyy').format(_selectedDateVrijediDo!);
+          }
+        });
+      } catch (e) {
+        print("Greška pri dohvaćanju cjenovnika: $e");
       }
     }
   }
@@ -57,7 +81,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     });
   }
 
-    Future<void> _selectVrijediOdDate(BuildContext context) async {
+  Future<void> _selectVrijediOdDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDateVrijediOd ?? DateTime.now(),
@@ -73,7 +97,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     }
   }
 
-    Future<void> _selectVrijediDoDate(BuildContext context) async {
+  Future<void> _selectVrijediDoDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDateVrijediDo ?? DateTime.now(),
@@ -92,7 +116,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title: widget.cjenovnik == null ? 'Kreiraj novu cijenu' : 'Uredite cijenu',
+      title: widget.cijenaId == null ? 'Kreiraj novu cijenu' : 'Uredite cijenu',
       child: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -116,7 +140,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.cjenovnik == null
+                    widget.cijenaId == null
                         ? 'Unesite informacije'
                         : 'Uredite informacije',
                     style: TextStyle(
@@ -153,7 +177,8 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                     decoration: InputDecoration(
                       labelText: 'Valuta',
                       labelStyle: const TextStyle(
-                          color: Colors.blueAccent, fontWeight: FontWeight.bold),
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.bold),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -219,7 +244,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                             borderRadius: BorderRadius.circular(10)),
                       ),
                       child: Text(
-                        widget.cjenovnik == null
+                        widget.cijenaId == null
                             ? 'Kreiraj cijenu'
                             : 'Uredi cijenu',
                         style: const TextStyle(
@@ -272,6 +297,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     required ValueChanged<int?> onChanged,
     required String? Function(int?) validator,
   }) {
+    // If the sobaId is already set (during editing), disable the dropdown
     return DropdownButtonFormField<int>(
       value: value,
       decoration: InputDecoration(
@@ -285,7 +311,9 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
         fillColor: Colors.blue[50],
       ),
       items: items,
-      onChanged: onChanged,
+      onChanged: widget.sobaId == null
+          ? onChanged
+          : null, // Disable the dropdown if the sobaId is set
       validator: validator,
     );
   }
@@ -293,10 +321,10 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      if (widget.cjenovnik == null) {
+      if (widget.cijenaId == null) {
         _createCjenovnik();
       } else {
-        _updateCjenovnik(widget.cjenovnik!['id']);
+        _updateCjenovnik(widget.cijenaId!);
       }
     }
   }
@@ -392,10 +420,11 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     );
 
     overlay.insert(overlayEntry);
-    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3))
+        .then((_) => overlayEntry.remove());
   }
 
-   Widget _buildDatePickerField({
+  Widget _buildDatePickerField({
     required TextEditingController controller,
     required String labelText,
     required VoidCallback onTap,
@@ -470,7 +499,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     );
 
     overlay.insert(overlayEntry);
-    Future.delayed(const Duration(seconds: 3)).then((_) => overlayEntry.remove());
+    Future.delayed(const Duration(seconds: 3))
+        .then((_) => overlayEntry.remove());
   }
 }
-
