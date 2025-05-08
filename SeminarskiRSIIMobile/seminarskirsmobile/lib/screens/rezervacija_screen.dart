@@ -1,9 +1,6 @@
 import 'dart:io';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
-import 'package:intl/intl.dart';
 import 'package:seminarskirsmobile/providers/usluge_provider.dart';
 import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
 import 'dart:convert';
@@ -312,7 +309,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
             behavior: SnackBarBehavior.floating,
           ),
         );
-        Navigator.pushNamed(
+Navigator.pushReplacementNamed(
             context, ListaRezervacijaScreen.listaRezervacijaRouteName);
       }
     }).catchError((error) {});

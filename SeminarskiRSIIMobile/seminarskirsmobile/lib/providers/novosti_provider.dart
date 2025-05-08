@@ -15,7 +15,6 @@ class NovostiProvider with ChangeNotifier {
 Future<dynamic> getList({int? gostId}) async {
   var url = Uri.parse("${BaseProvider.baseUrl}/Novosti");
 
-  // Dodavanje query parametra za korisnikId
   if (gostId != null) {
     url = Uri.parse("${BaseProvider.baseUrl}/Novosti?GostId=$gostId");
   }

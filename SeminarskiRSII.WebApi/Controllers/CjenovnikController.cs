@@ -20,10 +20,11 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             _service = service;
         }
+
         [HttpGet]
-        public async Task<ActionResult<List<Cjenovnik>>> GetList()
+        public async Task<ActionResult<List<Cjenovnik>>> GetList([FromQuery] DateTime datumOd, [FromQuery] DateTime datumDo)
         {
-            return Ok(await _service.GetList());
+            return Ok(await _service.GetList(datumOd, datumDo));
         }
 
         [HttpGet("getAllCijene")]

@@ -15,6 +15,7 @@ import 'package:seminarskirsmobile/screens/change_password_screen.dart';
 import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/menu_options_screen.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
+import 'package:seminarskirsmobile/screens/odabir_sobe_screen.dart';
 import 'package:seminarskirsmobile/screens/postavke_screen.dart';
 import 'package:seminarskirsmobile/screens/recenzija_screen.dart';
 import 'package:seminarskirsmobile/screens/recommendation_screen.dart';
@@ -45,6 +46,14 @@ void main() => runApp(MultiProvider(
           OptionsScreen.optionsRouteName: (context) => OptionsScreen(),
           PostavkeScreen.routeName: (context) => PostavkeScreen(),
           ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
+          OdabirDatumaScreen.routeName: (context) {
+            final args = ModalRoute.of(context)!.settings.arguments
+                as Map<String, dynamic>;
+            return OdabirDatumaScreen(
+              userData: args['userData'],
+              userId: args['userId'],
+            );
+          },
           // UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
           RecommendationScreen.routeName: (context) => RecommendationScreen(),
         },
@@ -59,6 +68,15 @@ void main() => runApp(MultiProvider(
           if (settings.name == RecommendationScreen.routeName) {
             return MaterialPageRoute(
                 builder: (context) => RecommendationScreen());
+          }
+if (settings.name == OdabirDatumaScreen.routeName) {
+            final args = settings.arguments as GetUserResponse;
+            return MaterialPageRoute(
+              builder: (context) => OdabirDatumaScreen(
+                userData: args,
+                userId: args.id,
+              ),
+            );
           }
           return null;
         },

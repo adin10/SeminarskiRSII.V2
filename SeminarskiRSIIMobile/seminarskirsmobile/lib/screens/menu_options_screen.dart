@@ -3,6 +3,7 @@ import 'package:seminarskirsmobile/main.dart';
 import 'package:seminarskirsmobile/providers/globals.dart';
 import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/novosti_screen.dart';
+import 'package:seminarskirsmobile/screens/odabir_sobe_screen.dart';
 import 'package:seminarskirsmobile/screens/postavke_screen.dart';
 import 'package:seminarskirsmobile/screens/recommendation_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
@@ -35,12 +36,21 @@ class OptionsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: ListView(
             children: [
-              buildOptionCard(
+              buildOptionCardCustomNavigation(
                 context,
-                'Slobodne sobe',
+                'Rezervisi sobu',
                 Icons.hotel,
-                SobeScreen.sobeRouteName,
-                userData,
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OdabirDatumaScreen(
+                        userData: userData,
+                        userId: userData.id,
+                      ),
+                    ),
+                  );
+                },
               ),
               buildOptionCard(
                 context,
@@ -71,6 +81,51 @@ class OptionsScreen extends StatelessWidget {
                 RecommendationScreen.routeName,
                 null,
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildOptionCardCustomNavigation(
+    BuildContext context,
+    String title,
+    IconData icon,
+    VoidCallback onTap,
+  ) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 12),
+      elevation: 6,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.teal.shade200,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, size: 32, color: Colors.white),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.teal.shade900,
+                  ),
+                ),
+              ),
+              Icon(Icons.arrow_forward_ios,
+                  color: Colors.teal.shade300, size: 18),
             ],
           ),
         ),

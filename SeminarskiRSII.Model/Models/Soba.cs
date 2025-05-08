@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SeminarskiRSII.Model.Models
@@ -16,6 +17,9 @@ namespace SeminarskiRSII.Model.Models
 
         public int? SobaStatusId { get; set; }
         public SobaStatus SobaStatus { get; set; }
+        [NotMapped]
+        public float? Cijena { get; set; }
+
 
         public override string ToString()
         {
