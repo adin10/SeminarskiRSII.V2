@@ -12,7 +12,6 @@ import '../screens/lists/recenzija_list_screen.dart';
 import '../screens/lists/rezervacija_list_screen.dart';
 import '../screens/lists/soba_list_screen.dart';
 import '../screens/lists/sobaosoblje_list_screen.dart';
-import '../screens/lists/sobastatus_list_screen.dart';
 import '../screens/lists/vrstaosoblja_list_screen.dart';
 import '../main.dart';
 
@@ -120,37 +119,32 @@ class _MasterScreenState extends State<MasterScreenWidget> {
                           builder: (context) => const RecenzijaListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.hotel, 'Soba Status', 7, () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SobaStatusListScreen(),
-                        ));
-                      }),
-                      _buildMenuItem(Icons.work, 'Vrsta Osoblja', 8, () {
+                      _buildMenuItem(Icons.work, 'Vrsta Osoblja', 7, () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const VrstaOsobljaListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.attach_money, 'Cjenovnik', 9, () {
+                      _buildMenuItem(Icons.attach_money, 'Cijene soba', 8, () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const CjenovnikListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.attach_money, 'Usluge', 10, () {
+                      _buildMenuItem(Icons.attach_money, 'Usluge', 9, () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UslugaListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.bed, 'Soba', 11, () {
+                      _buildMenuItem(Icons.bed, 'Soba', 10, () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const SobaListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.group, 'Soba Osoblje', 12, () {
+                      _buildMenuItem(Icons.group, 'Soba Osoblje', 11, () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const SobaOsobljeListScreen(),
                         ));
                       }),
-                      _buildMenuItem(Icons.settings, 'Postavke', 13, () async {
+                      _buildMenuItem(Icons.settings, 'Postavke', 12, () async {
                         final prefs = await SharedPreferences.getInstance();
                         final int? userId = prefs.getInt('loggedInUserId');
 
@@ -162,7 +156,7 @@ class _MasterScreenState extends State<MasterScreenWidget> {
                           showErrorToast(context, 'Neuspjesno dohvatanje ID. Pokusajte ponovo.');
                         }
                       }),
-                      _buildMenuItem(Icons.logout, 'Logout', 14, () {
+                      _buildMenuItem(Icons.logout, 'Logout', 13, () {
                         _handleLogout(context);
                       }),
                     ],

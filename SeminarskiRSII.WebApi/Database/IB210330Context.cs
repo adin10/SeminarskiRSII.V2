@@ -27,7 +27,6 @@ namespace SeminarskiRSII.WebApi.Database
         public virtual DbSet<Rezervacija> Rezervacija { get; set; } = null!;
         public virtual DbSet<Soba> Soba { get; set; } = null!;
         public virtual DbSet<SobaOsoblje> SobaOsoblje { get; set; } = null!;
-        public virtual DbSet<SobaStatus> SobaStatus { get; set; } = null!;
         public virtual DbSet<VrstaOsoblja> VrstaOsoblja { get; set; } = null!;
         public virtual DbSet<Usluga> Usluga { get; set; }
         public virtual DbSet<RezervacijaUsluga> RezervacijaUsluga { get; set; }
@@ -257,17 +256,10 @@ namespace SeminarskiRSII.WebApi.Database
             {
                 entity.ToTable("soba");
 
-                entity.HasIndex(e => e.SobaStatusId, "IX_soba_sobaStatusID");
-
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.OpisSobe).HasColumnName("opisSobe");
 
-                entity.Property(e => e.SobaStatusId).HasColumnName("sobaStatusID");
-
-                entity.HasOne(d => d.SobaStatus)
-                    .WithMany(p => p.Soba)
-                    .HasForeignKey(d => d.SobaStatusId);
             });
 
             modelBuilder.Entity<SobaOsoblje>(entity =>
@@ -293,17 +285,6 @@ namespace SeminarskiRSII.WebApi.Database
                     .HasForeignKey(d => d.SobaId);
             });
 
-            modelBuilder.Entity<SobaStatus>(entity =>
-            {
-                entity.ToTable("sobaStatus");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Opis).HasColumnName("opis");
-
-                entity.Property(e => e.Status).HasColumnName("status");
-            });
-
             modelBuilder.Entity<VrstaOsoblja>(entity =>
             {
                 entity.ToTable("vrstaOsoblja");
@@ -319,7 +300,6 @@ namespace SeminarskiRSII.WebApi.Database
             modelBuilder.SeedDrzava();
             modelBuilder.SeedGrad();
             modelBuilder.SeedUsluga();
-            modelBuilder.SeedSobaStatus();
             modelBuilder.SeedVrstaOsoblja();
             modelBuilder.SeedGost();
             modelBuilder.SeedSoba();

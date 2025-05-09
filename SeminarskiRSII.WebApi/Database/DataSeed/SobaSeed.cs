@@ -35,7 +35,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     BrojSobe = 1,
                     BrojSprata = 1,
                     OpisSobe = "Soba u tisini",
-                    SobaStatusId = 1,
+                    StatusSobe = "Slobodna",
                     Slika = originalSoba1
                 },
                 new Soba()
@@ -44,7 +44,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     BrojSobe = 2,
                     BrojSprata = 1,
                     OpisSobe = "Soba u tisini",
-                    SobaStatusId = 1,
+                    StatusSobe = "Slobodna",
                     Slika = originalSoba2
                 },
                 new Soba()
@@ -53,7 +53,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     BrojSobe = 3,
                     BrojSprata = 1,
                     OpisSobe = "Soba s pogledom na more",
-                    SobaStatusId = 2,
+                    StatusSobe = "Zauzeta",
                     Slika = originalSoba1
                 },
                 new Soba()
@@ -62,7 +62,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     BrojSobe = 4,
                     BrojSprata = 2,
                     OpisSobe = "Soba s pogledom na cijeli grad",
-                    SobaStatusId = 1,
+                    StatusSobe = "Slobodna",
                     Slika = originalSoba2
                 }
             });

@@ -14,9 +14,8 @@ namespace SeminarskiRSII.Model.Models
         public byte[] Slika { get; set; }
         public string? PictureName { get; set; }
         public string? PicturePath { get; set; }
+        public string? StatusSobe { get; set; }
 
-        public int? SobaStatusId { get; set; }
-        public SobaStatus SobaStatus { get; set; }
         [NotMapped]
         public float? Cijena { get; set; }
         [NotMapped]

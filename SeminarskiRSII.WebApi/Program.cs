@@ -35,7 +35,6 @@ builder.Services.AddScoped<IGradService, GradService>();
 builder.Services.AddScoped<ICjenovnikService, CjenovnikService>();
 builder.Services.AddScoped<ISobaService, SobaService>();
 builder.Services.AddScoped<IGostService, GostService>();
-builder.Services.AddScoped<ISobaStatusService, SobaStatusService>();
 builder.Services.AddScoped<ISobaOsobljeService, SobaOsobljeService>();
 builder.Services.AddScoped<IVrstaOsobljaService, VrstaOsobljaService>();
 builder.Services.AddScoped<IRecenzijaService, RecenzijaService>();

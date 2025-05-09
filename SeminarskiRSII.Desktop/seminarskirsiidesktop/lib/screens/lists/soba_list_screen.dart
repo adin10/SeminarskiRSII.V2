@@ -192,7 +192,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
             _buildDataCell(soba["brojSobe"]?.toString() ?? ""),
             _buildDataCell(soba["brojSprata"]?.toString() ?? ""),
             _buildDataCell(soba["opisSobe"] ?? ""),
-            _buildDataCell(soba["sobaStatus"]["status"] ?? ""),
+            _buildDataCell(soba["statusSobe"] ?? ""),
             _buildPriceCell(soba),
             DataCell(
               SizedBox(

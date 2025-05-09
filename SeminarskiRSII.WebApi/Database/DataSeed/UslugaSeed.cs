@@ -14,28 +14,32 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     UslugaID = 1,
                     Naziv = "Dorucak",
                     Opis = "Dorucak u hotelu",
-                    Cijena = 10
+                    Cijena = 10,
+                    Valuta = "KM"
                 },
                 new Usluga()
                 {
                     UslugaID = 2,
                     Naziv = "Rucak",
                     Opis = "Rucak u hotelu",
-                    Cijena = 15
+                    Cijena = 15,
+                    Valuta = "KM"
                 },
                 new Usluga()
                 {
                     UslugaID = 3,
                     Naziv = "Masaza",
                     Opis = "Usluge masaze",
-                    Cijena = 50
+                    Cijena = 50,
+                    Valuta = "KM"
                 },
                 new Usluga()
                 {
                     UslugaID = 4,
                     Naziv = "Sauna",
                     Opis = "Koristenje saune",
-                    Cijena = 75
+                    Cijena = 75,
+                    Valuta = "KM"
                 }
             });
             modelBuilder.Entity<Usluga>().HasData(list);

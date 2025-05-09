@@ -14,7 +14,6 @@ import 'package:seminarskirsiidesktop/providers/recenzija_provider.dart';
 import 'package:seminarskirsiidesktop/providers/rezervacija_provider.dart';
 import 'package:seminarskirsiidesktop/providers/soba_provider.dart';
 import 'package:seminarskirsiidesktop/providers/sobaosoblje_provider.dart';
-import 'package:seminarskirsiidesktop/providers/sobastatus_provider.dart';
 import 'package:seminarskirsiidesktop/providers/usluga_provider.dart';
 import 'package:seminarskirsiidesktop/providers/vrstaosoblja_provider.dart';
 import 'package:seminarskirsiidesktop/screens/lists/novosti_list_screen.dart';
@@ -31,7 +30,6 @@ void main() {
       ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
       ChangeNotifierProvider(create: (_) => RecenzijaProvider()),
       ChangeNotifierProvider(create: (_) => NovostiProvider()),
-      ChangeNotifierProvider(create: (_) => SobaStatusProvider()),
       ChangeNotifierProvider(create: (_) => VrstaOsobljaProvider()),
       ChangeNotifierProvider(create: (_) => CjenovnikProvider()),
       ChangeNotifierProvider(create: (_) => SobaProvider()),

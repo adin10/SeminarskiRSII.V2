@@ -30,20 +30,34 @@ namespace SeminarskiRSII.WebApi.Services
             return _mapper.Map<Model.Models.Cjenovnik>(entity);
         }
 
+        //public async Task<List<Model.Models.Cjenovnik>> GetList(DateTime datumOd, DateTime datumDo)
+        //{
+        //    var list = await _context.Cjenovnik.Include(s => s.Soba).Where(c => !_context.Rezervacija.Any(r =>
+        //                (datumOd >= r.DatumRezervacije && datumOd < r.ZavrsetakRezervacije) ||
+        //                (datumDo > r.DatumRezervacije && datumDo <= r.ZavrsetakRezervacije) ||
+        //                (datumOd <= r.DatumRezervacije && datumDo >= r.ZavrsetakRezervacije)
+        //        ))
+        //.ToListAsync();
+        //    return _mapper.Map<List<Model.Models.Cjenovnik>>(list);
+        //}
+
         public async Task<List<Model.Models.Cjenovnik>> GetList(DateTime datumOd, DateTime datumDo)
         {
-            var list = await _context.Cjenovnik.Include(s => s.Soba).ThenInclude(s=>s.SobaStatus).Where(c => !_context.Rezervacija.Any(r =>
-                        (datumOd >= r.DatumRezervacije && datumOd < r.ZavrsetakRezervacije) ||
-                        (datumDo > r.DatumRezervacije && datumDo <= r.ZavrsetakRezervacije) ||
-                        (datumOd <= r.DatumRezervacije && datumDo >= r.ZavrsetakRezervacije)
+            var list = await _context.Cjenovnik
+                .Include(c => c.Soba)
+                .Where(c => !_context.Rezervacija.Any(r =>
+                    r.SobaId == c.SobaId &&
+                    r.DatumRezervacije < datumDo &&
+                    r.ZavrsetakRezervacije > datumOd
                 ))
-        .ToListAsync();
+                .ToListAsync();
+
             return _mapper.Map<List<Model.Models.Cjenovnik>>(list);
         }
 
         public async Task<Model.Models.Cjenovnik> Get(int id)
         {
-            var entity = await _context.Cjenovnik.Include(s=>s.Soba).ThenInclude(s=>s.SobaStatus).FirstOrDefaultAsync(x=>x.Id == id);
+            var entity = await _context.Cjenovnik.Include(s=>s.Soba).FirstOrDefaultAsync(x=>x.Id == id);
             return _mapper.Map<Model.Models.Cjenovnik>(entity);
         }
 
@@ -65,7 +79,7 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<List<Model.Models.Cjenovnik>> getAllCijene()
         {
-            var list = await _context.Cjenovnik.Include(s => s.Soba).ThenInclude(s => s.SobaStatus).ToListAsync();
+            var list = await _context.Cjenovnik.Include(s => s.Soba).ToListAsync();
             return _mapper.Map<List<Model.Models.Cjenovnik>>(list);
         }
     }

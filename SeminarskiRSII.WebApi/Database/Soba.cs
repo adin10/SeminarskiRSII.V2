@@ -20,9 +20,7 @@ namespace SeminarskiRSII.WebApi.Database
         public byte[]? Slika { get; set; }
         public string? PictureName { get; set; }
         public string? PicturePath { get; set; }
-        public int SobaStatusId { get; set; }
-
-        public virtual SobaStatus SobaStatus { get; set; } = null!;
+        public string? StatusSobe { get; set; }
         public virtual ICollection<Cjenovnik> Cjenovnik { get; set; }
         public virtual ICollection<Recenzija> Recenzija { get; set; }
         public virtual ICollection<Rezervacija> Rezervacija { get; set; }

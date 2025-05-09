@@ -678,7 +678,7 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
                                           },
                                           child: Row(
                                             children: [
-                                              const Text("Datum rezervacije"),
+                                              const Text("Datum recenzije"),
                                               Icon(
                                                 !_sortByRating
                                                     ? (_sortAscending

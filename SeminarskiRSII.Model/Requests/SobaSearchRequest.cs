@@ -7,6 +7,6 @@ namespace SeminarskiRSII.Model.Requests
   public class SobaSearchRequest
     {
         public int? BrojSobe { get; set; }
-        public int? SobaStatusId { get; set; }
+        public string? SobaStatus { get; set; }
     }
 }

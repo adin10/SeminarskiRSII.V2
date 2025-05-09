@@ -22,9 +22,6 @@ namespace SeminarskiRSII.WebApi.Mappers
 
             CreateMap<VrstaOsobljaInsertRequest, Database.VrstaOsoblja>();
 
-            CreateMap<Database.SobaStatus, SobaStatus>();
-            CreateMap<SobaStatusInsertRequest, Database.SobaStatus>();
-
             CreateMap<Database.Soba, Soba>();
             CreateMap<SobaInsertRequest, Database.Soba>();
 

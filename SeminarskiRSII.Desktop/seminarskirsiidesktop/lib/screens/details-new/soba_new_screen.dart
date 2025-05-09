@@ -33,15 +33,10 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
   void initState() {
     super.initState();
     _statusController = TextEditingController();
-    // _fetchSobaStatus();
-    // if (widget.soba != null) {
-    //   _initializeFields();
-    // }
       if (widget.soba != null) {
     _initializeFields();
-    _fetchSobaStatus(); // samo kad uređuješ postojeću sobu
+    _fetchSobaStatus();
   } else {
-    // nova soba => podrazumijevani status je "Slobodna"
     statusSobeTekst = "Slobodna";
     _statusController.text = "Slobodna";
   }
@@ -51,7 +46,7 @@ class _NewSobaScreenState extends State<NewSobaScreen> {
     _brojSobeController.text = widget.soba['brojSobe'].toString();
     _brojSprataController.text = widget.soba['brojSprata'].toString();
     _opisSobeController.text = widget.soba['opisSobe'];
-    sobaStatusId = widget.soba['sobaStatus']['id'];
+    _statusController.text = widget.soba['statusSobe'];
     if (widget.soba['slika'] != null) {
       _slikaBytes = base64Decode(widget.soba['slika']);
     }
@@ -317,7 +312,7 @@ Widget _buildReadOnlyField({required String labelText, required TextEditingContr
       "slika": _slikaBytes != null
           ? base64Encode(_slikaBytes!)
           : widget.soba['slika'],
-      "sobaStatusId": sobaStatusId,
+      "statusSobe": _statusController.text
     };
 
     final requestBody = jsonEncode(request);
@@ -353,7 +348,7 @@ Widget _buildReadOnlyField({required String labelText, required TextEditingContr
       "slika": _slikaBytes != null
           ? base64Encode(_slikaBytes!)
           : widget.soba['slika'],
-      "sobaStatusId": sobaStatusId,
+      "statusSobe": _statusController.text
     };
 
     final requestBody = jsonEncode(request);

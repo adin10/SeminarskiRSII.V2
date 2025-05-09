@@ -35,17 +35,16 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<List<Model.Models.Soba>> GetList(SobaSearchRequest search)
         {
-            var query = _context.Soba.Include(s => s.SobaStatus).AsQueryable();
+            var query = _context.Soba.AsQueryable();
             if (search != null)
             {
-                if (search.SobaStatusId.HasValue)
-                {
-                    query = query.Where(s => s.SobaStatusId == search.SobaStatusId.Value);
-                }
-
                 if (search.BrojSobe.HasValue)
                 {
                     query = query.Where(l => l.BrojSobe == search.BrojSobe.Value);
+                }
+                if (!string.IsNullOrWhiteSpace(search.SobaStatus))
+                {
+                    query = query.Where(x => x.StatusSobe.ToLower() == search.SobaStatus.ToLower());
                 }
             }
 
@@ -65,7 +64,7 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Soba> Get(int id)
         {
-            var entity = await _context.Soba.Include(x => x.SobaStatus).FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _context.Soba.FirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<Model.Models.Soba>(entity);
         }
 
