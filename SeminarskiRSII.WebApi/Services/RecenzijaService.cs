@@ -77,5 +77,11 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Recenzija>(recenzija);
         }
+
+        public async Task<List<Model.Models.Recenzija>> GetListBySobaId(int sobaId)
+        {
+            var list = await _context.Recenzija.Include(x => x.Gost).Where(x => x.SobaId == sobaId).ToListAsync();
+            return _mapper.Map<List<Model.Models.Recenzija>>(list);
+        }
     }
 }

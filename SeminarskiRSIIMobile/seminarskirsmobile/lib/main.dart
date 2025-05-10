@@ -18,6 +18,7 @@ import 'package:seminarskirsmobile/screens/novosti_screen.dart';
 import 'package:seminarskirsmobile/screens/odabir_sobe_screen.dart';
 import 'package:seminarskirsmobile/screens/postavke_screen.dart';
 import 'package:seminarskirsmobile/screens/recenzija_screen.dart';
+import 'package:seminarskirsmobile/screens/recenzije_sobe_screen.dart';
 import 'package:seminarskirsmobile/screens/recommendation_screen.dart';
 import 'package:seminarskirsmobile/screens/rezervacija_screen.dart';
 import 'package:seminarskirsmobile/screens/signup_screen.dart';
@@ -56,6 +57,10 @@ void main() => runApp(MultiProvider(
           },
           // UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
           RecommendationScreen.routeName: (context) => RecommendationScreen(),
+          SobaRecenzijeScreen.routeName: (context) {
+          final sobaId = ModalRoute.of(context)!.settings.arguments as int;
+          return SobaRecenzijeScreen(sobaId: sobaId);
+},
         },
       onGenerateRoute: (settings) {
           if (settings.name == UpdateProfileScreen.routeName) {

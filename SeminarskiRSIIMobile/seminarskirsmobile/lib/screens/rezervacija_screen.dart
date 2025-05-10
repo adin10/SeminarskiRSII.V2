@@ -1,3 +1,357 @@
+// import 'dart:io';
+// import 'package:flutter/material.dart';
+// import 'package:http/io_client.dart';
+// import 'package:seminarskirsmobile/providers/usluge_provider.dart';
+// import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
+// import 'dart:convert';
+// import '../main.dart';
+// import '../providers/base_provider.dart';
+
+// class RezervacijScreen extends StatefulWidget {
+//   static const String dodajRezervacijuRouteName = '/dodajRezervaciju';
+//   const RezervacijScreen({Key? key}) : super(key: key);
+
+//   @override
+//   _RezervacijScreenState createState() => _RezervacijScreenState();
+// }
+
+// class _RezervacijScreenState extends State<RezervacijScreen> {
+//   final _formKey = GlobalKey<FormState>();
+
+//   int? gostId;
+//   int? sobaId;
+//   DateTime? datumRezervacije;
+//   DateTime? zavrsetakRezervacije;
+//   List<int> selectedUslugaIds = [];
+//   List<dynamic> _uslugeList = [];
+//   bool _isLoading = false;
+//   DateTime? datumOd;
+//   DateTime? datumDo;
+  
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchAvailableUsluge();
+//   }
+
+//   Future<void> fetchAvailableUsluge() async {
+//     setState(() {
+//       _isLoading = true;
+//     });
+//     try {
+//       var fetchedUsluge = await UslugeProvider().get('');
+
+//       if (fetchedUsluge == null) {
+//         throw Exception("No data received");
+//       }
+
+//       setState(() {
+//         _uslugeList = fetchedUsluge;
+//       });
+//     } catch (error) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Failed to load gradovi: $error')),
+//       );
+//     } finally {
+//       setState(() {
+//         _isLoading = false;
+//       });
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final Map<String, dynamic>? args =
+//         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+//     if (args == null) {
+//       return Scaffold(
+//         body: Center(
+//           child: Text('Error: Missing arguments'),
+//         ),
+//       );
+//     }
+
+//     final GetUserResponse userData = args['userData'] as GetUserResponse;
+//     final int userId = args['userId'] as int;
+//     final int? selectedRoomId = args['selectedRoomId'] as int?;
+//     final DateTime? datumOd = args['datumOd'] as DateTime?;
+//     final DateTime? datumDo = args['datumDo'] as DateTime?;
+
+//   print('-------------------');
+//     print(datumOd);
+//     print(datumDo);
+
+//     if (userId == null || selectedRoomId == null) {
+//       return Scaffold(
+//         body: Center(
+//           child: Text('Error: Missing required arguments'),
+//         ),
+//       );
+//     }
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Rezervacija'),
+//         backgroundColor: Colors.teal,
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Form(
+//           key: _formKey,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Text(
+//                 "Unesite datume za vašu rezervaciju",
+//                 style: TextStyle(
+//                   fontSize: 18,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.teal,
+//                 ),
+//               ),
+//               SizedBox(height: 16.0),
+//               _buildDateField(
+//                 label: 'Datum rezervacije',
+//                 date: datumRezervacije,
+//                 onDatePicked: (pickedDate) {
+//                   setState(() {
+//                     datumRezervacije = pickedDate;
+//                   });
+//                 },
+//               ),
+//               _buildDateField(
+//                 label: 'Završetak rezervacije',
+//                 date: zavrsetakRezervacije,
+//                 onDatePicked: (pickedDate) {
+//                   setState(() {
+//                     zavrsetakRezervacije = pickedDate;
+//                   });
+//                 },
+//               ),
+//               SizedBox(height: 16.0),
+//               Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     "Odaberite Usluge",
+//                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//                   ),
+//                   SizedBox(height: 8.0),
+//                   _buildCheckboxes(),
+//                 ],
+//               ),
+//               SizedBox(height: 24.0),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   if (_formKey.currentState!.validate()) {
+//                     _formKey.currentState!.save();
+//                     _submitForm(userId, userData, selectedRoomId!);
+//                   }
+//                 },
+//                 child: Text('Rezervisi'),
+//                 style: ElevatedButton.styleFrom(
+//                   minimumSize: Size(double.infinity, 48),
+//                   backgroundColor: Colors.teal,
+//                   textStyle:
+//                       TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildCheckboxes() {
+//     if (_isLoading) {
+//       return Center(child: CircularProgressIndicator());
+//     }
+
+//     if (_uslugeList.isEmpty) {
+//       return Center(child: Text("Problem prilikom ucitavanja usluga."));
+//     }
+
+//     return ListView.builder(
+//       shrinkWrap: true,
+//       itemCount: _uslugeList.length,
+//       itemBuilder: (context, index) {
+//         final option = _uslugeList[index];
+//         final int? uslugaId = option['uslugaID'] as int?;
+//         final String naziv = option['naziv'] ?? 'Unknown';
+//         final String cijena = option['cijena']?.toStringAsFixed(2) ?? '0.00';
+
+//         final isSelected = selectedUslugaIds.contains(uslugaId);
+
+//         return CheckboxListTile(
+//           activeColor: Colors.teal,
+//           title: Row(
+//             children: [
+//               Expanded(
+//                 child: Text(
+//                   naziv,
+//                   style: TextStyle(fontSize: 16),
+//                 ),
+//               ),
+//               Text(
+//                 'Cijena: $cijena KM',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                   fontSize: 14,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.grey[700],
+//                 ),
+//               ),
+//             ],
+//           ),
+//           value: isSelected,
+//           onChanged: (bool? selected) {
+//             if (selected == true) {
+//               if (uslugaId != null && !selectedUslugaIds.contains(uslugaId)) {
+//                 setState(() {
+//                   selectedUslugaIds.add(uslugaId);
+//                 });
+//               }
+//             } else {
+//               if (uslugaId != null) {
+//                 setState(() {
+//                   selectedUslugaIds.remove(uslugaId);
+//                 });
+//               }
+//             }
+//           },
+//         );
+//       },
+//     );
+//   }
+
+//   Widget _buildDateField({
+//     required String label,
+//     required DateTime? date,
+//     required Function(DateTime?) onDatePicked,
+//   }) {
+//     return Padding(
+//       padding: const EdgeInsets.only(bottom: 16.0),
+//       child: TextFormField(
+//         decoration: InputDecoration(
+//           labelText: label,
+//           contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+//           border: OutlineInputBorder(),
+//         ),
+//         readOnly: true,
+//         validator: (value) {
+//           if (value == null || value.isEmpty) {
+//             return 'Unesite $label';
+//           }
+//           return null;
+//         },
+//         controller: TextEditingController(
+//           text: date != null ? formatDate(date) : '',
+//         ),
+//         onTap: () async {
+//           FocusScope.of(context).requestFocus(FocusNode());
+//           final pickedDate = await showDatePicker(
+//             context: context,
+//             initialDate: DateTime.now(),
+//             firstDate: DateTime.now(),
+//             lastDate: DateTime(2100),
+//           );
+//           if (pickedDate != null) {
+//             onDatePicked(pickedDate);
+//           }
+//         },
+//       ),
+//     );
+//   }
+
+//   String formatDate(DateTime date) {
+//     return "${date.day}.${date.month}.${date.year}";
+//   }
+
+//   void _submitForm(int userId, GetUserResponse userdata, int selectedRoomId) {
+//     if (datumRezervacije == null || zavrsetakRezervacije == null) {
+//       return;
+//     }
+//     if (zavrsetakRezervacije!.isBefore(datumRezervacije!)) {
+//       showDialog(
+//         context: context,
+//         builder: (context) {
+//           return AlertDialog(
+//             title: Text('Greška'),
+//             content: Text(
+//                 'Završetak rezervacije ne može biti prije datuma rezervacije.'),
+//             actions: [
+//               TextButton(
+//                 onPressed: () => Navigator.of(context).pop(),
+//                 child: Text('U redu'),
+//               ),
+//             ],
+//           );
+//         },
+//       );
+//       return;
+//     }
+
+//     final request = RezervacijaInsertRequest(
+//       gostId: userId,
+//       sobaId: selectedRoomId,
+//       datumRezervacije: datumRezervacije!,
+//       zavrsetakRezervacije: zavrsetakRezervacije!,
+//       uslugaIds: selectedUslugaIds,
+//     );
+
+//     final requestBody = jsonEncode(request.toJson());
+//     final ioc = new HttpClient();
+//     ioc.badCertificateCallback =
+//         (X509Certificate cert, String host, int port) => true;
+//     final http = new IOClient(ioc);
+//     final url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
+//     http.post(url,
+//         body: requestBody,
+//         headers: {'Content-Type': 'application/json'}).then((response) {
+//       if (response.statusCode == 200) {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(
+//             content: Text('Rezervacija uspješno kreirana.'),
+//             behavior: SnackBarBehavior.floating,
+//           ),
+//         );
+// Navigator.pushReplacementNamed(
+//             context, ListaRezervacijaScreen.listaRezervacijaRouteName);
+//       }
+//     }).catchError((error) {});
+//   }
+// }
+
+// class RezervacijaInsertRequest {
+//   final int? gostId;
+//   final int? sobaId;
+//   final DateTime datumRezervacije;
+//   final DateTime zavrsetakRezervacije;
+//   final List<int> uslugaIds;
+
+//   RezervacijaInsertRequest({
+//     required this.gostId,
+//     required this.sobaId,
+//     required this.datumRezervacije,
+//     required this.zavrsetakRezervacije,
+//     required this.uslugaIds,
+//   });
+
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'gostId': gostId,
+//       'sobaId': sobaId,
+//       'datumRezervacije': datumRezervacije.toIso8601String(),
+//       'zavrsetakRezervacije': zavrsetakRezervacije.toIso8601String(),
+//       'uslugaIds': uslugaIds,
+//     };
+//   }
+// }
+
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
@@ -18,13 +372,12 @@ class RezervacijScreen extends StatefulWidget {
 class _RezervacijScreenState extends State<RezervacijScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  int? gostId;
-  int? sobaId;
-  DateTime? datumRezervacije;
-  DateTime? zavrsetakRezervacije;
   List<int> selectedUslugaIds = [];
   List<dynamic> _uslugeList = [];
   bool _isLoading = false;
+
+  DateTime? datumRezervacije;
+  DateTime? zavrsetakRezervacije;
 
   @override
   void initState() {
@@ -48,7 +401,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       });
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load gradovi: $error')),
+        SnackBar(content: Text('Failed to load usluge: $error')),
       );
     } finally {
       setState(() {
@@ -73,14 +426,20 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     final GetUserResponse userData = args['userData'] as GetUserResponse;
     final int userId = args['userId'] as int;
     final int? selectedRoomId = args['selectedRoomId'] as int?;
+    final DateTime? datumOd = args['datumOd'] as DateTime?;
+    final DateTime? datumDo = args['datumDo'] as DateTime?;
 
-    if (userId == null || selectedRoomId == null) {
+    if (userId == null || selectedRoomId == null || datumOd == null || datumDo == null) {
       return Scaffold(
         body: Center(
           child: Text('Error: Missing required arguments'),
         ),
       );
     }
+
+    // Postavi inicijalne vrijednosti ako nisu već postavljene
+    datumRezervacije ??= datumOd;
+    zavrsetakRezervacije ??= datumDo;
 
     return Scaffold(
       appBar: AppBar(
@@ -103,23 +462,13 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
                 ),
               ),
               SizedBox(height: 16.0),
-              _buildDateField(
+              _buildReadonlyDateField(
                 label: 'Datum rezervacije',
                 date: datumRezervacije,
-                onDatePicked: (pickedDate) {
-                  setState(() {
-                    datumRezervacije = pickedDate;
-                  });
-                },
               ),
-              _buildDateField(
+              _buildReadonlyDateField(
                 label: 'Završetak rezervacije',
                 date: zavrsetakRezervacije,
-                onDatePicked: (pickedDate) {
-                  setState(() {
-                    zavrsetakRezervacije = pickedDate;
-                  });
-                },
               ),
               SizedBox(height: 16.0),
               Column(
@@ -127,7 +476,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
                 children: [
                   Text(
                     "Odaberite Usluge",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal,),
                   ),
                   SizedBox(height: 8.0),
                   _buildCheckboxes(),
@@ -138,15 +487,20 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    _submitForm(userId, userData, selectedRoomId!);
+                    _submitForm(userId, userData, selectedRoomId);
                   }
                 },
-                child: Text('Rezervisi'),
+                child: Text('Rezerviši'),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 48),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
                   textStyle:
-                      TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 18),
                 ),
               ),
             ],
@@ -156,13 +510,42 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     );
   }
 
+  Widget _buildReadonlyDateField({
+  required String label,
+  required DateTime? date,
+}) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 16.0),
+    child: TextFormField(
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(Icons.calendar_today, color: Colors.teal),
+        contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      readOnly: true,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Unesite $label';
+        }
+        return null;
+      },
+      controller: TextEditingController(
+        text: date != null ? formatDate(date) : '',
+      ),
+    ),
+  );
+}
+
   Widget _buildCheckboxes() {
     if (_isLoading) {
       return Center(child: CircularProgressIndicator());
     }
 
     if (_uslugeList.isEmpty) {
-      return Center(child: Text("Problem prilikom ucitavanja usluga."));
+      return Center(child: Text("Problem prilikom učitavanja usluga."));
     }
 
     return ListView.builder(
@@ -218,70 +601,12 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
     );
   }
 
-  Widget _buildDateField({
-    required String label,
-    required DateTime? date,
-    required Function(DateTime?) onDatePicked,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-          labelText: label,
-          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-          border: OutlineInputBorder(),
-        ),
-        readOnly: true,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Unesite $label';
-          }
-          return null;
-        },
-        controller: TextEditingController(
-          text: date != null ? formatDate(date) : '',
-        ),
-        onTap: () async {
-          FocusScope.of(context).requestFocus(FocusNode());
-          final pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2100),
-          );
-          if (pickedDate != null) {
-            onDatePicked(pickedDate);
-          }
-        },
-      ),
-    );
-  }
-
   String formatDate(DateTime date) {
     return "${date.day}.${date.month}.${date.year}";
   }
 
-  void _submitForm(int userId, GetUserResponse userdata, int selectedRoomId) {
+  void _submitForm(int userId, GetUserResponse userData, int selectedRoomId) {
     if (datumRezervacije == null || zavrsetakRezervacije == null) {
-      return;
-    }
-    if (zavrsetakRezervacije!.isBefore(datumRezervacije!)) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Greška'),
-            content: Text(
-                'Završetak rezervacije ne može biti prije datuma rezervacije.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text('U redu'),
-              ),
-            ],
-          );
-        },
-      );
       return;
     }
 
@@ -299,9 +624,11 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
         (X509Certificate cert, String host, int port) => true;
     final http = new IOClient(ioc);
     final url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija");
-    http.post(url,
-        body: requestBody,
-        headers: {'Content-Type': 'application/json'}).then((response) {
+    http
+        .post(url,
+            body: requestBody,
+            headers: {'Content-Type': 'application/json'})
+        .then((response) {
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -309,10 +636,14 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
             behavior: SnackBarBehavior.floating,
           ),
         );
-Navigator.pushReplacementNamed(
+        Navigator.pushReplacementNamed(
             context, ListaRezervacijaScreen.listaRezervacijaRouteName);
       }
-    }).catchError((error) {});
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Greška prilikom kreiranja rezervacije.')),
+      );
+    });
   }
 }
 
@@ -341,3 +672,4 @@ class RezervacijaInsertRequest {
     };
   }
 }
+

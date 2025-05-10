@@ -30,17 +30,6 @@ namespace SeminarskiRSII.WebApi.Services
             return _mapper.Map<Model.Models.Cjenovnik>(entity);
         }
 
-        //public async Task<List<Model.Models.Cjenovnik>> GetList(DateTime datumOd, DateTime datumDo)
-        //{
-        //    var list = await _context.Cjenovnik.Include(s => s.Soba).Where(c => !_context.Rezervacija.Any(r =>
-        //                (datumOd >= r.DatumRezervacije && datumOd < r.ZavrsetakRezervacije) ||
-        //                (datumDo > r.DatumRezervacije && datumDo <= r.ZavrsetakRezervacije) ||
-        //                (datumOd <= r.DatumRezervacije && datumDo >= r.ZavrsetakRezervacije)
-        //        ))
-        //.ToListAsync();
-        //    return _mapper.Map<List<Model.Models.Cjenovnik>>(list);
-        //}
-
         public async Task<List<Model.Models.Cjenovnik>> GetList(DateTime datumOd, DateTime datumDo)
         {
             var list = await _context.Cjenovnik
@@ -49,8 +38,7 @@ namespace SeminarskiRSII.WebApi.Services
                     r.SobaId == c.SobaId &&
                     r.DatumRezervacije < datumDo &&
                     r.ZavrsetakRezervacije > datumOd
-                ))
-                .ToListAsync();
+                )).ToListAsync();
 
             return _mapper.Map<List<Model.Models.Cjenovnik>>(list);
         }

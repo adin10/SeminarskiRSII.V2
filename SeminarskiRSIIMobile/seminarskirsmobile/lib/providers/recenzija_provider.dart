@@ -12,8 +12,6 @@ class RecenzijaProvider with ChangeNotifier {
     http = IOClient(client);
   }
 
- 
-
   Future<List<dynamic>?> get() async {
   try {
     // Make the API request with the gostID parameter
@@ -32,6 +30,21 @@ class RecenzijaProvider with ChangeNotifier {
   } catch (error) {
     // Handle network or other errors
     return null;
+  }
+}
+
+Future<List<dynamic>> getListBySobaId(int sobaId) async {
+  final url = Uri.parse('${BaseProvider.baseUrl}/Recenzija/GetListBySobaId?sobaId=$sobaId');
+  
+  final response = await http!.get(
+    url,
+    headers: {'Content-Type': 'application/json'},
+  );
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception("Greška prilikom dohvata recenzija.");
   }
 }
 }

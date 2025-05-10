@@ -67,21 +67,15 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Lista rezervacija za gosta:",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
                       if (data.isNotEmpty)
                         Text(
-                          '${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}',
+                          "Lista rezervacija za gosta: ${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}",
                           style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                             color: Colors.black87,
                           ),
+                          textAlign: TextAlign.left,
                         ),
                     ],
                   ),

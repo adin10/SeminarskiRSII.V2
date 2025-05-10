@@ -171,6 +171,7 @@ class _OdabirDatumaScreenState extends State<OdabirDatumaScreen> {
         borderRadius: BorderRadius.circular(10),
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+      prefixIcon: Icon(Icons.calendar_today, color: Colors.teal),
     ),
     controller: TextEditingController(
       text: date != null ? "${date.day}.${date.month}.${date.year}" : '',
@@ -190,49 +191,49 @@ class _OdabirDatumaScreenState extends State<OdabirDatumaScreen> {
   );
 }
 
-  // Widget _buildDateField(String label, DateTime? date, Function(DateTime) onPicked) {
-  //   return TextFormField(
-  //     readOnly: true,
-  //     decoration: InputDecoration(
-  //       labelText: label,
-  //       border: OutlineInputBorder(),
-  //       contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-  //     ),
-  //     controller: TextEditingController(
-  //       text: date != null ? "${date.day}.${date.month}.${date.year}" : '',
-  //     ),
-  //     onTap: () async {
-  //       final picked = await showDatePicker(
-  //         context: context,
-  //         initialDate: DateTime.now(),
-  //         firstDate: DateTime.now(),
-  //         lastDate: DateTime(2100),
-  //       );
-  //       if (picked != null) {
-  //         onPicked(picked);
-  //       }
-  //     },
-  //     validator: (value) => value == null || value.isEmpty ? 'Unesite $label' : null,
-  //   );
-  // }
-
-  void _onSearchRoomsPressed() {
-    if (datumRezervacije != null && zavrsetakRezervacije != null) {
-      Navigator.pushNamed(
-        context,
-        SobeScreen.sobeRouteName,
-        arguments: {
-          'userData': widget.userData,
-          'datumOd': datumRezervacije,
-          'datumDo': zavrsetakRezervacije,
-        },
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Molimo odaberite oba datuma prije pretrage."),
-      ));
-    }
+void _onSearchRoomsPressed() {
+  if (datumRezervacije == null || zavrsetakRezervacije == null) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Molimo odaberite oba datuma prije pretrage."),
+    ));
+    return;
   }
+
+  if (zavrsetakRezervacije!.isBefore(datumRezervacije!)) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Datum završetka mora biti nakon datuma početka."),
+    ));
+    return;
+  }
+
+  Navigator.pushNamed(
+    context,
+    SobeScreen.sobeRouteName,
+    arguments: {
+      'userData': widget.userData,
+      'datumOd': datumRezervacije,
+      'datumDo': zavrsetakRezervacije,
+    },
+  );
+}
+
+  // void _onSearchRoomsPressed() {
+  //   if (datumRezervacije != null && zavrsetakRezervacije != null) {
+  //     Navigator.pushNamed(
+  //       context,
+  //       SobeScreen.sobeRouteName,
+  //       arguments: {
+  //         'userData': widget.userData,
+  //         'datumOd': datumRezervacije,
+  //         'datumDo': zavrsetakRezervacije,
+  //       },
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text("Molimo odaberite oba datuma prije pretrage."),
+  //     ));
+  //   }
+  // }
 
   @override
 Widget build(BuildContext context) {
@@ -258,17 +259,19 @@ Widget build(BuildContext context) {
             SizedBox(height: 30),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                elevation: 4,
-                backgroundColor: Colors.teal.shade600,
+               elevation: 4,
+               backgroundColor: Colors.teal,
+               foregroundColor: Colors.white,
+               textStyle: const TextStyle(fontSize: 18),
               ),
               onPressed: _onSearchRoomsPressed,
               child: Text(
                 "Pretraži slobodne sobe",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(),
               ),
             ),
           ],
