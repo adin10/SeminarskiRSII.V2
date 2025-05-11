@@ -62,26 +62,23 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
             ),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (data.isNotEmpty)
-                        Text(
-                          "Lista rezervacija za gosta: ${data[0]["gost"]["ime"]} ${data[0]["gost"]["prezime"]}",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                          ),
-                          textAlign: TextAlign.left,
+                if (data.isNotEmpty)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 16, 0),
+                      child: Text(
+                        "Vaša lista rezervacija",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
                         ),
-                    ],
+                      ),
+                    ),
                   ),
-                ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.85,
                   child: data.isNotEmpty
                       ? PageView(
                           children: data.map<Widget>((reservation) {
@@ -117,53 +114,31 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          "Broj sobe: ${reservation["soba"]["brojSobe"]}",
-                                          style: const TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        _buildInfoRow(
+                                            "Broj sobe",
+                                            reservation["soba"]["brojSobe"]
+                                                .toString()),
+                                        _buildInfoRow(
+                                            "Datum rezervacije",
+                                            formatDate(reservation[
+                                                "datumRezervacije"])),
+                                        _buildInfoRow(
+                                            "Kraj rezervacije",
+                                            formatDate(reservation[
+                                                "zavrsetakRezervacije"])),
+                                        _buildInfoRow(
+                                            "Usluge",
+                                            reservation["rezervacijaUsluge"]
+                                                .map<String>((usluga) =>
+                                                    usluga["usluga"]["naziv"]
+                                                        as String)
+                                                .join(", ")),
+                                        _buildInfoRow(
+                                          "Ukupna cijena",
+                                          "${reservation["cijena"]} KM",
+                                          isBold: true,
                                         ),
-                                        const SizedBox(height: 6),
-                                        Text(
-                                          "Početak rezervacije: ${formatDate(reservation["datumRezervacije"])}",
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Završetak rezervacije: ${formatDate(reservation["zavrsetakRezervacije"])}",
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Usluge koje ste rezervisali:",
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        Text(
-                                          reservation["rezervacijaUsluge"]
-                                              .map<String>((usluga) =>
-                                                  usluga["usluga"]["naziv"]
-                                                      as String)
-                                              .join(", "),
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Ukupna cijena: ${reservation["cijena"]} KM",
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
+  
                                         const SizedBox(height: 16),
                                         Center(
                                           child: DateTime.now()
@@ -321,6 +296,32 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
     );
   }
 }
+
+Widget _buildInfoRow(String label, String value, {bool isBold = false}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 3,
+          child: Text(
+            label,
+            style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: Text(
+            value,
+            style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
 class IdGetter {
   static int Id = 0;

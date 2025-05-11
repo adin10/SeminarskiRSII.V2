@@ -111,6 +111,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                               columns: [
                                 _buildDataColumn("Cijena"),
                                 _buildDataColumn("Valuta"),
+                                _buildDataColumn("Broj sobe"),
                                 _buildDataColumn("Soba"),
                                 _buildDataColumn("Vrijedi Od"),
                                 _buildDataColumn("Vrijedi Do"),
@@ -189,6 +190,7 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink())
         ])
       ];
@@ -201,6 +203,14 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                     style: const TextStyle(fontSize: 14))),
                 DataCell(Text(x["valuta"]?.toString() ?? "",
                     style: const TextStyle(fontSize: 14))),
+                DataCell(
+                  Center(
+                    child: Text(
+                      x["soba"]["brojSobe"]?.toString() ?? "",
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ),
                 // DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "",
                 //     style: const TextStyle(fontSize: 14))),
                   DataCell(

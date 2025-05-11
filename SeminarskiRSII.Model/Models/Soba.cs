@@ -22,6 +22,8 @@ namespace SeminarskiRSII.Model.Models
         public int? CijenaId { get; set; }
         [NotMapped]
         public string? Valuta { get; set; }
+        [NotMapped]
+        public float? ProsjecnaOcjena { get; set; }
 
 
         public override string ToString()

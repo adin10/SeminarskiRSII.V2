@@ -68,22 +68,22 @@ class _SobaRecenzijeScreenState extends State<SobaRecenzijeScreen> {
           Text(
             imePrezime,
             style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold),
+                fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
           Text(
-            "Ocjena: ${recenzija['ocjena']}/5",
-            style: const TextStyle(fontSize: 14),
+            "Ocjena: ${recenzija['ocjena']}",
+            style: const TextStyle(fontSize: 20),
           ),
           const SizedBox(height: 4),
           Text(
             "Komentar: ${recenzija['komentar']}",
-            style: const TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 18),
           ),
           const SizedBox(height: 4),
           Text(
             "Datum: ${DateFormat('dd.MM.yyyy').format(datum)}",
-            style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+            style: TextStyle(fontSize: 18),
           ),
         ],
       ),

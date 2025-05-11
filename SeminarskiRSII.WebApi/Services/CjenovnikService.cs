@@ -30,17 +30,73 @@ namespace SeminarskiRSII.WebApi.Services
             return _mapper.Map<Model.Models.Cjenovnik>(entity);
         }
 
+        //public async Task<List<Model.Models.Cjenovnik>> GetList(DateTime datumOd, DateTime datumDo)
+        //{
+        //    var list = await _context.Cjenovnik
+        //        .Include(c => c.Soba)
+        //        .Where(c => !_context.Rezervacija.Any(r =>
+        //            r.SobaId == c.SobaId &&
+        //            r.DatumRezervacije < datumDo &&
+        //            r.ZavrsetakRezervacije > datumOd
+        //        )).ToListAsync();
+
+        //    var mapped = _mapper.Map<List<Model.Models.Cjenovnik>>(list);
+
+        //    var sveRecenzije = await _context.Recenzija.ToListAsync();
+        //    var ukupno = 0;
+        //    foreach(var x in mapped)
+        //    {
+        //        foreach(var y in sveRecenzije)
+        //        {
+        //            if(x.SobaId == y.SobaId)
+        //            {
+        //                var suma = y.Ocjena;
+        //                var brojac = 1;
+        //                ukupno = suma / brojac;
+        //            }
+        //            x.Soba.ProsjecnaOcjena = ukupno;
+        //        }
+        //    }
+
+        //    return mapped;
+        //}
+
         public async Task<List<Model.Models.Cjenovnik>> GetList(DateTime datumOd, DateTime datumDo)
         {
-            var list = await _context.Cjenovnik
-                .Include(c => c.Soba)
-                .Where(c => !_context.Rezervacija.Any(r =>
-                    r.SobaId == c.SobaId &&
-                    r.DatumRezervacije < datumDo &&
-                    r.ZavrsetakRezervacije > datumOd
-                )).ToListAsync();
+            var zauzeteSobeIds = await _context.Rezervacija
+                .Where(r => r.DatumRezervacije < datumDo && r.ZavrsetakRezervacije > datumOd)
+                .Select(r => r.SobaId)
+                .Distinct()
+                .ToListAsync();
 
-            return _mapper.Map<List<Model.Models.Cjenovnik>>(list);
+            var slobodneSobeCijene = await _context.Cjenovnik
+                .Include(c => c.Soba)
+                .Where(c => !zauzeteSobeIds.Contains(c.SobaId))
+                .ToListAsync();
+
+            var mapped = _mapper.Map<List<Model.Models.Cjenovnik>>(slobodneSobeCijene);
+
+            var prosjecneOcjene = await _context.Recenzija
+                .GroupBy(r => r.SobaId)
+                .Select(g => new {
+                    SobaId = g.Key,
+                    Prosjek = g.Average(r => r.Ocjena)
+                })
+                .ToDictionaryAsync(x => x.SobaId, x => x.Prosjek);
+
+            foreach (var item in mapped)
+            {
+                if (prosjecneOcjene.TryGetValue(item.SobaId, out var prosjek))
+                {
+                    item.Soba.ProsjecnaOcjena = (float)prosjek;
+                }
+                else
+                {
+                    item.Soba.ProsjecnaOcjena = null;
+                }
+            }
+
+            return mapped;
         }
 
         public async Task<Model.Models.Cjenovnik> Get(int id)
