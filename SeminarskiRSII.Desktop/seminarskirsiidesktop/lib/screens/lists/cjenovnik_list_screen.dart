@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/cjenovnik_provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/cjenovnik_new_screen.dart';
@@ -119,10 +119,6 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                                   label: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      // SizedBox(
-                                      //   width: 60,
-                                      //   child: Center(child: Text('Uredi')),
-                                      // ),
                                       SizedBox(
                                         width: 60,
                                         child: Center(child: Text('Obrisi')),
@@ -139,29 +135,6 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                     ),
             ),
           ),
-          // const SizedBox(height: 20),
-          // Padding(
-          //   padding: const EdgeInsets.only(right: 24.0, bottom: 16.0),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.end,
-          //     children: [
-          //       ElevatedButton(
-          //         onPressed: () {
-          //           Navigator.push(
-          //             context,
-          //             MaterialPageRoute(builder: (context) => const NewCjenovnikScreen(x)),
-          //           );
-          //         },
-          //         style: ElevatedButton.styleFrom(
-          //           padding: const EdgeInsets.symmetric(
-          //               horizontal: 24, vertical: 12),
-          //           textStyle: const TextStyle(fontSize: 16),
-          //         ),
-          //         child: const Text('Dodaj novu cijenu'),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );
@@ -211,55 +184,40 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                     ),
                   ),
                 ),
-                // DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "",
-                //     style: const TextStyle(fontSize: 14))),
-                  DataCell(
-              SizedBox(
-                width: 70,
-                height: 40,
-                child: Image.memory(
-                  base64Decode(x["soba"]["slika"]),
-                  fit: BoxFit.cover,
+                DataCell(
+                  SizedBox(
+                    width: 70,
+                    height: 40,
+                    child: Image.memory(
+                      base64Decode(x["soba"]["slika"]),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-                DataCell(Center(
+                DataCell(
+                  Center(
                     child: Text(
-                        x["vrijediOd"] != null
-                            ? DateTime.parse(x["vrijediOd"])
-                                .toLocal()
-                                .toString()
-                                .split(' ')[0]
-                            : "",
-                        style: const TextStyle(fontSize: 14)))),
-                DataCell(Center(
+                      x["vrijediOd"] != null
+                          ? DateFormat('dd-MM-yyyy')
+                              .format(DateTime.parse(x["vrijediOd"]).toLocal())
+                          : "",
+                    ),
+                  ),
+                ),
+                DataCell(
+                  Center(
                     child: Text(
-                        x["vrijediDo"] != null
-                            ? DateTime.parse(x["vrijediDo"])
-                                .toLocal()
-                                .toString()
-                                .split(' ')[0]
-                            : "",
-                        style: const TextStyle(fontSize: 14)))),
+                      x["vrijediDo"] != null
+                          ? DateFormat('dd-MM-yyyy')
+                              .format(DateTime.parse(x["vrijediDo"]).toLocal())
+                          : "",
+                    ),
+                  ),
+                ),
                 DataCell(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // SizedBox(
-                      //   width: 60,
-                      //   child: IconButton(
-                      //       icon: const Icon(Icons.edit, color: Colors.blue),
-                      //       onPressed: () {
-                      //         Navigator.push(
-                      //           context,
-                      //           MaterialPageRoute(
-                      //             builder: (context) => NewCjenovnikScreen(
-                      //               cjenovnik: x,
-                      //             ),
-                      //           ),
-                      //         );
-                      //       }),
-                      // ),
                       SizedBox(
                         width: 60,
                         child: IconButton(

@@ -21,8 +21,8 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
   late String komentar;
   late int gostId;
   late int sobaId;
-  List<dynamic> sobe = []; 
-  List<dynamic> gosti = []; 
+  List<dynamic> sobe = [];
+  List<dynamic> gosti = [];
 
   @override
   void initState() {
@@ -33,12 +33,14 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
 
   Future<void> _fetchSobe() async {
     final ioc = HttpClient();
-    ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
     final http = IOClient(ioc);
-    final url = Uri.parse("${BaseProvider.baseUrl}/Soba"); // Replace with your endpoint
+    final url = Uri.parse("${BaseProvider.baseUrl}/Soba");
 
     try {
-      final response = await http.get(url, headers: {'Content-Type': 'application/json'});
+      final response =
+          await http.get(url, headers: {'Content-Type': 'application/json'});
       if (response.statusCode == 200) {
         setState(() {
           sobe = json.decode(response.body);
@@ -50,25 +52,23 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
       // Handle error
     }
   }
-  
-    Future<void> _fetchGosti() async {
+
+  Future<void> _fetchGosti() async {
     final ioc = HttpClient();
-    ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
     final http = IOClient(ioc);
-    final url = Uri.parse("${BaseProvider.baseUrl}/Gost"); // Replace with your endpoint
+    final url = Uri.parse("${BaseProvider.baseUrl}/Gost");
 
     try {
-      final response = await http.get(url, headers: {'Content-Type': 'application/json'});
+      final response =
+          await http.get(url, headers: {'Content-Type': 'application/json'});
       if (response.statusCode == 200) {
         setState(() {
           gosti = json.decode(response.body);
         });
-      } else {
-        // Handle error
-      }
-    } catch (error) {
-      // Handle error
-    }
+      } else {}
+    } catch (error) {}
   }
 
   @override
@@ -84,7 +84,7 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-                            DropdownButtonFormField<int>(
+              DropdownButtonFormField<int>(
                 decoration: const InputDecoration(labelText: 'Gost'),
                 items: gosti.map<DropdownMenuItem<int>>((gost) {
                   return DropdownMenuItem<int>(
@@ -104,7 +104,7 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
                   return null;
                 },
               ),
-                            DropdownButtonFormField<int>(
+              DropdownButtonFormField<int>(
                 decoration: const InputDecoration(labelText: 'soba'),
                 items: sobe.map<DropdownMenuItem<int>>((soba) {
                   return DropdownMenuItem<int>(
@@ -155,7 +155,6 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    // Call your method to create Drzava here
                     _createNews();
                   }
                 },
@@ -169,21 +168,15 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
   }
 
   void _createNews() {
-    // Implement your logic to create Grad here
     final request = RecenzijaInsertRequest(
-      gostId: gostId,
-      sobaId: sobaId,
-      ocjena: ocjena,
-      komentar: komentar
-    );
+        gostId: gostId, sobaId: sobaId, ocjena: ocjena, komentar: komentar);
 
-    // Pretvorite objekt request u JSON string
     final requestBody = jsonEncode(request.toJson());
 
     final ioc = HttpClient();
-    ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
     final http = IOClient(ioc);
-    // Izvršite HTTP POST zahtjev na server
     final url = Uri.parse("${BaseProvider.baseUrl}/Recenzija");
     http.post(url,
         body: requestBody,
@@ -192,22 +185,15 @@ class _NewRecenzijaScreenState extends State<NewRecenzijaScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Recenzija uspješno Dodata.'),
-            behavior: SnackBarBehavior.floating, // Display at the top
+            behavior: SnackBarBehavior.floating,
           ),
         );
-        // Uspješno poslan zahtjev
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const RecenzijaListScreen()),
         );
-      } else {
-        // Pogreška pri slanju zahtjeva
-        // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
-      }
-    }).catchError((error) {
-      // Pogreška prilikom izvršavanja HTTP zahtjeva
-      // Ovdje možete dodati odgovarajući postupak za prikaz pogreške
-    });
+      } else {}
+    }).catchError((error) {});
   }
 
   @override

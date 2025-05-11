@@ -48,48 +48,48 @@ class _SobaRecenzijeScreenState extends State<SobaRecenzijeScreen> {
               ? const Center(child: Text("Nema recenzija za ovu sobu."))
               : ListView.builder(
                   itemCount: _recenzije.length,
-      itemBuilder: (context, index) {
-  final recenzija = _recenzije[index];
-  final gost = recenzija['gost'];
-  final datum = DateTime.parse(recenzija['datumRecenzije']);
+                  itemBuilder: (context, index) {
+                    final recenzija = _recenzije[index];
+                    final gost = recenzija['gost'];
+                    final datum = DateTime.parse(recenzija['datumRecenzije']);
 
-  final imePrezime = gost != null
-      ? "${gost['ime']} ${gost['prezime']}"
-      : "Nepoznat gost";
+                    final imePrezime = gost != null
+                        ? "${gost['ime']} ${gost['prezime']}"
+                        : "Nepoznat gost";
 
-  return Card(
-    margin: const EdgeInsets.all(10),
-    elevation: 3,
-    child: Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            imePrezime,
-            style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            "Ocjena: ${recenzija['ocjena']}",
-            style: const TextStyle(fontSize: 20),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            "Komentar: ${recenzija['komentar']}",
-            style: const TextStyle(fontSize: 18),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            "Datum: ${DateFormat('dd.MM.yyyy').format(datum)}",
-            style: TextStyle(fontSize: 18),
-          ),
-        ],
-      ),
-    ),
-  );
-},
+                    return Card(
+                      margin: const EdgeInsets.all(10),
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              imePrezime,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              "Ocjena: ${recenzija['ocjena']}",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              "Komentar: ${recenzija['komentar']}",
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              "Datum: ${DateFormat('dd.MM.yyyy').format(datum)}",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
     );
   }

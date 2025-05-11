@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/io_client.dart';
 import 'base_provider.dart';
-import 'package:http/http.dart' as httpClient; // Use a different prefix
+import 'package:http/http.dart' as httpClient;
 
 class GradProvider with ChangeNotifier {
   HttpClient client = HttpClient();
@@ -26,18 +26,12 @@ bool isValidResponse(httpClient.Response response) {
 Future<dynamic> get(dynamic searchObject) async {
   var url = Uri.parse("${BaseProvider.baseUrl}/Grad");
 
-  // Make the HTTP GET request
   var response = await http!.get(url);
 
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
-
-  // Validate response
   if (isValidResponse(response)) {
-    // Check if the response body is empty or null
     if (response.body.isNotEmpty) {
       try {
-        var data = jsonDecode(response.body); // Decode response body
+        var data = jsonDecode(response.body);
         return data;
       } catch (e) {
         throw Exception("Failed to decode response body: $e");

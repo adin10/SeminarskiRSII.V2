@@ -41,7 +41,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     super.initState();
     _fetchSobe();
     _selectedSobaId = widget.sobaId;
-    _loadCjenovnik(); // Poziv async metode bez await-a
+    _loadCjenovnik();
   }
 
   Future<void> _loadCjenovnik() async {
@@ -297,7 +297,6 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     required ValueChanged<int?> onChanged,
     required String? Function(int?) validator,
   }) {
-    // If the sobaId is already set (during editing), disable the dropdown
     return DropdownButtonFormField<int>(
       value: value,
       decoration: InputDecoration(
@@ -313,7 +312,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
       items: items,
       onChanged: widget.sobaId == null
           ? onChanged
-          : null, // Disable the dropdown if the sobaId is set
+          : null,
       validator: validator,
     );
   }

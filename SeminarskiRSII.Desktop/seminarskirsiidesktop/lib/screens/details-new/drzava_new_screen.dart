@@ -247,7 +247,7 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
             decoration: BoxDecoration(
-              color: Colors.red, // Red background for the error
+              color: Colors.red,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(

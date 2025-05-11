@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/gosti_provider.dart';
 import '../../widgets/master_screen.dart';
@@ -247,11 +248,9 @@ class _GostiListScreenState extends State<GostiListScreen> {
       DataCell(Center(child: Text(x["grad"]["nazivGrada"] ?? "", style: const TextStyle(fontSize: 14)))),
       DataCell(Center(child: Text(x["korisnickoIme"] ?? "", style: const TextStyle(fontSize: 14)))),
       DataCell(Center(child: Text(
-        x["datumRegistracije"] != null
-            ? DateTime.parse(x["datumRegistracije"]).toLocal().toString().split(' ')[0]
-            : "",
-        style: const TextStyle(fontSize: 14),
-      ))),
+                    x["datumRegistracije"] != null
+                        ? DateFormat('dd-MM-yyyy').format(
+                            DateTime.parse(x["datumRegistracije"]).toLocal()) : ""),),),
       DataCell(Center(child: Text(
         x["status"] == true ? "Aktivan" : "Neaktivan",
         style: const TextStyle(fontSize: 14),

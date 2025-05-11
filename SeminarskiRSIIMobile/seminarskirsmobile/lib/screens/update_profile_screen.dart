@@ -23,17 +23,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final _imeController = TextEditingController();
   final _prezimeController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
-  final userData = widget.userData;
+    final userData = widget.userData;
 
-  _emailController.text = userData.email ?? '';
-  _telefonController.text = userData.telefon ?? '';
-  _usernameController.text = userData.korisnickoIme ?? '';
-  _imeController.text = userData.ime ?? '';
-  _prezimeController.text = userData.prezime ?? '';
-
+    _emailController.text = userData.email ?? '';
+    _telefonController.text = userData.telefon ?? '';
+    _usernameController.text = userData.korisnickoIme ?? '';
+    _imeController.text = userData.ime ?? '';
+    _prezimeController.text = userData.prezime ?? '';
 
     return Scaffold(
       appBar: AppBar(
@@ -55,9 +53,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    _buildTextField("Email", _emailController, 'Email je obavezno polje'),
-                    _buildTextField("Telefon", _telefonController, 'Telefon je obavezno polje'),
-                    _buildTextField("Korisničko ime", _usernameController, 'Korisničko ime je obavezno polje'),
+                    _buildTextField(
+                        "Email", _emailController, 'Email je obavezno polje'),
+                    _buildTextField("Telefon", _telefonController,
+                        'Telefon je obavezno polje'),
+                    _buildTextField("Korisničko ime", _usernameController,
+                        'Korisničko ime je obavezno polje'),
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () => _updateUser(userData.id),
@@ -69,7 +70,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Text("Spasi promjene", style: TextStyle(fontSize: 18)),
+                      child: Text("Spasi promjene",
+                          style: TextStyle(fontSize: 18)),
                     ),
                   ],
                 ),
@@ -81,7 +83,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, String errorMessage) {
+  Widget _buildTextField(
+      String label, TextEditingController controller, String errorMessage) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
@@ -100,73 +103,46 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     );
   }
 
-  // void _updateUser(int userId) {
-  //   if (!_formKey.currentState!.validate()) return;
-
-  //   final body = jsonEncode({
-  //     "email": _emailController.text,
-  //     "telefon": _telefonController.text,
-  //     "korisnickoIme": _usernameController.text,
-  //   });
-
-  //   final uri = Uri.parse("${BaseProvider.baseUrl}/Gost/UpdateProfile/$userId");
-  //   final ioc = HttpClient()..badCertificateCallback = (cert, host, port) => true;
-  //   final http = IOClient(ioc);
-
-  //   http.put(uri,
-  //       body: body,
-  //       headers: {'Content-Type': 'application/json'}).then((res) {
-  //     if (res.statusCode == 200) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text('Podaci uspješno ažurirani!')),
-  //       );
-  //       Navigator.pop(context);
-  //     } else {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text('Greška prilikom ažuriranja podataka.')),
-  //       );
-  //     }
-  //   });
-  // }
-
   void _updateUser(int userId) {
-  if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) return;
 
-  final body = jsonEncode({
-    "email": _emailController.text,
-    "telefon": _telefonController.text,
-    "korisnickoIme": _usernameController.text,
-  });
+    final body = jsonEncode({
+      "email": _emailController.text,
+      "telefon": _telefonController.text,
+      "korisnickoIme": _usernameController.text,
+    });
 
-  final uri = Uri.parse("${BaseProvider.baseUrl}/Gost/UpdateProfile/$userId");
-  final ioc = HttpClient()..badCertificateCallback = (cert, host, port) => true;
-  final http = IOClient(ioc);
+    final uri = Uri.parse("${BaseProvider.baseUrl}/Gost/UpdateProfile/$userId");
+    final ioc = HttpClient()
+      ..badCertificateCallback = (cert, host, port) => true;
+    final http = IOClient(ioc);
 
-  http.put(uri, body: body, headers: {'Content-Type': 'application/json'}).then((res) {
-    if (res.statusCode == 200) {
+    http.put(uri,
+        body: body, headers: {'Content-Type': 'application/json'}).then((res) {
+      if (res.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Podaci uspješno ažurirani!')),
+        );
+
+        final updatedUser = GetUserResponse(
+          id: userId,
+          email: _emailController.text,
+          telefon: _telefonController.text,
+          korisnickoIme: _usernameController.text,
+          ime: _imeController.text,
+          prezime: _prezimeController.text,
+        );
+
+        Navigator.pop(context, updatedUser);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Greška prilikom ažuriranja podataka.')),
+        );
+      }
+    }).catchError((err) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Podaci uspješno ažurirani!')),
+        SnackBar(content: Text('Došlo je do greške: $err')),
       );
-
-      final updatedUser = GetUserResponse(
-        id: userId,
-        email: _emailController.text,
-        telefon: _telefonController.text,
-        korisnickoIme: _usernameController.text,
-        ime: _imeController.text,
-        prezime: _prezimeController.text,
-      );
-
-      Navigator.pop(context, updatedUser);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Greška prilikom ažuriranja podataka.')),
-      );
-    }
-  }).catchError((err) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Došlo je do greške: $err')),
-    );
-  });
-}
+    });
+  }
 }

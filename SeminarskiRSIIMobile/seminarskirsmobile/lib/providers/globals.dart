@@ -1,1 +1,1 @@
-int loggedUserID = 0; // Initialize with a default value
+int loggedUserID = 0;

@@ -14,7 +14,6 @@ class RecenzijaProvider with ChangeNotifier {
 
   Future<List<dynamic>?> get() async {
   try {
-    // Make the API request with the gostID parameter
     final response = await http!.get(
       Uri.parse('${BaseProvider.baseUrl}/Recenzija'),
       headers: {'Content-Type': 'application/json'},
@@ -24,11 +23,9 @@ class RecenzijaProvider with ChangeNotifier {
       final responseData = jsonDecode(response.body);
       return responseData;
     } else {
-      // Handle API error response
       return null;
     }
   } catch (error) {
-    // Handle network or other errors
     return null;
   }
 }

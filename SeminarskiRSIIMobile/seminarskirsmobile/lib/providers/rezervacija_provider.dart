@@ -23,11 +23,9 @@ class RezervacijaProvider with ChangeNotifier {
         final responseData = jsonDecode(response.body);
         return responseData;
       } else {
-        // Handle API error response
         return null;
       }
     } catch (error) {
-      // Handle network or other errors
       return null;
     }
   }

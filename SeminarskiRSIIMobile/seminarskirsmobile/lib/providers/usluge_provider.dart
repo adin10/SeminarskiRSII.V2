@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/io_client.dart';
 import 'base_provider.dart';
-import 'package:http/http.dart' as httpClient; // Use a different prefix
+import 'package:http/http.dart' as httpClient;
 
 class UslugeProvider with ChangeNotifier {
   HttpClient client = HttpClient();

@@ -57,6 +57,7 @@ namespace SeminarskiRSII.WebApi.Services
         public async Task<Model.Models.Recenzija> Insert(RecenzijaInsertRequest insert)
         {
             var entity = _mapper.Map<Database.Recenzija>(insert);
+            entity.DatumRecenzije = DateTime.Now;
             await _context.Recenzija.AddAsync(entity);
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Recenzija>(entity);

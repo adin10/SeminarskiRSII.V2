@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:seminarskirsiidesktop/screens/details-new/change_password_screen.dart';
+import 'package:seminarskirsiidesktop/screens/details-new/osoblje_edit_screen.dart';
 import '../../providers/base_provider.dart';
 import '../../widgets/master_screen.dart';
 
@@ -101,10 +102,24 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
                             style: const TextStyle(
                                 fontSize: 16, color: Colors.black87),
                           ),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditOsobljeScreen(osoblje: osobljeData),
+                                ),
+                              );
+                            },
+                            child: const Text('Uredi vaše podatke'),
+                          ),
                         ],
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 20),
                   Card(
                     elevation: 4,

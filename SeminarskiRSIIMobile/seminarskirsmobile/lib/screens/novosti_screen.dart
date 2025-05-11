@@ -133,7 +133,7 @@ onTap: () async {
         );
 
         if (result == true) {
-          onMarkedAsRead(); // automatski poziva loadData iz roditelja
+          onMarkedAsRead();
         }
       },
       child: Card(

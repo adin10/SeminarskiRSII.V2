@@ -262,7 +262,7 @@ DataCell _buildPriceCell(dynamic soba) {
   final cijena = soba["cijena"];
   final valuta = soba["valuta"];
   final sobaId = soba["id"];
-  final cijenaId = soba["cijenaId"]; // Pretpostavka: postoji ovo polje ako cijena postoji
+  final cijenaId = soba["cijenaId"];
 
   void navigateToCjenovnik() {
     Navigator.push(

@@ -138,7 +138,6 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                           "${reservation["cijena"]} KM",
                                           isBold: true,
                                         ),
-  
                                         const SizedBox(height: 16),
                                         Center(
                                           child: DateTime.now()
@@ -307,21 +306,22 @@ Widget _buildInfoRow(String label, String value, {bool isBold = false}) {
           flex: 3,
           child: Text(
             label,
-            style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
           ),
         ),
         Expanded(
           flex: 5,
           child: Text(
             value,
-            style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
           ),
         ),
       ],
     ),
   );
 }
-
 
 class IdGetter {
   static int Id = 0;

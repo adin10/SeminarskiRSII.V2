@@ -125,6 +125,8 @@ namespace SeminarskiRSII.WebApi.Services
             {
                 throw new UserException("Lozinke se ne podudaraju");
             }
+            entity.DatumRegistracije = DateTime.Now;
+            entity.Status = true;
             entity.LozinkaSalt = Util.PasswordGenerator.GenerateSalt();
             entity.LozinkaHash = Util.PasswordGenerator.GenerateHash(entity.LozinkaSalt,requst.Lozinka);
             await _context.Gost.AddAsync(entity);

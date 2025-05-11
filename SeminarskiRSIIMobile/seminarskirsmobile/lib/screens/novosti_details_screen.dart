@@ -28,13 +28,14 @@ class _NovostiDetailScreenState extends State<NovostiDetailScreen> {
   }
 
   Future<void> _markAsReadIfNeeded() async {
-    if (widget.novost['procitano'] == false || widget.novost['procitano'] == null) {
+    if (widget.novost['procitano'] == false ||
+        widget.novost['procitano'] == null) {
       try {
-        await NovostiProvider().markAsRead(widget.novost['id'], widget.korisnikId);
+        await NovostiProvider()
+            .markAsRead(widget.novost['id'], widget.korisnikId);
         setState(() {
           isMarkedRead = true;
         });
-        // Postavi lokalno da je obavijest pročitana, da se zna pri povratku
         widget.novost['procitano'] = true;
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -61,13 +62,13 @@ class _NovostiDetailScreenState extends State<NovostiDetailScreen> {
   Widget build(BuildContext context) {
     final naslov = widget.novost['naslov'] ?? 'Bez naslova';
     final sadrzaj = widget.novost['sadrzaj'] ?? '';
-    final datumObjave = DateFormat('dd.MM.yyyy')
+    final datumObjave = DateFormat('dd-MM-yyyy')
         .format(DateTime.parse(widget.novost['datumObjave']));
     final slikaBase64 = widget.novost['slika'];
 
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context, true); // signalizira da je možda nešto izmijenjeno
+        Navigator.pop(context, true);
         return false;
       },
       child: Scaffold(
@@ -118,10 +119,10 @@ class _NovostiDetailScreenState extends State<NovostiDetailScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-Text(
-  'Datum objave: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(widget.novost['datumObjave']))}',
-  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-),
+                  Text(
+                    'Datum objave: ${DateFormat('dd-MM-yyyy').format(DateTime.parse(widget.novost['datumObjave']))}',
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
                   if (widget.novost['osoblje'] != null)
                     Text(
                       'Autor: ${widget.novost['osoblje']['ime']} ${widget.novost['osoblje']['prezime']}',
