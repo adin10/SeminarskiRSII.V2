@@ -281,8 +281,14 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
             behavior: SnackBarBehavior.floating,
           ),
         );
-        Navigator.pushReplacementNamed(
-            context, ListaRezervacijaScreen.listaRezervacijaRouteName);
+        // Navigator.pushNamedAndRemoveUntil(
+        //     context, ListaRezervacijaScreen.listaRezervacijaRouteName,
+        //      (Route<dynamic> route) => false);
+             int popCount = 0;
+Navigator.of(context).pushAndRemoveUntil(
+  MaterialPageRoute(builder: (context) => ListaRezervacijaScreen()),
+  (route) => popCount++ == 3,
+);
       }
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(

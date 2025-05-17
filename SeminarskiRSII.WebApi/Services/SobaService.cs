@@ -70,6 +70,12 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Soba> Insert(SobaInsertRequest insert)
         {
+            var listaSoba = await _context.Soba.ToListAsync();
+            if (listaSoba.Any(x => x.BrojSobe == insert.BrojSobe))
+            {
+                return null;
+            }
+
             var entity = _mapper.Map<Database.Soba>(insert);
             await _context.Soba.AddAsync(entity);
             await _context.SaveChangesAsync();
@@ -78,6 +84,11 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Soba> Update(int id, SobaInsertRequest update)
         {
+            var listaSoba = await _context.Soba.ToListAsync();
+            if(listaSoba.Any(x=>x.BrojSobe == update.BrojSobe && x.Id != id))
+            {
+                return null;
+            }
             var entity = await _context.Soba.FindAsync(id);
             _mapper.Map(update, entity);
             await _context.SaveChangesAsync();
@@ -144,8 +155,11 @@ namespace SeminarskiRSII.WebApi.Services
                     SobaID = (uint)item.Id
                 });
 
-                var reservationCount = _context.Rezervacija.Count(r => r.SobaId == item.Id);
-                predictionResult.Add(new Tuple<Model.Models.Soba, float>(item, prediction.Score * reservationCount)); // Povećavamo relevantnost prema broju rezervacija
+                var zadnjaGodina = DateTime.Now.AddDays(-365);
+                var brojRezervacijaZadnjaGodina = _context.Rezervacija
+                        .Count(r => r.SobaId == item.Id && r.DatumRezervacije >= zadnjaGodina);
+                item.BrojRezervacijaUZadnjuGodinu = brojRezervacijaZadnjaGodina;
+                predictionResult.Add(new Tuple<Model.Models.Soba, float>(item, prediction.Score * brojRezervacijaZadnjaGodina)); // Povećavamo relevantnost prema broju rezervacija
             }
 
             var finalResult = predictionResult

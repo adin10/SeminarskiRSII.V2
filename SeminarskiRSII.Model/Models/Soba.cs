@@ -25,6 +25,9 @@ namespace SeminarskiRSII.Model.Models
         [NotMapped]
         public float? ProsjecnaOcjena { get; set; }
 
+        [NotMapped]
+        public int? BrojRezervacijaUZadnjuGodinu { get; set; }
+
 
         public override string ToString()
         {

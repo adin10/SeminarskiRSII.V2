@@ -97,7 +97,7 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
                         child: const Text("Uredite vaše podatke"),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 50),
-                          backgroundColor: Colors.orange,
+                          backgroundColor: Colors.teal,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),

@@ -40,13 +40,24 @@ namespace SeminarskiRSII.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Soba>> Insert(SobaInsertRequest insert)
         {
-            return Ok(await _service.Insert(insert));
+            var result = await _service.Insert(insert);
+            if (result == null)
+            {
+                return BadRequest("Soba sa tim brojem već postoji.");
+            }
+
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Soba>> Update(int id, SobaInsertRequest update)
         {
-            return Ok(await _service.Update(id, update));
+            var result = await _service.Update(id, update);
+            if(result == null)
+            {
+                return BadRequest("Soba sa tim brojem već postoji.");
+            }
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]

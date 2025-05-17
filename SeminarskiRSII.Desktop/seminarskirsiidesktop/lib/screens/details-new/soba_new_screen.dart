@@ -330,11 +330,19 @@ Widget _buildReadOnlyField({required String labelText, required TextEditingContr
     if (response.statusCode == 200) {
       showCustomSnackBar(
         context,
-        'Soba uspjesno kreirana.',
+        'Soba uspješno kreirana.',
         Colors.green,
       );
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const SobaListScreen()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SobaListScreen()),
+      );
+    } else if (response.statusCode == 400) {
+      showWarningToast(
+        context,
+        utf8.decode(
+            response.bodyBytes)
+      );
     } else {
       _showErrorSnackBar();
     }
@@ -366,11 +374,19 @@ Widget _buildReadOnlyField({required String labelText, required TextEditingContr
     if (response.statusCode == 200) {
       showCustomSnackBar(
         context,
-        'Soba uspjesno uredjena.',
+        'Soba uspješno uredjena.',
         Colors.green,
       );
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const SobaListScreen()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SobaListScreen()),
+      );
+    } else if (response.statusCode == 400) {
+      showWarningToast(
+        context,
+        utf8.decode(
+            response.bodyBytes)
+      );
     } else {
       _showErrorSnackBar();
     }
@@ -466,4 +482,43 @@ Widget _buildReadOnlyField({required String labelText, required TextEditingContr
     Future.delayed(const Duration(seconds: 3))
         .then((_) => overlayEntry.remove());
   }
+
+void showWarningToast(BuildContext context, String message) {
+  final overlay = Overlay.of(context);
+  final overlayEntry = OverlayEntry(
+    builder: (context) => Positioned(
+      top: 20,
+      left: MediaQuery.of(context).size.width * 0.15,
+      width: MediaQuery.of(context).size.width * 0.7,
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          decoration: BoxDecoration(
+            color: Colors.orange, // narandžasta boja
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.warning, color: Colors.white),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+
+  overlay.insert(overlayEntry);
+
+  Future.delayed(const Duration(seconds: 3))
+      .then((_) => overlayEntry.remove());
+}
 }

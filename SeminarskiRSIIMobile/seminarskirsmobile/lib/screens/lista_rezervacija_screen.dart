@@ -259,6 +259,7 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                                           .styleFrom(
                                                         backgroundColor:
                                                             Colors.red,
+                                                        foregroundColor: Colors.white,
                                                         shape:
                                                             RoundedRectangleBorder(
                                                           borderRadius:
