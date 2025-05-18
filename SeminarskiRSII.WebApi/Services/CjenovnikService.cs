@@ -61,7 +61,7 @@ namespace SeminarskiRSII.WebApi.Services
         //    return mapped;
         //}
 
-        public async Task<List<Model.Models.Cjenovnik>> GetList(DateTime datumOd, DateTime datumDo)
+        public async Task<List<Model.Models.Cjenovnik>> GetList(DateTime datumOd, DateTime datumDo, double? cijenaOd, double? cijenaDo, int? sprat)
         {
             var zauzeteSobeIds = await _context.Rezervacija
                 .Where(r => r.DatumRezervacije < datumDo && r.ZavrsetakRezervacije > datumOd)
@@ -69,12 +69,19 @@ namespace SeminarskiRSII.WebApi.Services
                 .Distinct()
                 .ToListAsync();
 
-            var slobodneSobeCijene = await _context.Cjenovnik
+            var query = await _context.Cjenovnik
                 .Include(c => c.Soba)
                 .Where(c => !zauzeteSobeIds.Contains(c.SobaId))
                 .ToListAsync();
 
-            var mapped = _mapper.Map<List<Model.Models.Cjenovnik>>(slobodneSobeCijene);
+            if (cijenaOd.HasValue)
+                query = query.Where(c => c.Cijena >= cijenaOd.Value).ToList();
+            if (cijenaDo.HasValue)
+                query = query.Where(c => c.Cijena <= cijenaDo.Value).ToList();
+            if (sprat.HasValue)
+                query = query.Where(c => c.Soba.BrojSprata == sprat.Value).ToList();
+
+            var mapped = _mapper.Map<List<Model.Models.Cjenovnik>>(query);
 
             var prosjecneOcjene = await _context.Recenzija
                 .GroupBy(r => r.SobaId)

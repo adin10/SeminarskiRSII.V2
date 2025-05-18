@@ -35,7 +35,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Uredi podatke"),
+        title: Text("Uredite vase podatke"),
         backgroundColor: Colors.teal,
       ),
       body: SafeArea(

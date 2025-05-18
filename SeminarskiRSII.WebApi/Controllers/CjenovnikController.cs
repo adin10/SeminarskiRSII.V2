@@ -22,9 +22,9 @@ namespace SeminarskiRSII.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Cjenovnik>>> GetList([FromQuery] DateTime datumOd, [FromQuery] DateTime datumDo)
+        public async Task<ActionResult<List<Cjenovnik>>> GetList([FromQuery] DateTime datumOd, [FromQuery] DateTime datumDo, [FromQuery] double? cijenaOd, [FromQuery] double? cijenaDo, [FromQuery] int? sprat)
         {
-            return Ok(await _service.GetList(datumOd, datumDo));
+            return Ok(await _service.GetList(datumOd, datumDo, cijenaOd, cijenaDo, sprat));
         }
 
         [HttpGet("getAllCijene")]
