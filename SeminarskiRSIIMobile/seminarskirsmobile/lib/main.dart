@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
 import 'package:http/io_client.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -25,68 +26,136 @@ import 'package:seminarskirsmobile/screens/signup_screen.dart';
 import 'package:seminarskirsmobile/screens/sobe_screen.dart';
 import 'package:seminarskirsmobile/screens/update_profile_screen.dart';
 
-void main() => runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => SobaProvider()),
-        ChangeNotifierProvider(create: (_) => NovostiProvider()),
-        ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
-        ChangeNotifierProvider(create: (_) => RecenzijaProvider())
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-        routes: {
-          SobeScreen.sobeRouteName: (context) => SobeScreen(),
-          NovostiScreen.novostiRouteName: (context) => NovostiScreen(),
-          RezervacijScreen.dodajRezervacijuRouteName: (context) =>
-              RezervacijScreen(),
-          ListaRezervacijaScreen.listaRezervacijaRouteName: (context) =>
-              ListaRezervacijaScreen(),
-          RecenzijaScreen.dodajRecenzijuRouteName: (context) =>
-              RecenzijaScreen(),
-          OptionsScreen.optionsRouteName: (context) => OptionsScreen(),
-          PostavkeScreen.routeName: (context) => PostavkeScreen(),
-          ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
-          OdabirDatumaScreen.routeName: (context) {
-            final args = ModalRoute.of(context)!.settings.arguments
-                as Map<String, dynamic>;
-            return OdabirDatumaScreen(
-              userData: args['userData'],
-              userId: args['userId'],
-            );
-          },
-          // UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
-          RecommendationScreen.routeName: (context) => RecommendationScreen(),
-          SobaRecenzijeScreen.routeName: (context) {
+// void main() => runApp(MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(create: (_) => SobaProvider()),
+//         ChangeNotifierProvider(create: (_) => NovostiProvider()),
+//         ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
+//         ChangeNotifierProvider(create: (_) => RecenzijaProvider())
+//       ],
+//       child: MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         home: HomePage(),
+//         routes: {
+//           SobeScreen.sobeRouteName: (context) => SobeScreen(),
+//           NovostiScreen.novostiRouteName: (context) => NovostiScreen(),
+//           RezervacijScreen.dodajRezervacijuRouteName: (context) =>
+//               RezervacijScreen(),
+//           ListaRezervacijaScreen.listaRezervacijaRouteName: (context) =>
+//               ListaRezervacijaScreen(),
+//           RecenzijaScreen.dodajRecenzijuRouteName: (context) =>
+//               RecenzijaScreen(),
+//           OptionsScreen.optionsRouteName: (context) => OptionsScreen(),
+//           PostavkeScreen.routeName: (context) => PostavkeScreen(),
+//           ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
+//           OdabirDatumaScreen.routeName: (context) {
+//             final args = ModalRoute.of(context)!.settings.arguments
+//                 as Map<String, dynamic>;
+//             return OdabirDatumaScreen(
+//               userData: args['userData'],
+//               userId: args['userId'],
+//             );
+//           },
+//           // UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
+//           RecommendationScreen.routeName: (context) => RecommendationScreen(),
+//           SobaRecenzijeScreen.routeName: (context) {
+//             final sobaId = ModalRoute.of(context)!.settings.arguments as int;
+//             return SobaRecenzijeScreen(sobaId: sobaId);
+//           },
+//         },
+//         onGenerateRoute: (settings) {
+//           if (settings.name == UpdateProfileScreen.routeName) {
+//             final args = settings.arguments as GetUserResponse;
+
+//             return MaterialPageRoute(
+//               builder: (context) => UpdateProfileScreen(userData: args),
+//             );
+//           }
+//           if (settings.name == RecommendationScreen.routeName) {
+//             return MaterialPageRoute(
+//                 builder: (context) => RecommendationScreen());
+//           }
+//           if (settings.name == OdabirDatumaScreen.routeName) {
+//             final args = settings.arguments as GetUserResponse;
+//             return MaterialPageRoute(
+//               builder: (context) => OdabirDatumaScreen(
+//                 userData: args,
+//                 userId: args.id,
+//               ),
+//             );
+//           }
+//           return null;
+//         },
+//       ),
+//     ));
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  stripe.Stripe.publishableKey = 'pk_test_51RFxpFRGkjPm5E6WVznMWWlomn3lwfeHI7NRfJI191YK4ZyICPBgB8JQ6X11zChootJqgulDugoaBu2tfurW3IBW00hLIJtDDQ';
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => SobaProvider()),
+      ChangeNotifierProvider(create: (_) => NovostiProvider()),
+      ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
+      ChangeNotifierProvider(create: (_) => RecenzijaProvider()),
+    ],
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+      routes: {
+        SobeScreen.sobeRouteName: (context) => SobeScreen(),
+        NovostiScreen.novostiRouteName: (context) => NovostiScreen(),
+        RezervacijScreen.dodajRezervacijuRouteName: (context) =>
+            RezervacijScreen(),
+        ListaRezervacijaScreen.listaRezervacijaRouteName: (context) =>
+            ListaRezervacijaScreen(),
+        RecenzijaScreen.dodajRecenzijuRouteName: (context) =>
+            RecenzijaScreen(),
+        OptionsScreen.optionsRouteName: (context) => OptionsScreen(),
+        PostavkeScreen.routeName: (context) => PostavkeScreen(),
+        ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
+        OdabirDatumaScreen.routeName: (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return OdabirDatumaScreen(
+            userData: args['userData'],
+            userId: args['userId'],
+          );
+        },
+        // UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
+        RecommendationScreen.routeName: (context) => RecommendationScreen(),
+        SobaRecenzijeScreen.routeName: (context) {
           final sobaId = ModalRoute.of(context)!.settings.arguments as int;
           return SobaRecenzijeScreen(sobaId: sobaId);
-},
         },
+      },
       onGenerateRoute: (settings) {
-          if (settings.name == UpdateProfileScreen.routeName) {
-            final args = settings.arguments as GetUserResponse;
-
-            return MaterialPageRoute(
-              builder: (context) => UpdateProfileScreen(userData: args),
-            );
-          }
-          if (settings.name == RecommendationScreen.routeName) {
-            return MaterialPageRoute(
-                builder: (context) => RecommendationScreen());
-          }
-if (settings.name == OdabirDatumaScreen.routeName) {
-            final args = settings.arguments as GetUserResponse;
-            return MaterialPageRoute(
-              builder: (context) => OdabirDatumaScreen(
-                userData: args,
-                userId: args.id,
-              ),
-            );
-          }
-          return null;
-        },
-      ),
-    ));
+        if (settings.name == UpdateProfileScreen.routeName) {
+          final args = settings.arguments as GetUserResponse;
+          return MaterialPageRoute(
+            builder: (context) => UpdateProfileScreen(userData: args),
+          );
+        }
+        if (settings.name == RecommendationScreen.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => RecommendationScreen());
+        }
+        if (settings.name == OdabirDatumaScreen.routeName) {
+          final args = settings.arguments as GetUserResponse;
+          return MaterialPageRoute(
+            builder: (context) => OdabirDatumaScreen(
+              userData: args,
+              userId: args.id,
+            ),
+          );
+        }
+        return null;
+      },
+    ),
+  ));
+}
 
 class HomePage extends StatelessWidget {
   final usernameController = TextEditingController();

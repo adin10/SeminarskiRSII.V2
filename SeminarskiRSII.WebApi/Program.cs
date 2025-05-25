@@ -18,7 +18,11 @@ builder.Services.Configure<JsonOptions>(options =>
 });
 
 // Add services to the container.
-
+//builder.Configuration
+//    .SetBasePath(Directory.GetCurrentDirectory())
+//    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+//    .AddEnvironmentVariables();
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
