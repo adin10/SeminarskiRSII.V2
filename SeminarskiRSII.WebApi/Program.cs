@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
+using SeminarskiRSII.Model.Models;
 using SeminarskiRSII.Model.Requests;
 using SeminarskiRSII.WebApi.Database;
 using SeminarskiRSII.WebApi.Interfaces;
@@ -28,6 +29,8 @@ builder.Services.AddSwaggerGen();
 var connection = builder.Configuration.GetConnectionString("HotelAS");
 builder.Services.AddDbContext<IB210330Context>(options => options.UseSqlServer(connection));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.Configure<StripeSettings>(
+    builder.Configuration.GetSection("Stripe"));
 
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IDrzavaService, DrzavaService>();
