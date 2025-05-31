@@ -306,21 +306,6 @@ class _SobeScreenState extends State<SobeScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 6),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0),
-                                      child: Text(
-                                        x["soba"]["prosjecnaOcjena"] != null
-                                            ? "Prosječna ocjena: ${x["soba"]["prosjecnaOcjena"].toStringAsFixed(1)}"
-                                            : "Nema ocjena za ovu sobu",
-                                        style: const TextStyle(
-                                          fontSize: 17,
-                                          color: Colors.black87,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
                                     AspectRatio(
                                       aspectRatio: 1 / 1,
                                       child: ClipRRect(
@@ -347,6 +332,8 @@ class _SobeScreenState extends State<SobeScreen> {
                                                   .toString()),
                                           _tekstStavka("Opis sobe",
                                               x["soba"]["opisSobe"].toString()),
+                                          _tekstStavka("Pros. ocjena",
+                                              x["soba"]["prosjecnaOcjena"].toString()),
                                           _tekstStavka("Cijena",
                                               "${x["cijena"]} ${x["valuta"]}",
                                               bold: true),
@@ -434,7 +421,7 @@ Widget _tekstStavka(String labela, String vrijednost, {bool bold = false}) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 110, // širina rezervisana za labelu
+          width: 130, // širina rezervisana za labelu
           child: Text(
             "$labela:",
             style: TextStyle(

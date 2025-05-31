@@ -127,7 +127,7 @@ namespace SeminarskiRSII.WebApi.Services
                 throw new Exception("Cjenovnik entry not found for the specified Soba and number of days.");
             }
 
-            float totalRoomPrice = cjenovnik.Cijena * brojDana;
+            float totalRoomPrice = brojDana > 0 ? cjenovnik.Cijena * brojDana : cjenovnik.Cijena;
 
             float totalServicePrice = 0;
             if (uslugaIds != null && uslugaIds.Any())

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
+import 'package:seminarskirsmobile/screens/menu_options_screen.dart';
 import 'dart:convert';
 import '../main.dart';
 import '../providers/base_provider.dart';
@@ -170,8 +171,15 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
             behavior: SnackBarBehavior.floating,
           ),
         );
-        Navigator.pushNamed(
-            context, ListaRezervacijaScreen.listaRezervacijaRouteName);
+        // Navigator.pushNamed(
+        //     context, ListaRezervacijaScreen.listaRezervacijaRouteName);
+Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ListaRezervacijaScreen(),
+          ),
+          ModalRoute.withName(OptionsScreen.optionsRouteName),
+        );
       } else {
         _showErrorMessage('Greška pri slanju recenzije');
       }
