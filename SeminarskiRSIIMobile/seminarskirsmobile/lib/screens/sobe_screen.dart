@@ -268,7 +268,56 @@ class _SobeScreenState extends State<SobeScreen> {
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    Padding(
+                                    // Padding(
+                                    //   padding: const EdgeInsets.symmetric(
+                                    //       horizontal: 14.0),
+                                    //   child: SizedBox(
+                                    //     width: double.infinity,
+                                    //     child: ElevatedButton.icon(
+                                    //       onPressed: () {
+                                    //         final roomId =
+                                    //             x["soba"]["id"] as int?;
+                                    //         if (roomId != null) {
+                                    //           Navigator.pushNamed(
+                                    //             context,
+                                    //             SobaRecenzijeScreen.routeName,
+                                    //             arguments: roomId,
+                                    //           );
+                                    //         }
+                                    //       },
+                                    //       icon: const Icon(Icons.rate_review),
+                                    //       label: const Text("Recenzije sobe"),
+                                    //       style: ElevatedButton.styleFrom(
+                                    //         backgroundColor: Colors.white,
+                                    //         foregroundColor: Colors.teal,
+                                    //         side: const BorderSide(
+                                    //             color: Colors.teal),
+                                    //         elevation: 2,
+                                    //         shape: RoundedRectangleBorder(
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(12),
+                                    //         ),
+                                    //         padding: const EdgeInsets.symmetric(
+                                    //             vertical: 12),
+                                    //         textStyle:
+                                    //             const TextStyle(fontSize: 18),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    // const SizedBox(height: 6),
+                                    AspectRatio(
+                                      aspectRatio: 1 / 1,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: Image.memory(
+                                          base64Decode(x["soba"]["slika"]),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                      Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 14.0),
                                       child: SizedBox(
@@ -302,17 +351,6 @@ class _SobeScreenState extends State<SobeScreen> {
                                             textStyle:
                                                 const TextStyle(fontSize: 18),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    AspectRatio(
-                                      aspectRatio: 1 / 1,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: Image.memory(
-                                          base64Decode(x["soba"]["slika"]),
-                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),

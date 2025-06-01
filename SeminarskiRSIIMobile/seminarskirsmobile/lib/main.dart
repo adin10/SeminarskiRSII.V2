@@ -125,7 +125,14 @@ void main() async {
           );
         },
         // UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
-        RecommendationScreen.routeName: (context) => RecommendationScreen(),
+        RecommendationScreen.routeName: (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return OdabirDatumaScreen(
+            userData: args['userData'],
+            userId: args['userId'],
+          );
+        },
         SobaRecenzijeScreen.routeName: (context) {
           final sobaId = ModalRoute.of(context)!.settings.arguments as int;
           return SobaRecenzijeScreen(sobaId: sobaId);
@@ -139,8 +146,13 @@ void main() async {
           );
         }
         if (settings.name == RecommendationScreen.routeName) {
+          final args = settings.arguments as GetUserResponse;
           return MaterialPageRoute(
-              builder: (context) => RecommendationScreen());
+            builder: (context) => RecommendationScreen(
+              userData: args,
+              userId: args.id,
+            ),
+          );
         }
         if (settings.name == OdabirDatumaScreen.routeName) {
           final args = settings.arguments as GetUserResponse;

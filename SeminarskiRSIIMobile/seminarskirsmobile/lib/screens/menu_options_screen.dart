@@ -74,12 +74,21 @@ class OptionsScreen extends StatelessWidget {
                 userData,
               ),
               buildLogoutCard(context),
-              buildOptionCard(
+              buildOptionCardCustomNavigation(
                 context,
                 'Recommendation system',
                 Icons.hotel,
-                RecommendationScreen.routeName,
-                null,
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RecommendationScreen(
+                        userData: userData,
+                        userId: userData.id,
+                      ),
+                    ),
+                  );
+                },
               ),
             ],
           ),
