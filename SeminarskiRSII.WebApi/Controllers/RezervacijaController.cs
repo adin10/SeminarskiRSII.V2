@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using SeminarskiRSII.Model.Models;
 using SeminarskiRSII.WebApi.Interfaces;
+using Stripe;
+using Microsoft.Extensions.Options;
 
 namespace SeminarskiRSII.WebApi.Controllers
 {
@@ -16,10 +18,13 @@ namespace SeminarskiRSII.WebApi.Controllers
     public class RezervacijaController : ControllerBase
     {
         private readonly IRezervacijaService _service;
+        private readonly StripeSettings _stripeSettings;
 
-        public RezervacijaController(IRezervacijaService service)
+        public RezervacijaController(IRezervacijaService service, IOptions<StripeSettings> stripeOptions)
         {
             _service = service;
+            _stripeSettings = stripeOptions.Value;
+            StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
         }
 
         [HttpGet]
@@ -50,6 +55,40 @@ namespace SeminarskiRSII.WebApi.Controllers
         public async Task<ActionResult<Rezervacija>> Delete(int id)
         {
             return Ok(await _service.Delete(id));
+        }
+
+        [HttpPost("create-payment-intent")]
+        public async Task<IActionResult> CreatePaymentIntent([FromBody] RezervacijaInsertRequest request)
+        {
+            try
+            {
+                var izracunataCijena = await _service.CalculateTotalPrice(
+                    request.SobaId.Value,
+                    request.DatumRezervacije,
+                    request.ZavrsetakRezervacije,
+                    request.UslugaIds
+                );
+
+                var options = new PaymentIntentCreateOptions
+                {
+                    Amount = (long)(izracunataCijena * 100),
+                    Currency = "BAM",
+                    AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
+                    {
+                        Enabled = true,
+                    },
+                };
+
+                var service = new PaymentIntentService();
+                var intent = service.Create(options);
+
+                return Ok(new { clientSecret = intent.ClientSecret });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Stripe greška: {ex.Message}");
+                return StatusCode(500, new { error = ex.Message });
+            }
         }
     }
 }

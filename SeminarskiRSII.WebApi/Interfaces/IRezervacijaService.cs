@@ -14,5 +14,6 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<Rezervacija> Insert(RezervacijaInsertRequest insert);
         public Task<Rezervacija> Update(int id, RezervacijaInsertRequest update);
         public Task<Rezervacija> Delete(int id);
+        public Task<float> CalculateTotalPrice(int sobaId, DateTime startDate, DateTime endDate, List<int> uslugaIds);
     }
 }

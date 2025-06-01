@@ -90,7 +90,6 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.Rezervacija.AddAsync(entity);
             await _context.SaveChangesAsync();
 
-            // Handle UslugaIds
             if (insert.UslugaIds != null && insert.UslugaIds.Any())
             {
                 var rezervacijaUsluge = insert.UslugaIds.Select(uslugaId => new RezervacijaUsluga
@@ -114,7 +113,7 @@ namespace SeminarskiRSII.WebApi.Services
             return _mapper.Map<Model.Models.Rezervacija>(entity);
         }
 
-        private async Task<float> CalculateTotalPrice(int sobaId, DateTime startDate, DateTime endDate, List<int> uslugaIds)
+        public async Task<float> CalculateTotalPrice(int sobaId, DateTime startDate, DateTime endDate, List<int> uslugaIds)
         {
             int brojDana = (endDate - startDate).Days;
 

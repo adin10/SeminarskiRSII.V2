@@ -64,6 +64,13 @@ void _onSearchRoomsPressed() {
     return;
   }
 
+  if (zavrsetakRezervacije!.isAtSameMomentAs(datumRezervacije!)) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Datum završetka mora biti veci od datuma početka."),
+    ));
+    return;
+  }
+
   if (zavrsetakRezervacije!.isBefore(datumRezervacije!)) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Datum završetka mora biti nakon datuma početka."),

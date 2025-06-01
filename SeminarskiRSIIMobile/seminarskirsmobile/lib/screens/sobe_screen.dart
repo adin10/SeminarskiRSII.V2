@@ -332,8 +332,9 @@ class _SobeScreenState extends State<SobeScreen> {
                                                   .toString()),
                                           _tekstStavka("Opis sobe",
                                               x["soba"]["opisSobe"].toString()),
-                                          _tekstStavka("Pros. ocjena",
-                                              x["soba"]["prosjecnaOcjena"].toString()),
+                                          _tekstStavka("Pros. ocjena", 
+                                              (x["soba"]["prosjecnaOcjena"] as double).toStringAsFixed(2)
+                                            ),
                                           _tekstStavka("Cijena",
                                               "${x["cijena"]} ${x["valuta"]}",
                                               bold: true),

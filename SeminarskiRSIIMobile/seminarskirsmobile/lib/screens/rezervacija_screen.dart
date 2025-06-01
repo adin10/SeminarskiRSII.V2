@@ -1,5 +1,5 @@
-// stripe unutar ovog screena
 
+// stripe unutar ovog screena
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -265,15 +265,28 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
   _handlePaymentAndSubmit(userId, userData, selectedRoomId);
 }
 
-Future<Map<String, dynamic>?> _createPaymentIntent() async {
-  final url = Uri.parse("${BaseProvider.baseUrl}/Payment/create-payment-intent");
+Future<Map<String, dynamic>?> _createPaymentIntent(
+    int userId, int selectedRoomId) async {
+  final url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija/create-payment-intent");
+
+   final request = RezervacijaInsertRequest(
+    gostId: userId,
+    sobaId: selectedRoomId,
+    datumRezervacije: datumRezervacije!,
+    zavrsetakRezervacije: zavrsetakRezervacije!,
+    uslugaIds: selectedUslugaIds,
+  );
 
   final ioc = HttpClient();
   ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   final client = IOClient(ioc);
 
   try {
-    final response = await client.post(url);
+    final response = await client.post(
+      url,
+      body: jsonEncode(request.toJson()),
+      headers: {'Content-Type': 'application/json'},
+    );
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     }
@@ -315,72 +328,34 @@ Navigator.of(context).pushAndRemoveUntil(
 }
 
 Future<void> _handlePaymentAndSubmit(
-    int userId,
-    GetUserResponse userData,
-    int selectedRoomId,
-  ) async {
-    showLoadingDialog(context);
+  int userId,
+  GetUserResponse userData,
+  int selectedRoomId,
+) async {
+  showLoadingDialog(context);
 
-    try {
-      final paymentIntentData = await _createPaymentIntent();
+  try {
+    final paymentIntentData = await _createPaymentIntent(userId, selectedRoomId);
 
-      if (paymentIntentData == null) {
-        throw Exception('Greška prilikom kreiranja Payment Intenta.');
-      }
-
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntentData['clientSecret'],
-          merchantDisplayName: 'Tvoja Firma',
-        ),
-      );
-
-      await Stripe.instance.presentPaymentSheet();
-
-      await _submitRezervacija(userId, selectedRoomId);
-
-      Navigator.of(context).pop();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Uspjesna rezervacija i placanje')),
-      );
-    } catch (e) {
-      Navigator.of(context).pop();
-
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Greška: $e')));
+    if (paymentIntentData == null) {
+      throw Exception('Greška prilikom kreiranja Payment Intenta.');
     }
+
+    await Stripe.instance.initPaymentSheet(
+      paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: paymentIntentData['clientSecret'],
+        merchantDisplayName: 'Tvoja Firma',
+      ),
+    );
+
+    await Stripe.instance.presentPaymentSheet();
+
+    await _submitRezervacija(userId, selectedRoomId);
+  } catch (e) {
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Greška: $e')));
   }
-
-// Future<void> _handlePaymentAndSubmit(int userId, GetUserResponse userData, int selectedRoomId) async {
-//   try {
-//     final paymentIntentData = await _createPaymentIntent();
-
-//     if (paymentIntentData == null) {
-//       throw Exception('Greška prilikom kreiranja Payment Intenta.');
-//     }
-
-//     await Stripe.instance.initPaymentSheet(
-//       paymentSheetParameters: SetupPaymentSheetParameters(
-//         paymentIntentClientSecret: paymentIntentData['clientSecret'],
-//         merchantDisplayName: 'Tvoja Firma',
-//       ),
-//     );
-
-//     await Stripe.instance.presentPaymentSheet();
-
-//     await _submitRezervacija(userId, selectedRoomId);
-
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(content: Text('Plaćanje i rezervacija uspješni!')),
-//     );
-//   } catch (e) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(content: Text('Greška: $e')),
-//     );
-//   }
-// }
+}
 
 void showLoadingDialog(BuildContext context) {
     showDialog(
