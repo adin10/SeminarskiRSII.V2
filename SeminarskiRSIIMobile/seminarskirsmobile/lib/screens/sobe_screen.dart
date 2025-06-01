@@ -67,7 +67,6 @@ class _SobeScreenState extends State<SobeScreen> {
       if (cijenaDo != null) 'cijenaDo': cijenaDo.toString(),
       if (sprat != null) 'sprat': sprat.toString(),
     };
-    
 
     var tmpData = await _sobaProvider?.getCjenovnik(filters);
     setState(() {
@@ -136,8 +135,7 @@ class _SobeScreenState extends State<SobeScreen> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0,
-                          horizontal: 12.0),
+                          vertical: 10.0, horizontal: 12.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -232,8 +230,7 @@ class _SobeScreenState extends State<SobeScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                textStyle:
-                                    const TextStyle(fontSize: 18),
+                                textStyle: const TextStyle(fontSize: 18),
                               ),
                               child: const Text('Primjeni filter'),
                             ),
@@ -249,200 +246,179 @@ class _SobeScreenState extends State<SobeScreen> {
                 duration: const Duration(milliseconds: 100),
               ),
               Expanded(
-              child: isLoading
-              ? Center(child: CircularProgressIndicator())
-              : 
-                 data.isNotEmpty
-                    ? PageView(
-                        children: data.map<Widget>((x) {
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                            elevation: 6,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 2),
-                            child: SingleChildScrollView(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    // Padding(
-                                    //   padding: const EdgeInsets.symmetric(
-                                    //       horizontal: 14.0),
-                                    //   child: SizedBox(
-                                    //     width: double.infinity,
-                                    //     child: ElevatedButton.icon(
-                                    //       onPressed: () {
-                                    //         final roomId =
-                                    //             x["soba"]["id"] as int?;
-                                    //         if (roomId != null) {
-                                    //           Navigator.pushNamed(
-                                    //             context,
-                                    //             SobaRecenzijeScreen.routeName,
-                                    //             arguments: roomId,
-                                    //           );
-                                    //         }
-                                    //       },
-                                    //       icon: const Icon(Icons.rate_review),
-                                    //       label: const Text("Recenzije sobe"),
-                                    //       style: ElevatedButton.styleFrom(
-                                    //         backgroundColor: Colors.white,
-                                    //         foregroundColor: Colors.teal,
-                                    //         side: const BorderSide(
-                                    //             color: Colors.teal),
-                                    //         elevation: 2,
-                                    //         shape: RoundedRectangleBorder(
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(12),
-                                    //         ),
-                                    //         padding: const EdgeInsets.symmetric(
-                                    //             vertical: 12),
-                                    //         textStyle:
-                                    //             const TextStyle(fontSize: 18),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    // const SizedBox(height: 6),
-                                    AspectRatio(
-                                      aspectRatio: 1 / 1,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: Image.memory(
-                                          base64Decode(x["soba"]["slika"]),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                      Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 14.0),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                        child: ElevatedButton.icon(
-                                          onPressed: () {
-                                            final roomId =
-                                                x["soba"]["id"] as int?;
-                                            if (roomId != null) {
-                                              Navigator.pushNamed(
-                                                context,
-                                                SobaRecenzijeScreen.routeName,
-                                                arguments: roomId,
-                                              );
-                                            }
-                                          },
-                                          icon: const Icon(Icons.rate_review),
-                                          label: const Text("Recenzije sobe"),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                            foregroundColor: Colors.teal,
-                                            side: const BorderSide(
-                                                color: Colors.teal),
-                                            elevation: 2,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
+                child: isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : data.isNotEmpty
+                        ? PageView(
+                            children: data.map<Widget>((x) {
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                                elevation: 6,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 2),
+                                child: SingleChildScrollView(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        AspectRatio(
+                                          aspectRatio: 1 / 1,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            child: Image.memory(
+                                              base64Decode(x["soba"]["slika"]),
+                                              fit: BoxFit.cover,
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 12),
-                                            textStyle:
-                                                const TextStyle(fontSize: 18),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          _tekstStavka("Broj sobe",
-                                              x["soba"]["brojSobe"].toString()),
-                                          _tekstStavka(
-                                              "Broj sprata",
-                                              x["soba"]["brojSprata"]
-                                                  .toString()),
-                                          _tekstStavka("Opis sobe",
-                                              x["soba"]["opisSobe"].toString()),
-                                          _tekstStavka("Pros. ocjena", 
-                                              (x["soba"]["prosjecnaOcjena"] as double).toStringAsFixed(2)
-                                            ),
-                                          _tekstStavka("Cijena",
-                                              "${x["cijena"]} ${x["valuta"]}",
-                                              bold: true),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            final roomId =
-                                                x["soba"]["id"] as int?;
-                                            if (roomId == null) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  content: Text(
-                                                      'Greška: ID sobe nije dostupan.'),
-                                                ),
-                                              );
-                                              return;
-                                            }
-                                            IdGetter.Id = roomId;
-                                            Navigator.pushNamed(
-                                              context,
-                                              RezervacijScreen
-                                                  .dodajRezervacijuRouteName,
-                                              arguments: {
-                                                'userData': userData,
-                                                'userId': userData!.id,
-                                                'selectedRoomId': roomId,
-                                                'datumOd': datumOd,
-                                                'datumDo': datumDo
+                                        const SizedBox(height: 6),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 14.0),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: ElevatedButton.icon(
+                                              onPressed: () {
+                                                final roomId =
+                                                    x["soba"]["id"] as int?;
+                                                if (roomId != null) {
+                                                  Navigator.pushNamed(
+                                                    context,
+                                                    SobaRecenzijeScreen
+                                                        .routeName,
+                                                    arguments: roomId,
+                                                  );
+                                                }
                                               },
-                                            );
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.teal,
-                                            foregroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
+                                              icon:
+                                                  const Icon(Icons.rate_review),
+                                              label:
+                                                  const Text("Recenzije sobe"),
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.white,
+                                                foregroundColor: Colors.teal,
+                                                side: const BorderSide(
+                                                    color: Colors.teal),
+                                                elevation: 2,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 12),
+                                                textStyle: const TextStyle(
+                                                    fontSize: 18),
+                                              ),
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 14.0),
-                                            textStyle:
-                                                const TextStyle(fontSize: 18),
                                           ),
-                                          child: const Text("Rezerviši sobu"),
                                         ),
-                                      ),
+                                        const SizedBox(height: 8),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              _tekstStavka(
+                                                  "Broj sobe",
+                                                  x["soba"]["brojSobe"]
+                                                      .toString(),
+                                                  ikona: Icons.numbers),
+                                              _tekstStavka(
+                                                  "Broj sprata",
+                                                  x["soba"]["brojSprata"]
+                                                      .toString(),
+                                                  ikona: Icons.numbers),
+                                              _tekstStavka(
+                                                  "Opis sobe",
+                                                  x["soba"]["opisSobe"]
+                                                      .toString(),
+                                                  ikona: Icons.text_format),
+                                              _tekstStavka(
+                                                  "Pros. ocjena",
+                                                  (x["soba"]["prosjecnaOcjena"]
+                                                          as double)
+                                                      .toStringAsFixed(2),
+                                                  ikona: Icons.star_border_outlined),
+                                              _tekstStavka("Cijena",
+                                                  "${x["cijena"]} ${x["valuta"]}",
+                                                  bold: true,
+                                                  ikona: Icons.attach_money),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                final roomId =
+                                                    x["soba"]["id"] as int?;
+                                                if (roomId == null) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                      content: Text(
+                                                          'Greška: ID sobe nije dostupan.'),
+                                                    ),
+                                                  );
+                                                  return;
+                                                }
+                                                IdGetter.Id = roomId;
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  RezervacijScreen
+                                                      .dodajRezervacijuRouteName,
+                                                  arguments: {
+                                                    'userData': userData,
+                                                    'userId': userData!.id,
+                                                    'selectedRoomId': roomId,
+                                                    'datumOd': datumOd,
+                                                    'datumDo': datumDo
+                                                  },
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.teal,
+                                                foregroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 14.0),
+                                                textStyle: const TextStyle(
+                                                    fontSize: 18),
+                                              ),
+                                              child:
+                                                  const Text("Rezerviši sobu"),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 12),
+                                      ],
                                     ),
-                                    const SizedBox(height: 12),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              );
+                            }).toList(),
+                          )
+                        : const Center(
+                            child: Text(
+                              "Nema dostupnih soba",
+                              style: TextStyle(fontSize: 18),
                             ),
-                          );
-                        }).toList(),
-                      )
-                    : const Center(
-                        child: Text(
-                          "Nema dostupnih soba",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
+                          ),
               ),
               const SizedBox(height: 10),
             ],
@@ -453,14 +429,19 @@ class _SobeScreenState extends State<SobeScreen> {
   }
 }
 
-Widget _tekstStavka(String labela, String vrijednost, {bool bold = false}) {
+Widget _tekstStavka(String labela, String vrijednost,
+    {bool bold = false, IconData? ikona}) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 2),
+    padding: const EdgeInsets.symmetric(vertical: 4),
     child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        if (ikona != null) ...[
+          Icon(ikona, size: 20, color: Colors.teal),
+          const SizedBox(width: 10),
+        ],
         SizedBox(
-          width: 130, // širina rezervisana za labelu
+          width: 120,
           child: Text(
             "$labela:",
             style: TextStyle(

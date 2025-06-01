@@ -57,7 +57,7 @@ class _NovostiScreenState extends State<NovostiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Novosti"),
+        title: Text("Pregled svih novosti"),
         backgroundColor: Colors.teal,
       ),
       body: SafeArea(
@@ -196,12 +196,17 @@ onTap: () async {
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 6),
-              Text(
-                DateFormat('dd/MM/yyyy')
-                    .format(DateTime.parse(data["datumObjave"])),
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
+SizedBox(height: 6),
+Row(
+  children: [
+    Icon(Icons.calendar_today, color: Colors.teal.shade300, size: 18),
+    SizedBox(width: 6),
+    Text(
+      DateFormat('dd/MM/yyyy').format(DateTime.parse(data["datumObjave"])),
+      style: TextStyle(fontSize: 14, color: Colors.grey),
+    ),
+  ],
+),
             ],
           ),
         ),
