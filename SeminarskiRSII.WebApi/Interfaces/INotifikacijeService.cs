@@ -10,5 +10,6 @@ namespace SeminarskiRSII.WebApi.Services
    public interface INotifikacijeService
     {
         public Task<List<Notifikacije>> GetList(NotifikacijeSearchRequest search);
+        Task NotifyUserAboutNewReservation(long reservationId);
     }
 }

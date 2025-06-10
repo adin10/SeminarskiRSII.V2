@@ -18,6 +18,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.ML" Version="2.0.0" />
     <PackageReference Include="Microsoft.ML.Recommender" Version="0.20.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
     <PackageReference Include="Stripe.net" Version="48.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
@@ -25,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SeminarskiRSII.Model\SeminarskiRSII.Model.csproj" />
+    <ProjectReference Include="..\SeminarskiRSII.RabbitMQConsumer\SeminarskiRSII.RabbitMQConsumer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

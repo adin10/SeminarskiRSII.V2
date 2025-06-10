@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeminarskiRSII.WebApi", "Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeminarskiRSII.Model", "SeminarskiRSII.Model\SeminarskiRSII.Model.csproj", "{CDC58E35-7100-4B7E-8BF6-F5334CC8EDA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeminarskiRSII.WebApiDodatni", "SeminarskiRSII.WebApiDodatni\SeminarskiRSII.WebApiDodatni.csproj", "{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeminarskiRSII.RabbitMQConsumer", "SeminarskiRSII.RabbitMQConsumer\SeminarskiRSII.RabbitMQConsumer.csproj", "{E664593D-8179-46EB-A14F-15D833A1AC62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9B3B2776-7F37-41DD-B8D9-C3B7421A1A39}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +28,10 @@ Global
 		{CDC58E35-7100-4B7E-8BF6-F5334CC8EDA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDC58E35-7100-4B7E-8BF6-F5334CC8EDA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDC58E35-7100-4B7E-8BF6-F5334CC8EDA5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBF4E7C7-6B7B-4F21-8ED1-590F3E0884CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E664593D-8179-46EB-A14F-15D833A1AC62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E664593D-8179-46EB-A14F-15D833A1AC62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E664593D-8179-46EB-A14F-15D833A1AC62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E664593D-8179-46EB-A14F-15D833A1AC62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

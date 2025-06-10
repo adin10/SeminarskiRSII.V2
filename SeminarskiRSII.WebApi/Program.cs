@@ -9,6 +9,7 @@ using SeminarskiRSII.WebApi.Database;
 using SeminarskiRSII.WebApi.Interfaces;
 using SeminarskiRSII.WebApi.Security;
 using SeminarskiRSII.WebApi.Services;
+using SeminarskiRSII.WebApi.Util;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.Configure<StripeSettings>(
     builder.Configuration.GetSection("Stripe"));
 
+builder.Services.Configure<MailConfig>(builder.Configuration.GetSection("MailConfig"));
+
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IDrzavaService, DrzavaService>();
 builder.Services.AddScoped<IGradService, GradService>();
@@ -51,6 +54,7 @@ builder.Services.AddScoped<INovostiService, NovostiService>();
 builder.Services.AddScoped<INotifikacijeService, NotifikacijeService>();
 builder.Services.AddScoped<IUslugaService, UslugaService>();
 builder.Services.AddScoped<IGostiNotifikacijeService, GostiNotifikacijeService>();
+builder.Services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
 
 //builder.Services.AddScoped<ICRUDService<Model.Models.Notifikacije, NotifikacijeSearchRequest, NotifikacijeInsertRequest, NotifikacijeInsertRequest>, NotifikacijaService>();
 //builder.Services.AddScoped<INovostiService, NovostiService>();

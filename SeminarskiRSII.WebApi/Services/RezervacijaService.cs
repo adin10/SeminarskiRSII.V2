@@ -17,11 +17,13 @@ namespace SeminarskiRSII.WebApi.Services
     {
         private readonly IB210330Context _context;
         private readonly IMapper _mapper;
+        private readonly INotifikacijeService _notifikacijeService;
 
-        public RezervacijaService(IB210330Context context, IMapper mapper)
+        public RezervacijaService(IB210330Context context, IMapper mapper, INotifikacijeService notifikacijeService)
         {
             _context = context;
             _mapper = mapper;
+            _notifikacijeService = notifikacijeService;
         }
 
         public async Task<Model.Models.Rezervacija> Delete(int id)
@@ -102,6 +104,8 @@ namespace SeminarskiRSII.WebApi.Services
                 await _context.SaveChangesAsync();
             }
 
+            await _notifikacijeService.NotifyUserAboutNewReservation(entity.Id);
+
             return _mapper.Map<Model.Models.Rezervacija>(entity);
         }
 
@@ -138,5 +142,10 @@ namespace SeminarskiRSII.WebApi.Services
 
             return totalRoomPrice + (totalServicePrice * brojDana);
         }
+
+        //private void NotifyOwnerAboutNewReservation(long reservationId)
+        //{
+        //    _backgroundJobClient.Enqueue<INotifikacijeService>(x => x.NotifyOwnerAboutNewReservation(reservationId));
+        //}
     }
 }
