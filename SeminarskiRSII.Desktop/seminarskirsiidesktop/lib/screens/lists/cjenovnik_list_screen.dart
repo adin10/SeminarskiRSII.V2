@@ -106,8 +106,8 @@ class _CjenovnikListScreenState extends State<CjenovnikListScreen> {
                               headingRowColor:
                                   WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
-                              columnSpacing: 40,
-                              horizontalMargin: 25,
+                              columnSpacing: 60,
+                              horizontalMargin: 40,
                               columns: [
                                 _buildDataColumn("Cijena"),
                                 _buildDataColumn("Valuta"),

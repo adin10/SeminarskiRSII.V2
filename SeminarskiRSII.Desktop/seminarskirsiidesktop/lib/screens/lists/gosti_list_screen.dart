@@ -232,35 +232,41 @@ class _GostiListScreenState extends State<GostiListScreen> {
     );
   }
 
-  List<DataRow> _buildRows() {
-    if (_pagedData.isEmpty) {
-      return [
-        DataRow(
-          cells: List.generate(9, (_) => const DataCell(Text("No data..."))),
-        )
-      ];
-    }
-    return _pagedData.map<DataRow>((x) => DataRow(cells: [
-      DataCell(Center(child: Text(x["ime"] ?? "", style: const TextStyle(fontSize: 14)))),
-      DataCell(Center(child: Text(x["prezime"] ?? "", style: const TextStyle(fontSize: 14)))),
-      DataCell(Center(child: Text(x["email"] ?? "", style: const TextStyle(fontSize: 14)))),
-      DataCell(Center(child: Text(x["telefon"] ?? "", style: const TextStyle(fontSize: 14)))),
-      DataCell(Center(child: Text(x["grad"]["nazivGrada"] ?? "", style: const TextStyle(fontSize: 14)))),
-      DataCell(Center(child: Text(x["korisnickoIme"] ?? "", style: const TextStyle(fontSize: 14)))),
-      DataCell(Center(child: Text(
-                    x["datumRegistracije"] != null
-                        ? DateFormat('dd-MM-yyyy').format(
-                            DateTime.parse(x["datumRegistracije"]).toLocal()) : ""),),),
-      DataCell(Center(child: Text(
-        x["status"] == true ? "Aktivan" : "Neaktivan",
-        style: const TextStyle(fontSize: 14),
-      ))),
-      DataCell(Center(child: Text(
-        x["prosjecnaOcjena"] != null
-            ? (x["prosjecnaOcjena"] as num).toStringAsFixed(2)
-            : "N/A",
-        style: const TextStyle(fontSize: 14),
-      ))),
-    ])).toList();
+ List<DataRow> _buildRows() {
+  if (_pagedData.isEmpty) {
+    return [
+      DataRow(
+        cells: List.generate(9, (_) => const DataCell(Text("No data..."))),
+      )
+    ];
   }
+  return _pagedData.map<DataRow>((x) => DataRow(cells: [
+    DataCell(Text(x["ime"] ?? "", style: const TextStyle(fontSize: 14))),
+    DataCell(Text(x["prezime"] ?? "", style: const TextStyle(fontSize: 14))),
+    DataCell(Text(x["email"] ?? "", style: const TextStyle(fontSize: 14))),
+    DataCell(Text(x["telefon"] ?? "", style: const TextStyle(fontSize: 14))),
+    DataCell(Text(x["grad"]["nazivGrada"] ?? "", style: const TextStyle(fontSize: 14))),
+    DataCell(Text(x["korisnickoIme"] ?? "", style: const TextStyle(fontSize: 14))),
+    DataCell(Text(
+      x["datumRegistracije"] != null
+          ? DateFormat('dd-MM-yyyy').format(DateTime.parse(x["datumRegistracije"]).toLocal())
+          : "",
+      style: const TextStyle(fontSize: 14),
+    )),
+    DataCell(Text(
+      x["status"] == true ? "Aktivan" : "Neaktivan",
+      style: const TextStyle(fontSize: 14),
+    )),
+    DataCell(
+  Center(
+    child: Text(
+      x["prosjecnaOcjena"] != null
+          ? (x["prosjecnaOcjena"] as num).toStringAsFixed(2)
+          : "N/A",
+      style: const TextStyle(fontSize: 14),
+    ),
+  ),
+),
+  ])).toList();
+}
 }

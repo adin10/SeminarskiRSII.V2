@@ -83,7 +83,7 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
   }
 
   Widget _buildFilters() {
-    const double fieldWidth = 200;
+    const double fieldWidth = 300;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Wrap(

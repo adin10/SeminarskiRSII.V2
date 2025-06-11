@@ -259,8 +259,8 @@ class _RezervacijaListScreenState extends State<RezervacijaListScreen> {
                                     headingRowHeight: 50,
                                     headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                                     dividerThickness: 2,
-                                    columnSpacing: 40,
-                                    horizontalMargin: 25,
+                                    columnSpacing: 60,
+                                    horizontalMargin: 35,
                                     columns: [
                                       _buildDataColumn("Ime"),
                                       _buildDataColumn("Prezime"),

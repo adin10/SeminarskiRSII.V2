@@ -14,6 +14,7 @@ class GradListScreen extends StatefulWidget {
 class _GradListScreenState extends State<GradListScreen> {
   late GradProvider _gradProvider;
   dynamic data;
+  double _tableWidth = 900;
   bool isLoading = true;
   TextEditingController _searchController = TextEditingController();
 
@@ -92,27 +93,24 @@ class _GradListScreenState extends State<GradListScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    width: 400,
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        labelText: 'Pretraga gradova',
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: () => loadData(searchQuery: _searchController.text),
-                        ),
-                      ),
-                      onEditingComplete: () {
-                        loadData(searchQuery: _searchController.text);
-                      },
+            child: Center(
+              child: SizedBox(
+                width: _tableWidth,
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    labelText: 'Pretraga gradova',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () =>
+                          loadData(searchQuery: _searchController.text),
                     ),
                   ),
+                  onEditingComplete: () {
+                    loadData(searchQuery: _searchController.text);
+                  },
                 ),
-              ],
+              ),
             ),
           ),
           Expanded(
@@ -136,28 +134,45 @@ class _GradListScreenState extends State<GradListScreen> {
                           child: SingleChildScrollView(
                             controller: _horizontalController,
                             scrollDirection: Axis.horizontal,
-                            child: DataTable(
-                              dataRowHeight: 60,
-                              headingRowHeight: 60,
-                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
-                              dividerThickness: 2,
-                              columnSpacing: 40,
-                              horizontalMargin: 25,
-                              columns: [
-                                _buildDataColumn("Naziv grada"),
-                                _buildDataColumn("Postanski broj"),
-                                _buildDataColumn("Drzava"),
-                                DataColumn(
-                                  label: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      SizedBox(width: 60, child: Center(child: Text('Uredi'))),
-                                      SizedBox(width: 60, child: Center(child: Text('Obrisi'))),
-                                    ],
+                            child: SizedBox(
+                              width: _tableWidth,
+                              child: DataTable(
+                                dataRowHeight: 60,
+                                headingRowHeight: 60,
+                                headingRowColor: WidgetStateProperty.all(
+                                    Colors.blueGrey[50]),
+                                dividerThickness: 2,
+                                columnSpacing: 55,
+                                horizontalMargin: 35,
+                                columns: [
+                                  _buildDataColumn("Naziv grada"),
+                                  _buildDataColumn("Postanski broj"),
+                                  _buildDataColumn("Drzava"),
+                                  DataColumn(
+                                    label: SizedBox(
+                                      width:
+                                          140,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text('Uredi',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.blueGrey[700],
+                                              )),
+                                          const SizedBox(width: 30),
+                                          Text('Obriši',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.blueGrey[700])),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                              rows: _buildRows(),
+                                ],
+                                rows: _buildRows(),
+                              ),
                             ),
                           ),
                         ),
@@ -172,11 +187,13 @@ class _GradListScreenState extends State<GradListScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NewGradScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const NewGradScreen()),
                 );
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: const TextStyle(fontSize: 16),
               ),
               child: Text('Dodaj novi grad'),
@@ -216,37 +233,36 @@ class _GradListScreenState extends State<GradListScreen> {
     return data
         .map<DataRow>((x) => DataRow(
               cells: [
-                DataCell(Text(x["nazivGrada"] ?? "", style: const TextStyle(fontSize: 14))),
-                DataCell(Text(x["postanskiBroj"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
-                DataCell(Text(x["drzava"]?["naziv"] ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["nazivGrada"] ?? "",
+                    style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["postanskiBroj"]?.toString() ?? "",
+                    style: const TextStyle(fontSize: 14))),
+                DataCell(Text(x["drzava"]?["naziv"] ?? "",
+                    style: const TextStyle(fontSize: 14))),
                 DataCell(
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 60,
-                        child: IconButton(
+                  SizedBox(
+                    width: 140, // isto povećano da se uklopi
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
                           icon: const Icon(Icons.edit, color: Colors.blue),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NewGradScreen(
-                                  grad: x,
-                                ),
+                                builder: (context) => NewGradScreen(grad: x),
                               ),
                             );
                           },
                         ),
-                      ),
-                      SizedBox(
-                        width: 60,
-                        child: IconButton(
+                        const SizedBox(width: 30),
+                        IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _confirmDelete(x["id"].toString()),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

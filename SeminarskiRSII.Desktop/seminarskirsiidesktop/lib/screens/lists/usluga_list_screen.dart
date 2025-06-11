@@ -102,8 +102,8 @@ class _UslugaListScreenState extends State<UslugaListScreen> {
                         headingRowHeight: 50,
                         headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                         dividerThickness: 2,
-                        columnSpacing: 40,
-                        horizontalMargin: 25,
+                        columnSpacing: 55,
+                        horizontalMargin: 35,
                         columns: const [
                           DataColumn(label: Text('Naziv usluge')),
                           DataColumn(label: Text('Opis')),
