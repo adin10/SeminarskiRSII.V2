@@ -175,8 +175,11 @@ class _NewDrzavaScreenState extends State<NewDrzavaScreen> {
               : 'Drzava uspjesno uredjena.',
           Colors.green,
         );
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const DrzavaListScreen()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const DrzavaListScreen()),
+          (route) => route.isFirst,
+        );
       } else {
         _showErrorSnackBar();
       }

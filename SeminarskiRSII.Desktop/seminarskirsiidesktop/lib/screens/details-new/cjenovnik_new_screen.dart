@@ -28,6 +28,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
   final TextEditingController _cijenaController = TextEditingController();
   final TextEditingController _vrijediOdController = TextEditingController();
   final TextEditingController _vrijediDoController = TextEditingController();
+  final TextEditingController _valutaController = TextEditingController(text: 'KM');
   int? _selectedSobaId;
   String? _selectedValuta;
   List<dynamic> _sobeList = [];
@@ -53,7 +54,6 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
 
         setState(() {
           _cijenaController.text = cjenovnik['cijena']?.toString() ?? '';
-          _selectedValuta = cjenovnik['valuta']?.toString();
           _selectedSobaId = cjenovnik['soba']?['id'];
 
           if (cjenovnik['vrijediOd'] != null) {
@@ -172,36 +172,9 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  DropdownButtonFormField<String>(
-                    value: _selectedValuta,
-                    decoration: InputDecoration(
-                      labelText: 'Valuta',
-                      labelStyle: const TextStyle(
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.bold),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      fillColor: Colors.blue[50],
-                    ),
-                    items: _valute.map((valuta) {
-                      return DropdownMenuItem(
-                        value: valuta,
-                        child: Text(valuta),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValuta = value;
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Odaberite valutu';
-                      }
-                      return null;
-                    },
+                  _buildReadonlyCurrencyField(
+                    controller: _valutaController,
+                    labelText: 'Valuta',
                   ),
                   const SizedBox(height: 20),
                   _buildTextField(
@@ -290,6 +263,33 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
     );
   }
 
+  Widget _buildReadonlyCurrencyField({
+  required TextEditingController controller,
+  required String labelText,
+}) {
+  return TextFormField(
+    controller: controller,
+    readOnly: true,
+    decoration: InputDecoration(
+      labelText: labelText,
+      labelStyle: const TextStyle(
+        color: Colors.blueAccent,
+        fontWeight: FontWeight.bold,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      filled: true,
+      fillColor: Colors.blue[50],
+      contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+    ),
+  );
+}
+
   Widget _buildDropdownField({
     required String labelText,
     required int? value,
@@ -330,7 +330,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
 
   void _createCjenovnik() {
     final requestBody = jsonEncode({
-      'Valuta': _selectedValuta,
+      'Valuta': _valutaController.text,
       'Cijena': double.tryParse(_cijenaController.text),
       'SobaId': _selectedSobaId,
       'VrijediOd': _selectedDateVrijediOd?.toIso8601String(),
@@ -341,7 +341,7 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
 
   void _updateCjenovnik(int id) {
     final requestBody = jsonEncode({
-      'valuta': _selectedValuta,
+      'valuta': _valutaController.text,
       'Cijena': double.tryParse(_cijenaController.text),
       'SobaId': _selectedSobaId,
       'VrijediOd': _selectedDateVrijediOd?.toIso8601String(),
@@ -372,9 +372,10 @@ class _NewCjenovnikScreenState extends State<NewCjenovnikScreen> {
               : 'Cijena uspješno uređena.',
           Colors.green,
         );
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const CjenovnikListScreen()),
+          (route) => route.isFirst,
         );
       } else {
         _showErrorSnackBar();

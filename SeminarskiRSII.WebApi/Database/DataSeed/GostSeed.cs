@@ -48,7 +48,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     LozinkaSalt = "uFdyLQoAo6+BtcRfOYC0Og==",
                     Telefon = "52515215",
                     DatumRegistracije = new DateTime(2025, 02, 01),
-                    Status = false
+                    Status = true
                 },
                 new Gost()
                 {
@@ -62,7 +62,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     LozinkaSalt = "cJCHfu17NRuIYzB3bS9onw==",
                     Telefon = "43743743",
                     DatumRegistracije = new DateTime(2025, 04, 04),
-                    Status = false
+                    Status = true
                 },
                 new Gost()
                 {
@@ -76,7 +76,7 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     LozinkaSalt = "uy9mahnWC7AvJIt+6qeWPg==",
                     Telefon = "1234214",
                     DatumRegistracije = new DateTime(2024, 12, 31),
-                    Status = true
+                    Status = false
                 }
             };
             modelBuilder.Entity<Gost>().HasData(gosti);

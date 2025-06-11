@@ -333,9 +333,10 @@ Widget _buildReadOnlyField({required String labelText, required TextEditingContr
         'Soba uspješno kreirana.',
         Colors.green,
       );
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const SobaListScreen()),
+        (route) => route.isFirst,
       );
     } else if (response.statusCode == 400) {
       showWarningToast(
@@ -377,10 +378,15 @@ Widget _buildReadOnlyField({required String labelText, required TextEditingContr
         'Soba uspješno uredjena.',
         Colors.green,
       );
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SobaListScreen()),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const SobaListScreen()),
+      // );
+                      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const SobaListScreen()),
+          (route) => route.isFirst,
+        );
     } else if (response.statusCode == 400) {
       showWarningToast(
         context,

@@ -35,6 +35,24 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     Valuta = "KM",
                     VrijediOd = new DateTime(2025, 06, 30),
                     VrijediDo = new DateTime(2025, 12, 31)
+                },
+                new Cjenovnik()
+                {
+                    Id = 4,
+                    SobaId = 4,
+                    Cijena = 120,
+                    Valuta = "KM",
+                    VrijediOd = new DateTime(2025, 06, 30),
+                    VrijediDo = new DateTime(2025, 09, 30)
+                },
+                new Cjenovnik()
+                {
+                    Id = 5,
+                    SobaId = 5,
+                    Cijena = 80,
+                    Valuta = "KM",
+                    VrijediOd = new DateTime(2025, 02, 25),
+                    VrijediDo = new DateTime(2025, 06, 26)
                 }
             });
             modelBuilder.Entity<Cjenovnik>().HasData(list);

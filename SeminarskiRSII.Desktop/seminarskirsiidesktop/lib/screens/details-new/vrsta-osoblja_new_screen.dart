@@ -201,10 +201,12 @@ class _NewVrstaOsobljaScreenState extends State<NewVrstaOsobljaScreen> {
               : 'Pozicija uspjesno uredjena.',
           Colors.green,
         );
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const VrstaOsobljaListScreen()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const VrstaOsobljaListScreen()),
+          (route) => route.isFirst,
+        );
       } else {
         _showErrorSnackBar();
       }

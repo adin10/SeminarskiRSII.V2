@@ -20,7 +20,7 @@ class _NewUslugaScreenState extends State<NewUslugaScreen> {
   final TextEditingController _nazivController = TextEditingController();
   final TextEditingController _opisController = TextEditingController();
   final TextEditingController _cijenaController = TextEditingController();
-
+  final TextEditingController _valutaController = TextEditingController(text: 'KM');
 
   @override
   void initState() {
@@ -103,6 +103,11 @@ class _NewUslugaScreenState extends State<NewUslugaScreen> {
                       return null;
                     },
                   ),
+                 const SizedBox(height: 20),
+                  _buildReadonlyCurrencyField(
+                    controller: _valutaController,
+                    labelText: 'Valuta',
+                  ),
                   const SizedBox(height: 30),
                   Center(
                     child: ElevatedButton(
@@ -131,6 +136,33 @@ class _NewUslugaScreenState extends State<NewUslugaScreen> {
       ),
     );
   }
+
+   Widget _buildReadonlyCurrencyField({
+  required TextEditingController controller,
+  required String labelText,
+}) {
+  return TextFormField(
+    controller: controller,
+    readOnly: true,
+    decoration: InputDecoration(
+      labelText: labelText,
+      labelStyle: const TextStyle(
+        color: Colors.blueAccent,
+        fontWeight: FontWeight.bold,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      filled: true,
+      fillColor: Colors.blue[50],
+      contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+    ),
+  );
+}
 
   Widget _buildTextField({
     required TextEditingController controller,
@@ -171,14 +203,13 @@ class _NewUslugaScreenState extends State<NewUslugaScreen> {
       }
     }
   }
-
   void _dodajUslugu() {
-    final requestBody = jsonEncode({'naziv': _nazivController.text, 'opis': _opisController.text, 'cijena': int.tryParse(_cijenaController.text)});
+    final requestBody = jsonEncode({'naziv': _nazivController.text, 'opis': _opisController.text, 'cijena': int.tryParse(_cijenaController.text), 'valuta': _valutaController.text});
     _submitData(requestBody, "${BaseProvider.baseUrl}/Usluge", 'POST');
   }
 
   void _urediUslugu(int id) {
-    final requestBody = jsonEncode({'naziv': _nazivController.text, 'opis': _opisController.text, 'cijena': int.tryParse(_cijenaController.text)});
+    final requestBody = jsonEncode({'naziv': _nazivController.text, 'opis': _opisController.text, 'cijena': int.tryParse(_cijenaController.text), 'valuta': _valutaController.text});
     _submitData(requestBody, "${BaseProvider.baseUrl}/Usluge/$id", 'PUT');
   }
 
@@ -204,8 +235,11 @@ class _NewUslugaScreenState extends State<NewUslugaScreen> {
               : 'Usluga uspjesno uredjena.',
           Colors.green,
         );
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const UslugaListScreen()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const UslugaListScreen()),
+          (route) => route.isFirst,
+        );
       } else {
         _showErrorSnackBar();
       }

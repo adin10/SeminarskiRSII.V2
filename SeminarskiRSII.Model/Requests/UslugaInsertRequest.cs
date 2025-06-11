@@ -11,5 +11,6 @@ namespace SeminarskiRSII.Model.Requests
         public string Naziv { get; set; }
         public string Opis { get; set; }
         public int Cijena { get; set; }
+        public string Valuta { get; set; }
     }
 }

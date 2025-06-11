@@ -267,8 +267,11 @@ class _NewGradScreenState extends State<NewGradScreen> {
           method == 'POST' ? 'Grad uspjesno dodat.' : 'Grad uspjesno uredjen.',
           Colors.green,
         );
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const GradListScreen()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const GradListScreen()),
+          (route) => route.isFirst,
+        );
       } else {
         _showErrorSnackBar();
       }

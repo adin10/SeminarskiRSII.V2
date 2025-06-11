@@ -239,10 +239,12 @@ class _NewSobaOsobljeScreenState extends State<NewSobaOsobljeScreen> {
               : 'Zaduzenje uspjesno uredjeno.',
           Colors.green,
         );
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const SobaOsobljeListScreen()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const SobaOsobljeListScreen()),
+          (route) => route.isFirst,
+        );
       } else {
         _showErrorSnackBar();
       }

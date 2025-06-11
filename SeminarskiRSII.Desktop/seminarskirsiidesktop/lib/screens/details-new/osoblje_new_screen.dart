@@ -116,9 +116,10 @@ class _NewOsobljeScreenState extends State<NewOsobljeScreen> {
               : 'Uposlenik uspjesno modifikovan.',
           Colors.green,
         );
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const OsobljeListScreen()),
+          (route) => route.isFirst,
         );
       } else {
         _showErrorSnackBar();

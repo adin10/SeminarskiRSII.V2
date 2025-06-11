@@ -370,8 +370,11 @@ class _NewNovostScreenState extends State<NewNovostScreen> {
               : 'Novost uspjesno uredjena.',
           Colors.green,
         );
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const NovostiListScreen()));
+Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const NovostiListScreen()),
+          (route) => route.isFirst,
+        );
       } else {
         _showErrorSnackBar();
       }
