@@ -65,6 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         title: Text('Registracija'),
         centerTitle: true,
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),

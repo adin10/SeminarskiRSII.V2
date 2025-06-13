@@ -104,7 +104,15 @@ namespace SeminarskiRSII.WebApi.Services
                 await _context.SaveChangesAsync();
             }
 
-            await _notifikacijeService.NotifyUserAboutNewReservation(entity.Id);
+            //await _notifikacijeService.NotifyUserAboutNewReservation(entity.Id);
+            try
+            {
+                await _notifikacijeService.NotifyUserAboutNewReservation(entity.Id);
+            }
+            catch
+            {
+                Console.WriteLine("greska prilikom slanja emaila");
+            }
 
             return _mapper.Map<Model.Models.Rezervacija>(entity);
         }

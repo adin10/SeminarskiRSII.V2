@@ -462,7 +462,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // Kad god se prikaže login ekran, očisti polja
     usernameController.clear();
     passwordController.clear();
   }

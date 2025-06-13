@@ -1,5 +1,4 @@
 
-// stripe unutar ovog screena
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -94,6 +93,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       appBar: AppBar(
         title: Text('Rezervacija'),
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -251,7 +251,7 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
   }
 
   String formatDate(DateTime date) {
-    return "${date.day}.${date.month}.${date.year}";
+    return "${date.day}-${date.month}-${date.year}";
   }
 
   void _submitForm(int userId, GetUserResponse userData, int selectedRoomId) {

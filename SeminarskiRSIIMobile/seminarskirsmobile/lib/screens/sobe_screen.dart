@@ -595,6 +595,7 @@ void dispose() {
       appBar: AppBar(
         title: const Text("Pregled svih slobodnih soba"),
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Container(

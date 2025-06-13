@@ -37,6 +37,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       appBar: AppBar(
         title: Text("Uredite vase podatke"),
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

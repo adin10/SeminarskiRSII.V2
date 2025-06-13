@@ -75,6 +75,7 @@ class _NovostiDetailScreenState extends State<NovostiDetailScreen> {
         appBar: AppBar(
           title: Text("Detalji novosti"),
           backgroundColor: Colors.teal,
+          foregroundColor: Colors.white,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),

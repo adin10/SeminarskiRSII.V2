@@ -54,6 +54,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       appBar: AppBar(
         title: const Text("Preporučene sobe"),
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -101,7 +102,7 @@ builder: (context) => OdabirDatumaScreen(
             backgroundColor: Colors.teal,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(vertical: 14),
-            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),

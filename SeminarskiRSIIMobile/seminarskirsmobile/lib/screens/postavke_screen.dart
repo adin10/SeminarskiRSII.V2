@@ -40,6 +40,7 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
       appBar: AppBar(
         title: const Text("Postavke"),
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -103,8 +104,7 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           textStyle: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 18
                           ),
                         ),
                       ),
@@ -127,8 +127,7 @@ class _PostavkeScreenState extends State<PostavkeScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           textStyle: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 18
                           ),
                         ),
                       ),

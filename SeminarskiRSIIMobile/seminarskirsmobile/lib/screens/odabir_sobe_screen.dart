@@ -95,6 +95,7 @@ Widget build(BuildContext context) {
     appBar: AppBar(
       title: Text("Odaberite datume"),
       backgroundColor: Colors.teal,
+      foregroundColor: Colors.white,
     ),
     body: Padding(
       padding: const EdgeInsets.all(16),

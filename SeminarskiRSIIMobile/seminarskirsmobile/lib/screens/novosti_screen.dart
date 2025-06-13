@@ -59,6 +59,7 @@ class _NovostiScreenState extends State<NovostiScreen> {
       appBar: AppBar(
         title: Text("Pregled svih novosti"),
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Container(
@@ -202,7 +203,7 @@ Row(
     Icon(Icons.calendar_today, color: Colors.teal.shade300, size: 18),
     SizedBox(width: 6),
     Text(
-      DateFormat('dd/MM/yyyy').format(DateTime.parse(data["datumObjave"])),
+      DateFormat('dd-MM-yyyy').format(DateTime.parse(data["datumObjave"])),
       style: TextStyle(fontSize: 14, color: Colors.grey),
     ),
   ],
