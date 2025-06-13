@@ -104,7 +104,6 @@ namespace SeminarskiRSII.WebApi.Services
                 await _context.SaveChangesAsync();
             }
 
-            //await _notifikacijeService.NotifyUserAboutNewReservation(entity.Id);
             try
             {
                 await _notifikacijeService.NotifyUserAboutNewReservation(entity.Id);

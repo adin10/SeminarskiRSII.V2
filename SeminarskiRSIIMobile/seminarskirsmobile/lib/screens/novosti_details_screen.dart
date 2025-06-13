@@ -106,14 +106,14 @@ class _NovostiDetailScreenState extends State<NovostiDetailScreen> {
               SizedBox(height: 16),
               Text(
                 naslov,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 16),
               GestureDetector(
                 onTap: () => _launchUrlsInText(sadrzaj),
                 child: Text(
                   sadrzaj,
-                  style: TextStyle(fontSize: 16, color: Colors.black87),
+                  style: TextStyle(fontSize: 18, color: Colors.black87),
                 ),
               ),
               SizedBox(height: 35),
@@ -121,13 +121,13 @@ class _NovostiDetailScreenState extends State<NovostiDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Datum objave: ${DateFormat('dd-MM-yyyy').format(DateTime.parse(widget.novost['datumObjave']))}',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    'Datum: ${DateFormat('dd-MM-yyyy').format(DateTime.parse(widget.novost['datumObjave']))}',
+                    style: TextStyle(fontSize: 15, color: Colors.grey[600]),
                   ),
                   if (widget.novost['osoblje'] != null)
                     Text(
                       'Autor: ${widget.novost['osoblje']['ime']} ${widget.novost['osoblje']['prezime']}',
-                      style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                      style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                     ),
                 ],
               )

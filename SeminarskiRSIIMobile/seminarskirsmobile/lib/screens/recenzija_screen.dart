@@ -66,43 +66,22 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
                   ),
                 ),
               ),
-             TextFormField(
-  decoration: InputDecoration(
-    labelText: 'Ocjena',
-    border: OutlineInputBorder(),
-    prefixIcon: Icon(Icons.star_border),
-    filled: true,
-    fillColor: Colors.grey[200],
-  ),
-  // validator: null, // možeš izostaviti validator
-  keyboardType: TextInputType.number,
-  onSaved: (value) {
-    if (value != null && value.isNotEmpty) {
-      ocjena = int.tryParse(value);
-    }
-  },
-),
-              // TextFormField(
-              //   decoration: InputDecoration(
-              //     labelText: 'Ocjena',
-              //     border: OutlineInputBorder(),
-              //     prefixIcon: Icon(Icons.star_border),
-              //     filled: true,
-              //     fillColor: Colors.grey[200],
-              //   ),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Unesite vašu ocjenu';
-              //     }
-              //     return null;
-              //   },
-              //   keyboardType: TextInputType.number,
-              //   onSaved: (value) {
-              //     if (value != null && value.isNotEmpty) {
-              //       ocjena = int.tryParse(value);
-              //     }
-              //   },
-              // ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Ocjena',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.star_border),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
+                // validator: null, // možeš izostaviti validator
+                keyboardType: TextInputType.number,
+                onSaved: (value) {
+                  if (value != null && value.isNotEmpty) {
+                    ocjena = int.tryParse(value);
+                  }
+                },
+              ),
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: InputDecoration(
@@ -139,9 +118,9 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
                   backgroundColor: Colors.teal,
                   foregroundColor: Colors.white,
                   textStyle: TextStyle(fontSize: 18),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   elevation: 5,
                 ),
                 child: Text('Ostavite recenziju'),
@@ -157,9 +136,8 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
     if (ocjena == null || ocjena! < 1 || ocjena! > 10) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Ocjena mora biti od 1 do 10'),
-          behavior: SnackBarBehavior.floating
-        ),
+            content: Text('Ocjena mora biti od 1 do 10'),
+            behavior: SnackBarBehavior.floating),
       );
       return;
     }
@@ -196,9 +174,7 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
             behavior: SnackBarBehavior.floating,
           ),
         );
-        // Navigator.pushNamed(
-        //     context, ListaRezervacijaScreen.listaRezervacijaRouteName);
-Navigator.pushAndRemoveUntil(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) => const ListaRezervacijaScreen(),

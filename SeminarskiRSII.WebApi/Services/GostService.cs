@@ -92,6 +92,13 @@ namespace SeminarskiRSII.WebApi.Services
             }
             var gosti = await query.ToListAsync();
 
+            var godinaUnazad = DateTime.Now.AddYears(-1);
+            var aktivniGostIds = await _context.Rezervacija
+                .Where(r => r.DatumRezervacije >= godinaUnazad)
+                .Select(r => r.GostId)
+                .Distinct()
+                .ToListAsync();
+
             var gostIds = gosti.Select(x => x.Id).ToList();
             var ocjene = await _context.Recenzija.Where(x => gostIds.Contains(x.GostId))
                 .GroupBy(x => x.GostId).Select(g => new
@@ -107,6 +114,7 @@ namespace SeminarskiRSII.WebApi.Services
             {
                 var ocjena = ocjene.FirstOrDefault(o => o.GostId == gost.Id);
                 gost.ProsjecnaOcjena = ocjena?.ProsjecnaOcjena;
+                gost.Status = aktivniGostIds.Contains(gost.Id);
             }
 
             return mapped;

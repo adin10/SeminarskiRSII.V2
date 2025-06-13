@@ -5,7 +5,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/io_client.dart';
 import 'package:seminarskirsmobile/providers/usluge_provider.dart';
 import 'package:seminarskirsmobile/screens/lista_rezervacija_screen.dart';
-import 'package:seminarskirsmobile/screens/payment_screen.dart';
 import 'dart:convert';
 import '../main.dart';
 import '../providers/base_provider.dart';

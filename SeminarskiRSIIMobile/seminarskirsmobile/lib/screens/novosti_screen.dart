@@ -78,8 +78,8 @@ class _NovostiScreenState extends State<NovostiScreen> {
                   ? Center(
                       child: Text(
                         "Nema dostupnih podataka",
-                        style:
-                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     )
                   : ListView.builder(
@@ -88,9 +88,11 @@ class _NovostiScreenState extends State<NovostiScreen> {
                         return NovostiCard(
                           data: data[index],
                           onMarkedAsRead: () async {
+                            setState(() {
+                              data[index]["procitano"] = true;
+                            });
                             await _novostiProvider?.markAsRead(
                                 data[index]["id"], loggedUserID);
-                            loadData();
                           },
                         );
                       },
@@ -122,7 +124,7 @@ class NovostiCard extends StatelessWidget {
     bool isRead = data['procitano'] == true;
 
     return InkWell(
-onTap: () async {
+      onTap: () async {
         final result = await Navigator.push(
           context,
           MaterialPageRoute(
@@ -197,17 +199,19 @@ onTap: () async {
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-SizedBox(height: 6),
-Row(
-  children: [
-    Icon(Icons.calendar_today, color: Colors.teal.shade300, size: 18),
-    SizedBox(width: 6),
-    Text(
-      DateFormat('dd-MM-yyyy').format(DateTime.parse(data["datumObjave"])),
-      style: TextStyle(fontSize: 14, color: Colors.grey),
-    ),
-  ],
-),
+              SizedBox(height: 6),
+              Row(
+                children: [
+                  Icon(Icons.calendar_today,
+                      color: Colors.teal.shade300, size: 18),
+                  SizedBox(width: 6),
+                  Text(
+                    DateFormat('dd-MM-yyyy')
+                        .format(DateTime.parse(data["datumObjave"])),
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -215,4 +219,3 @@ Row(
     );
   }
 }
-
