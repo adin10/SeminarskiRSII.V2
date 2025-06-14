@@ -58,23 +58,41 @@ class _OdabirDatumaScreenState extends State<OdabirDatumaScreen> {
 
 void _onSearchRoomsPressed() {
   if (datumRezervacije == null || zavrsetakRezervacije == null) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Molimo odaberite oba datuma prije pretrage."),
-    ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Molimo odaberite oba datuma prije pretrage",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
     return;
   }
 
   if (zavrsetakRezervacije!.isAtSameMomentAs(datumRezervacije!)) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Datum završetka mora biti veci od datuma početka."),
-    ));
+          ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Datum završetka mora biti veci od datuma početka",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
     return;
   }
 
   if (zavrsetakRezervacije!.isBefore(datumRezervacije!)) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Datum završetka mora biti nakon datuma početka."),
-    ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Datum završetka mora biti veci od datuma početka",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
     return;
   }
 

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/usluga_provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/usluga_new_screen.dart';
-import '../../providers/drzava_provider.dart';
 import '../../widgets/master_screen.dart';
-import '../details-new/drzava_new_screen.dart';
 
 class UslugaListScreen extends StatefulWidget {
   static const String uslugaRouteName = '/usluge';
@@ -132,21 +130,35 @@ class _UslugaListScreenState extends State<UslugaListScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+        const SizedBox(height: 20),
           Align(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  NewUslugaScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: const TextStyle(fontSize: 16),
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 24, right: 50),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NewUslugaScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  elevation: 4,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  shadowColor: Colors.black.withOpacity(0.2),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                icon: const Icon(Icons.add, size: 22),
+                label: const Text('Dodaj novu uslugu'),
               ),
-              child: Text('Dodaj novu uslugu'),
             ),
           ),
         ],
@@ -184,7 +196,7 @@ class _UslugaListScreenState extends State<UslugaListScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NewDrzavaScreen(drzava: x),
+                                builder: (context) => NewUslugaScreen(usluga: x),
                               ),
                             );
                           },
@@ -194,7 +206,7 @@ class _UslugaListScreenState extends State<UslugaListScreen> {
                         width: 60,
                         child: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => _confirmDelete(x["id"].toString()),
+                          onPressed: () => _confirmDelete(x["uslugaID"].toString()),
                         ),
                       ),
                     ],

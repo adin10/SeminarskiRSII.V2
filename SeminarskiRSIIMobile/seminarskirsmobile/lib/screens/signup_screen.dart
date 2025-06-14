@@ -49,7 +49,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load gradovi: $error')),
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Greska prilikom ucitavanja gradova",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       );
     } finally {
       setState(() {
@@ -170,10 +176,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     response.then((res) {
       if (res.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registracija uspjesna!')),
-        );
-
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Registracija uspjesna!",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
         Navigator.pushNamedAndRemoveUntil(
           context,
           '/',
@@ -181,10 +192,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
       } else {
         final responseData = jsonDecode(response as String);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(responseData['message'] ?? 'Neuspjesna registracija')),
-        );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            responseData['message']
+            ?? 'Neuspjesna registracija',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
       }
     });
   }

@@ -13,6 +13,7 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<Gost> Get(int id);
         public Task<Gost> Insert(GostiInsertRequest requst);
         public Task<Gost> Update(int id, GostiInsertRequest requst);
+        public Task<Gost> UpdateInformation(int id, GostiUpdateRequest requst);
         public Task<Gost> Delete(int id);
         public Task<Gost> AuthenticirajGosta(string username, string pass);
         public Task<Gost> ChangePassword(int id, ChangePasswordRequest request);

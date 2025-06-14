@@ -40,5 +40,13 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Usluga>(usluga);
         }
+
+        public async Task<Model.Models.Usluga> Update(int id, UslugaInsertRequest update)
+        {
+            var entity = await _context.Usluga.FindAsync(id);
+            _mapper.Map(update, entity);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<Model.Models.Usluga>(entity);
+        }
     }
 }

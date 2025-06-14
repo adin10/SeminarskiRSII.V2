@@ -100,7 +100,7 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
                         headingRowHeight: 50,
                         headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
                         dividerThickness: 2,
-                        columnSpacing: 55,
+                        columnSpacing: 75,
                         horizontalMargin: 35,
                         columns: const [
                           DataColumn(label: Text('Naziv drzave')),
@@ -130,19 +130,33 @@ class _DrzavaListScreenState extends State<DrzavaListScreen> {
           ),
           const SizedBox(height: 20),
           Align(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  NewDrzavaScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: const TextStyle(fontSize: 16),
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 24, right: 50),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NewDrzavaScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  elevation: 4,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  shadowColor: Colors.black.withOpacity(0.2),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                icon: const Icon(Icons.add, size: 22),
+                label: const Text('Dodaj novu drzavu'),
               ),
-              child: Text('Dodaj novu drzavu'),
             ),
           ),
         ],

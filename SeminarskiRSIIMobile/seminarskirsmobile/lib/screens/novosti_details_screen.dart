@@ -39,7 +39,13 @@ class _NovostiDetailScreenState extends State<NovostiDetailScreen> {
         widget.novost['procitano'] = true;
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Greška pri označavanju obavijesti")),
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text(
+              "Greška pri označavanju obavijesti",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         );
       }
     }

@@ -163,39 +163,45 @@ class _RecenzijaListScreenState extends State<RecenzijaListScreen> {
   }
 
   Widget _buildPaginationControls() {
-    if (data.isEmpty) return const SizedBox();
-    int totalPages = (data.length / _itemsPerPage).ceil();
+  if (data == null || data.isEmpty) return const SizedBox();
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.chevron_left),
-            onPressed: _currentPage > 1
-                ? () {
-                    setState(() {
-                      _currentPage--;
-                    });
-                  }
-                : null,
-          ),
-          Text("Stranica $_currentPage od $totalPages | Ukupno: ${data.length}"),
-          IconButton(
-            icon: const Icon(Icons.chevron_right),
-            onPressed: _currentPage < totalPages
-                ? () {
-                    setState(() {
-                      _currentPage++;
-                    });
-                  }
-                : null,
-          ),
-        ],
-      ),
-    );
-  }
+  int totalItems = data.length;
+  int totalPages = (totalItems / _itemsPerPage).ceil();
+
+  int firstItem = ((_currentPage - 1) * _itemsPerPage) + 1;
+  int lastItem = (_currentPage * _itemsPerPage);
+  if (lastItem > totalItems) lastItem = totalItems;
+
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: _currentPage > 1
+              ? () {
+                  setState(() {
+                    _currentPage--;
+                  });
+                }
+              : null,
+        ),
+        Text("$firstItem–$lastItem Od Ukupno $totalItems"),
+        IconButton(
+          icon: const Icon(Icons.chevron_right),
+          onPressed: _currentPage < totalPages
+              ? () {
+                  setState(() {
+                    _currentPage++;
+                  });
+                }
+              : null,
+        ),
+      ],
+    ),
+  );
+}
 
   Future<void> _deleteComment(int id) async {
     await _recenzijaProvider.update(id);

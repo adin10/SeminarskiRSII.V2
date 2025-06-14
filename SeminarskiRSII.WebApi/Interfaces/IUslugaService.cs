@@ -7,6 +7,7 @@ namespace SeminarskiRSII.WebApi.Interfaces
     {
         public Task<List<Usluga>> GetList();
         public Task<Usluga> Insert(UslugaInsertRequest request);
+        public Task<Usluga> Update(int id, UslugaInsertRequest request);
         public Task<Usluga> Delete(int id);
 
     }

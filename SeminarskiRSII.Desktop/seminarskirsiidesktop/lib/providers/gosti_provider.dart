@@ -41,6 +41,18 @@ class GostiProvider with ChangeNotifier {
   }
 }
 
+Future<void> update(int id, Map<String, dynamic> data) async {
+  final url = "${BaseProvider.baseUrl}/Gost/$id";
+  final response = await http!.put(
+    Uri.parse(url),
+    headers: {"Content-Type": "application/json"},
+    body: jsonEncode(data),
+  );
+  if (response.statusCode < 200 || response.statusCode >= 300) {
+    throw Exception("Greška pri izmjeni podataka gosta");
+  }
+}
+
   bool isValidResponse(Response response) {
     if (response.statusCode < 299) {
       return true;

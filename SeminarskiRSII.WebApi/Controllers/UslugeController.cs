@@ -30,10 +30,16 @@ namespace SeminarskiRSII.WebApi.Controllers
             return Ok(await _service.Insert(request));
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Usluga>> Delete(int id)
         {
             return Ok(await _service.Delete(id));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Rezervacija>> Update(int id, UslugaInsertRequest update)
+        {
+            return Ok(await _service.Update(id, update));
         }
     }
 }

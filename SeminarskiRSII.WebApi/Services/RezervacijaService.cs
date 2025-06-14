@@ -37,6 +37,14 @@ namespace SeminarskiRSII.WebApi.Services
             var entity = await _context.Rezervacija.FindAsync(id);
             _context.Rezervacija.Remove(entity);
             await _context.SaveChangesAsync();
+            try
+            {
+                await _notifikacijeService.NotifyUserAboutCancelledReservation(entity.Id);
+            }
+            catch
+            {
+                Console.WriteLine("greska prilikom slanja emaila");
+            }
             return _mapper.Map<Model.Models.Rezervacija>(entity);
         }
 

@@ -64,6 +64,18 @@ Future<List<dynamic>> get(dynamic searchObject) async {
     }
   }
 
+    Future<void> delete(String id) async {
+    final url = Uri.parse("${BaseProvider.baseUrl}/Rezervacija/$id");
+
+    final response = await http!.delete(url);
+
+    if (response.statusCode == 200) {
+      notifyListeners();
+    } else {
+      throw Exception('Failed to delete item');
+    }
+  }
+
   Map<String, String> CreateHeaders() {
     String username = Authorization.username ?? "";
     String password = Authorization.password ?? "";

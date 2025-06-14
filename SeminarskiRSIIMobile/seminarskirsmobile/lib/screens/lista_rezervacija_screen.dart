@@ -99,57 +99,75 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                       final datumRezervacije = DateTime.parse(
                                         reservation["datumRezervacije"],
                                       );
-                                      final zavrsetakRezervacije = DateTime.parse(
+                                      final zavrsetakRezervacije =
+                                          DateTime.parse(
                                         reservation["zavrsetakRezervacije"],
                                       );
                                       return Card(
                                         margin: const EdgeInsets.all(10.0),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12.0),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
                                         ),
                                         elevation: 5,
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
                                           children: [
                                             ClipRRect(
-                                              borderRadius: const BorderRadius.vertical(
+                                              borderRadius:
+                                                  const BorderRadius.vertical(
                                                 top: Radius.circular(12.0),
                                               ),
                                               child: AspectRatio(
                                                 aspectRatio: 1 / 1,
                                                 child: Image.memory(
                                                   base64Decode(
-                                                    reservation["soba"]["slika"],
+                                                    reservation["soba"]
+                                                        ["slika"],
                                                   ),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(16.0),
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   _buildInfoRow(
                                                       "Broj sobe",
-                                                      reservation["soba"]["brojSobe"].toString(),
+                                                      reservation["soba"]
+                                                              ["brojSobe"]
+                                                          .toString(),
                                                       isBold: true,
                                                       icon: Icons.numbers),
                                                   _buildInfoRow(
                                                       "Datum rezervacije",
-                                                      formatDate(reservation["datumRezervacije"]),
+                                                      formatDate(reservation[
+                                                          "datumRezervacije"]),
                                                       isBold: true,
-                                                      icon: Icons.calendar_today),
+                                                      icon:
+                                                          Icons.calendar_today),
                                                   _buildInfoRow(
                                                       "Kraj rezervacije",
-                                                      formatDate(reservation["zavrsetakRezervacije"]),
+                                                      formatDate(reservation[
+                                                          "zavrsetakRezervacije"]),
                                                       isBold: true,
-                                                      icon: Icons.calendar_today),
+                                                      icon:
+                                                          Icons.calendar_today),
                                                   _buildInfoRow(
                                                       "Usluge",
-                                                      reservation["rezervacijaUsluge"]
+                                                      reservation[
+                                                              "rezervacijaUsluge"]
                                                           .map<String>(
-                                                            (usluga) => usluga["usluga"]["naziv"] as String,
+                                                            (usluga) =>
+                                                                usluga["usluga"]
+                                                                        [
+                                                                        "naziv"]
+                                                                    as String,
                                                           )
                                                           .join(", "),
                                                       isBold: true,
@@ -160,22 +178,36 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                                       icon: Icons.attach_money),
                                                   const SizedBox(height: 16),
                                                   Center(
-                                                    child: DateTime.now().isAfter(zavrsetakRezervacije)
+                                                    child: DateTime.now().isAfter(
+                                                            zavrsetakRezervacije)
                                                         ? ElevatedButton(
                                                             onPressed: () {
-                                                              IdGetter.Id = reservation["sobaId"];
-                                                              Navigator.pushNamed(
+                                                              IdGetter.Id =
+                                                                  reservation[
+                                                                      "sobaId"];
+                                                              Navigator
+                                                                  .pushNamed(
                                                                 context,
-                                                                RecenzijaScreen.dodajRecenzijuRouteName,
+                                                                RecenzijaScreen
+                                                                    .dodajRecenzijuRouteName,
                                                                 arguments: {
-                                                                  'selectedRoomId': reservation["sobaId"],
+                                                                  'selectedRoomId':
+                                                                      reservation[
+                                                                          "sobaId"],
                                                                 },
                                                               );
                                                             },
-                                                            style: ElevatedButton.styleFrom(
-                                                              backgroundColor: Colors.teal,
-                                                              foregroundColor: Colors.white,
-                                                              textStyle: const TextStyle(fontSize: 18),
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.teal,
+                                                              foregroundColor:
+                                                                  Colors.white,
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          18),
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 borderRadius:
@@ -184,66 +216,121 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                                                             12),
                                                               ),
                                                             ),
-                                                            child: const Text("Ostavite recenziju"),
+                                                            child: const Text(
+                                                                "Ostavite recenziju"),
                                                           )
-                                                        : DateTime.now().isBefore(datumRezervacije)
+                                                        : DateTime.now().isBefore(
+                                                                datumRezervacije)
                                                             ? ElevatedButton(
-                                                                onPressed: () async {
-                                                                  final confirmed = await showDialog<bool>(
-                                                                    context: context,
-                                                                    builder: (context) => AlertDialog(
-                                                                      title: const Text("Potvrda"),
-                                                                      content: const Text(
-                                                                          "Da li ste sigurni da želite otkazati rezervaciju?"),
+                                                                onPressed:
+                                                                    () async {
+                                                                  final confirmed =
+                                                                      await showDialog<
+                                                                          bool>(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) =>
+                                                                            AlertDialog(
+                                                                      title: const Text(
+                                                                          "Potvrda"),
+                                                                      content:
+                                                                          const Text(
+                                                                              "Da li ste sigurni da želite otkazati rezervaciju?"),
                                                                       actions: [
                                                                         TextButton(
-                                                                          onPressed: () => Navigator.of(context).pop(false),
-                                                                          child: const Text("Ne"),
+                                                                          onPressed: () =>
+                                                                              Navigator.of(context).pop(false),
+                                                                          child:
+                                                                              const Text("Ne"),
                                                                         ),
                                                                         ElevatedButton(
-                                                                          onPressed: () => Navigator.of(context).pop(true),
-                                                                          style: ElevatedButton.styleFrom(
-                                                                            backgroundColor: Colors.red,
+                                                                          onPressed: () =>
+                                                                              Navigator.of(context).pop(true),
+                                                                          style:
+                                                                              ElevatedButton.styleFrom(
+                                                                            backgroundColor:
+                                                                                Colors.red,
                                                                           ),
-                                                                          child: const Text("Da"),
+                                                                          child:
+                                                                              const Text("Da"),
                                                                         ),
                                                                       ],
                                                                     ),
                                                                   );
 
-                                                                  if (confirmed == true) {
+                                                                  if (confirmed ==
+                                                                      true) {
                                                                     final rezervacijaProvider =
-                                                                        context.read<RezervacijaProvider>();
-                                                                    final isCancelled = await rezervacijaProvider.otkazi(
-                                                                      reservation["id"].toString(),
+                                                                        context.read<
+                                                                            RezervacijaProvider>();
+                                                                    final isCancelled =
+                                                                        await rezervacijaProvider
+                                                                            .otkazi(
+                                                                      reservation[
+                                                                              "id"]
+                                                                          .toString(),
                                                                     );
                                                                     if (isCancelled) {
-                                                                      setState(() {
-                                                                        data.removeWhere((item) => item["id"] == reservation["id"]);
+                                                                      setState(
+                                                                          () {
+                                                                        data.removeWhere((item) =>
+                                                                            item["id"] ==
+                                                                            reservation["id"]);
                                                                       });
-                                                                      ScaffoldMessenger.of(context).showSnackBar(
-                                                                        const SnackBar(
-                                                                          content: Text("Rezervacija otkazana."),
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          backgroundColor:
+                                                                              Colors.green,
+                                                                          content:
+                                                                              Text(
+                                                                            "Rezervacija otkazana.",
+                                                                            style:
+                                                                                TextStyle(color: Colors.white),
+                                                                          ),
                                                                         ),
                                                                       );
                                                                     } else {
-                                                                      ScaffoldMessenger.of(context).showSnackBar(
-                                                                        const SnackBar(
-                                                                          content: Text("Greška pri otkazivanju rezervacije."),
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          backgroundColor:
+                                                                              Colors.redAccent,
+                                                                          content:
+                                                                              Text(
+                                                                            "Greška pri otkazivanju rezervacije.",
+                                                                            style:
+                                                                                TextStyle(color: Colors.white),
+                                                                          ),
                                                                         ),
                                                                       );
                                                                     }
                                                                   }
                                                                 },
-                                                                style: ElevatedButton.styleFrom(
-                                                                  backgroundColor: Colors.red,
-                                                                  foregroundColor: Colors.white,
-                                                                  textStyle: const TextStyle(fontSize: 18),
-                                                                  shape: RoundedRectangleBorder(
-                                                                    borderRadius: BorderRadius.circular(12),
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .red,
+                                                                  foregroundColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  textStyle:
+                                                                      const TextStyle(
+                                                                          fontSize:
+                                                                              18),
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12),
                                                                   ),
                                                                 ),
-                                                                child: const Text("Otkazite rezervaciju"),
+                                                                child: const Text(
+                                                                    "Otkazite rezervaciju"),
                                                               )
                                                             : const SizedBox(),
                                                   ),
@@ -259,20 +346,25 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                 // Indikatori ispod PageView-a (ali izvan Carda!)
                                 if (data.length > 1)
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 8, bottom: 6),
+                                    padding: const EdgeInsets.only(
+                                        top: 8, bottom: 6),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: List.generate(data.length, (index) {
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children:
+                                          List.generate(data.length, (index) {
                                         return AnimatedContainer(
                                           duration: Duration(milliseconds: 200),
-                                          margin: EdgeInsets.symmetric(horizontal: 4),
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 4),
                                           width: _currentPage == index ? 16 : 8,
                                           height: 8,
                                           decoration: BoxDecoration(
                                             color: _currentPage == index
                                                 ? Colors.teal
                                                 : Colors.teal.shade100,
-                                            borderRadius: BorderRadius.circular(4),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
                                           ),
                                         );
                                       }),

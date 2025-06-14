@@ -49,7 +49,13 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
       });
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load usluge: $error')),
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Greska prilikom ucitavanja usluga",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       );
     } finally {
       setState(() {
@@ -255,9 +261,15 @@ class _RezervacijScreenState extends State<RezervacijScreen> {
 
   void _submitForm(int userId, GetUserResponse userData, int selectedRoomId) {
   if (datumRezervacije == null || zavrsetakRezervacije == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Molimo odaberite datume rezervacije.')),
-    );
+          ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Molimo odaberite datume rezervacije",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
     return;
   }
 
@@ -316,6 +328,15 @@ Future<void> _submitRezervacija(int userId, int selectedRoomId) async {
   );
 
   if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Uspjesno ste rezervisali sobu!",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
         int popCount = 0;
 Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => ListaRezervacijaScreen()),
@@ -352,7 +373,15 @@ Future<void> _handlePaymentAndSubmit(
     await _submitRezervacija(userId, selectedRoomId);
   } catch (e) {
     Navigator.of(context).pop();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Greška: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Greska $e",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
   }
 }
 

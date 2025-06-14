@@ -11,5 +11,7 @@ namespace SeminarskiRSII.WebApi.Services
     {
         public Task<List<Notifikacije>> GetList(NotifikacijeSearchRequest search);
         Task NotifyUserAboutNewReservation(long reservationId);
+        Task NotifyUserAboutCancelledReservation(long reservationId);
+
     }
 }

@@ -82,5 +82,11 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(await _service.UpdateUserProfile(id, request));
         }
+
+        [HttpPut("UpdateInformation/{id}")]
+        public async Task<ActionResult<Gost>> UpdateInformation(int id, GostiUpdateRequest request)
+        {
+            return Ok(await _service.UpdateInformation(id, request));
+        }
     }
 }

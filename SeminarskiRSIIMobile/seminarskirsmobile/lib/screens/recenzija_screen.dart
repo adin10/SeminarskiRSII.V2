@@ -136,8 +136,12 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
     if (ocjena == null || ocjena! < 1 || ocjena! > 10) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text('Ocjena mora biti od 1 do 10'),
-            behavior: SnackBarBehavior.floating),
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Ocjena mora biti od 1 do 10",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       );
       return;
     }
@@ -168,12 +172,15 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
       );
 
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Recenzija uspješno obavljena.'),
-            behavior: SnackBarBehavior.floating,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Recenzija uspjesno zavrsena",
+            style: TextStyle(color: Colors.white),
           ),
-        );
+        ),
+      );
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

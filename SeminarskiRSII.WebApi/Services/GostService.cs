@@ -93,11 +93,22 @@ namespace SeminarskiRSII.WebApi.Services
             var gosti = await query.ToListAsync();
 
             var godinaUnazad = DateTime.Now.AddYears(-1);
-            var aktivniGostIds = await _context.Rezervacija
+            var mjesecDanaUnazad = DateTime.Now.AddDays(-30);
+
+            var aktivniGostIdsPoRezervacijama = await _context.Rezervacija
                 .Where(r => r.DatumRezervacije >= godinaUnazad)
                 .Select(r => r.GostId)
                 .Distinct()
                 .ToListAsync();
+
+            var aktivniGostIdsPoRegistraciji = await _context.Gost
+                .Where(g => g.DatumRegistracije >= mjesecDanaUnazad)
+                .Select(g => g.Id)
+                .ToListAsync();
+
+            var aktivniGostIds = aktivniGostIdsPoRezervacijama
+                .Union(aktivniGostIdsPoRegistraciji)
+                .ToHashSet();
 
             var gostIds = gosti.Select(x => x.Id).ToList();
             var ocjene = await _context.Recenzija.Where(x => gostIds.Contains(x.GostId))
@@ -161,7 +172,22 @@ namespace SeminarskiRSII.WebApi.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Gost>(entity);
         }
-    
+
+        public async Task<Model.Models.Gost> UpdateInformation(int id, GostiUpdateRequest request)
+        {
+            var entity = await _context.Gost.FindAsync(id);
+            entity.Ime = request.Ime;
+            entity.Prezime = request.Prezime;
+            entity.KorisnickoIme = request.korisnickoIme;
+            entity.Email = request.Email;
+            entity.GradId = request.GradId;
+            entity.Telefon = request.Telefon;
+            //_context.Gost.Attach(entity);
+            _context.Gost.Update(entity);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<Model.Models.Gost>(entity);
+        }
+
         public async Task<Model.Models.Gost> Delete(int id)
         {
             var entity = await _context.Gost.FindAsync(id);

@@ -16,6 +16,8 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
   late OsobljeProvider _osobljeProvider;
   dynamic data;
   bool isLoading = true;
+  int _currentPage = 1;
+  final int _itemsPerPage = 10;
 
   final ScrollController _verticalController = ScrollController();
   final ScrollController _horizontalController = ScrollController();
@@ -28,10 +30,12 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
   }
 
   Future loadData() async {
+    _currentPage = 1;
     var tmpData = await _osobljeProvider.get(null);
     setState(() {
       data = tmpData;
       isLoading = false;
+      _currentPage = 1;
     });
   }
 
@@ -63,6 +67,54 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
         print(e);
       }
     }
+  }
+
+  Widget _buildPaginationControls() {
+    if (data == null || data.isEmpty) return const SizedBox();
+
+    int totalItems = data.length;
+    int totalPages = (totalItems / _itemsPerPage).ceil();
+
+    int firstItem = ((_currentPage - 1) * _itemsPerPage) + 1;
+    int lastItem = (_currentPage * _itemsPerPage);
+    if (lastItem > totalItems) lastItem = totalItems;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: _currentPage > 1
+                ? () {
+                    setState(() {
+                      _currentPage--;
+                    });
+                  }
+                : null,
+          ),
+          Text("$firstItem–$lastItem Od Ukupno $totalItems"),
+          IconButton(
+            icon: const Icon(Icons.chevron_right),
+            onPressed: _currentPage < totalPages
+                ? () {
+                    setState(() {
+                      _currentPage++;
+                    });
+                  }
+                : null,
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<dynamic> get _pagedData {
+    if (data == null) return [];
+    int start = (_currentPage - 1) * _itemsPerPage;
+    int end = start + _itemsPerPage;
+    return data.sublist(start, end > data.length ? data.length : end);
   }
 
   @override
@@ -102,7 +154,8 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                             child: DataTable(
                               dataRowHeight: 60,
                               headingRowHeight: 50,
-                              headingRowColor: WidgetStateProperty.all(Colors.blueGrey[50]),
+                              headingRowColor:
+                                  WidgetStateProperty.all(Colors.blueGrey[50]),
                               dividerThickness: 2,
                               columnSpacing: 30,
                               horizontalMargin: 15,
@@ -114,7 +167,7 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                                 _buildDataColumn("Korisnicko ime"),
                                 _buildDataColumn("Slika"),
                                 _buildDataColumn("Uredi"),
-                                 _buildDataColumn("Obrisi"),
+                                _buildDataColumn("Obrisi"),
                               ],
                               rows: _buildRows(),
                             ),
@@ -124,21 +177,36 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                     ),
             ),
           ),
+          _buildPaginationControls(),
           const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const NewOsobljeScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: const TextStyle(fontSize: 16),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 24, right: 30),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NewOsobljeScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  elevation: 4,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  shadowColor: Colors.black.withOpacity(0.2),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                icon: const Icon(Icons.add, size: 22),
+                label: const Text('Dodaj novog uposlenika'),
               ),
-              child: Text('Dodaj novog uposlenika'),
             ),
           ),
         ],
@@ -161,9 +229,11 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
   }
 
   List<DataRow> _buildRows() {
-    if (data == null || data.isEmpty) {
+    if (_pagedData.isEmpty) {
       return [
-        DataRow(cells: List.generate(8, (index) => const DataCell(Text("No data..."))))
+        DataRow(
+          cells: List.generate(8, (_) => const DataCell(Text("No data..."))),
+        )
       ];
     }
 
@@ -187,25 +257,25 @@ class _OsobljeListScreenState extends State<OsobljeListScreen> {
                 height: 50,
               ),
             ),
-                 DataCell(
-      IconButton(
-        icon: const Icon(Icons.edit, color: Colors.blue),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NewOsobljeScreen(osoblje: employee),
+            DataCell(
+              IconButton(
+                icon: const Icon(Icons.edit, color: Colors.blue),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewOsobljeScreen(osoblje: employee),
+                    ),
+                  );
+                },
+              ),
             ),
-          );
-        },
-      ),
-    ),
-    DataCell(
-      IconButton(
-        icon: const Icon(Icons.delete, color: Colors.red),
-        onPressed: () => _confirmDelete(employee["id"].toString()),
-      ),
-    ),
+            DataCell(
+              IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () => _confirmDelete(employee["id"].toString()),
+              ),
+            ),
           ],
           color: WidgetStateProperty.resolveWith<Color?>(
             (Set<WidgetState> states) {

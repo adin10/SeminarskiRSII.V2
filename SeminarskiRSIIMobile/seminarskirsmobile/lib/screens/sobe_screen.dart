@@ -396,13 +396,21 @@ void dispose() {
                                                 final roomId =
                                                     x["soba"]["id"] as int?;
                                                 if (roomId == null) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      content: Text(
-                                                          'Greška: ID sobe nije dostupan.'),
-                                                    ),
-                                                  );
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            SnackBar(
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .redAccent,
+                                                              content: Text(
+                                                                "Greska: ID sobe nije dostupan",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                            ),
+                                                          );
                                                   return;
                                                 }
                                                 IdGetter.Id = roomId;

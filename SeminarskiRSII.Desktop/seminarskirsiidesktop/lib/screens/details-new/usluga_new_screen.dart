@@ -30,8 +30,8 @@ class _NewUslugaScreenState extends State<NewUslugaScreen> {
       _nazivController.text = widget.usluga['naziv'] ?? '';
       _opisController.text = widget.usluga['opis'] ?? '';
       _cijenaController.text = widget.usluga['cijena']?.toString() ?? '';
-
     }
+    print(widget.usluga);
   }
 
   @override
@@ -199,17 +199,19 @@ class _NewUslugaScreenState extends State<NewUslugaScreen> {
       if (widget.usluga == null) {
         _dodajUslugu();
       } else {
-        _urediUslugu(widget.usluga!['id']);
+        _urediUslugu(widget.usluga!['uslugaID']);
       }
     }
   }
   void _dodajUslugu() {
     final requestBody = jsonEncode({'naziv': _nazivController.text, 'opis': _opisController.text, 'cijena': int.tryParse(_cijenaController.text), 'valuta': _valutaController.text});
+    print(requestBody);
     _submitData(requestBody, "${BaseProvider.baseUrl}/Usluge", 'POST');
   }
 
   void _urediUslugu(int id) {
     final requestBody = jsonEncode({'naziv': _nazivController.text, 'opis': _opisController.text, 'cijena': int.tryParse(_cijenaController.text), 'valuta': _valutaController.text});
+    print(requestBody);
     _submitData(requestBody, "${BaseProvider.baseUrl}/Usluge/$id", 'PUT');
   }
 

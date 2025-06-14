@@ -142,8 +142,8 @@ class _GradListScreenState extends State<GradListScreen> {
                                 headingRowColor: WidgetStateProperty.all(
                                     Colors.blueGrey[50]),
                                 dividerThickness: 2,
-                                columnSpacing: 55,
-                                horizontalMargin: 35,
+                                columnSpacing: 60,
+                                horizontalMargin: 40,
                                 columns: [
                                   _buildDataColumn("Naziv grada"),
                                   _buildDataColumn("Postanski broj"),
@@ -183,20 +183,32 @@ class _GradListScreenState extends State<GradListScreen> {
           const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const NewGradScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: const TextStyle(fontSize: 16),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 24, right: 50),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NewGradScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  elevation: 4,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  shadowColor: Colors.black.withOpacity(0.2),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                icon: const Icon(Icons.add, size: 22),
+                label: const Text('Dodaj novi grad'),
               ),
-              child: Text('Dodaj novi grad'),
             ),
           ),
         ],
@@ -241,7 +253,7 @@ class _GradListScreenState extends State<GradListScreen> {
                     style: const TextStyle(fontSize: 14))),
                 DataCell(
                   SizedBox(
-                    width: 140, // isto povećano da se uklopi
+                    width: 140,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

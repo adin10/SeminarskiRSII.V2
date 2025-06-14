@@ -174,7 +174,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         headers: {'Content-Type': 'application/json'}).then((res) {
       if (res.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Password changed successfully!')),
+          SnackBar(
+            backgroundColor: Colors.green,
+            content: Text(
+              "Lozinka uspjesno promjenuta",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         );
         Navigator.pushNamedAndRemoveUntil(
           context,
@@ -183,7 +189,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to change password.')),
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text(
+              "Greska prilikom izmjene lozinke",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         );
       }
     });

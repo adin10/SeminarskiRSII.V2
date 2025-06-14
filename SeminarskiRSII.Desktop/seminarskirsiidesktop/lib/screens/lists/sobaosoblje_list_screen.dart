@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/soba-osoblje_new_screen.dart';
@@ -107,8 +109,9 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
                               columnSpacing: 40,
                               horizontalMargin: 25,
                               columns: [
-                                _buildDataColumn("Soba"),
-                                _buildDataColumn("Osoblje"),
+                                _buildDataColumn("Broj Sobe"),
+                                 _buildDataColumn("Slika"),
+                                _buildDataColumn("Uposlenik"),
                                 const DataColumn(
                                   label: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -136,18 +139,32 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
           const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  const NewSobaOsobljeScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: const TextStyle(fontSize: 16),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 24, right: 30),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NewSobaOsobljeScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  elevation: 4,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  shadowColor: Colors.black.withOpacity(0.2),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                icon: const Icon(Icons.add, size: 22),
+                label: const Text('Zaduzi uposlenika'),
               ),
-              child: Text('Zaduzi uposlenika'),
             ),
           ),
         ],
@@ -175,6 +192,7 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
         const DataRow(cells: [
           DataCell(Text("No data...")),
           DataCell(SizedBox.shrink()),
+          DataCell(SizedBox.shrink()),
           DataCell(SizedBox.shrink())
         ])
       ];
@@ -184,6 +202,16 @@ class _SobaOsobljeListScreenState extends State<SobaOsobljeListScreen> {
         .map<DataRow>((x) => DataRow(
               cells: [
                 DataCell(Text(x["soba"]?["brojSobe"]?.toString() ?? "", style: const TextStyle(fontSize: 14))),
+                DataCell(
+              SizedBox(
+                width: 70,
+                height: 40,
+                child: Image.memory(
+                  base64Decode(x["soba"]["slika"]),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
                 DataCell(Text(
                   "${x["osoblje"]?["ime"] ?? ""} ${x["osoblje"]?["prezime"] ?? ""}",
                   style: const TextStyle(fontSize: 14),

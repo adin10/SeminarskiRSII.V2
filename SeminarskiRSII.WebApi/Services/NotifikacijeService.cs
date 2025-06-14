@@ -49,6 +49,25 @@ namespace SeminarskiRSII.WebApi.Services
             return _mapper.Map<List<Model.Models.Notifikacije>>(list);
         }
 
+        public async Task NotifyUserAboutCancelledReservation(long reservationId)
+        {
+            var reservation = await _context.Rezervacija.
+                Include(x => x.Gost).Include(x => x.Soba)
+                .FirstOrDefaultAsync(x => x.Id == reservationId);
+
+            if (reservation == null) return;
+
+            var mail = new MailDto
+            {
+                Sender = "adin.smajkic@gmail.com",
+                Recipient = reservation.Gost.Email ?? "",
+                Subject = $"Vasa rezervacije sobe: {reservation.Soba.BrojSobe} je otkazana",
+                Content = $"Vasa rezervacija broj {reservation.Id} po cijeni {reservation.Cijena}KM je otkazana."
+            };
+
+            _rabbitMQProducer.SendMessage(mail);
+        }
+
         public async Task NotifyUserAboutNewReservation(long reservationId)
         {
             var reservation = await _context.Rezervacija

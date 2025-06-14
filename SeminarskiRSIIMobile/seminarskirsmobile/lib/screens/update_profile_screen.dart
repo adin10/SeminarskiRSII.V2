@@ -121,9 +121,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     http.put(uri,
         body: body, headers: {'Content-Type': 'application/json'}).then((res) {
       if (res.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Podaci uspješno ažurirani!')),
-        );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Podaci uspješno ažurirani",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
 
         final updatedUser = GetUserResponse(
           id: userId,
@@ -137,12 +143,26 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         Navigator.pop(context, updatedUser);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Greška prilikom ažuriranja podataka.')),
-        );
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Greška prilikom ažuriranja podataka",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+
+        
       }
     }).catchError((err) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Došlo je do greške: $err')),
+        ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Doslo je do greske",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       );
     });
   }
