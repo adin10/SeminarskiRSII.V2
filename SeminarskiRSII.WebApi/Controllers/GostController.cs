@@ -88,5 +88,11 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(await _service.UpdateInformation(id, request));
         }
+
+        [HttpGet("gostIzvjestaj/{id}")]
+        public async Task<ActionResult<GostIzvjestaj>> GetGostIzvjestaj(int id)
+        {
+            return Ok(await _service.GetGostIzvjestaj(id));
+        }
     }
 }

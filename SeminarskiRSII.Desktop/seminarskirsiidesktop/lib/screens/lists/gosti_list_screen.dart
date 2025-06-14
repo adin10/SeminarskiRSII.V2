@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/gosti_provider.dart';
+import 'package:seminarskirsiidesktop/providers/izvjestaj_gosti_provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/gost_edit_screen.dart';
+import 'package:seminarskirsiidesktop/screens/lists/izvjestaj_gosti_screen.dart';
 import '../../widgets/master_screen.dart';
 
 class GostiListScreen extends StatefulWidget {
@@ -14,6 +16,7 @@ class GostiListScreen extends StatefulWidget {
 
 class _GostiListScreenState extends State<GostiListScreen> {
   late GostiProvider _gostiProvider;
+  late IzvjestajGostProvider _izvjestajGostProvider;
   dynamic data;
   bool isLoading = true;
 
@@ -36,6 +39,7 @@ class _GostiListScreenState extends State<GostiListScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _gostiProvider = context.read<GostiProvider>();
+    _izvjestajGostProvider = context.read<IzvjestajGostProvider>();
     loadData();
   }
 
@@ -198,6 +202,7 @@ Widget _buildPaginationControls() {
                               columnSpacing: 40,
                               horizontalMargin: 25,
                               columns: [
+                                _buildDataColumn("ID"),
                                 _buildDataColumn("Ime"),
                                 _buildDataColumn("Prezime"),
                                 _buildDataColumn("Email"),
@@ -207,6 +212,7 @@ Widget _buildPaginationControls() {
                                 _buildDataColumn("Datum registracije"),
                                 _buildDataColumn("Status"),
                                 _buildDataColumn("Prosječna ocjena"),
+                                _buildDataColumn("Rezervacije gosta"),
                                  DataColumn(
                                     label: SizedBox(
                                       width:
@@ -259,11 +265,12 @@ Widget _buildPaginationControls() {
   if (_pagedData.isEmpty) {
     return [
       DataRow(
-        cells: List.generate(10, (_) => const DataCell(Text("No data..."))),
+        cells: List.generate(11, (_) => const DataCell(Text("No data..."))),
       )
     ];
   }
   return _pagedData.map<DataRow>((x) => DataRow(cells: [
+    DataCell(Center(child: Text(x["id"]?.toString() ?? "",style: const TextStyle(fontSize: 14)))),
     DataCell(Text(x["ime"] ?? "", style: const TextStyle(fontSize: 14))),
     DataCell(Text(x["prezime"] ?? "", style: const TextStyle(fontSize: 14))),
     DataCell(Text(x["email"] ?? "", style: const TextStyle(fontSize: 14))),
@@ -290,6 +297,26 @@ Widget _buildPaginationControls() {
     ),
   ),
 ),
+DataCell(
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      var korisnikId = x["id"];
+                      final izvjestaj = await _izvjestajGostProvider
+                          .fetchIzvjestaj(korisnikId);
+                      if (izvjestaj != null) {
+                        prikaziIzvjestajDialog(context, izvjestaj);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Greška pri dohvatu izvjestaja')),
+                        );
+                      }
+                    },
+                    child: const Text("Izvjestaj"),
+                  ),
+                ),
+              ),
               DataCell(
                 IconButton(
                   icon: const Icon(Icons.edit, color: Colors.blue),

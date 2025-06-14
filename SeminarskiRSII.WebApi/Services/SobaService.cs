@@ -11,6 +11,7 @@ using Microsoft.ML.Trainers;
 using Microsoft.ML;
 using SeminarskiRSII.Model.ML;
 using Microsoft.ML.Data;
+using SeminarskiRSII.Model.Models;
 
 namespace SeminarskiRSII.WebApi.Services
 {
@@ -187,6 +188,44 @@ namespace SeminarskiRSII.WebApi.Services
                 }
             }
             return false;
+        }
+
+        public async Task<SobaIzvjestaj> GetSobaIzvjestaj(int id)
+        {
+            var soba = await _context.Soba.FindAsync(id);
+            if (soba == null)
+                return null;
+
+            var rezervacije = await _context.Rezervacija
+                .Where(r => r.SobaId == id)
+                .Include(r => r.Gost)
+                .Include(r => r.RezervacijaUsluge)
+                    .ThenInclude(ru => ru.Usluga)
+                .ToListAsync();
+
+            var result = new SobaIzvjestaj
+            {
+                BrojSobe = soba.BrojSobe,
+                BrojSprata = soba.BrojSprata,
+                OpisSobe = soba.OpisSobe,
+                Slika = soba.Slika,
+                Rezervacije = rezervacije.Select(r => new RezervacijaZaSobuInfo
+                {
+                    DatumRezervacije = r.DatumRezervacije,
+                    ZavrsetakRezervacije = r.ZavrsetakRezervacije,
+                    GostIme = r.Gost?.Ime ?? "Nepoznato",
+                    GostPrezime = r.Gost?.Prezime ?? "",
+                    Cijena = r.Cijena,
+                    Usluge = r.RezervacijaUsluge?.Select(ru => new UslugaSobaInfo
+                    {
+                        Naziv = ru.Usluga.Naziv,
+                        Opis = ru.Usluga.Opis,
+                        Cijena = ru.Usluga.Cijena
+                    }).ToList() ?? new List<UslugaSobaInfo>()
+                }).ToList()
+            };
+
+            return result;
         }
     }
 

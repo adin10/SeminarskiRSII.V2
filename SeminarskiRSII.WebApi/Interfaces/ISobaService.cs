@@ -11,6 +11,7 @@ namespace SeminarskiRSII.WebApi.Interfaces
     {
         public Task<List<Soba>> GetList(SobaSearchRequest search);
         public Task<Soba> Get(int id);
+        public Task<SobaIzvjestaj> GetSobaIzvjestaj(int id);
         public Task<Soba> Insert(SobaInsertRequest insert);
         public Task<Soba> Update(int id, SobaInsertRequest update);
         public Task<Soba> Delete(int id);

@@ -8,6 +8,8 @@ import 'package:seminarskirsiidesktop/providers/cjenovnik_provider.dart';
 import 'package:seminarskirsiidesktop/providers/drzava_provider.dart';
 import 'package:seminarskirsiidesktop/providers/gosti_provider.dart';
 import 'package:seminarskirsiidesktop/providers/grad_provider.dart';
+import 'package:seminarskirsiidesktop/providers/izvjestaj_gosti_provider.dart';
+import 'package:seminarskirsiidesktop/providers/izvjestaj_sobe_provider.dart' show IzvjestajSobaProvider;
 import 'package:seminarskirsiidesktop/providers/novosti_provider.dart';
 import 'package:seminarskirsiidesktop/providers/osoblje_provider.dart';
 import 'package:seminarskirsiidesktop/providers/recenzija_provider.dart';
@@ -33,7 +35,9 @@ void main() {
       ChangeNotifierProvider(create: (_) => VrstaOsobljaProvider()),
       ChangeNotifierProvider(create: (_) => CjenovnikProvider()),
       ChangeNotifierProvider(create: (_) => SobaProvider()),
-      ChangeNotifierProvider(create: (_) => SobaOsobljeProvider())
+      ChangeNotifierProvider(create: (_) => SobaOsobljeProvider()),
+      ChangeNotifierProvider(create: (_) => IzvjestajSobaProvider()),
+      ChangeNotifierProvider(create: (_) => IzvjestajGostProvider())
     ],
     child: const MyMaterialApp(),
   ));
@@ -142,7 +146,7 @@ class LoginPage extends StatelessWidget {
     final String password = _passwordController.text.trim();
 
     if (username.isEmpty || password.isEmpty) {
-      _showErrorDialog(context, "Username and password cannot be empty.");
+      _showErrorDialog(context, "Moorate upisati Korisnicko ime i Password.");
       return;
     }
 
@@ -178,7 +182,7 @@ class LoginPage extends StatelessWidget {
         _showErrorDialog(context, errorMessage);
       }
     } catch (error) {
-      _showErrorDialog(context, "An error occurred. Please try again later.");
+      _showErrorDialog(context, "Greska prilikom logiranja. Pokusajte ponovo kasnije");
     }
   }
 
@@ -186,7 +190,7 @@ class LoginPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Login Failed"),
+        title: const Text("Greska Prilikom logiranja"),
         content: Text(message),
         actions: [
           TextButton(

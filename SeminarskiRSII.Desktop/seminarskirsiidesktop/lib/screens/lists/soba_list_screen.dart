@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seminarskirsiidesktop/providers/izvjestaj_sobe_provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/cjenovnik_new_screen.dart';
+import 'package:seminarskirsiidesktop/screens/lists/izvjestaj_sobe_screen.dart';
 import '../../providers/soba_provider.dart';
 import '../../widgets/master_screen.dart';
 import '../details-new/soba_new_screen.dart';
@@ -16,6 +18,7 @@ class SobaListScreen extends StatefulWidget {
 
 class _SobaListScreenState extends State<SobaListScreen> {
   late SobaProvider _sobaProvider;
+  late IzvjestajSobaProvider _izvjestajSobaProvider;
   dynamic data = {};
   bool isLoading = true;
 
@@ -26,6 +29,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _sobaProvider = context.read<SobaProvider>();
+    _izvjestajSobaProvider = context.read<IzvjestajSobaProvider>();
     loadData();
   }
 
@@ -115,6 +119,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
                                 _buildDataColumn("Soba Status"),
                                 _buildDataColumn("Cijena"),
                                 _buildDataColumn("Slika"),
+                                _buildDataColumn("Lista rezervacija"),
                                    const DataColumn(
                                   label: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -218,6 +223,24 @@ class _SobaListScreenState extends State<SobaListScreen> {
                 ),
               ),
             ),
+               DataCell(
+                 Center(
+                 child: ElevatedButton(
+                   onPressed: () async {
+                     var sobaId = soba["id"];
+                     final izvjestaj = await _izvjestajSobaProvider.fetchIzvjestaj(sobaId);
+                     if (izvjestaj != null) {
+                       prikaziIzvjestajDialog(context, izvjestaj);
+                     } else {
+                       ScaffoldMessenger.of(context).showSnackBar(
+                         SnackBar(content: Text('Greška pri dohvatu izvjestaja')),
+                       );
+                     }
+                   },
+                   child: const Text("Izvjestaj"),
+                 ),
+               ),
+           ),
                DataCell(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

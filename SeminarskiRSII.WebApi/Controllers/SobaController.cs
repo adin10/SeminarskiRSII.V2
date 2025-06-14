@@ -77,6 +77,12 @@ namespace SeminarskiRSII.WebApi.Controllers
         {
             return Ok(await _service.SobaZauzeta(id));
         }
+
+        [HttpGet("sobaIzvjestaj/{id}")]
+        public async Task<ActionResult<SobaIzvjestaj>> GetSobaIzvjestaj(int id)
+        {
+            return Ok(await _service.GetSobaIzvjestaj(id));
+        }
     }
     //public class SobaController : BaseCRUDController<Model.Soba, SobaSearchRequest, SobaInsertRequest, SobaInsertRequest>
     //{

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SeminarskiRSII.Model.Models;
 using SeminarskiRSII.Model.Requests;
 using SeminarskiRSII.WebApi.Database;
 using SeminarskiRSII.WebApi.Interfaces;
@@ -238,6 +239,48 @@ namespace SeminarskiRSII.WebApi.Services
             gost.Telefon = request.Telefon;
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Gost>(gost);
+        }
+
+        public async Task<GostIzvjestaj> GetGostIzvjestaj(int id)
+        {
+            var gost = await _context.Gost.FindAsync(id);
+
+            if (gost == null)
+                return null;
+
+            var rezervacije = await _context.Rezervacija
+                .Where(r => r.GostId == id)
+                .Include(r => r.RezervacijaUsluge)
+                    .ThenInclude(ru => ru.Usluga)
+                .Include(r => r.Soba)
+                .ToListAsync();
+
+            var result = new GostIzvjestaj
+            {
+                Ime = gost.Ime,
+                Prezime = gost.Prezime,
+                Rezervacije = rezervacije.Select(r => new RezervacijaInfo
+                {
+                    DatumRezervacije = r.DatumRezervacije,
+                    ZavrsetakRezervacije = r.ZavrsetakRezervacije,
+                    Usluge = r.RezervacijaUsluge != null
+                                ? r.RezervacijaUsluge.Select(ru => new UslugaInfo
+                                {
+                                    Naziv = ru.Usluga.Naziv,
+                                    Opis = ru.Usluga.Opis,
+                                    Cijena = ru.Usluga.Cijena
+                                }).ToList()
+                                : new List<UslugaInfo>(),
+                    BrojSprata = r.Soba.BrojSprata,
+                    BrojSobe = r.Soba.BrojSobe,
+                    OpisSobe = r.Soba.OpisSobe,
+                    Slika = r.Soba.Slika,
+                    UkupnaCijena = r.Cijena
+                }).ToList()
+            };
+
+            return result;
+
         }
     }
 }
