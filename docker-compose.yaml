@@ -17,6 +17,7 @@ services:
   hotelas_sqlserver:
     image: mcr.microsoft.com/mssql/server
     container_name: ib210330_sqlserver
+    restart: unless-stopped
     ports:
       - "1433:1433"
     environment:
@@ -24,7 +25,11 @@ services:
       ACCEPT_EULA: "Y"
     volumes:
       - sqlserverdata:/var/opt/mssql
+    networks:
+      - hotelAS_network
+
   hotelas_webapi:
+    restart: unless-stopped
     build:
       context: .
       dockerfile: SeminarskiRSII.WebApi/Dockerfile
@@ -34,8 +39,16 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__HotelAS: "Server=hotelas_sqlserver;Database=IB210330;User Id=sa;Password=YourStrongPassword!;"
+      RABBITMQ_HOST: rabbitMQ
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+    networks:
+      - hotelAS_network
     depends_on:
       - hotelas_sqlserver
+      - rabbitMQ
+
   rabbitmq-consumer:
     restart: unless-stopped
     build:
