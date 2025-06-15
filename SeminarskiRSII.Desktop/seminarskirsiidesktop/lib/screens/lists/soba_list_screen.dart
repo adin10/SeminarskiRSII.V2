@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seminarskirsiidesktop/providers/izvjestaj_sobe_provider.dart';
 import 'package:seminarskirsiidesktop/screens/details-new/cjenovnik_new_screen.dart';
+import 'package:seminarskirsiidesktop/screens/lists/izvjestaj_recenzije_za_sobu.dart';
 import 'package:seminarskirsiidesktop/screens/lists/izvjestaj_sobe_screen.dart';
 import '../../providers/soba_provider.dart';
 import '../../widgets/master_screen.dart';
@@ -120,6 +121,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
                                 _buildDataColumn("Cijena"),
                                 _buildDataColumn("Slika"),
                                 _buildDataColumn("Lista rezervacija"),
+                                _buildDataColumn("Lista recenzija"),
                                    const DataColumn(
                                   label: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -197,7 +199,7 @@ class _SobaListScreenState extends State<SobaListScreen> {
   List<DataRow> _buildRows() {
     if (data == null || data.isEmpty) {
       return [
-        DataRow(cells: List.generate(7, (index) => const DataCell(Text("No data..."))))
+        DataRow(cells: List.generate(8, (index) => const DataCell(Text("No data..."))))
       ];
     }
 
@@ -237,7 +239,25 @@ class _SobaListScreenState extends State<SobaListScreen> {
                        );
                      }
                    },
-                   child: const Text("Izvjestaj"),
+                   child: const Text("Rezervacije"),
+                 ),
+               ),
+           ),
+                          DataCell(
+                 Center(
+                 child: ElevatedButton(
+                   onPressed: () async {
+                     var sobaId = soba["id"];
+                     final izvjestaj = await _izvjestajSobaProvider.fetchRecenzijeZaSobuIzvjestaj(sobaId);
+                     if (izvjestaj != null) {
+                       prikaziRecenzijeIzvjestajDialog(context, izvjestaj);
+                     } else {
+                       ScaffoldMessenger.of(context).showSnackBar(
+                         SnackBar(content: Text('Greška pri dohvatu izvjestaja')),
+                       );
+                     }
+                   },
+                   child: const Text("Recenzije"),
                  ),
                ),
            ),

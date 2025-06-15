@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 import 'package:seminarskirsiidesktop/providers/base_provider.dart';
+import 'package:seminarskirsiidesktop/screens/lists/izvjestaj_recenzije_za_sobu.dart';
 import 'package:seminarskirsiidesktop/screens/lists/izvjestaj_sobe_screen.dart';
 import 'package:seminarskirsiidesktop/utils/util.dart';
 
@@ -25,6 +26,21 @@ class IzvjestajSobaProvider with ChangeNotifier {
  if (isValidResponse(response)) {
     var data = jsonDecode(response.body);
     return SobaIzvjestaj.fromJson(data);
+  } else {
+    throw Exception("Something went wrong");
+  }
+}
+
+  Future<RecenzijeZaSobuIzvjetsaj?> fetchRecenzijeZaSobuIzvjestaj(int sobaId) async {
+  final url = Uri.parse("${BaseProvider.baseUrl}/Soba/recenzijeIzvjestaj/$sobaId");
+
+  var response = await http!.get(
+      url,
+    );
+
+ if (isValidResponse(response)) {
+    var data = jsonDecode(response.body);
+    return RecenzijeZaSobuIzvjetsaj.fromJson(data);
   } else {
     throw Exception("Something went wrong");
   }

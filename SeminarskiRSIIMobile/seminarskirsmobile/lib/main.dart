@@ -234,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                                       login(context, usernameController.text, passwordController.text);
                                     },
                                     child: Text(
-                                      "Login",
+                                      "Prijavi se",
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,

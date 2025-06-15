@@ -134,10 +134,16 @@ namespace SeminarskiRSII.WebApi.Services
 
         public async Task<Model.Models.Novosti> Delete(int id)
         {
-            var entity = await _context.Novosti.FindAsync(id);
-            _context.Novosti.Remove(entity);
+            var novost = await _context.Novosti.FindAsync(id);
+            var novostiProcitane = await _context.NovostProcitana.Where(x=>x.NovostId == id).ToListAsync();
+            foreach(var x in novostiProcitane)
+            {
+                _context.NovostProcitana.Remove(x);
+                await _context.SaveChangesAsync();
+            }
+            _context.Novosti.Remove(novost);
             await _context.SaveChangesAsync();
-            return _mapper.Map<Model.Models.Novosti>(entity);
+            return _mapper.Map<Model.Models.Novosti>(novost);
         }
 
         public async Task MarkAsRead(MarkAsReadRequest request)

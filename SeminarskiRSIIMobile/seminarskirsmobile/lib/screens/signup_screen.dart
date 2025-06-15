@@ -68,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registracija'),
+        title: Text('Kreirajte vas profil'),
         centerTitle: true,
         backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
@@ -80,13 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Text(
-                  'Kreirajte profil',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 5),
               _buildTextField('Ime', imeController, 'Ime je obavezno polje'),
               _buildTextField(
                   'Prezime', prezimeController, 'Prezime je obavezno polje'),
@@ -96,7 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               _buildTextField(
                   'Telefon', telefonController, 'Telefon je obavezno poslje',
                   inputType: TextInputType.phone),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               _isLoading
                   ? Center(child: CircularProgressIndicator())
                   : _buildDropdownField(
@@ -129,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               _buildTextField('Potvrdi Lozinku', potvrdiLozinkuController,
                   'Lozinke se ne podudaraju',
                   obscureText: true, compareValue: lozinkaController.text),
-              SizedBox(height: 20),
+              SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(

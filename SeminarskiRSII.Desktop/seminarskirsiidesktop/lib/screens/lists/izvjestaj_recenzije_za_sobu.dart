@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,81 +7,53 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-class SobaIzvjestaj {
+class RecenzijeZaSobuIzvjetsaj {
   final int brojSobe;
   final int brojSprata;
   final String opisSobe;
   final String slika;
-  final List<RezervacijaZaSobuInfo> rezervacije;
+  final List<RecenzijaZaSobuInfo> recenzije;
 
-  SobaIzvjestaj({
+  RecenzijeZaSobuIzvjetsaj({
     required this.brojSobe,
     required this.brojSprata,
     required this.opisSobe,
     required this.slika,
-    required this.rezervacije,
+    required this.recenzije,
   });
 
-  factory SobaIzvjestaj.fromJson(Map<String, dynamic> json) {
-    return SobaIzvjestaj(
+  factory RecenzijeZaSobuIzvjetsaj.fromJson(Map<String, dynamic> json) {
+    return RecenzijeZaSobuIzvjetsaj(
       brojSobe: json['brojSobe'],
       brojSprata: json['brojSprata'],
       opisSobe: json['opisSobe'],
       slika: json['slika'] ?? '',
-      rezervacije: (json['rezervacije'] as List)
-          .map((e) => RezervacijaZaSobuInfo.fromJson(e))
+      recenzije: (json['recenzije'] as List)
+          .map((e) => RecenzijaZaSobuInfo.fromJson(e))
           .toList(),
     );
   }
 }
 
-class RezervacijaZaSobuInfo {
-  final DateTime datumRezervacije;
-  final DateTime zavrsetakRezervacije;
+class RecenzijaZaSobuInfo {
+  final int ocjena;
+  final String komentar;
   final String gostIme;
   final String gostPrezime;
-  final double cijena;
-  final List<UslugaSobaInfo> usluge;
 
-  RezervacijaZaSobuInfo({
-    required this.datumRezervacije,
-    required this.zavrsetakRezervacije,
+  RecenzijaZaSobuInfo({
+    required this.ocjena,
+    required this.komentar,
     required this.gostIme,
-    required this.gostPrezime,
-    required this.cijena,
-    required this.usluge,
+    required this.gostPrezime
   });
 
-  factory RezervacijaZaSobuInfo.fromJson(Map<String, dynamic> json) {
-    return RezervacijaZaSobuInfo(
-      datumRezervacije: DateTime.parse(json['datumRezervacije']),
-      zavrsetakRezervacije: DateTime.parse(json['zavrsetakRezervacije']),
+  factory RecenzijaZaSobuInfo.fromJson(Map<String, dynamic> json) {
+    return RecenzijaZaSobuInfo(
+      ocjena: (json['ocjena'] as num).toInt(),
+      komentar: json['komentar'],
       gostIme: json['gostIme'],
-      gostPrezime: json['gostPrezime'],
-      cijena: (json['cijena'] as num).toDouble(),
-      usluge: (json['usluge'] as List)
-          .map((e) => UslugaSobaInfo.fromJson(e))
-          .toList(),
-    );
-  }
-}
-
-class UslugaSobaInfo {
-  final String naziv;
-  final String opis;
-  final int cijena;
-
-  UslugaSobaInfo({
-    required this.naziv,
-    required this.opis,
-    required this.cijena,
-  });
-
-  factory UslugaSobaInfo.fromJson(Map<String, dynamic> json) {
-    return UslugaSobaInfo(
-      naziv: json['naziv'],
-      opis: json['opis'],
-      cijena: json['cijena'],
+      gostPrezime: json['gostPrezime']
     );
   }
 }
@@ -89,7 +62,7 @@ class UslugaSobaInfo {
   return DateFormat('dd.MM.yyyy').format(datum);
 }
 
-Future<void> generisiIPreuzmiPDF(BuildContext context, SobaIzvjestaj izvjestaj) async {
+Future<void> generisiIPreuzmiPDF(BuildContext context, RecenzijeZaSobuIzvjetsaj izvjestaj) async {
   final pdf = pw.Document();
 
   pw.Widget alignedRow(String label, String value, {bool boldValue = false}) {
@@ -147,18 +120,13 @@ Future<void> generisiIPreuzmiPDF(BuildContext context, SobaIzvjestaj izvjestaj) 
             ),
           ),
         pw.SizedBox(height: 12),
-        if (izvjestaj.rezervacije.isEmpty)
+        if (izvjestaj.recenzije.isEmpty)
           pw.Text(
             'Za ovu sobu trenutno nema rezervacija.',
             style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
           )
         else
-          ...izvjestaj.rezervacije.map((rez) {
-            final ukupnaCijenaUsluga = rez.usluge.fold<double>(
-              0,
-              (sum, u) => sum + u.cijena,
-            );
-
+          ...izvjestaj.recenzije.map((rez) {
             return pw.Container(
               margin: const pw.EdgeInsets.only(bottom: 20),
               padding: const pw.EdgeInsets.all(10),
@@ -169,37 +137,10 @@ Future<void> generisiIPreuzmiPDF(BuildContext context, SobaIzvjestaj izvjestaj) 
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
-                  alignedRow(
-                    'Rezervacija:',
-                    '${formatirajDatum(rez.datumRezervacije)} - ${formatirajDatum(rez.zavrsetakRezervacije)}',
-                  ),
+                  alignedRow('Ocjena:', '${rez.ocjena}'),
+                  alignedRow('Gost:', '${rez.komentar}'),
                   alignedRow('Gost:', '${rez.gostIme} ${rez.gostPrezime}'),
-                  pw.Row(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Container(
-                        width: 120,
-                        child: pw.Text(
-                          'Usluge:',
-                          style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                        ),
-                      ),
-                      pw.Expanded(
-                        child: pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          children: rez.usluge
-                              .map((u) => pw.Text('${u.opis} (${u.cijena.toStringAsFixed(2)} KM)'))
-                              .toList(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  pw.SizedBox(height: 6),
-                  alignedRow(
-                    'Ukupna cijena:',
-                    '${rez.cijena.toStringAsFixed(2)} KM',
-                    boldValue: true,
-                  ),
+
                 ],
               ),
             );
@@ -213,7 +154,7 @@ Future<void> generisiIPreuzmiPDF(BuildContext context, SobaIzvjestaj izvjestaj) 
   );
 }
 
-void prikaziIzvjestajDialog(BuildContext context, SobaIzvjestaj izvjestaj) {
+void prikaziRecenzijeIzvjestajDialog(BuildContext context, RecenzijeZaSobuIzvjetsaj izvjestaj) {
   Uint8List? imageBytes;
   if (izvjestaj.slika.isNotEmpty) {
     try {
@@ -253,21 +194,17 @@ void prikaziIzvjestajDialog(BuildContext context, SobaIzvjestaj izvjestaj) {
                 ),
               ),
             Expanded(
-              child: izvjestaj.rezervacije.isEmpty
+              child: izvjestaj.recenzije.isEmpty
                   ? const Center(
                       child: Text(
-                        'Za ovu sobu trenutno nema rezervacija.',
+                        'Za ovu sobu trenutno nema recenzija.',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     )
                   : ListView.builder(
-                      itemCount: izvjestaj.rezervacije.length,
+                      itemCount: izvjestaj.recenzije.length,
                       itemBuilder: (context, index) {
-                        final rez = izvjestaj.rezervacije[index];
-                        final ukupnaCijenaUsluga = rez.usluge.fold<double>(
-                          0,
-                          (sum, u) => sum + u.cijena,
-                        );
+                        final rez = izvjestaj.recenzije[index];
 
                         return Card(
                           margin: const EdgeInsets.symmetric(vertical: 8),
@@ -276,42 +213,9 @@ void prikaziIzvjestajDialog(BuildContext context, SobaIzvjestaj izvjestaj) {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildAlignedRow(
-                                  'Rezervacija:',
-                                  '${formatirajDatum(rez.datumRezervacije)} - ${formatirajDatum(rez.zavrsetakRezervacije)}',
-                                ),
+                                 _buildAlignedRow('Ocjena:', '${rez.ocjena}'),
+                                 _buildAlignedRow('Komentar:', '${rez.komentar}'),
                                 _buildAlignedRow('Gost:', '${rez.gostIme} ${rez.gostPrezime}'),
-                                const SizedBox(height: 8),
-                                Row(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
-                                   const SizedBox(
-                                     width: 120, 
-                                     child: Text(
-                                       'Usluge:',
-                                       style:  TextStyle(fontWeight: FontWeight.w600),
-                                     ),
-                                   ),
-                                   Expanded(
-                                     child: Column(
-                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                       children: rez.usluge
-                                           .map(
-                                             (u) => Text(
-                                               '${u.opis} (${u.cijena.toStringAsFixed(2)} KM)',
-                                             ),
-                                           )
-                                           .toList(),
-                                     ),
-                                   ),
-                                 ],
-                               ),
-                                const SizedBox(height: 8),
-                                _buildAlignedRow(
-                                  'Ukupna cijena:',
-                                  '${rez.cijena.toStringAsFixed(2)} KM',
-                                  boldValue: true,
-                                ),
                               ],
                             ),
                           ),
@@ -329,7 +233,7 @@ void prikaziIzvjestajDialog(BuildContext context, SobaIzvjestaj izvjestaj) {
         ),
         TextButton(
           child: const Text('Preuzmi PDF'),
-          onPressed: izvjestaj.rezervacije.isEmpty
+          onPressed: izvjestaj.recenzije.isEmpty
               ? null
               : () => generisiIPreuzmiPDF(context, izvjestaj),
         ),

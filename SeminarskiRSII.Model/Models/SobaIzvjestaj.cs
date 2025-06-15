@@ -25,6 +25,4 @@
         public string Opis { get; set; }
         public int Cijena { get; set; }
     }
-
-
 }

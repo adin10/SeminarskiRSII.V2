@@ -202,7 +202,6 @@ Widget _buildPaginationControls() {
                               columnSpacing: 40,
                               horizontalMargin: 25,
                               columns: [
-                                _buildDataColumn("ID"),
                                 _buildDataColumn("Ime"),
                                 _buildDataColumn("Prezime"),
                                 _buildDataColumn("Email"),
@@ -265,12 +264,11 @@ Widget _buildPaginationControls() {
   if (_pagedData.isEmpty) {
     return [
       DataRow(
-        cells: List.generate(11, (_) => const DataCell(Text("No data..."))),
+        cells: List.generate(10, (_) => const DataCell(Text("No data..."))),
       )
     ];
   }
   return _pagedData.map<DataRow>((x) => DataRow(cells: [
-    DataCell(Center(child: Text(x["id"]?.toString() ?? "",style: const TextStyle(fontSize: 14)))),
     DataCell(Text(x["ime"] ?? "", style: const TextStyle(fontSize: 14))),
     DataCell(Text(x["prezime"] ?? "", style: const TextStyle(fontSize: 14))),
     DataCell(Text(x["email"] ?? "", style: const TextStyle(fontSize: 14))),

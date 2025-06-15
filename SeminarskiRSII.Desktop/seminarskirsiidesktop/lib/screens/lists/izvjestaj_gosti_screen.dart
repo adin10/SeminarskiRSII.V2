@@ -258,17 +258,6 @@ void prikaziIzvjestajDialog(BuildContext context, GostIzvjestaj izvjestaj) {
                           _buildAlignedRow('Broj sobe:', '${rez.brojsobe}'),
                           _buildAlignedRow('Opis sobe:', rez.opissobe),
                           const SizedBox(height: 8),
-                          // const Text(
-                          //   'Usluge:',
-                          //   style: TextStyle(fontWeight: FontWeight.bold),
-                          // ),
-                          // const SizedBox(height: 4),
-                          // ...rez.usluge.map(
-                          //   (usluga) => _buildAlignedRow(
-                          //     '${usluga.naziv}:',
-                          //     '${usluga.opis} (${usluga.cijena} KM)',
-                          //   ),
-                          // ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -276,7 +265,7 @@ void prikaziIzvjestajDialog(BuildContext context, GostIzvjestaj izvjestaj) {
                                 width: 120,
                                 child: Text(
                                   'Usluge:',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.w600),
                                 ),
                               ),
                               Expanded(

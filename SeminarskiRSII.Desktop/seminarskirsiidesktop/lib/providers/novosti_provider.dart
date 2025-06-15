@@ -36,6 +36,7 @@ class NovostiProvider with ChangeNotifier {
 
 
   Future<void> delete(String id) async {
+    print(id);
     final url = Uri.parse("${BaseProvider.baseUrl}/Novosti/$id");
 
     final response = await http!.delete(url);

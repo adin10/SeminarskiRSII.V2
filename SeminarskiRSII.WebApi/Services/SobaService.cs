@@ -227,6 +227,35 @@ namespace SeminarskiRSII.WebApi.Services
 
             return result;
         }
+
+        public async Task<RecenzijeZaSobuIzvjetsaj> GetSobaRecenzijeIzvjestaj(int id)
+        {
+            var soba = await _context.Soba.FindAsync(id);
+            if (soba == null)
+                return null;
+
+            var recenzije = await _context.Recenzija
+                .Where(r => r.SobaId == id)
+                .Include(r => r.Gost)
+                .ToListAsync();
+
+            var result = new RecenzijeZaSobuIzvjetsaj
+            {
+                BrojSobe = soba.BrojSobe,
+                BrojSprata = soba.BrojSprata,
+                OpisSobe = soba.OpisSobe,
+                Slika = soba.Slika,
+                Recenzije = recenzije.Select(r => new RecenzijaZaSobuInfo
+                {
+                    GostIme = r.Gost?.Ime ?? "Nepoznato",
+                    GostPrezime = r.Gost?.Prezime ?? "",
+                    Ocjena = r.Ocjena,
+                    Komentar = r.Komentar
+                }).ToList()
+            };
+
+            return result;
+        }
     }
 
     public class RoomEntry
