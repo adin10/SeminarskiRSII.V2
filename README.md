@@ -32,8 +32,8 @@ Aplikacija za pretrazivanje, upravljanje i rezervaciju hotelskih soba i apartman
 
 
 
-Stripe Testna kartica
-Broj kartice: 4242 4242 4242 4242
-Datum isteka: bilo koji datum u budućnosti
+Stripe Testna kartica<br>
+Broj kartice: 4242 4242 4242 4242<br>
+Datum isteka: bilo koji datum u budućnosti<br>
 CVC: bilo koji trocifreni broj
 
