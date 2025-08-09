@@ -7,10 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeminarskiRSII.WebApi", "Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeminarskiRSII.Model", "SeminarskiRSII.Model\SeminarskiRSII.Model.csproj", "{CDC58E35-7100-4B7E-8BF6-F5334CC8EDA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeminarskiRSII.RabbitMQConsumer", "SeminarskiRSII.RabbitMQConsumer\SeminarskiRSII.RabbitMQConsumer.csproj", "{E664593D-8179-46EB-A14F-15D833A1AC62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeminarskiRSII.RabbitMQConsumer", "SeminarskiRSII.RabbitMQConsumer\SeminarskiRSII.RabbitMQConsumer.csproj", "{E664593D-8179-46EB-A14F-15D833A1AC62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9B3B2776-7F37-41DD-B8D9-C3B7421A1A39}"
 	ProjectSection(SolutionItems) = preProject
+		.env = .env
 		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
