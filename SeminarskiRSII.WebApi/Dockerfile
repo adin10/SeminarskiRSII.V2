@@ -24,4 +24,7 @@ RUN dotnet publish "./SeminarskiRSII.WebApi.csproj" -c $BUILD_CONFIGURATION -o /
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+COPY SeminarskiRSII.WebApi/appsettings.Development.json .
+
 ENTRYPOINT ["dotnet", "SeminarskiRSII.WebApi.dll"]
