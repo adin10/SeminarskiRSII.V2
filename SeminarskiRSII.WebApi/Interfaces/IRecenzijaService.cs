@@ -12,7 +12,7 @@ namespace SeminarskiRSII.WebApi.Interfaces
         public Task<List<Recenzija>> GetList(RecenzijaSearchRequest search);
         public Task<List<Recenzija>> GetListBySobaId(int sobaId);
         public Task<Recenzija> Get(int id);
-        public Task<Recenzija> Insert(RecenzijaInsertRequest insert);
+        public Task<Recenzija> Insert(int rezervacijaId, RecenzijaInsertRequest insert);
         public Task<Recenzija> Update(int id, RecenzijaInsertRequest update);
         public Task<Recenzija> ObrisiKomentar(int id);
         

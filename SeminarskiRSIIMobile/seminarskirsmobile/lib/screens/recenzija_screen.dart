@@ -42,6 +42,7 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
     }
 
     final int? selectedRoomId = args['selectedRoomId'] as int?;
+    final int? reservationId = args['reservationId'] as int?;
 
     return Scaffold(
       appBar: AppBar(
@@ -110,7 +111,7 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
                     : () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          _submitForm(selectedRoomId!);
+                          _submitForm(reservationId!, selectedRoomId!);
                         }
                       },
                 style: ElevatedButton.styleFrom(
@@ -132,7 +133,7 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
     );
   }
 
-  void _submitForm(int selectedRoomId) async {
+  void _submitForm(int reservationId, int selectedRoomId) async {
     if (ocjena == null || ocjena! < 1 || ocjena! > 10) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -162,7 +163,7 @@ class _RecenzijaScreenState extends State<RecenzijaScreen> {
     ioc.badCertificateCallback =
         (X509Certificate cert, String host, int port) => true;
     final httpClient = new IOClient(ioc);
-    final url = Uri.parse("${BaseProvider.baseUrl}/Recenzija");
+    final url = Uri.parse("${BaseProvider.baseUrl}/Recenzija/$reservationId");
 
     try {
       final response = await httpClient.post(

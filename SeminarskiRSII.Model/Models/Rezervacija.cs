@@ -14,6 +14,7 @@ namespace SeminarskiRSII.Model.Models
         public int? GostId { get; set; }
         public Gost Gost { get; set; }
         public int? SobaId { get; set; }
+        public bool? Ocjenjena { get; set; }
         public Soba Soba { get; set; }
     }
 }

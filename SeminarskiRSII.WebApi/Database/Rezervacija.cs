@@ -12,6 +12,7 @@ namespace SeminarskiRSII.WebApi.Database
         public DateTime ZavrsetakRezervacije { get; set; }
         public byte[]? Qrcode { get; set; }
         public bool? Otkazana { get; set; }
+        public bool? Ocjenjena { get; set; }
         public float Cijena { get; set; }
         public ICollection<RezervacijaUsluga> RezervacijaUsluge { get; set; }
         public virtual Gost Gost { get; set; } = null!;

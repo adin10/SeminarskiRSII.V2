@@ -54,11 +54,16 @@ namespace SeminarskiRSII.WebApi.Services
             return _mapper.Map<Model.Models.Recenzija>(entity);
         }
 
-        public async Task<Model.Models.Recenzija> Insert(RecenzijaInsertRequest insert)
+        public async Task<Model.Models.Recenzija> Insert(int rezervacijaId, RecenzijaInsertRequest insert)
         {
             var entity = _mapper.Map<Database.Recenzija>(insert);
             entity.DatumRecenzije = DateTime.Now;
             await _context.Recenzija.AddAsync(entity);
+            var rezervacija = await _context.Rezervacija.FindAsync(rezervacijaId);
+            if(rezervacija != null)
+            {
+                rezervacija.Ocjenjena = true;
+            }
             await _context.SaveChangesAsync();
             return _mapper.Map<Model.Models.Recenzija>(entity);
         }

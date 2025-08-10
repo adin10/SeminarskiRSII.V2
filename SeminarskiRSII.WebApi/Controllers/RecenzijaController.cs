@@ -39,10 +39,10 @@ namespace SeminarskiRSII.WebApi.Controllers
             return Ok(await _service.Get(id));
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Recenzija>> Insert(RecenzijaInsertRequest insert)
+        [HttpPost("{rezervacijaId}")]
+        public async Task<ActionResult<Recenzija>> Insert(int rezervacijaId, RecenzijaInsertRequest insert)
         {
-            return Ok(await _service.Insert(insert));
+            return Ok(await _service.Insert(rezervacijaId, insert));
         }
 
         [HttpPut("{id}")]

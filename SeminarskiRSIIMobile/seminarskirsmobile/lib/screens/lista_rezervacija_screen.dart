@@ -179,7 +179,7 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                                   const SizedBox(height: 16),
                                                   Center(
                                                     child: DateTime.now().isAfter(
-                                                            zavrsetakRezervacije)
+                                                                zavrsetakRezervacije) && !(reservation["ocjenjena"] ?? false)
                                                         ? ElevatedButton(
                                                             onPressed: () {
                                                               IdGetter.Id =
@@ -194,6 +194,9 @@ class _ListaRezervacijaScreenState extends State<ListaRezervacijaScreen> {
                                                                   'selectedRoomId':
                                                                       reservation[
                                                                           "sobaId"],
+                                                                  'reservationId':
+                                                                      reservation[
+                                                                          "id"],
                                                                 },
                                                               );
                                                             },

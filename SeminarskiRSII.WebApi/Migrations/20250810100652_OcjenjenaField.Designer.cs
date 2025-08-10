@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeminarskiRSII.WebApi.Database;
 
@@ -11,9 +12,10 @@ using SeminarskiRSII.WebApi.Database;
 namespace SeminarskiRSII.WebApi.Migrations
 {
     [DbContext(typeof(IB210330Context))]
-    partial class IB210330ContextModelSnapshot : ModelSnapshot
+    [Migration("20250810100652_OcjenjenaField")]
+    partial class OcjenjenaField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
