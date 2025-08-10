@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SeminarskiRSII.WebApi.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -326,6 +326,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                     zavrsetakRezervacije = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Qrcode = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Otkazana = table.Column<bool>(type: "bit", nullable: true),
+                    Ocjenjena = table.Column<bool>(type: "bit", nullable: true),
                     Cijena = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
@@ -534,13 +535,13 @@ namespace SeminarskiRSII.WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "rezervacija",
-                columns: new[] { "ID", "Cijena", "datumRezervacije", "gostID", "Otkazana", "Qrcode", "sobaID", "zavrsetakRezervacije" },
+                columns: new[] { "ID", "Cijena", "datumRezervacije", "gostID", "Ocjenjena", "Otkazana", "Qrcode", "sobaID", "zavrsetakRezervacije" },
                 values: new object[,]
                 {
-                    { 1, 305f, new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, null, 1, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, 295f, new DateTime(2024, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, null, null, 1, new DateTime(2024, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, 215f, new DateTime(2024, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, null, null, 2, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, 350f, new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, null, null, 3, new DateTime(2024, 12, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, 305f, new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, null, null, 1, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 295f, new DateTime(2024, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, true, null, null, 1, new DateTime(2024, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, 215f, new DateTime(2024, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, false, null, null, 2, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, 350f, new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, false, null, null, 3, new DateTime(2025, 2, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(

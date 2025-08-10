@@ -16,7 +16,8 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     SobaId = 1,
                     DatumRezervacije = new DateTime(2024, 12, 30),
                     ZavrsetakRezervacije = new DateTime(2025, 01, 01),
-                    Cijena = 305
+                    Cijena = 305,
+                    Ocjenjena = false
                 },
                 new Rezervacija()
                 {
@@ -25,25 +26,28 @@ namespace SeminarskiRSII.WebApi.Database.DataSeed
                     SobaId = 1,
                     DatumRezervacije = new DateTime(2024, 12, 26),
                     ZavrsetakRezervacije = new DateTime(2024, 12, 29),
-                    Cijena = 295
+                    Cijena = 295,
+                    Ocjenjena = true
                 },
                 new Rezervacija()
                 {
                     Id = 3,
-                    GostId = 3,
+                    GostId = 5,
                     SobaId = 2,
                     DatumRezervacije = new DateTime(2024, 12, 11),
                     ZavrsetakRezervacije = new DateTime(2024, 12, 14),
-                    Cijena = 215
+                    Cijena = 215,
+                    Ocjenjena = false
                 },
                 new Rezervacija()
                 {
                     Id = 4,
-                    GostId = 4,
+                    GostId = 5,
                     SobaId = 3,
-                    DatumRezervacije = new DateTime(2024, 12, 01),
-                    ZavrsetakRezervacije = new DateTime(2024, 12, 04),
-                    Cijena = 350
+                    DatumRezervacije = new DateTime(2025, 02, 01),
+                    ZavrsetakRezervacije = new DateTime(2025, 02, 04),
+                    Cijena = 350,
+                    Ocjenjena = false
                 }
             });
             modelBuilder.Entity<Rezervacija>().HasData(list);

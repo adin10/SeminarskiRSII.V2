@@ -12,8 +12,8 @@ using SeminarskiRSII.WebApi.Database;
 namespace SeminarskiRSII.WebApi.Migrations
 {
     [DbContext(typeof(IB210330Context))]
-    [Migration("20250810100652_OcjenjenaField")]
-    partial class OcjenjenaField
+    [Migration("20250810113015_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -753,6 +753,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                             Cijena = 305f,
                             DatumRezervacije = new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GostId = 1,
+                            Ocjenjena = false,
                             SobaId = 1,
                             ZavrsetakRezervacije = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -762,6 +763,7 @@ namespace SeminarskiRSII.WebApi.Migrations
                             Cijena = 295f,
                             DatumRezervacije = new DateTime(2024, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GostId = 2,
+                            Ocjenjena = true,
                             SobaId = 1,
                             ZavrsetakRezervacije = new DateTime(2024, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -770,7 +772,8 @@ namespace SeminarskiRSII.WebApi.Migrations
                             Id = 3,
                             Cijena = 215f,
                             DatumRezervacije = new DateTime(2024, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            GostId = 3,
+                            GostId = 5,
+                            Ocjenjena = false,
                             SobaId = 2,
                             ZavrsetakRezervacije = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -778,10 +781,11 @@ namespace SeminarskiRSII.WebApi.Migrations
                         {
                             Id = 4,
                             Cijena = 350f,
-                            DatumRezervacije = new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            GostId = 4,
+                            DatumRezervacije = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GostId = 5,
+                            Ocjenjena = false,
                             SobaId = 3,
-                            ZavrsetakRezervacije = new DateTime(2024, 12, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            ZavrsetakRezervacije = new DateTime(2025, 2, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
