@@ -102,6 +102,8 @@ android {
         release {
             // Signing with the debug keys for now; replace with your own signing config when ready.
             signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
         }
     }
 }
